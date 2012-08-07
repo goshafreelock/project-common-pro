@@ -643,7 +643,7 @@
 //#define K2084_BY_S14_V001
 //#define K2082_HF_2082_V001
 //#define K1176_LS_1176_V001
-//#define K1172_ALK_969B_V001
+#define K1172_ALK_969B_V001
 
 
 /*****************测试验证******************/
@@ -12659,7 +12659,9 @@
 #define PLAY_STATUS_LED_P27
 
 #define FM_BY_PASS
-	
+
+#define ADKEY_PLAY_SHORT_SCAN_FRE
+
 #define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
 #define USE_LONG_PLAY_KEY_TO_SWITCH_MODE
 
