@@ -1,0 +1,17 @@
+TRANSFER
+"decode.obj",
+"entry.obj",
+"uart_page.obj",
+"adc_page.obj",
+"ap_emi_page.obj",
+"cpu_page.obj",
+"dac_amux_page.obj",
+"iic_page.obj",
+"io_page.obj",
+"main_page.obj",
+"spi_emi_dma_page.obj",
+"spi_page.obj",
+"timer_page.obj",
+"dac.obj",
+"clock.obj" 
+TO "app.LIB"
