@@ -714,7 +714,7 @@ void Mute_Ext_PA(MUTE_TYPE M_Type)
 		}
 #endif		
 
-#ifdef K0000_GW_118B_V001
+#if defined(K0000_GW_118B_V001)||defined(K0000_GW_ZX015_V001)
 	if(mute_flag){
 		P02 = 1;	   
 	}

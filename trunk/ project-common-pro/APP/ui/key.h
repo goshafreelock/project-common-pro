@@ -607,7 +607,7 @@ void bat_val_arg(void);
 #define ADKEY_7		INFO_7
 #define ADKEY_8		INFO_8
 #define ADKEY_NOKEY	NO_KEY
-#elif defined(K0000_GW_168C_V001)||defined(K0000_GW_ZX015_V001)
+#elif defined(K0000_GW_168C_V001)
 #define ADKEY_1		NO_KEY
 #define ADKEY_2		NO_KEY
 #define ADKEY_3		INFO_PLAY_MODE
@@ -617,7 +617,7 @@ void bat_val_arg(void);
 #define ADKEY_7		NO_KEY
 #define ADKEY_8		INFO_PLAY
 #define ADKEY_NOKEY	NO_KEY
-#elif defined(K0000_GW_118B_V001)
+#elif defined(K0000_GW_118B_V001)||defined(K0000_GW_ZX015_V001)
 #define ADKEY_1		NO_KEY
 #define ADKEY_2		INFO_PLAY
 #define ADKEY_3		INFO_NEXT_FIL
