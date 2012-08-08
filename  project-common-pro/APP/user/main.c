@@ -803,7 +803,7 @@ void sys_init(void)
 	
 #endif
 
-#ifdef K0000_GW_118B_V001
+#if defined(K0000_GW_118B_V001)||defined(K0000_GW_ZX015_V001)
 	P0DIR &= ~(BIT(2));
 	P0PU |= BIT(2);
 	P02 = 1;	   
