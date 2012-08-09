@@ -1508,8 +1508,11 @@ u8 ap_handle_hotkey(u8 key)
 	     Set_Curr_Func(last_work_mode);
             return 0;
 #endif        
-        
+#if defined(SYS_POWER_ON_DEFAULT_IN_BT_AUX_ALTERNATIVE_MODE)
+	     Set_Curr_Func(SYS_BT);
+#else
             work_mode = SYS_MP3DECODE_USB;
+#endif
             return 0;
         }
         break;
