@@ -27,6 +27,10 @@
 #undef EEPROM_RTC_RAM_COMPATIBLE
 #endif
 
+#ifdef RADIO_AM_WM_ENABLE
+#define MAX_AM_CHANNL  20
+#endif
+
 
 #elif defined(FM_MAX_CHANNAL_60)
 #define MAX_CHANNL 60
@@ -38,8 +42,13 @@
 #ifdef RADIO_AM_WM_ENABLE
 #define MAX_AM_CHANNL  20
 #endif
+
 #else
 #define MAX_CHANNL 30
+#ifdef RADIO_AM_WM_ENABLE
+#define MAX_AM_CHANNL  20
+#endif
+
 #endif
 
 #ifdef __C51__
