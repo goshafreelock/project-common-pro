@@ -1048,7 +1048,7 @@
 #define BT_VOL_DOWN_ON() 			
 #define BT_VOL_DOWN_OFF() 			
 
-#elif defined(K000_ZG_HA8919_V001)
+#elif defined(K000_ZG_HA8919_BT_V001)
 #define BT_PWR_PORT_INIT() 			P0DIR &= ~(BIT(5));P0PU &= ~(BIT(5));P05 =0
 #define BT_PWR_ON() 				P05 =1
 #define BT_PWR_OFF() 				P05 =0

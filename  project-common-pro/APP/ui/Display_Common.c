@@ -985,8 +985,6 @@ void Disp_Scan(void)
 
    Update_customed_buf();
    
-
-
 #ifdef NO_LED_DISPLAY	
 	//return;
 #else
