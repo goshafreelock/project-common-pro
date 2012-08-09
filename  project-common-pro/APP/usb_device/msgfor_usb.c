@@ -10,6 +10,7 @@
 
 /* msgfor usb */
 #include "Custom_config.h"
+#ifndef REMOVE_USE_DEVICE_MODE
 #include "msgfor_usb.h"
 
 
@@ -336,7 +337,7 @@ _USB_DEV:
     }
 }
 
-
+#endif
 
 
 

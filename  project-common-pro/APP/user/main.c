@@ -940,7 +940,9 @@ void sys_info_init(void)
     if (work_mode != SYS_RTC)
 #endif
     {
+#ifndef REMOVE_USE_DEVICE_MODE   
         usb_audio_massstorage();									//每次上电判断是否连接电脑
+#endif
 
 #if defined(AUX_MODE_HOT_KEY_ENABLE)||defined(MUSIC_MODE_HOT_KEY_ENABLE)||defined(RADIO_MODE_HOT_KEY_ENABLE)||defined(RTC_MODE_HOT_KEY_ENABLE)
 	if(get_mod_hotkey_protect_status())
@@ -1225,6 +1227,17 @@ void main(void)
 	pwr_up_flag=1;
 	Set_Curr_Func(SYS_IDLE);
 	put_msg_lifo(INFO_SYS_IDLE);
+#elif defined(SYS_POWER_ON_DEFAULT_IN_BT_AUX_ALTERNATIVE_MODE)
+
+#ifdef USE_LINE_IN_DETECT_FUNC
+	if(aux_online){
+		Set_Curr_Func(SYS_AUX);
+	}
+	else{
+		Set_Curr_Func(SYS_BT);
+	}
+#endif
+
 #endif
 
 #if 0
