@@ -580,7 +580,7 @@ void timer1isr(void)
 /*----------------------------------------------------------------------------*/
 void pll_init(void)
 {
-#if defined(K000_ZG_HA8919_V001)
+#if defined(K000_ZG_HA8919_BT_V001)
 	P0DIR &= ~(BIT(2));
 	 P0PU |= BIT(2);P3DIR |= (BIT(4));
 	P3PU &= ~(BIT(4));

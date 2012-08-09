@@ -619,7 +619,9 @@ void music_play(void)
 			Set_Curr_Func(SYS_MP3DECODE_SD);		
 		else if(device_active ==0x02)
 			Set_Curr_Func(SYS_MP3DECODE_USB);
-#if 1//defined(TWO_PLAY_LED_IN_USE)||defined(NEW_CUSTOMIZED_LED_METHOD)
+#if defined(PLAY_STATUS_LED_IN_SLOW_MODE)
+	  	set_play_flash(LED_FLASH_SLOW);
+#else
 		set_play_flash(LED_FLASH_NOR);
 #endif
 
@@ -985,6 +987,8 @@ void music_play(void)
 		  set_play_flash(LED_FLASH_NOR);
 		else
 		  set_play_flash(LED_FLASH_SLOW);
+#elif defined(PLAY_STATUS_LED_IN_SLOW_MODE)
+	  	set_play_flash(LED_FLASH_SLOW);
 #else			
 		  set_play_flash(LED_FLASH_NOR);
 #endif
