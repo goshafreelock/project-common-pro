@@ -713,17 +713,33 @@ void LED_SEG_OUT(u8 SEG_Data)
 #elif defined(K1107_DCX_991_V001)||defined(K0000_XXX_SX_V001)||defined(LED_COMMON_SCAN_COM_USE_P17)
 void LED_COM_OUT(u8 COM_Data)
 {
+#if defined(COMMON_CATHODE)	
+ 	P30 =((COM_Data&0x01)>0)?0:1;
+ 	P31 =((COM_Data&0x02)>0)?0:1;
+ 	P32 =((COM_Data&0x04)>0)?0:1;
+ 	P33 =((COM_Data&0x08)>0)?0:1;
+ 	P17 =((COM_Data&0x10)>0)?0:1;
+#else
  	P30 =((COM_Data&0x01)>0)?1:0;
  	P31 =((COM_Data&0x02)>0)?1:0;
  	P32 =((COM_Data&0x04)>0)?1:0;
  	P33 =((COM_Data&0x08)>0)?1:0;
  	P17 =((COM_Data&0x10)>0)?1:0;
+#endif	
 }
 void LED_SEG_OUT(u8 SEG_Data)
 {
+
+#if defined(COMMON_CATHODE)	
+    	LED_COM |=0x0f;
+	LED_SEG |=0x7F;
+       LED_SEG &=~(SEG_Data&0x7F);
+
+#else
     	LED_COM &= ~0x0f;
 	LED_SEG &=~0x7F;
        LED_SEG |=(SEG_Data&0x7F);
+#endif	   
 }
 #elif defined(K731_YJH_731_V001)||defined(K731_YJH_820_V001)
 void LED_COM_OUT(u8 COM_Data)
