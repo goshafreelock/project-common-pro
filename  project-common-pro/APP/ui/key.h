@@ -597,7 +597,7 @@ void bat_val_arg(void);
 #define ADKEY_7		INFO_3
 #define ADKEY_8		INFO_6
 #define ADKEY_NOKEY	NO_KEY
-#elif defined(K000_ZG_HA8919_NOR_V001)
+#elif defined(K000_ZG_HA8918_NOR_V001)
 #define ADKEY_1		INFO_PLAY
 #define ADKEY_2		INFO_PREV_FIL
 #define ADKEY_3		INFO_NEXT_FIL
