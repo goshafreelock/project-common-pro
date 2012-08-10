@@ -257,6 +257,23 @@ void fm_rev( void )
 #endif
 #endif  
 
+#ifdef RADIO_MODE_HOT_KEY_ENABLE	
+
+#ifdef RADIO_AM_WM_SEL_IN_ONE_KEY
+#ifdef RADIO_AM_WM_ENABLE
+    case INFO_FM_MOD | KEY_SHORT_UP:
+        if (work_mode == SYS_AMREV){
+		Set_Curr_Func(SYS_FMREV);			
+	     	FMAM_Mode_Switch_Profile(SYS_FMREV);
+	}
+	else if(work_mode == SYS_FMREV){
+		Set_Curr_Func(SYS_AMREV);			
+	     	FMAM_Mode_Switch_Profile(SYS_AMREV);
+	}
+		break;
+#endif		
+#endif		
+#endif		
 #if defined(USE_POWER_KEY_FOR_FM_PLAY)
     	 case INFO_POWER | KEY_SHORT_UP :
 #elif defined(USE_MODE_LONG_FOR_FM_PLAY)
@@ -468,7 +485,7 @@ _PICK_CH:
             write_info(MEM_FRE,frequency - MIN_FRE);
             break;
 
-#if defined(VOL_TUNE_FREQ_VOL)
+#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)
         case INFO_PLUS:	
       	     frequency += 2;
             goto __FRE_DOWN;			

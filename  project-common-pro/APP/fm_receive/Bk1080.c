@@ -545,7 +545,7 @@ bool BK1080_ValidStop(u16 freq,u16 start_freq)
 	u8 TmpData8[8];
 
 	BK1080_SetFreq(freq);
-#if defined(VOL_TUNE_FREQ_VOL)
+#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)
 	if( get_radio_freq_tune_protect()){
 		
 	}

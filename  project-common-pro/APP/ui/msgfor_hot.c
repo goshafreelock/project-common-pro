@@ -46,6 +46,9 @@ extern void DSA_if_hdlr(void);
 extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 #endif
 
+#if defined(WKUP_PIN_USE_ENABLE)
+extern void wkup_pin_ctrl(bool dir);
+#endif
 #ifdef PWM3_IN_USE
 void pwm_setting(u8 level_setting);
 #endif
@@ -1402,8 +1405,7 @@ u8 ap_handle_hotkey(u8 key)
 		
 #ifdef RADIO_AM_WM_ENABLE
         if (work_mode == SYS_AMREV){
-		Set_Curr_Func(SYS_FMREV);
-			
+		Set_Curr_Func(SYS_FMREV);			
 	     	FMAM_Mode_Switch_Profile(SYS_FMREV);
 		break;
 	}

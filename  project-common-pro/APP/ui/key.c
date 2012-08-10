@@ -37,7 +37,7 @@ extern bool earphone_plugged_flag;
 extern bool aux_online;
 #endif
 
-#if defined(VOL_TUNE_FREQ_VOL)
+#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)
 static bool radio_freq_tune_protect=0;
 bool get_radio_freq_tune_protect()
 {
@@ -1577,6 +1577,16 @@ void JogDetect(void)
 		else{
 	             put_msg_fifo(INFO_NEXT_FIL|KEY_SHORT_UP);
 		}
+#elif defined(VOL_TUNE_FREQ_ONLY)
+		if((work_mode == SYS_FMREV)
+#ifdef RADIO_AM_WM_ENABLE						
+		   ||(work_mode == SYS_AMREV)
+#endif			
+		)
+		{
+		     radio_freq_tune_protect =1;
+	             put_msg_fifo(INFO_MINUS);
+		}		
 #elif defined(VOL_TUNE_FREQ_VOL)
 		if((work_mode == SYS_FMREV)
 #ifdef RADIO_AM_WM_ENABLE			
@@ -1621,6 +1631,16 @@ void JogDetect(void)
 		}
 		else{
                     put_msg_fifo(INFO_PREV_FIL|KEY_SHORT_UP);
+		}
+#elif defined(VOL_TUNE_FREQ_ONLY)
+		if((work_mode == SYS_FMREV)
+#ifdef RADIO_AM_WM_ENABLE						
+		   ||(work_mode == SYS_AMREV)
+#endif			
+		)
+		{
+		     radio_freq_tune_protect =1;
+	             put_msg_fifo(INFO_PLUS);
 		}
 #elif defined(VOL_TUNE_FREQ_VOL)
 		if((work_mode == SYS_FMREV)
