@@ -452,7 +452,7 @@ u16 BK1088_Get_ID()
 	BEKEN_I2c_Read(0x01,TmpData,2); //read reg2,with 4 bytes
 
 
-	   	ChipID = TmpData[0];
+	ChipID = TmpData[0];
     	ChipID = ((ChipID<<8) | TmpData[1]);
 	//printf(" BK1088ChipID %x \r\n",ChipID);
 	 return ChipID;
@@ -649,8 +649,6 @@ void  BK1088_SetFreq(u16 curFreq)
 
 
 	curChan=BK1088_FreqToChan(curFreq); /*stop seek and tune*/
-
-		   //     printf(" curChan== %d \n",(u16)(curChan));
 
 	BEKEN_I2c_Read(0x02,TmpData8,2); //read reg2,with 4 bytes
 	TmpData8[0] &=~0x01;
