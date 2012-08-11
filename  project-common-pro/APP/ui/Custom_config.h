@@ -12521,7 +12521,7 @@
 #ifdef MUTE_PORT_USE_P01
 #undef  MUTE_PORT_USE_P01
 #endif
-#define MUTE_PORT_USE_P03
+#define MUTE_PORT_USE_DUMP
 
 #define PLAY_STATUS_LED_P02
 
@@ -12529,6 +12529,7 @@
 #define EXCHANGE_LINE_IN_CHANNEL	//½»»»LINE IN Í¨µÀ
 #define INDEPENDENT_VOLUME_KEY
 
+//#define DISPLAY_TEST
 #endif
 
 #ifdef K000_ZG_HA8918_NOR_V001
