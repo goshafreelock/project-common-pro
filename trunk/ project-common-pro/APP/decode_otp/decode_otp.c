@@ -63,6 +63,8 @@ void decode_opt_music_file(u8 buf_dptr)
 	printf(" decode_opt_music_file %x \r\n",(u16)music_file);
 #endif
 
+   Mute_Ext_PA(UNMUTE);
+
    main_vol(MAX_ANALOG_VOL);
 
     flush_low_msg();
