@@ -501,6 +501,7 @@
 //#define K1173_ZK_ALK936_V001
 //#define K1174_SES_2012_V001
 //#define K2086_AJR_LS091_V001
+//#define K2094_DYT_2094_V001
 
 
 
@@ -675,6 +676,51 @@
 
 /*****************按 主板编号定义宏******************/
 
+#ifdef K2094_DYT_2094_V001
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P03
+
+#define LED_GPIO_PORT_CUSTOMERIZED
+#define LED_COMMON_SCAN_COM_USE_P17
+
+#define NO_PLAY_STATUS_LED
+
+#define DISP_PAUS_STRING
+#define DISP_VOL_V_CHAR
+#define VOLUME_DEFUALT 	30
+#define DISP_PC_STR
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+
+#define EXCHANGE_FM_MP3_ICON
+
+#define ADKEY_PLAY_SHORT_SCAN_FRE
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+#define INDEPENDENT_VOLUME_KEY
+#define FM_BY_PASS
+
+#define LINE_IN_PLAY_KEY_PAUSE
+
+
+#define USE_RTC_FUNCTION
+#define USE_RTC_TIME_ONLY
+#define USE_RTC_ALARM_FUNCTION
+#define USE_RTC_ALM_CUSTOM_INIT
+
+#define BLUE_TOOTH_FUNC
+#define BLUETOOTH_GPIO_CTRL
+
+
+#endif
 
 #ifdef K2086_AJR_LS091_V001
 
