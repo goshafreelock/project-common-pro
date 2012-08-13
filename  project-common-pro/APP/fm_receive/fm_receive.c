@@ -158,12 +158,15 @@ void enter_am_rev(void)
 }
 void FMAM_Mode_Switch_Profile(u8 fm_wm)
 {
+
+    	my_main_vol(0);
 	if(fm_wm==SYS_FMREV){
 
 		//printf(" ----FM   %x \r\n",(u16)fm_wm);
 		radio_mode=1;
 		FM_AM_chip_mode_sel(RADIO_FM);
 		enter_fm_rev();
+		set_fre(frequency,1);		
 	       Disp_Con(DISP_FREQ);
 
 	}
@@ -173,9 +176,12 @@ void FMAM_Mode_Switch_Profile(u8 fm_wm)
 		radio_mode=0;
 		FM_AM_chip_mode_sel(RADIO_AM);
 		enter_am_rev();
+		set_fre(frequency,1);
 	       Disp_Con(DISP_FREQ);		
 	}
+	delay_10ms(20);
 	set_fre(frequency,1);
+    	my_main_vol(my_music_vol);
 	
 }
 #endif
