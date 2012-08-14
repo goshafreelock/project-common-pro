@@ -913,6 +913,10 @@
 #define D_CLASS_AMP_GPIO_INIT()			P0DIR &= ~(BIT(4));P0PU |=BIT(4);
 #define D_CLASS_AMP_HIGH()				P0|=(BIT(4))
 #define D_CLASS_AMP_LOW()				P0&=~(BIT(4))
+#elif defined(AMP_MODE_SELECT_PORT_USE_P34)
+#define D_CLASS_AMP_GPIO_INIT()		P3DIR &= ~(BIT(4));P3PU |=BIT(4)
+#define D_CLASS_AMP_HIGH()				P3|=(BIT(4))
+#define D_CLASS_AMP_LOW()				P3&=~(BIT(4))
 #elif defined(AMP_MODE_SELECT_PORT_USE_P17)
 #define D_CLASS_AMP_GPIO_INIT()		P1DIR &= ~(BIT(7));P1PU |=BIT(7);
 #define D_CLASS_AMP_HIGH()				P17=1
