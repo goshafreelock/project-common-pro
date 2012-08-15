@@ -293,6 +293,23 @@ void gpio_ctrl_if(bool ctrl_f)
 	else{
 		P13=0;
 	}
+#elif defined(K0000_JK_PORTABLE_CHARGER_V001)
+
+	P0DIR &= ~(BIT(3));
+	P0PU |= (BIT(3));
+	
+	if(ctrl_f){
+#ifdef USB_SD_PORTABLE_BAT_CHARGER
+		cell_output_charge_enable(1);
+#endif
+		P03 =1;
+	}
+	else{
+#ifdef USB_SD_PORTABLE_BAT_CHARGER
+		cell_output_charge_enable(0);
+#endif	
+		P03=0;
+	}
 #else
 	P0DIR &= ~(BIT(7));
 	P0PU |= (BIT(7));

@@ -487,6 +487,9 @@ bool charger_detect(void)
 #endif
 
 #ifdef USB_SD_PORTABLE_BAT_CHARGER
+
+//#define BATT_PLAY_DEBUG
+
 #define BATT_CHARGER_PORT_INIT()	P1DIR |=(BIT(6)|BIT(7));	P1PU|=(BIT(6)|BIT(7))
 #define BATT_CHRG_PORT				P16
 #define BATT_STBY_PORT				P17
@@ -505,8 +508,24 @@ enum{
 	BATT_CHARG_FULL,
 	BATT_CHARG_CHARGING,
 };
+enum{
+	LEVEL_LED_ALL_OFF=0,
+	LEVEL_LED_ALL_ON,
+	LEVEL_LED_PLAY,
+	LEVEL_LED_LEVEL_IND,		
+	LEVEL_LED_CHRG_IND,		
+};
 xd_u8 cell_battary_status=0,cell_level_disp_timer=0,cell_level_ind=0;
 xd_u8 output_charger_status=0,output_charger_timer=0;
+static bool output_discharge_en=0;
+void cell_output_charge_enable(bool f_g)
+{
+	output_discharge_en=f_g;
+}
+bool get_cell_output_charge_status(void)
+{
+	return output_discharge_en;
+}
 void cell_level_measure(void)
 {
 
@@ -532,13 +551,41 @@ void cell_level_disp_if(u8 cmd)
 {
 	static bool led_spark=0;
 
-	if(cmd==0){
+	EA = 0;
+	if(play_status == MUSIC_PLAY){
+		cmd =LEVEL_LED_PLAY;
+#ifdef SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION_WHEN_CHARGER_LEVEL_0
+	    sys_pwr_on_led_protect_bit=0;
+#endif		
+		
+	}
+	else{
+#ifdef SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION_WHEN_CHARGER_LEVEL_0
+	    sys_pwr_on_led_protect_bit=1;
+#endif		
+	}
+#ifdef BATT_PLAY_DEBUG
+	//sys_printf(" ----------------------------->cell_level_disp_if ");
+	//printf(" ----------------------------->cell_level_disp_if     %x \r\n",(u16)cmd);
+#endif
+
+	P1DIR &=~(0x0F);
+	if(cmd==LEVEL_LED_ALL_OFF){
 
 		P1	|=(0x0F);
 	}
-	else if(cmd ==1){
+	else if(cmd ==LEVEL_LED_ALL_ON){
 		
 		P1	&=~(0x0F);
+	}
+	else if(cmd == LEVEL_LED_PLAY){
+
+		P1	|=(0x0E);
+	}
+	else if(cmd == LEVEL_LED_LEVEL_IND){
+
+		P1	|=(0x0F);
+		P1	&=~(0x0F>>(4-cell_level_ind));
 	}
 	else{		
 
@@ -562,13 +609,16 @@ void cell_level_disp_if(u8 cmd)
 			}
 		}			
 	}
-	
+	EA = 1;
 }
 void portable_charger_hdlr()
 {
 	cell_level_measure();
+
+#ifdef BATT_PLAY_DEBUG
 	printf("portable_charger_hdlr  LEVEL %u \r\n",(u16)cell_level_ind);
-	
+#endif
+
 	//4 BATTARY CHARGE PHASE...BEGIN...
 	BATT_CHARGER_PORT_INIT();
 	
@@ -578,7 +628,7 @@ void portable_charger_hdlr()
 		}
 		else{
 			cell_battary_status =BATT_CHARG_FULL;
-			cell_level_disp_if(0);
+			cell_level_disp_if(LEVEL_LED_ALL_ON);
 		}
 	}
 	else{
@@ -597,30 +647,36 @@ void portable_charger_hdlr()
 	//4 OUTPUT CHARGE PHASE...BEGIN...
 	OUTPUT_CHARGER_PORT_INIT();
 	OUTPUT_DEVICE_PORT_INIT();
-	
-	if(OUTPUT_DEVICE_PORT){
 
-		OUTPUT_CHRG_PORT_EN();
+	
+	if(output_discharge_en){
+	//if(OUTPUT_DEVICE_PORT){
+
 		
 		if(OUTPUT_STBY_PORT){
 
+			OUTPUT_CHRG_PORT_EN();
+			
+#ifdef BATT_PLAY_DEBUG
 			sys_printf(" OUT PUT -->BATT_CHARG_CHARGING ");
-
+#endif
 			output_charger_timer=0;
 			output_charger_status =BATT_CHARG_CHARGING;
 		}
 		else{
 			if(output_charger_timer>=12){		
-
-				sys_printf(" OUT PUT -->BATT_CHARG_FULL ");
 				
+#ifdef BATT_PLAY_DEBUG
+				sys_printf(" OUT PUT -->BATT_CHARG_FULL ");
+#endif				
 				OUTPUT_CHRG_PORT_DIS();			
 				output_charger_status =BATT_CHARG_FULL;
 			}
 			else{
 
+#ifdef BATT_PLAY_DEBUG
 				sys_printf(" OUT PUT -->DEVICE DISCONNECT  ");
-
+#endif
 				output_charger_timer++;
 
 			}
@@ -628,54 +684,33 @@ void portable_charger_hdlr()
 	}
 	else{
 
+#ifdef BATT_PLAY_DEBUG
 		sys_printf(" OUT PUT -->  BATT_CHARG_IDLE  ");
+#endif
 
-		OUTPUT_CHRG_PORT_DIS();
+		//OUTPUT_CHRG_PORT_DIS();
 		output_charger_timer=0;
 		output_charger_status =BATT_CHARG_IDLE;
 	}
 	//4 OUTPUT  CHARGE PHASE...END...
 
 	if(cell_battary_status ==BATT_CHARG_IDLE){
-
+#ifdef BATT_PLAY_DEBUG
 		sys_printf(" BATT_CHARG_IDLE ");
-		if(cell_level_disp_timer<6){
-			cell_level_disp_timer++;
-		}	
-		else{		
-
-#ifdef SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION_WHEN_CHARGER_LEVEL_0
-	    		sys_pwr_on_led_protect_bit=0;
-#endif					
-			cell_level_disp_if(0);
-		}
+#endif
+		cell_level_disp_if(LEVEL_LED_LEVEL_IND);
 	}
 	else if(cell_battary_status ==BATT_CHARG_CHARGING){
-
-#ifdef SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION_WHEN_CHARGER_LEVEL_0
-	    sys_pwr_on_led_protect_bit=1;
-#endif		
-			sys_printf(" BATT_CHARG_CHARGING ");
-		
-			cell_level_disp_timer=0;
-			cell_level_disp_if(2);
+#ifdef BATT_PLAY_DEBUG
+		sys_printf(" BATT_CHARG_CHARGING ");
+#endif
+		cell_level_disp_if(LEVEL_LED_CHRG_IND);
 	}
 	else if(cell_battary_status ==BATT_CHARG_FULL){
-
+#ifdef BATT_PLAY_DEBUG
 		sys_printf(" BATT_CHARG_FULL ");
-
-		if(cell_level_disp_timer<6){
-
-			cell_level_disp_timer++;
-			cell_level_disp_if(1);
-		}	
-		else{
-
-#ifdef SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION_WHEN_CHARGER_LEVEL_0
-	    		sys_pwr_on_led_protect_bit=0;
-#endif					
-			cell_level_disp_if(0);
-		}
+#endif
+		cell_level_disp_if(LEVEL_LED_ALL_ON);
 	}
 }
 #endif

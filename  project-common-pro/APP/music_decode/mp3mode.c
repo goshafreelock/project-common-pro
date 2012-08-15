@@ -268,6 +268,7 @@ void stop_decode(void)
 #if defined(SPECTRUM_FUNC_ENABLE)
      set_spectrum_lock(LOCK);
 #endif		  
+    play_status = MUSIC_STOP;
     //main_vol_set(0, CHANGE_VOL_NO_MEM);//digital_fade_out();
     read_usb_remain_data();
     disable_decode_isr();

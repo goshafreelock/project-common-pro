@@ -588,6 +588,11 @@ void pll_init(void)
 	P02 = 1;	   
 #endif
 
+#if defined(K0000_JK_PORTABLE_CHARGER_V001)
+	P1DIR &= ~(0x0F);
+	P1 =0xFF;	   
+#endif
+
     P0PU = 0;
     PCON = 0;
     USBCON0 |= BIT(0);							//usb io is port
