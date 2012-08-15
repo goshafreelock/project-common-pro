@@ -44,6 +44,7 @@ extern xd_u8 audio_effect_state;
 #ifdef USE_AUX_2
 static bool aux_2_sel=0;
 #endif
+extern xd_u8 aux_ch_reg;
 
 #if defined(ADC_DETECT_LINE_IN)
 extern bool Line_In_Detect;
@@ -104,6 +105,8 @@ void ipone_hdlr()
 	if(key!=0xff)
 	printf(" ipone_hdlr  %x \r\n",(u16)key);
 #endif
+
+       dac_out_select(aux_ch_reg);
 
 	 dac_sw_check();
 	 
@@ -314,7 +317,8 @@ void deal_aux( void )
 	if(key!=0xFF)
 	printf( "---->---deal_aux %x \r\n",(u16)key);
 #endif
-       // dac_out_select(DAC_AMUX0);
+
+       dac_out_select(aux_ch_reg);
 		
 #if defined(KEY_PRESS_LED_INDICATOR)
 	key_press_led_indicator(key);

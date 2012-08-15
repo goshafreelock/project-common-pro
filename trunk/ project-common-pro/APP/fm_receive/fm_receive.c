@@ -46,9 +46,12 @@ xd_u8 fre_channl =0;
 #ifdef RADIO_AM_WM_ENABLE
 xd_u16 am_fre_point[MAX_AM_CHANNL] _at_ 0xd80;    //4 AM收音搜索到的台的缓存
 bool radio_mode=1;
-#endif
 xd_u8 fre_point[MAX_CHANNL]	_at_ 0xd80;    ///< FM收音搜索到的台的缓存
+#else
+xd_u8 fre_point[MAX_CHANNL];    ///< FM收音搜索到的台的缓存
+#endif
 extern _idata u16 dac_cnt;
+extern xd_u8 aux_ch_reg;
 
 void fm_osc_output_select(bool flag)
 {
@@ -222,6 +225,10 @@ void fm_rev( void )
 	printf(" music_play get_msg %x \r\n",(u16)key);
 #endif
 	dac_sw_check();
+
+#ifndef FM_BY_PASS
+       dac_out_select(aux_ch_reg);
+#endif
 
         switch (key)
         {

@@ -1097,7 +1097,19 @@ void Idle_hdlr()
         case INFO_MODE | KEY_LONG :
 #endif
        case INFO_CH_DOWN|KEY_SHORT_UP:	//Power key on remoter when no FM 
+#if defined(SYS_DEFAULT_IN_IDLE_POWER_DOWN_MODE)
+		if(pwr_up_flag){
+			return;
+		}
+		else{
+
+		   	pwr_up_flag = 1;			
+			put_msg_lifo(INFO_SYS_IDLE);
+
+		}		
+#else
 	   	pwr_up_flag = 1;
+#endif
 	   	return;
 #ifdef  USE_POWER_KEY	
     	case INFO_POWER | KEY_HOLD:
