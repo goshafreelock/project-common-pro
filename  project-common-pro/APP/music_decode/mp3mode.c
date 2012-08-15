@@ -607,8 +607,11 @@ void music_play(void)
 
 #ifdef DEVICE_SEL_MANUAL_ONLY
 	    	    if(device_selected!=device_active){
-				Set_Curr_Func(SYS_IDLE);
-				return;
+		  		set_play_flash(LED_FLASH_ON);	
+				stop_decode();
+				break;
+				//Set_Curr_Func(SYS_IDLE);
+				//return;
 		    }
 #endif						
 
@@ -898,39 +901,50 @@ void music_play(void)
 
         case INFO_NEXTMODE:                     ///<下一个模式	
 
-		work_mode = Next_Func();
 #ifdef GPIO_SWITCH_SELECT_MODE
 		work_mode = SYS_AUX;
+		return;
 #endif
 
 #ifdef DEFAULT_GO_TO_AUX
 		work_mode = SYS_AUX;
+		return;
 #elif defined(DEFAULT_GO_TO_CUSTOM_MODE)
 		if(custom_first_time_pwr_flag){
 			custom_first_time_pwr_flag=0;
 #if defined(DEFAULT_GO_TO_CUSTOM_MODE_POWER_ON_FIRST_TIME_IN_AUX)
 			Set_Curr_Func(SYS_AUX);
+			return;
 #else
 			Set_Curr_Func(SYS_IDLE);
+			return;
 #endif
 		}
 		else{
 #if defined(DEFAULT_GO_TO_CUSTOM_MODE_POWER_ON_AFTER_TIME_IN_IDLE)
-			Set_Curr_Func(SYS_IDLE);
+	  		set_play_flash(LED_FLASH_ON);	
+			break;
 #else			
 			Set_Curr_Func(SYS_FMREV);
+			return;
 #endif
 		}
 #elif defined(DEFAULT_GO_TO_TIME_MODE)
 		Set_Curr_Func(SYS_RTC);
+		return;
 #elif defined(DEFAULT_GO_TO_FM)
 		if(IR_Type == WITH_FM_CHIP)
 			work_mode = SYS_FMREV;
 		else
 			work_mode = SYS_AUX;
+		return;
 #elif defined(DEFAULT_GO_TO_IDLE)		
 		Set_Curr_Func(SYS_IDLE);
+		return;
 #endif
+
+		work_mode = Next_Func();
+
 #if defined( K186_LM_186_V001)||defined(K000_Zhongwei_SP_016_V001)
 		work_mode = SYS_IDLE;
 #endif

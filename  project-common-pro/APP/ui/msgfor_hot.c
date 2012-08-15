@@ -305,9 +305,12 @@ void gpio_ctrl_if(bool ctrl_f)
 #endif	
 }
 #endif
-
+xd_u8 aux_ch_reg=0;
 void aux_channel_crosstalk_improve(u8 ch_num)
 {
+
+	aux_ch_reg=ch_num;
+	//printf("-------->%aux_ch_reg  %d \r\n",(u16)aux_ch_reg);
 
 #ifdef UART_ENABLE
 		if(ch_num == DAC_AMUX0){
@@ -319,6 +322,7 @@ void aux_channel_crosstalk_improve(u8 ch_num)
 #endif
 
 #ifndef UART_ENABLE
+
 
 #if !defined(FM_BY_PASS)||defined(IPONE_INDEPENDENT_MODE)
 		if(ch_num == DAC_AMUX0){
@@ -337,6 +341,7 @@ void aux_channel_crosstalk_improve(u8 ch_num)
 #endif		    	
 		}
 #endif		
+
     		dac_out_select(ch_num);	//4
 
 #if !defined(FM_BY_PASS)||defined(IPONE_INDEPENDENT_MODE)
@@ -1552,7 +1557,7 @@ u8 ap_handle_hotkey(u8 key)
 	DSA_init();
 #endif	 
 #ifdef DEVICE_SEL_MANUAL_ONLY
-	 if(device_selected== BIT(SDMMC))
+	 if((device_selected== BIT(SDMMC))&&(work_mode == SYS_MP3DECODE_SD))
 #endif
 	 {					
 #ifndef DISABLE_DEVICE_HOT_PLUG_AND_PLAY	 
@@ -1578,7 +1583,7 @@ u8 ap_handle_hotkey(u8 key)
 	DSA_init();
 #endif	 	 
 #ifdef DEVICE_SEL_MANUAL_ONLY
-	 if(device_selected== BIT(USB_DISK))
+	 if((device_selected== BIT(USB_DISK))&&(work_mode == SYS_MP3DECODE_USB))
 #endif
 	 {
 #ifndef DISABLE_DEVICE_HOT_PLUG_AND_PLAY
