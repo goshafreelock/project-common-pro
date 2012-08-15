@@ -104,6 +104,11 @@ void JogDetect_c(void);
 void adc_diode_temp_measure_hdlr();
 #endif
 
+
+#ifdef USB_SD_PORTABLE_BAT_CHARGER
+void cell_output_charge_enable(bool f_g);
+#endif
+
 #ifdef USE_CUSTOMIED_GPIO_KEY
 void gpio_key_scan_one_or_two();
 bool get_pwr_on_rsp();
@@ -596,6 +601,26 @@ void bat_val_arg(void);
 #define ADKEY_6		INFO_2
 #define ADKEY_7		INFO_3
 #define ADKEY_8		INFO_6
+#define ADKEY_NOKEY	NO_KEY
+#elif defined(K0000_JK_PORTABLE_CHARGER_V001)
+#define ADKEY_1		INFO_PLAY
+#define ADKEY_2		INFO_PREV_FIL
+#define ADKEY_3		INFO_NEXT_FIL
+#define ADKEY_4		INFO_MODE
+#define ADKEY_5		INFO_CUS_KEY_1
+#define ADKEY_6		NO_KEY
+#define ADKEY_7		NO_KEY
+#define ADKEY_8		INFO_POWER
+#define ADKEY_NOKEY	NO_KEY
+#elif defined(K6037_SES_6037_V001)
+#define ADKEY_1		INFO_PLAY
+#define ADKEY_2		INFO_PREV_FIL
+#define ADKEY_3		INFO_NEXT_FIL
+#define ADKEY_4		INFO_MODE
+#define ADKEY_5		INFO_PLAY_MODE
+#define ADKEY_6		INFO_FM_MOD
+#define ADKEY_7		INFO_VOL_MINUS
+#define ADKEY_8		INFO_VOL_PLUS
 #define ADKEY_NOKEY	NO_KEY
 #elif defined(K000_ZG_HA8918_NOR_V001)
 #define ADKEY_1		INFO_PLAY
