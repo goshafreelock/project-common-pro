@@ -1054,9 +1054,9 @@
 
 #elif defined(K2094_DYT_2094_V001)
 
-#define BT_PWR_PORT_INIT() 			P0DIR &= ~(BIT(2));P0PU &= ~(BIT(2));P02=0
-#define BT_PWR_ON() 				P02 =1
-#define BT_PWR_OFF() 				P02 =0
+#define BT_PWR_PORT_INIT() 			//P0DIR &= ~(BIT(2));P0PU &= ~(BIT(2));P02=0
+#define BT_PWR_ON() 				//P02 =1
+#define BT_PWR_OFF() 				//P02 =0
 
 #define BT_RST_PORT_INIT() 		
 #define BT_RST_ON() 				

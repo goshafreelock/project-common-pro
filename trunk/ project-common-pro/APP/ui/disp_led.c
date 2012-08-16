@@ -15,7 +15,7 @@ extern u16 given_file_number;
 extern u8 play_mode;
 extern u8 eq_mode;
 extern u16 cfilenum;
-extern u8 device_active;
+extern u8 device_active,given_device;
 //extern _code u8 _code * chars_table_l;
 extern xd_u8 all_channl;
 extern xd_u16 frequency;
@@ -246,6 +246,18 @@ void Disp_Filenum(void)
 	}
 #elif defined(DISP_DEV_AT_PLAY)
 	disp_active();
+
+#elif defined(DISP_FILE_NUM_NEW_TYPE)
+	if(given_file_number>999)
+	    dispNum((u8)((given_file_number/1000)%10),3);
+	if(given_file_number>99)
+	    dispNum((u8)((given_file_number/100)%10),2);
+	if(given_file_number>9)
+	    dispNum((u8)((given_file_number/10)%10),1);
+
+	    dispNum(given_file_number%10,0);
+
+    disp_active();		
 #else
 
     dispNum((u8)((given_file_number/1000)%10),3);
@@ -270,8 +282,22 @@ void Disp_Filenum(void)
 	
 }
 
-
-
+#ifdef DISP_DEV_STR_BEFOR_PLAY
+void Disp_curr_Dev()
+{
+    disp_active();
+	
+    if (given_device== BIT(USB_DISK))
+    {
+	 dispstring(" USb",0);
+    }
+    else if (given_device == BIT(SDMMC))
+    {
+	 dispstring(" Sd",0);
+    }
+    LED_STATUS &=~LED_2POINT;
+}
+#endif
 /*----------------------------------------------------------------------------*/
 /**@brief
    @param
@@ -334,6 +360,10 @@ void Disp_Vol(void)
 #endif
     dispNum((my_music_vol/10),1);
     dispNum(my_music_vol%10,0);
+#ifdef VOL_DISP_COL_ICON
+    LED_STATUS |= LED_2POINT;
+#endif
+
 }
 
 #if defined(AD_MEASURE_TEMP_FUNC)

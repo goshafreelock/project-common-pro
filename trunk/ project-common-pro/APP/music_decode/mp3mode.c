@@ -916,6 +916,9 @@ void music_play(void)
 #if defined(DEFAULT_GO_TO_CUSTOM_MODE_POWER_ON_FIRST_TIME_IN_AUX)
 			Set_Curr_Func(SYS_AUX);
 			return;
+#elif defined(DEFAULT_GO_TO_CUSTOM_MODE_POWER_ON_FIRST_TIME_IN_RTC_MODE)
+			Set_Curr_Func(SYS_RTC);
+			return;
 #else
 			Set_Curr_Func(SYS_IDLE);
 			return;

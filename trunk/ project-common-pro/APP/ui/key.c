@@ -261,6 +261,8 @@ bool get_low_bat_power_lock()
 #define CHARGER_PORT	P02
 #elif defined(K723_LUOMAO_723_V001)||defined(K000_AOKAILIN_535B_V001)||defined(CHARGER_DET_USE_P17)
 #define CHARGER_PORT	P17
+#elif defined(CHARGER_DET_USE_VPP)
+#define CHARGER_PORT	(WKUPPND&BIT(7))
 #elif defined(DC_DETECT_USE_P05)
 #define CHARGER_PORT	P05
 #elif defined(DC_DETECT_USE_P33)
@@ -285,7 +287,10 @@ bool charger_detect(void)
     P0PU  &= ~(BIT(7));
     P0PD|= (BIT(7));
     P0DIR |= (BIT(7));
-	
+#elif defined(CHARGER_DET_USE_VPP)
+
+    WKUPPND|=BIT(6);
+
 #elif defined(K723_LUOMAO_723_V001)||defined(K000_AOKAILIN_535B_V001)||defined(CHARGER_DET_USE_P17)
 
     P17 =0;

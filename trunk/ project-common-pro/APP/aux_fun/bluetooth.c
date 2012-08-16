@@ -40,6 +40,11 @@ extern u8 last_disp_menu;
 
 extern xd_u8 bluetooth_vol_dir;
 
+#ifdef K2078_MY_2078_V001
+#define BLUE_TOOTH_DELAY		25
+#else
+#define BLUE_TOOTH_DELAY		10
+#endif
 #ifdef SUPPORT_PT2313
 extern xd_u8 audio_effect_state;
 #endif
@@ -125,26 +130,26 @@ void blue_tooth_key_hdlr(u8 key)
 	        case BT_PP :
 #ifdef BLUETOOTH_GPIO_CTRL		
 			BT_PP_PORT_INIT();
-			BT_PP_ON();delay_10ms(10);BT_PP_OFF();
+			BT_PP_ON();delay_10ms(BLUE_TOOTH_DELAY);BT_PP_OFF();
 #endif
 			break;
 	        case BT_NEXT_FILE:
 #ifdef BLUETOOTH_GPIO_CTRL
 			BT_NEXT_PORT_INIT();
-			BT_NEXT_ON();delay_10ms(10);BT_NEXT_OFF();				
+			BT_NEXT_ON();delay_10ms(BLUE_TOOTH_DELAY);BT_NEXT_OFF();				
 #endif
 			break;
 	        case BT_PREV_FILE:
 #ifdef BLUETOOTH_GPIO_CTRL	
 			BT_PREV_PORT_INIT();
-			BT_PREV_ON();delay_10ms(10);BT_PREV_OFF();				
+			BT_PREV_ON();delay_10ms(BLUE_TOOTH_DELAY);BT_PREV_OFF();				
 #endif
 			break;
 		case BT_VOL_UP:
 #ifdef BLUETOOTH_GPIO_CTRL
 			BT_VOLU_PORT_INIT();
 			BT_VOL_UP_ON();
-			delay_10ms(10);
+			delay_10ms(BLUE_TOOTH_DELAY);
 			BT_VOL_UP_OFF();				
 #endif	
 #ifdef BLUE_TOOTH_DISP_VOL_DIR
@@ -156,7 +161,7 @@ void blue_tooth_key_hdlr(u8 key)
 #ifdef BLUETOOTH_GPIO_CTRL
 			BT_VOLD_PORT_INIT();
 			BT_VOL_DOWN_ON();
-			delay_10ms(10);
+			delay_10ms(BLUE_TOOTH_DELAY);
 			BT_VOL_DOWN_OFF();				
 #endif		
 
