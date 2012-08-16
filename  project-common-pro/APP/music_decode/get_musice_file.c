@@ -81,6 +81,10 @@ void get_music_file2(void)
 {
     if (!find_device(given_device))
     {
+#if defined(DISP_DEV_STR_BEFOR_PLAY)
+	    Disp_Con(DISP_CUR_DEV);
+#endif
+
         if ((given_file_number == 0) || (given_file_number > fs_msg.fileTotal))
         {
             given_file_number = 1;

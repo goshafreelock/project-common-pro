@@ -1587,6 +1587,9 @@ u8 ap_handle_hotkey(u8 key)
 #endif		
 		)
         {
+#if defined(DISP_DEV_STR_BEFOR_PLAY)
+	      Disp_Con(DISP_CUR_DEV);
+#endif		       
 		Set_Curr_Func(SYS_MP3DECODE_SD);
             return 0;
         }
@@ -1605,13 +1608,16 @@ u8 ap_handle_hotkey(u8 key)
 	 {
 #ifndef DISABLE_DEVICE_HOT_PLUG_AND_PLAY
         given_device = BIT(USB_DISK);
-        given_file_number = 1;
+        given_file_number = 1;	
         put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
         if ((work_mode != SYS_MP3DECODE_USB) && (work_mode != SYS_USBDEVICE))
         {
 #ifdef USE_USB_HOTPLUG_FUNC
 	     set_usb_hotplug_protect(1);
 #endif                                
+#if defined(DISP_DEV_STR_BEFOR_PLAY)
+	      Disp_Con(DISP_CUR_DEV);
+#endif		
             work_mode = SYS_MP3DECODE_USB;
             return 0;
         }

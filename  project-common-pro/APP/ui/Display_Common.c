@@ -63,6 +63,9 @@ extern void Disp_Timer_OFF(void);
 #if defined(IPONE_DOCK_FUNC_ENABLE)
 extern void Disp_IPOD(void);
 #endif
+#ifdef DISP_DEV_STR_BEFOR_PLAY
+extern void Disp_curr_Dev();
+#endif
 #if defined(BLUE_TOOTH_FUNC)
 extern void Disp_BT(void);
 extern void Disp_BT_Vol(void);
@@ -1096,13 +1099,12 @@ void Disp_Con(u8 LCDinterf)
     	case DISP_SCAN_NO:
 	 	Disp_Scan_NO();		
 		break;	
-	case DISP_USBOUT:
-	    	Disp_Dev_Change(2);
+#ifdef DISP_DEV_STR_BEFOR_PLAY		
+	case DISP_CUR_DEV:
+		Disp_curr_Dev();
 		break;
-	case DISP_SDOUT:
-		Disp_Dev_Change(1);
-	    	break;	  
-    	case DISP_AUX:
+#endif		
+      	case DISP_AUX:
         	Disp_AUX();
      	 	break;				
 #if defined(IPONE_DOCK_FUNC_ENABLE)

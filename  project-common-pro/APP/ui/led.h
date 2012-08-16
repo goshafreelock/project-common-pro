@@ -244,7 +244,7 @@
 #define LED_MP3		0//T(LED_H)
 #define LED_PLAY	0//T(LED_H)
 #define LED_PAUSE	0//T(LED_H)
-#elif defined(K1032_ZHONGKAI_1032_V001)||defined(K1032_WK_1032_V001)||defined(K1166_ZK_ALK980_V001)
+#elif defined(K1032_ZHONGKAI_1032_V001)||defined(K1032_WK_1032_V001)||defined(K1166_ZK_ALK980_V001)|defined(BAT_LEVEL_LED_ICON_IND)
 #define LED_AUX	 		BIT(LED_A)
 #define LED_FM			BIT(LED_C)
 #define LED_USB		 	BIT(LED_D)
