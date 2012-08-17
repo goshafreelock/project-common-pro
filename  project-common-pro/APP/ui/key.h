@@ -582,16 +582,6 @@ void bat_val_arg(void);
 #define ADKEY_7		INFO_VOL_MINUS
 #define ADKEY_8		INFO_VOL_PLUS
 #define ADKEY_NOKEY	NO_KEY
-#elif defined(K000_ZG_HA8919_BT_V001)
-#define ADKEY_1		INFO_PLAY
-#define ADKEY_2		INFO_PREV_FIL
-#define ADKEY_3		INFO_NEXT_FIL
-#define ADKEY_4		INFO_MODE
-#define ADKEY_5		INFO_PLAY_MODE
-#define ADKEY_6		INFO_EQ_UP
-#define ADKEY_7		INFO_VOL_MINUS
-#define ADKEY_8		INFO_VOL_PLUS
-#define ADKEY_NOKEY	NO_KEY
 #elif defined(K1173_ZK_ALK936_V001)
 #define ADKEY_1		INFO_PREV_FIL
 #define ADKEY_2		INFO_NEXT_FIL
@@ -601,6 +591,16 @@ void bat_val_arg(void);
 #define ADKEY_6		INFO_2
 #define ADKEY_7		INFO_3
 #define ADKEY_8		INFO_6
+#define ADKEY_NOKEY	NO_KEY
+#elif defined(K000_ZG_HA8919_BT_V001)
+#define ADKEY_1		INFO_PLAY
+#define ADKEY_2		INFO_PREV_FIL
+#define ADKEY_3		INFO_NEXT_FIL
+#define ADKEY_4		INFO_MODE
+#define ADKEY_5		INFO_PLAY_MODE
+#define ADKEY_6		INFO_EQ_UP
+#define ADKEY_7		INFO_VOL_MINUS
+#define ADKEY_8		INFO_VOL_PLUS
 #define ADKEY_NOKEY	NO_KEY
 #elif defined(K0000_JK_PORTABLE_CHARGER_V001)
 #define ADKEY_1		INFO_PLAY
