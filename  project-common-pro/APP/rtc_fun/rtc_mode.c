@@ -244,12 +244,13 @@ void close_alm_bell(void)
 {
 	if (alm_flag)
 	{
-	    sys_clock_pll();
-	    set_alm_sec();
-	    alm_flag = 0;
-	     my_main_vol(0);	
+	      sys_clock_pll();
+	      set_alm_sec();
+	      alm_flag = 0;
+	      my_main_vol(0);	
 	 	key_voice_disable = 0;
 		rtc_mode = RTC_PLAY_MODE;
+		Mute_Ext_PA(MUTE);		     
 	}
 }
 /*----------------------------------------------------------------------------*/
@@ -889,8 +890,7 @@ __TIME_ADJ_POS:
 #if defined(USE_BAT_MANAGEMENT)
 			bmt_hdlr();
 #endif
-		      delay_10ms(10);
-    		      Mute_Ext_PA(MUTE);		     
+		      //delay_10ms(10);
                     break;
                 }					
             }

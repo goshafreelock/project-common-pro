@@ -909,19 +909,15 @@ void music_play(void)
 
 #ifdef DEFAULT_GO_TO_AUX
 		work_mode = SYS_AUX;
-		return;
 #elif defined(DEFAULT_GO_TO_CUSTOM_MODE)
 		if(custom_first_time_pwr_flag){
 			custom_first_time_pwr_flag=0;
 #if defined(DEFAULT_GO_TO_CUSTOM_MODE_POWER_ON_FIRST_TIME_IN_AUX)
 			Set_Curr_Func(SYS_AUX);
-			return;
 #elif defined(DEFAULT_GO_TO_CUSTOM_MODE_POWER_ON_FIRST_TIME_IN_RTC_MODE)
 			Set_Curr_Func(SYS_RTC);
-			return;
 #else
 			Set_Curr_Func(SYS_IDLE);
-			return;
 #endif
 		}
 		else{
@@ -930,24 +926,20 @@ void music_play(void)
 			break;
 #else			
 			Set_Curr_Func(SYS_FMREV);
-			return;
 #endif
 		}
 #elif defined(DEFAULT_GO_TO_TIME_MODE)
 		Set_Curr_Func(SYS_RTC);
-		return;
 #elif defined(DEFAULT_GO_TO_FM)
 		if(IR_Type == WITH_FM_CHIP)
 			work_mode = SYS_FMREV;
 		else
 			work_mode = SYS_AUX;
-		return;
 #elif defined(DEFAULT_GO_TO_IDLE)		
 		Set_Curr_Func(SYS_IDLE);
-		return;
-#endif
-
+#else
 		work_mode = Next_Func();
+#endif
 
 #if defined( K186_LM_186_V001)||defined(K000_Zhongwei_SP_016_V001)
 		work_mode = SYS_IDLE;
