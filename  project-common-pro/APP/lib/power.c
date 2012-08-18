@@ -284,6 +284,14 @@ __PWR_ON:
 			if(pwr_key_cnt >1)
 				goto __PWR_UP;
 		}
+#elif defined(USB_SD_PORTABLE_BAT_CHARGER)
+
+		BATT_CHARGER_PORT_INIT();
+		if(BATT_CHRG_PORT){			
+			power_ctl(1);
+			goto __PWR_UP;
+		}
+
 #endif
 
 #ifdef PWR_OFF_WAKEUP_FUNC
