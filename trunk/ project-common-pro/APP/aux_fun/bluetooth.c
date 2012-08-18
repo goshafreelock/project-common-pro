@@ -40,7 +40,7 @@ extern u8 last_disp_menu;
 
 extern xd_u8 bluetooth_vol_dir;
 
-#ifdef K2078_MY_2078_V001
+#ifdef BLUE_TOOTH_KEY_DELAY_25MS
 #define BLUE_TOOTH_DELAY		25
 #else
 #define BLUE_TOOTH_DELAY		10

@@ -549,7 +549,11 @@ void Disp_IPOD(void)
 #if defined(BLUE_TOOTH_FUNC)
 void Disp_BT(void)
 {
+#ifdef DISP_BLUE_STR
+    dispstring("blue",0);
+#else
     dispstring(" bT",0);
+#endif
 }
 #endif
 
@@ -747,7 +751,9 @@ void Disp_Freq(void )
 #if defined(DISP_PAUS_STRING)
       if (play_status==0){
     		dispstring("PAUS",0);
+#ifndef DISP_FM_STR_WHEN_PAUS			
 		LED_STATUS &=~LED_FM;
+#endif
       }	  
 #endif
 #endif
