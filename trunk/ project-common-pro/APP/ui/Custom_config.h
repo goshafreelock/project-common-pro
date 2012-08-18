@@ -1643,6 +1643,7 @@
 
 #define USE_MODE_LONG_FOR_RTC_SETTING
 #define USE_RTC_FUNCTION
+#define USE_RTC_YEAR_FUNCTION
 
 #endif
 

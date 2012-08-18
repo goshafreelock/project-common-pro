@@ -494,7 +494,7 @@ bool charger_detect(void)
 #ifdef USB_SD_PORTABLE_BAT_CHARGER
 
 //#define BATT_PLAY_DEBUG
-
+#if 0
 #define BATT_CHARGER_PORT_INIT()	P1DIR |=(BIT(6)|BIT(7));	P1PU|=(BIT(6)|BIT(7))
 #define BATT_CHRG_PORT				P16
 #define BATT_STBY_PORT				P17
@@ -506,7 +506,7 @@ bool charger_detect(void)
 
 #define OUTPUT_DEVICE_PORT_INIT()		P1DIR &=~(BIT(5));P15=0;P1DIR |=(BIT(5));P1PU &=~(BIT(5));P1PDA&=~(BIT(5))
 #define OUTPUT_DEVICE_PORT				P15
-
+#endif
 enum{
 
 	BATT_CHARG_IDLE=0,

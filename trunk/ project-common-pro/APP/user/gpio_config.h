@@ -1232,6 +1232,24 @@
 #endif
 #endif
 
+#ifdef USB_SD_PORTABLE_BAT_CHARGER
+
+
+
+#define BATT_CHARGER_PORT_INIT()	P1DIR |=(BIT(6)|BIT(7));	P1PU|=(BIT(6)|BIT(7))
+#define BATT_CHRG_PORT				P17
+#define BATT_STBY_PORT				P16
+
+#define OUTPUT_CHARGER_PORT_INIT()	P1DIR &=~(BIT(4));P14=0;P1DIR |=(BIT(4));P1PU &=~(BIT(4));P1PDA&=~(BIT(4))
+#define OUTPUT_CHRG_PORT_EN()			P0DIR &=~(BIT(3));P03=1
+#define OUTPUT_CHRG_PORT_DIS()			P0DIR &=~(BIT(3));P03=0
+#define OUTPUT_STBY_PORT				P14
+
+#define OUTPUT_DEVICE_PORT_INIT()		P1DIR &=~(BIT(5));P15=0;P1DIR |=(BIT(5));P1PU &=~(BIT(5));P1PDA&=~(BIT(5))
+#define OUTPUT_DEVICE_PORT				P15
+
+#endif
+
 #endif
 
 
