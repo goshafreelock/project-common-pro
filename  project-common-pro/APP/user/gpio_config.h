@@ -563,6 +563,12 @@
 #elif defined(PLAY_STATUS_LED_P10)
 #define play_led_seg_out() 	P1DIR &= ~(BIT(0));P1PU |= BIT(0)
 #define PLAY_STATUS_PORT 	P10
+#elif defined(PLAY_STATUS_LED_P01)
+#define play_led_seg_out() 		P0DIR &= ~(BIT(1));P0PU |= BIT(1)
+#define PLAY_STATUS_PORT 		P01
+#ifdef IIC_GPIO_USE_P00_P01
+#define PLAY_STATUS_LED_SHARE_WITH_IIC_SCL
+#endif
 #elif defined(PLAY_STATUS_LED_P17)
 #define play_led_seg_out() 	P1DIR &= ~(BIT(7));P1PU |= BIT(7)
 #define PLAY_STATUS_PORT 	P17
@@ -811,7 +817,16 @@
 #define Pwr_Key_Init()		P0DIR |= (BIT(1));P0PD |= (BIT(1));
 #define Pwr_Key_output()		P0DIR &= ~(BIT(1));GPIO_POWER_KEY =0;//P2PU |= (BIT(4));GPIO_POWER_KEY =1;
 #define Pwr_Key_input()		P0DIR |= (BIT(1));P0PD |= (BIT(1));
-//#define Pwr_Key_Input()		P2DIR &= ~(1<<6);
+//#define Pwr_Key_Input()		P2DIR &= ~(1<<6);
+#elif defined(PWR_CTRL_WKUP_POWER_ONLY)
+#define GPIO_POWER_CTRL 	0
+#define power_ctl(n)  			0
+
+#define GPIO_POWER_KEY   	//P01
+#define Pwr_Key_Init()		//P0DIR |= (BIT(1));P0PD |= (BIT(1));
+#define Pwr_Key_output()		//P0DIR &= ~(BIT(1));GPIO_POWER_KEY =0;//P2PU |= (BIT(4));GPIO_POWER_KEY =1;
+#define Pwr_Key_input()		//P0DIR |= (BIT(1));P0PD |= (BIT(1));
+//#define Pwr_Key_Input()		P2DIR &= ~(1<<6);
 #else
 #define GPIO_POWER_CTRL 	0
 #define power_ctl(n)  			0
@@ -945,9 +960,16 @@
 #endif
 
 #ifdef USE_BT_GPIO_DETECTION
+
+#if defined(BT_GPIO_DETECTION_USE_PORT_P15)
+#define BT_GPIO_INIT()				P1DIR |=(BIT(5));P1PU &=~(BIT(5))
+#define BT_GPIO_READ				P15
+#define BT_GPIO_RELEASE()			P1DIR &=~(BIT(5));P15=1
+#else
 #define BT_GPIO_INIT()				P3DIR |=(BIT(1));P3PU &=~(BIT(1));P3PD |=BIT(1)
 #define BT_GPIO_READ				P31
 #define BT_GPIO_RELEASE()			P3DIR &=~(BIT(1));P31=1
+#endif
 #endif
 
 #if defined(BAT_LEVEL_GPIO_DRV_LED_IND)
@@ -1112,17 +1134,17 @@
 #define BT_VOL_DOWN_OFF() 					
 
 #elif defined(K0000_JK_EARPHONE_BT_V001)
-#define BT_PWR_PORT_INIT() 			P1DIR &= ~(BIT(3));P1PU &= ~(BIT(3));P13 =0
-#define BT_PWR_ON() 				P13 =0
-#define BT_PWR_OFF() 				P13 =1	
+#define BT_PWR_PORT_INIT() 			P1DIR &= ~(BIT(6));P1PU &= ~(BIT(6));P16 =0
+#define BT_PWR_ON() 				P16 =0
+#define BT_PWR_OFF() 				P16 =1	
 
 #define BT_RST_PORT_INIT() 		
 #define BT_RST_ON() 				
 #define BT_RST_OFF() 			
 
-#define BT_PP_PORT_INIT() 			P1DIR &= ~(BIT(0));P1PU |=BIT(0);P10 =0
-#define BT_PP_ON() 					P10 =1
-#define BT_PP_OFF() 					P10 =0
+#define BT_PP_PORT_INIT() 			//P1DIR &= ~(BIT(0));P1PU |=BIT(0);P10 =0
+#define BT_PP_ON() 					//P10 =1
+#define BT_PP_OFF() 					//P10 =0
 
 #define BT_NEXT_PORT_INIT() 		P1DIR &= ~(BIT(2));P1PU |=BIT(2);P12 =0
 #define BT_NEXT_ON() 				P12 =1
