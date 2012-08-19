@@ -466,12 +466,6 @@
 #endif
 
 
-#if defined(DC_CHARGE_GPIO_DRV_LED_IND)
-#define DC_CHARGE_LED_INIT()	DACCON0|=0x80;P0DIR &= ~(1<<2);P0PU |= (1<<2); P3DIR |= (1<<4);P3PU &= ~(1<<4);P3PD&= ~(1<<4)
-#define DC_CHARGE_LED_H()		P02=1
-#define DC_CHARGE_LED_L()		P02=0	
-#endif
-
 #ifdef USE_CUSTOMIED_GPIO_KEY
 #define  GPIO_KEY_INIT()      		P0DIR |= BIT(7);P0PU |=(BIT(7))
 #define  GPIO_KEY_PORT  			P07
@@ -986,9 +980,15 @@
 #endif
 
 #if defined(USE_BT_GPIO_SEL_MODE)
+#if defined(USE_BT_GPIO_SEL_MODE_USE_PORT_P15)
+#define BT_GPIO_SEL_INIT()				P1DIR |=(BIT(5));P1PU |=(BIT(5))
+#define BT_GPIO_SEL_READ				P15
+#define BT_GPIO_SEL_END()				P1DIR &= ~(BIT(5));P1PU &= ~(BIT(5));P15 =0
+#else
 #define BT_GPIO_SEL_INIT()				P0DIR |=(BIT(5));P0PU |=(BIT(5))
 #define BT_GPIO_SEL_READ				P05
 #define BT_GPIO_SEL_END()				P0DIR &= ~(BIT(5));P0PU &= ~(BIT(5));P0PD|=BIT(5);P05 =0
+#endif
 #endif
 
 #ifdef BLUETOOTH_GPIO_CTRL
@@ -1111,6 +1111,34 @@
 #define BT_VOL_DOWN_ON() 			
 #define BT_VOL_DOWN_OFF() 					
 
+#elif defined(K0000_JK_EARPHONE_BT_V001)
+#define BT_PWR_PORT_INIT() 			P1DIR &= ~(BIT(3));P1PU &= ~(BIT(3));P13 =0
+#define BT_PWR_ON() 				P13 =0
+#define BT_PWR_OFF() 				P13 =1	
+
+#define BT_RST_PORT_INIT() 		
+#define BT_RST_ON() 				
+#define BT_RST_OFF() 			
+
+#define BT_PP_PORT_INIT() 			P1DIR &= ~(BIT(0));P1PU |=BIT(0);P10 =0
+#define BT_PP_ON() 					P10 =1
+#define BT_PP_OFF() 					P10 =0
+
+#define BT_NEXT_PORT_INIT() 		P1DIR &= ~(BIT(2));P1PU |=BIT(2);P12 =0
+#define BT_NEXT_ON() 				P12 =1
+#define BT_NEXT_OFF() 				P12 =0
+
+#define BT_PREV_PORT_INIT() 		P1DIR &= ~(BIT(3));P1PU |=BIT(3);P13 =0
+#define BT_PREV_ON() 				P13 =1
+#define BT_PREV_OFF() 				P13 =0
+
+#define BT_VOLU_PORT_INIT() 		
+#define BT_VOL_UP_ON() 				
+#define BT_VOL_UP_OFF() 			
+
+#define BT_VOLD_PORT_INIT() 		
+#define BT_VOL_DOWN_ON() 			
+#define BT_VOL_DOWN_OFF() 	
 #elif defined(K2078_MY_2078_V001)
 #define BT_PWR_PORT_INIT() 			P1DIR &= ~(BIT(3));P1PU &= ~(BIT(3));P13 =0
 #define BT_PWR_ON() 				P13 =1
@@ -1232,9 +1260,19 @@
 #endif
 #endif
 
+#if defined(DC_CHARGE_GPIO_DRV_LED_IND)
+#if defined(DC_CHARGE_GPIO_DRV_LED_P00)
+#define DC_CHARGE_LED_INIT()	P0DIR &= ~(BIT(0));P0PU |= (BIT(0))
+#define DC_CHARGE_LED_H()		P00=1
+#define DC_CHARGE_LED_L()		P00=0	
+#else
+#define DC_CHARGE_LED_INIT()	DACCON0|=0x80;P0DIR &= ~(1<<2);P0PU |= (1<<2); P3DIR |= (1<<4);P3PU &= ~(1<<4);P3PD&= ~(1<<4)
+#define DC_CHARGE_LED_H()		P02=1
+#define DC_CHARGE_LED_L()		P02=0	
+#endif
+#endif
+
 #ifdef USB_SD_PORTABLE_BAT_CHARGER
-
-
 
 #define BATT_CHARGER_PORT_INIT()	P1DIR |=(BIT(6)|BIT(7));	P1PU|=(BIT(6)|BIT(7))
 #define BATT_CHRG_PORT				P17
