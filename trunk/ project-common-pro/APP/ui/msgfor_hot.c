@@ -46,7 +46,7 @@ extern void DSA_if_hdlr(void);
 extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 #endif
 
-#if defined(WKUP_PIN_USE_ENABLE)
+#if defined(WKUP_PIN_USE_ENABLE)||defined(MUTE_PORT_USE_WKUP)||defined(PWR_CTRL_WKUP)
 extern void wkup_pin_ctrl(bool dir);
 #endif
 #ifdef PWM3_IN_USE
@@ -1513,6 +1513,18 @@ u8 ap_handle_hotkey(u8 key)
 #if !defined(NOT_USE_LINE_IN_FUNC)||defined(LINE_IN_DETECT_SHARE_LED_STATUS_PORT)
 #ifndef ADC_DETECT_LINE_IN
     case MSG_AUX_IN :
+		
+#ifdef LINE_DETECT_INDEPENDENT_MODE
+#ifdef  USE_POWER_KEY
+	    set_play_flash(LED_FLASH_STOP);
+#if defined(PWR_CTRL_WKUP)
+	    wkup_pin_ctrl(0);
+#else
+	    power_ctl(0);
+#endif
+#endif
+
+#endif
 	Add_Func_To_List(AUX_DEV);
         if (work_mode != SYS_USBDEVICE)
         {
