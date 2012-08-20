@@ -42,6 +42,10 @@ extern xd_u8  PT_Fade_Val;
 extern _xdata u8 filename_buff[100];
 extern void disp_buf_clear(void);
 
+#ifdef NEW_RTC_SETTING_CTRL
+extern xd_u8 new_rtc_setting;
+#endif
+
 #if defined(EXTENED_LED_NUM_SCAN)
 #define EXTENED_NUM 	8
 extern xd_u8 LED_BUFF_2[EXTENED_NUM-5];
@@ -973,14 +977,50 @@ void Disp_RTC_POINT()
 	    LED_STATUS &= ~LED_2POINT;
 	}
 }
-#ifdef USE_RTC_YEAR_FUNCTION
+#if defined(USE_RTC_YEAR_FUNCTION)||defined(NEW_RTC_SETTING_CTRL)
 void Disp_RTC_Date()
 {
+#if defined(NEW_RTC_SETTING_CTRL)
+	u8  setting_buff_high=0,setting_buff_low=0;
+
+	if(new_rtc_setting==1){
+
+		setting_buff_high=curr_date.year/100%100;
+		setting_buff_low=curr_date.year%100;
+	    	LED_STATUS &= ~LED_2POINT;		
+	}
+	else if(new_rtc_setting==2){
+
+		setting_buff_high=curr_date.month;
+		setting_buff_low = curr_date.day;
+	    	LED_STATUS |= LED_2POINT;		
+	}
+	else if(new_rtc_setting==3){
+		setting_buff_high=curr_alm.hour;
+		setting_buff_low =curr_alm.minutes;	
+	    	LED_STATUS |= LED_2POINT;				
+	}
+	else if(new_rtc_setting==4){
+
+	    	  if (alm_sw)
+       	     dispstring("ON",0);
+       	 else
+            		dispstring("OFF",0);
+		 return;
+	}
+
+
+    dispNum(((setting_buff_high/10)%10),3);
+    dispNum((setting_buff_high%10),2);
+	
+    dispNum(((setting_buff_low/10)%10),1);
+    dispNum((setting_buff_low%10),0);
+#else
 	static _xdata u8 date_show=0;
 
 	if(date_show++>4)date_show=0;
 	get_curr_setting_data(date_show);
-
+#endif
 }
 #endif
 void Disp_RTC()

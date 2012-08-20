@@ -493,6 +493,7 @@ bool charger_detect(void)
 
 #ifdef USB_SD_PORTABLE_BAT_CHARGER
 
+xd_u8 batt_level_exit_timer=0;
 //#define BATT_PLAY_DEBUG
 #if 0
 #define BATT_CHARGER_PORT_INIT()	P1DIR |=(BIT(6)|BIT(7));	P1PU|=(BIT(6)|BIT(7))
@@ -558,13 +559,23 @@ void cell_level_disp_if(u8 cmd)
 
 	EA = 0;
 	if(play_status == MUSIC_PLAY){
-		cmd =LEVEL_LED_PLAY;
-#ifdef SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION_WHEN_CHARGER_LEVEL_0
-	    sys_pwr_on_led_protect_bit=0;
-#endif		
 		
+		if(batt_level_exit_timer >2*30){
+#ifdef SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION_WHEN_CHARGER_LEVEL_0
+		    	sys_pwr_on_led_protect_bit=1;
+#endif		
+		}
+		else{
+			batt_level_exit_timer++;
+			cmd =LEVEL_LED_PLAY;
+#ifdef SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION_WHEN_CHARGER_LEVEL_0
+	    		sys_pwr_on_led_protect_bit=0;
+#endif		
+		}
 	}
 	else{
+
+		batt_level_exit_timer=0;
 #ifdef SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION_WHEN_CHARGER_LEVEL_0
 	    sys_pwr_on_led_protect_bit=1;
 #endif		
@@ -653,6 +664,8 @@ void portable_charger_hdlr()
 	OUTPUT_CHARGER_PORT_INIT();
 	OUTPUT_DEVICE_PORT_INIT();
 
+
+#ifdef BATT_OUTPUT_CHARGER_DETECTION
 	
 	if(output_discharge_en){
 	//if(OUTPUT_DEVICE_PORT){
@@ -698,6 +711,8 @@ void portable_charger_hdlr()
 		output_charger_status =BATT_CHARG_IDLE;
 	}
 	//4 OUTPUT  CHARGE PHASE...END...
+#endif
+
 
 	if(cell_battary_status ==BATT_CHARG_IDLE){
 #ifdef BATT_PLAY_DEBUG

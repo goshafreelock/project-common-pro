@@ -35,6 +35,11 @@ xd_u8 alm_source=ALM_SOUR_USB;
 #endif
 bool alm_sw;
 
+#ifdef NEW_RTC_SETTING_CTRL
+xd_u8 new_rtc_setting=0;
+#endif
+
+
 #ifdef ALM_ON_FLASH_SCR
 bool alm_flash_flag=0;
 #endif
@@ -402,6 +407,7 @@ u8 alm_bell_mode(void)
 		}
 	}	
 }
+
 #if defined(USE_SNOOZE_FUNC)        
 u16 snooze_cnt=0;
 bool snooze_en=0;
@@ -422,7 +428,7 @@ void snooze_hdlr()
 }
 #endif
 
-#if defined(MINI_DIGIT_BOX)
+#if defined(MINI_DIGIT_BOX)||defined(RTC_SETTING_OP_TIMER_ENABLE)
 u8 op_timer=0;
 void rtc_setting_key_hdlr(void)
 {
@@ -431,6 +437,9 @@ void rtc_setting_key_hdlr(void)
 		op_timer++;		
 		if(op_timer>12){
 			op_timer =0;
+#if defined(NEW_RTC_SETTING_CTRL)
+			new_rtc_setting=0;
+#endif						
 	              rtc_mode = RTC_PLAY_MODE;
 	              Disp_Con(DISP_RTC);
 		}
@@ -526,7 +535,38 @@ void deal_rtc(void)
 		    } 
 			   
 		    Disp_Con(DISP_RTC);			
-		}		
+		}	
+#elif defined(NEW_RTC_SETTING_CTRL)
+		if (rtc_mode != ALM_UP_MODE)
+		{
+			if(new_rtc_setting==0){
+				rtc_mode=RTC_SET_MODE;
+		            	rtc_set=3;
+			}
+			else if(new_rtc_setting==1){
+
+				rtc_mode=RTC_SET_MODE;
+		            	rtc_set=0;
+			}
+			else if(new_rtc_setting==2){
+
+				rtc_mode=RTC_SET_MODE;
+		            	rtc_set=1;
+			}
+			else if(new_rtc_setting==3){
+				
+				rtc_mode=ALM_SET_MODE;
+		            	alm_set=1;			
+
+			}
+			else if(new_rtc_setting==4){
+				
+				rtc_mode=ALM_SET_MODE;
+		            	alm_set=0;			
+			}
+
+	            	Disp_Con(DISP_RTC);
+        	}
 #else
 
 #if defined(K820_LHD_820_V001)
@@ -641,6 +681,59 @@ void deal_rtc(void)
 #else
         case INFO_PLAY| KEY_SHORT_UP:
 #endif
+
+#if defined(NEW_RTC_SETTING_CTRL)
+		if ((rtc_mode != ALM_UP_MODE)&&(rtc_mode !=RTC_PLAY_MODE))
+		{
+			if(new_rtc_setting==0){
+				rtc_mode=RTC_SET_MODE;
+	            		rtc_set++;
+
+				if(rtc_set>4){
+					rtc_mode=RTC_PLAY_MODE;
+				}
+			}
+			else if(new_rtc_setting==1){
+
+				rtc_mode=RTC_PLAY_MODE;
+				Disp_Con(DISP_RTC_DATE);	
+				break;				
+			}
+			else if(new_rtc_setting==2){
+
+				rtc_mode=RTC_SET_MODE;
+	            		rtc_set++;
+
+				if(rtc_set>2){
+
+					Disp_Con(DISP_RTC_DATE);
+					rtc_mode=RTC_PLAY_MODE;
+					break;
+				}
+			}
+			else if(new_rtc_setting==3){
+				
+				rtc_mode=ALM_SET_MODE;
+		            	alm_set++;			
+				if(alm_set>2){
+
+					Disp_Con(DISP_RTC_DATE);
+					rtc_mode=RTC_PLAY_MODE;
+					break;					
+				}
+			}
+			else if(new_rtc_setting==4){
+
+				Disp_Con(DISP_RTC_DATE);	
+				rtc_mode=RTC_PLAY_MODE;
+				alm_set=0;	
+				break;
+			}
+
+			  Disp_Con(DISP_RTC);
+
+        	}
+#else
 #if defined(K820_LHD_820_V001)
 			break;
 #endif
@@ -679,6 +772,7 @@ __TIME_ADJ_POS:
                 }
 		  Disp_Con(DISP_RTC);
             } 
+#endif			
             break;
 #ifdef ADJ_TIME_USE_VOL_KEY			
         case INFO_VOL_PLUS:
@@ -742,10 +836,27 @@ __TIME_ADJ_POS:
 	     {
 #ifdef RTC_ADJ_VOL
 		goto _HOT_KEY_HDLR;
-#endif	     
+#endif
+#ifdef NEW_RTC_SETTING_CTRL
+		new_rtc_setting--;
+
+		if(new_rtc_setting>4){
+			new_rtc_setting=4;
+		}
+		
+		if(new_rtc_setting==0){
+			
+			Disp_Con(DISP_RTC);
+		}
+		else{
+			
+			Disp_Con(DISP_RTC_DATE);
+		}
+#else
 #ifdef USE_RTC_YEAR_FUNCTION
 		date_show_active = 1;	
 		Disp_Con(DISP_RTC_DATE);	
+#endif
 #endif
 	    }
             break;
@@ -807,9 +918,26 @@ __TIME_ADJ_POS:
             }
             else
 	     {
+#ifdef NEW_RTC_SETTING_CTRL
+		new_rtc_setting++;
+
+		if(new_rtc_setting>4){
+			new_rtc_setting=0;
+		}
+		
+		if(new_rtc_setting==0){
+			
+			Disp_Con(DISP_RTC);
+		}
+		else{
+			
+			Disp_Con(DISP_RTC_DATE);
+		}
+#else
 #ifdef USE_RTC_YEAR_FUNCTION
 		date_show_active = 1;		
 		Disp_Con(DISP_RTC_DATE);
+#endif
 #endif
 	    }
             break;
@@ -902,7 +1030,7 @@ __TIME_ADJ_POS:
                   chk_date_err();
                     //Disp_Con(DISP_RTC);
             }
-#if defined(MINI_DIGIT_BOX)
+#if defined(MINI_DIGIT_BOX)||defined(RTC_SETTING_OP_TIMER_ENABLE)
 	     rtc_setting_key_hdlr();
 #endif
             if (return_cnt < (RETURN_TIME))
@@ -916,6 +1044,9 @@ __TIME_ADJ_POS:
 		      rtc_set = 0;
     		      alm_set = 0;
                     rtc_mode = 0;
+#if defined(NEW_RTC_SETTING_CTRL)
+			new_rtc_setting=0;
+#endif			
                     get_curr_date();
                     Disp_Con(DISP_RTC);
                 }
@@ -933,9 +1064,14 @@ __TIME_ADJ_POS:
 			
 #ifdef USE_RTC_YEAR_FUNCTION			
 	     if(!date_show_active)
+#elif defined(NEW_RTC_SETTING_CTRL)
+	     if((rtc_mode == RTC_PLAY_MODE)&&(new_rtc_setting>0)){
+			break;
+		 }
+		 	
 #endif
 		{
-            	Disp_Con(DISP_RTC_POINT);
+            		Disp_Con(DISP_RTC_POINT);
 		}
 #if defined(USE_BAT_MANAGEMENT)
 		bmt_hdlr();
@@ -1005,6 +1141,10 @@ void rtc_function(void)
 
 _deal_rtc0:
     deal_rtc();
+
+#if defined(NEW_RTC_SETTING_CTRL)
+	new_rtc_setting=0;
+#endif			
 	
     main_vol_set(0, CHANGE_VOL_NO_MEM);
 	

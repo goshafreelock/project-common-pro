@@ -1134,9 +1134,9 @@
 #define BT_VOL_DOWN_OFF() 					
 
 #elif defined(K0000_JK_EARPHONE_BT_V001)
-#define BT_PWR_PORT_INIT() 			P1DIR &= ~(BIT(6));P1PU &= ~(BIT(6));P16 =0
-#define BT_PWR_ON() 				P16 =0
-#define BT_PWR_OFF() 				P16 =1	
+#define BT_PWR_PORT_INIT() 			
+#define BT_PWR_ON() 				
+#define BT_PWR_OFF() 				
 
 #define BT_RST_PORT_INIT() 		
 #define BT_RST_ON() 				
@@ -1161,6 +1161,11 @@
 #define BT_VOLD_PORT_INIT() 		
 #define BT_VOL_DOWN_ON() 			
 #define BT_VOL_DOWN_OFF() 	
+
+#define BT_CONFIG_PORT_INIT() 			P1DIR &= ~(BIT(6));P1PU &= ~(BIT(6));P16 =0
+#define BT_CONFIG_ON() 					P16 =1
+#define BT_CONFIG_OFF() 				P16 =0	
+
 #elif defined(K2078_MY_2078_V001)
 #define BT_PWR_PORT_INIT() 			P1DIR &= ~(BIT(3));P1PU &= ~(BIT(3));P13 =0
 #define BT_PWR_ON() 				P13 =1
