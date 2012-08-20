@@ -218,6 +218,12 @@ void waiting_power_key()
 #ifdef DC_HW_POWER_UP	
 	Init_dc_hw_if();
 #endif
+
+#if defined(BT_CONFIG_POWER_ON_ENABLE)
+	BT_CONFIG_PORT_INIT();
+	BT_CONFIG_ON();
+#endif
+
 #if defined(POWER_KEY_ON_WAIT_FOR_3_SEC	)
 	 set_play_flash(LED_FLASH_STOP);	
 	pwr_key_cnt = 0;
@@ -307,11 +313,19 @@ __PWR_ON:
 
 		if(key == (INFO_POWER|KEY_HOLD)){
 
+#if defined(BT_CONFIG_POWER_ON_ENABLE)
+			power_down_cnt = 0;
+			if(pwr_key_cnt>10){
+
+			}
+#else
 			if(pwr_key_cnt >1)
 				goto __PWR_UP;
 			power_down_cnt = 0;
+#endif			
 		}
 		else if(key==0xFF){
+			
 			if(power_down_cnt++>250){
 			    EA = 0;
 #if defined(PWR_CTRL_WKUP)

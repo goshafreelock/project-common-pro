@@ -1150,6 +1150,10 @@ void Disp_Con(u8 LCDinterf)
     	case DISP_RTC_DATE:
         	Disp_RTC_Date();
         	break;
+#elif defined(NEW_RTC_SETTING_CTRL)
+    	case DISP_RTC_DATE:
+        	Disp_RTC_Date();
+        	break;
 #endif
 #ifdef USE_MICPHONE_GPIO_DETECTION
     	case DISP_MIC:
