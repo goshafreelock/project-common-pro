@@ -543,7 +543,7 @@
 #define  hp_detect_begin() 
 #else
 
-#if defined(K1028_WOKA_1028_APPLE_V001)
+#if defined(K1028_WOKA_1028_APPLE_V001)||defined(INVERT_LED_IN_USE)
 #define play_led_seg_out2() 	P0DIR &= ~(BIT(2));P0PU |= (BIT(2));
 #define PLAY_STATUS_PORT2 	P02
 

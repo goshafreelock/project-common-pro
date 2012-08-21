@@ -612,7 +612,7 @@ void bat_val_arg(void);
 #define ADKEY_7		NO_KEY
 #define ADKEY_8		INFO_POWER
 #define ADKEY_NOKEY	NO_KEY
-#elif defined(K6037_SES_6037_V001)
+#elif defined(K6037_SES_6037_V001)||defined(K2059_SES_6038_V001)
 #define ADKEY_1		INFO_PLAY
 #define ADKEY_2		INFO_PREV_FIL
 #define ADKEY_3		INFO_NEXT_FIL
@@ -969,6 +969,19 @@ void bat_val_arg(void);
 #define ADKEY_8		INFO_POWER
 #define ADKEY_9		INFO_PLAY
 #define ADKEY_10	NO_KEY
+#define ADKEY_11	NO_KEY
+#define ADKEY_NOKEY	NO_KEY
+#elif defined(K3021_AP_LG836_V001)
+#define ADKEY_1		INFO_MODE
+#define ADKEY_2		INFO_PLAY
+#define ADKEY_3		INFO_NEXT_FIL
+#define ADKEY_4		INFO_PREV_FIL
+#define ADKEY_5		INFO_PLUS
+#define ADKEY_6		INFO_MINUS
+#define ADKEY_7		NO_KEY
+#define ADKEY_8		NO_KEY
+#define ADKEY_9		INFO_VOL_PLUS
+#define ADKEY_10	INFO_VOL_MINUS
 #define ADKEY_11	NO_KEY
 #define ADKEY_NOKEY	NO_KEY
 #elif defined(K1169_ZK_ALK982_V001)

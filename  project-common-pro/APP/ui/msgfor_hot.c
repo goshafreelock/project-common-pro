@@ -145,13 +145,13 @@ bool get_mod_hotkey_protect_status()
 }
 #endif
 
-#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
 extern xd_u8 led_flash_tpye_poll;
 #if defined(MUTE_ON_FLASH_WHOLE_SCREEN)
 bool mute_on_flash_enable=0;
 #endif
 
-#if defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
 bool pause_flash_enable=0;
 #endif
 void set_led_flash_tpye(u8 type_reg)
@@ -168,7 +168,7 @@ void Led_flash_screen_hdlr()
 	            		put_msg_fifo(INFO_RESTORE_SCREEN);				
 			}
 #endif			
-#if defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
 			if(pause_flash_enable){
 				pause_flash_enable =0;
 		       	put_msg_fifo(INFO_RESTORE_SCREEN);				
@@ -193,6 +193,22 @@ void Led_flash_screen_hdlr()
 			}
 		}
 #endif		
+#if defined(PAUSE_FLASH_WHOLE_SCREEN)
+		if(led_flash_tpye_poll==2){
+		
+				if(play_status == MUSIC_PAUSE){
+					pause_flash_enable=~pause_flash_enable;
+					if(!pause_flash_enable)
+		            		put_msg_fifo(INFO_RESTORE_SCREEN);				
+				}
+				else{
+					if(pause_flash_enable){
+						pause_flash_enable =0;
+		            			put_msg_fifo(INFO_RESTORE_SCREEN);				
+					}
+				}
+		}
+#endif
 #if defined(MP3_PUASE_FLASH_FIGURE)
 
 		if(led_flash_tpye_poll==2){
@@ -1371,7 +1387,7 @@ u8 ap_handle_hotkey(u8 key)
 		return 0;
 #endif
 
-#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
     case INFO_RESTORE_SCREEN:
 		Disp_Con(curr_menu);
 	break;

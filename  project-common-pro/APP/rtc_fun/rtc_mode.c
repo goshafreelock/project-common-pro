@@ -838,12 +838,13 @@ __TIME_ADJ_POS:
 		goto _HOT_KEY_HDLR;
 #endif
 #ifdef NEW_RTC_SETTING_CTRL
-		new_rtc_setting--;
+
+		new_rtc_setting++;
 
 		if(new_rtc_setting>4){
-			new_rtc_setting=4;
+			new_rtc_setting=0;
 		}
-		
+				
 		if(new_rtc_setting==0){
 			
 			Disp_Con(DISP_RTC);
@@ -919,10 +920,10 @@ __TIME_ADJ_POS:
             else
 	     {
 #ifdef NEW_RTC_SETTING_CTRL
-		new_rtc_setting++;
 
+		new_rtc_setting--;
 		if(new_rtc_setting>4){
-			new_rtc_setting=0;
+			new_rtc_setting=4;
 		}
 		
 		if(new_rtc_setting==0){

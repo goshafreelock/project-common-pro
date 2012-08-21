@@ -322,7 +322,16 @@ void fm_rev( void )
     		set_play_flash(LED_FLASH_NOR);
 #endif		
 	     }
-            Disp_Con(DISP_FREQ);		 
+
+#if defined(PAUSE_FLASH_WHOLE_SCREEN)
+            if (play_status == MUSIC_PAUSE)
+			set_led_flash_tpye(2);
+	     else{
+			set_led_flash_tpye(0);
+	     }
+#endif
+          Disp_Con(DISP_FREQ);		 
+		
 	   break;        
 #endif	   
 		if(IR_KEY_Detect){
@@ -383,6 +392,10 @@ __SCAN_FREQ:
 	     set_lcd_flash_lock(LOCK);
 #endif
 
+#ifdef DISP_SCH_AT_FM_SCAN	
+            Disp_Con(DISP_SCH);
+	     delay_10ms(60);
+#endif
             scan_fre();
 
 #if defined(USE_SPECTRUM_PARTTERN)		  
@@ -764,7 +777,7 @@ _HOT_KEY_HDLR:
 
 void fm_radio(void)
 {
-#ifdef FM_LINE_IN_SHARE_SAME_CHANNEL
+#if defined(FM_LINE_IN_SHARE_SAME_CHANNEL)||defined(FM_LINE_IN_ONLY_ONE_MODE_EXIST)
 #ifdef USE_LINE_IN_DETECT_FUNC
    if(aux_online){
    	

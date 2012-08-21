@@ -47,6 +47,7 @@ typedef enum
     DISP_FREQ,
     DISP_CH_NO,
     DISP_SCAN_NO,
+    DISP_SCH,
     DISP_CUR_DEV,
     DISP_AUX,
     DISP_IPOD,
