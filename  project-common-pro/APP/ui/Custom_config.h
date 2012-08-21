@@ -4542,7 +4542,7 @@
 
 #define LED_USE_ROUND_LED
 #define LED_USE_PLAY_MODE
-
+#define BAT_LEVEL_LED_ICON_IND
 #if 1
 #define USE_POWER_KEY
 #define USE_ONLY_POWER_HOLD_CTRL
