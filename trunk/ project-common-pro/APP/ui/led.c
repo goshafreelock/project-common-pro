@@ -957,8 +957,26 @@ void LED_scan(void)
 }
 
 #endif
+
+#ifdef NEW_RTC_SETTING_CTRL
+extern xd_u8 new_rtc_setting;
+extern bool alm_sw;
+#endif
+
 void updateLED(void)
 {
+#ifdef NEW_RTC_SETTING_CTRL	
+	if(new_rtc_setting>=3){
+    		LED_STATUS |= LED_AUX;
+	}
+	else{
+    		LED_STATUS &=~LED_AUX;
+	}
+	if(alm_sw){
+    		LED_STATUS |= LED_AUX;
+	}
+#endif	
+
 #ifdef LED_DRVER_USE_SM1628
 TM1628_display(LED_BUFF[4],LED_BUFF[0],LED_BUFF[1],LED_BUFF[2],LED_BUFF[3]);
 #endif

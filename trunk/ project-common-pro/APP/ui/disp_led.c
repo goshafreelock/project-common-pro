@@ -580,6 +580,9 @@ void Disp_AUX(void)
 	}
 #endif
 
+#ifdef NO_AUX_ICON_DISP
+	LED_STATUS &=~LED_AUX;
+#endif
 #if defined(LINE_IN_PLAY_KEY_PAUSE)
 
 #if defined(DISP_PAUS_STRING)
@@ -796,6 +799,12 @@ void Disp_Scan_NO(void )
     //LED_STATUS |= LED_FM;
 
 }
+#ifdef DISP_SCH_AT_FM_SCAN		
+void Disp_Sch(void)
+{
+      	dispstring(" SCH",0);
+}
+#endif
 void Disp_Dev_Change(u8 flag)
 {
     if (2 == flag)
@@ -1085,6 +1094,7 @@ void Disp_RTC()
 	    oppo_area_rtc(alm_set);	
 	}
     }
+
 }
 void Disp_Alm_Up(void)
 {

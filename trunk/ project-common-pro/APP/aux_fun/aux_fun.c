@@ -394,6 +394,13 @@ void deal_aux( void )
     set_spectrum_lock(LOCK);
 #endif		  
 	     }
+#if defined(PAUSE_FLASH_WHOLE_SCREEN)
+            if (play_status == MUSIC_PAUSE)
+			set_led_flash_tpye(2);
+	     else{
+			set_led_flash_tpye(0);
+	     }
+#endif		 
             Disp_Con(DISP_AUX);		 
 	   break;        
 #endif	   

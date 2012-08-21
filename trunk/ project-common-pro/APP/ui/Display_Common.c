@@ -51,7 +51,7 @@ extern void Disp_USB_Slave();
 extern void Disp_Freq();
 extern void Disp_CH_NO();
 extern void Disp_Scan_NO();
-extern void Disp_Dev_Change(u8 flag);
+extern void Disp_Sch(void);
 extern void Disp_AUX();
 extern void Disp_Load(void);
 extern void Disp_Start();
@@ -90,7 +90,7 @@ extern void Disp_Patern();
 #if defined(MUTE_ON_FLASH_WHOLE_SCREEN)
 extern bool mute_on_flash_enable;
 #endif
-#if defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
 extern bool pause_flash_enable;
 extern void disp_buf_figure_buf();
 #endif
@@ -696,17 +696,29 @@ void play_led_flash()
 
 	LED_cnt++;
 
+#ifdef LED_FLASH_ALL_THE_TIME
+	if(LED_cnt==80){
+		PLAY_STATUS_PORT = OFF_LEVEL;
+		PLAY_STATUS_PORT2 = ON_LEVEL;
+	}
+	else if(LED_cnt==160){
+
+		LED_cnt=0;
+		PLAY_STATUS_PORT = ON_LEVEL;
+		PLAY_STATUS_PORT2 = OFF_LEVEL;
+	}
+#endif
 	if(LED_Flash_mode ==0xFF){	//LED_FLASH_STOP
 
 		PLAY_STATUS_PORT = OFF_LEVEL;
-#if defined(K1028_WOKA_1028_APPLE_V001)
+#if defined(K1028_WOKA_1028_APPLE_V001)||defined(INVERT_LED_IN_USE)
 		PLAY_STATUS_PORT2 = ON_LEVEL;
 #endif		
 	}
 	else if(LED_Flash_mode == 0xF6){	//LED_FLASH_ON
 
 		PLAY_STATUS_PORT = ON_LEVEL;
-#if defined(K1028_WOKA_1028_APPLE_V001)
+#if defined(K1028_WOKA_1028_APPLE_V001)||defined(INVERT_LED_IN_USE)
 		PLAY_STATUS_PORT2 = OFF_LEVEL;
 #endif		
 		
@@ -716,7 +728,7 @@ void play_led_flash()
 		if(LED_cnt>(LED_Flash_mode<<1)){
 			LED_cnt=0;
 			PLAY_STATUS_PORT=~PLAY_STATUS_PORT;
-#if defined(K1028_WOKA_1028_APPLE_V001)
+#if defined(K1028_WOKA_1028_APPLE_V001)||defined(INVERT_LED_IN_USE)
 			PLAY_STATUS_PORT2=~PLAY_STATUS_PORT2;
 #endif		
 			
@@ -726,7 +738,7 @@ void play_led_flash()
 	else  if((LED_cnt % LED_Flash_mode)==0){
 
 		PLAY_STATUS_PORT=~PLAY_STATUS_PORT;
-#if defined(K1028_WOKA_1028_APPLE_V001)
+#if defined(K1028_WOKA_1028_APPLE_V001)||defined(INVERT_LED_IN_USE)
 			PLAY_STATUS_PORT2=~PLAY_STATUS_PORT2;
 #endif				
 	}
@@ -888,6 +900,7 @@ void get_spectrum_data(void)
 
 }
 #endif
+
 void Disp_Init(void)
 {
     init_disp();
@@ -899,7 +912,7 @@ void Disp_Init(void)
 
     play_led_seg_out();
 
-#if defined(K1028_WOKA_1028_APPLE_V001)
+#if defined(K1028_WOKA_1028_APPLE_V001)||defined(INVERT_LED_IN_USE)
 	play_led_seg_out2();
 #endif
 
@@ -938,7 +951,7 @@ void Disp_Update(void)
 #endif
 
 }
-#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
 xd_u8 led_flash_tpye_poll=0;
 void led_screen_flash()
 {
@@ -951,7 +964,13 @@ void led_screen_flash()
 		}
 	}
 #endif
-
+#if defined(PAUSE_FLASH_WHOLE_SCREEN)
+	if(led_flash_tpye_poll==2){		
+		if(pause_flash_enable){
+			Clear_Disp_Buf();
+		}
+	}
+#endif
 #if defined(MP3_PUASE_FLASH_FIGURE)
 	if(led_flash_tpye_poll==2){		
 		if(pause_flash_enable){
@@ -973,7 +992,7 @@ void Update_customed_buf()
 #if defined(USE_BAT_MANAGEMENT)
 	Bat_icon_chk();
 #endif
-#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
  	led_screen_flash();
  #endif
 
@@ -1099,6 +1118,11 @@ void Disp_Con(u8 LCDinterf)
     	case DISP_SCAN_NO:
 	 	Disp_Scan_NO();		
 		break;	
+#ifdef DISP_SCH_AT_FM_SCAN		
+    	case DISP_SCH:
+	 	Disp_Sch();		
+		break;			
+#endif		
 #ifdef DISP_DEV_STR_BEFOR_PLAY		
 	case DISP_CUR_DEV:
 		Disp_curr_Dev();

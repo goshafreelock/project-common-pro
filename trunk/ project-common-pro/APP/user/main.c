@@ -538,7 +538,7 @@ void timer1isr(void)
   		custom_func_tick =1;
 #endif
 			
-#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
 		Led_flash_screen_hdlr();
 #endif
             put_msg_fifo(INFO_HALF_SECOND);

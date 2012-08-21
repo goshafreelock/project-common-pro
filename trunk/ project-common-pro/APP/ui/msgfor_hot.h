@@ -50,7 +50,7 @@ void set_mode_hotkey_protect(bool protec);
 bool get_mod_hotkey_protect_status();
 #endif
 
-#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
 void Led_flash_screen_hdlr();
 void set_led_flash_tpye(u8 type_reg);
 #endif

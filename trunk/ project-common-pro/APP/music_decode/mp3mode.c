@@ -676,7 +676,7 @@ void music_play(void)
 #endif
             get_music_file1(GET_NEXT_FILE);
 #if defined(MUTE_ON_FLASH_WHOLE_SCREEN)
-#if defined(MP3_PUASE_FLASH_FIGURE)
+#if 1//defined(MP3_PUASE_FLASH_FIGURE)
 	     if(get_super_mute_lock()){
 			clear_super_mute_lock();
 	      }
@@ -709,7 +709,7 @@ void music_play(void)
 #endif
             get_music_file1(GET_PREV_FILE);
 #if defined(MUTE_ON_FLASH_WHOLE_SCREEN)
-#if defined(MP3_PUASE_FLASH_FIGURE)
+#if 1//defined(MP3_PUASE_FLASH_FIGURE)
 	     if(get_super_mute_lock()){
 			clear_super_mute_lock();
 	      }
@@ -738,6 +738,27 @@ void music_play(void)
 		select_folder_file(FIND_PREV_DIR);	
 		break;
 #endif
+
+#ifdef ADKEY_NEXT_PREV_15_SONG	
+        case INFO_PLUS | KEY_SHORT_UP:
+
+		if((given_file_number+15)<fs_msg.fileTotal){
+			given_file_number=given_file_number+15;
+			stop_decode();
+                	put_msg_lifo(INIT_PLAY);			
+		}
+
+		break;
+        case INFO_MINUS | KEY_SHORT_UP:
+
+		if((given_file_number>15)){
+			given_file_number=given_file_number-15;
+			stop_decode();
+                	put_msg_lifo(INIT_PLAY);			
+		}		
+		break;
+#endif
+
 
 #if defined(K015_983_SW005_ZhuoXin_FB001_V001)
         case INFO_PLUS |KEY_SHORT_UP:
@@ -1047,10 +1068,11 @@ void music_play(void)
 #endif		  
             }
 #if 1//ined(MUTE_ON_FLASH_WHOLE_SCREEN)
-#if defined(MP3_PUASE_FLASH_FIGURE)
+#if defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
             if (play_status == MUSIC_PAUSE)
 			set_led_flash_tpye(2);
 	     else{
+			set_led_flash_tpye(0);
 			if(get_super_mute_lock()){
 				set_led_flash_tpye(1);
 			       Disp_Con(DISP_VOL);
