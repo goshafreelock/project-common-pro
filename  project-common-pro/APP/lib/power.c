@@ -315,17 +315,43 @@ __PWR_ON:
 
 #if defined(BT_CONFIG_POWER_ON_ENABLE)
 			power_down_cnt = 0;
-			if(pwr_key_cnt>10){
+			if(pwr_key_cnt>2){
 
+				if(pwr_key_cnt>=3){
+					set_play_flash(LED_FLASH_ON);
+				}
+				
+				if(pwr_key_cnt>12){
+					goto __PWR_UP;
+				}
 			}
 #else
 			if(pwr_key_cnt >1)
 				goto __PWR_UP;
 			power_down_cnt = 0;
 #endif			
+
 		}
 		else if(key==0xFF){
-			
+#if defined(BT_CONFIG_POWER_ON_ENABLE)
+			power_down_cnt++;
+			if(power_down_cnt>120){
+				
+				if(pwr_key_cnt>=3){
+					goto __PWR_UP;
+				}
+				else{
+					    EA = 0;
+#if defined(PWR_CTRL_WKUP)
+					    wkup_pin_ctrl(0);
+#else
+					    power_ctl(0);
+#endif
+					    while (1);
+				}
+			}
+
+#else			
 			if(power_down_cnt++>250){
 			    EA = 0;
 #if defined(PWR_CTRL_WKUP)
@@ -334,11 +360,20 @@ __PWR_ON:
 			    power_ctl(0);
 #endif
 			    while (1);
+				
 			}
+#endif
+			
 		    delay_10ms(1);
 		}
     }
  __PWR_UP:
+
+#if defined(BT_CONFIG_POWER_ON_ENABLE)
+	BT_CONFIG_PORT_INIT();
+	BT_CONFIG_OFF();
+#endif
+	
 	set_play_flash(LED_FLASH_ON);
     	Disp_Con(DISP_START);
 #if defined(USE_BAT_MANAGEMENT)	
