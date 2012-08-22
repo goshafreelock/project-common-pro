@@ -641,32 +641,24 @@ void portable_charger_hdlr()
 	
 	if(BATT_CHRG_PORT){
 		if(BATT_STBY_PORT){
-			cell_battary_status =BATT_CHARG_IDLE;
+			cell_battary_status =BATT_CHARG_FULL;
+			cell_level_disp_if(LEVEL_LED_ALL_ON);			
 		}
 		else{
-			cell_battary_status =BATT_CHARG_FULL;
-			cell_level_disp_if(LEVEL_LED_ALL_ON);
+			cell_battary_status =BATT_CHARG_CHARGING;
 		}
 	}
 	else{
-		
-		if(BATT_STBY_PORT){
-			cell_battary_status =BATT_CHARG_CHARGING;
-		}
-		else{
-			cell_battary_status =BATT_CHARG_IDLE;
-
-		}
+		cell_battary_status =BATT_CHARG_IDLE;
 	}
 	//4 BATTARY CHARGE PHASE...END..
+	
 
+#ifdef BATT_OUTPUT_CHARGER_DETECTION
 
 	//4 OUTPUT CHARGE PHASE...BEGIN...
 	OUTPUT_CHARGER_PORT_INIT();
 	OUTPUT_DEVICE_PORT_INIT();
-
-
-#ifdef BATT_OUTPUT_CHARGER_DETECTION
 	
 	if(output_discharge_en){
 	//if(OUTPUT_DEVICE_PORT){
