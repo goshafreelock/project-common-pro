@@ -323,7 +323,8 @@ bool charger_detect(void)
     P04 =0;
     P0PU  &= ~(BIT(4));
     P0DIR |= (BIT(4));
-	
+    P0PD |= (BIT(4));
+
 #endif
 
      if(CHARGER_PORT){
