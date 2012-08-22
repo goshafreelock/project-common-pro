@@ -37,7 +37,7 @@
 #define LED_BAT_L1		 BIT(LED_G)
 #define LED_MP3		 0//BIT(LED_H)
 #define LED_STATUS   LED_BUFF[4]
-#elif defined(K1161_ZK_ALK935_V001)||defined(K1166_ZK_ALK980_V001)
+#elif defined(K1161_ZK_ALK935_V001)||defined(K1166_ZK_ALK980_V001)||defined(LED_MODE_EXCHANGE_TF_USB_ICON)
 #define LED_AUX	 	BIT(LED_A)
 #define LED_FM		BIT(LED_C)
 #define LED_USB		 BIT(LED_D)
