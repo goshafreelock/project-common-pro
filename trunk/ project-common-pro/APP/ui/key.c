@@ -37,6 +37,10 @@ extern bool earphone_plugged_flag;
 extern bool aux_online;
 #endif
 
+#if defined(CHARGE_STATE_FOR_LED_PROTECTION)
+extern bool sys_led_protect_bit;
+#endif
+
 #if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)
 static bool radio_freq_tune_protect=0;
 bool get_radio_freq_tune_protect()
@@ -333,7 +337,11 @@ bool charger_detect(void)
 #ifdef LOW_BAT_POWER_OFF_MODE
 		low_bat_power_lock =0;		
 #endif
-		
+
+#if defined(CHARGE_STATE_FOR_LED_PROTECTION)
+		sys_led_protect_bit =1;
+#endif
+
 #if defined(CHARGER_FLASH_TYPE_1)
 
 		if(LDO_IN_Volt>=BAT_FULL_VOLT){
@@ -438,6 +446,10 @@ bool charger_detect(void)
 				bat_level=0;
 			}
 		}		
+#elif defined(DC_CHARGE_GPIO_DRV_LED_IND_2)
+		DC_CHARGE_LED_INIT();
+		DC_CHARGE_LED_H();		
+
 #elif defined(DC_CHARGE_GPIO_DRV_LED_IND)
 
 
@@ -483,7 +495,12 @@ bool charger_detect(void)
 		return 1;
      }
 	charger_in_flag =0;
-
+#if defined(CHARGE_STATE_FOR_LED_PROTECTION)
+		sys_led_protect_bit =0;
+#endif
+#ifdef K0000_MY_FT18_BT_V001
+	return 0;
+#endif
 #if defined(DC_CHARGE_GPIO_DRV_LED_IND)
 		DC_CHARGE_LED_L();		
 #endif

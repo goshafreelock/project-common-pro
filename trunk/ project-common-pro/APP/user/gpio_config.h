@@ -1044,6 +1044,36 @@
 #define BT_VOL_DOWN_ON() 			P15 =1
 #define BT_VOL_DOWN_OFF() 			P15 =0
 
+#elif defined(K0000_MY_FT18_BT_V001)
+
+#define BT_PWR_PORT_INIT() 			P1DIR &= ~(BIT(3));P1PU &= ~(BIT(3));P13 =0
+#define BT_PWR_ON() 				P13 =1
+#define BT_PWR_OFF() 				P13 =0	
+
+#define BT_RST_PORT_INIT() 		
+#define BT_RST_ON() 				
+#define BT_RST_OFF() 			
+
+#define BT_PP_PORT_INIT() 			P1DIR &= ~(BIT(0));P1PU |=BIT(0);P10 =0
+#define BT_PP_ON() 					P10 =1
+#define BT_PP_OFF() 					P10 =0
+
+#define BT_NEXT_PORT_INIT() 		P1DIR &= ~(BIT(1));P1PU |=BIT(1);P11 =0
+#define BT_NEXT_ON() 				P11 =1
+#define BT_NEXT_OFF() 				P11 =0
+
+#define BT_PREV_PORT_INIT() 		P1DIR &= ~(BIT(2));P1PU |=BIT(2);P12 =0
+#define BT_PREV_ON() 				P12 =1
+#define BT_PREV_OFF() 				P12 =0
+
+#define BT_VOLU_PORT_INIT() 		
+#define BT_VOL_UP_ON() 				
+#define BT_VOL_UP_OFF() 			
+
+#define BT_VOLD_PORT_INIT() 		
+#define BT_VOL_DOWN_ON() 			
+#define BT_VOL_DOWN_OFF() 	
+
 #elif defined(K0000_ZG_BT260_V001)
 
 #define BT_PWR_PORT_INIT() 			P1DIR &= ~(BIT(3));P1PU &= ~(BIT(3));P13=0
@@ -1291,7 +1321,15 @@
 #if defined(DC_CHARGE_GPIO_DRV_LED_P00)
 #define DC_CHARGE_LED_INIT()	P0DIR &= ~(BIT(0));P0PU |= (BIT(0))
 #define DC_CHARGE_LED_H()		P00=1
-#define DC_CHARGE_LED_L()		P00=0	
+#define DC_CHARGE_LED_L()		P00=0
+#elif defined(DC_CHARGE_GPIO_DRV_LED_P07)
+#define DC_CHARGE_LED_INIT()	P0DIR &= ~(BIT(7));P0PU |= (BIT(7))
+#define DC_CHARGE_LED_H()		P07=1
+#define DC_CHARGE_LED_L()		P07=0
+#elif defined(DC_CHARGE_GPIO_DRV_LED_P13)
+#define DC_CHARGE_LED_INIT()	P1DIR &= ~(BIT(3));P1PU |= (BIT(3))
+#define DC_CHARGE_LED_H()		P13=1
+#define DC_CHARGE_LED_L()		P13=0	
 #else
 #define DC_CHARGE_LED_INIT()	DACCON0|=0x80;P0DIR &= ~(1<<2);P0PU |= (1<<2); P3DIR |= (1<<4);P3PU &= ~(1<<4);P3PD&= ~(1<<4)
 #define DC_CHARGE_LED_H()		P02=1

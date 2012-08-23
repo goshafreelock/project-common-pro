@@ -99,6 +99,10 @@ extern void disp_buf_figure_buf();
 bool sys_pwr_on_led_protect_bit=0;
 #endif
 
+#if defined(CHARGE_STATE_FOR_LED_PROTECTION)
+bool sys_led_protect_bit=0;
+#endif
+
 extern xd_u8 my_music_vol;
 
 extern _xdata SYS_WORK_MODE work_mode;
@@ -682,6 +686,10 @@ void play_led_flash()
 
 #if defined(SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION)||defined(SYS_LED_PROTECTION_UNTILL_PWR_ON)
 	if(sys_pwr_on_led_protect_bit)return;
+#endif
+
+#if defined(CHARGE_STATE_FOR_LED_PROTECTION)
+	if(sys_led_protect_bit)return;
 #endif
 #if 0//defined(USE_GPIO_DETECT_EARPHONE_PLUGGED)||defined(LINE_IN_DETECT_SHARE_LED_STATUS_PORT)
 #ifndef USE_ADKEY_FOR_AUX_HP_DETECTION
