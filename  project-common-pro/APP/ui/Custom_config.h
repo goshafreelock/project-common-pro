@@ -666,6 +666,7 @@
 //#define K1172_DCX_D968_V001
 //#define K000_XFW_GL005_V001
 //#define K3018_AP_751_V001
+#define K2099_JGY_2099_V001
 
 
 /*****************测试验证******************/
@@ -13891,6 +13892,33 @@
 #define USE_PWR_KEY_LONG_PWR_ON
 #endif
 
+
+#endif
+
+
+#ifdef K2099_JGY_2099_V001
+
+#define AC209_28PIN		//28 PIN IC GPIO CONFIG
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P26
+
+#define PLAY_STATUS_LED_P27
+
+#define FM_BY_PASS
+
+#define ADKEY_PLAY_SHORT_SCAN_FRE
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+#define LINE_IN_PLAY_KEY_PAUSE
 
 #endif
 
