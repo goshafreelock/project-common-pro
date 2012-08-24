@@ -64,9 +64,11 @@ void decode_opt_music_file(u8 buf_dptr)
 #endif
 
    Mute_Ext_PA(UNMUTE);
-
+#ifdef  OTP_DECODE_PLAY_FOLLOW_SYS_VOL
+   main_vol(my_music_vol);
+#else
    main_vol(MAX_ANALOG_VOL);
-
+#endif
     flush_low_msg();
     play_status = MUSIC_PLAY;
     decode_cmd = 0;
