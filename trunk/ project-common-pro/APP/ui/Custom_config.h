@@ -666,7 +666,7 @@
 //#define K1172_DCX_D968_V001
 //#define K000_XFW_GL005_V001
 //#define K3018_AP_751_V001
-#define K2099_JGY_2099_V001
+//#define K2099_JGY_2099_V001
 
 
 /*****************测试验证******************/
@@ -1808,13 +1808,11 @@
 #define LED_MODE_EXCHANGE_TF_USB_ICON
 
 #define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
-#define DEFAULT_GO_TO_IDLE
 
 #define USE_POWER_KEY_SHORT_SCAN
 #define POWE_KEY_PLAY_KEY_IN_ONE_KEY
 
 #define DISP_OFF_STR_AT_PWR_DOWN
-#define NO_DEV_SHOW_HI_STR
 #define DISP_PAUS_STRING
 #define FM_MAX_CHANNAL_50
 #define ADKEY_PLAY_SHORT_ADJ_CH
@@ -1825,8 +1823,8 @@
 #define LINE_IN_PLAY_KEY_PAUSE
 #define USE_POWER_KEY_FOR_AUX_PLAY
 
-#define DISP_HIFI_STR_AT_POWER_ON
-#define VOLUME_CUSTOMER_DEFINE_32
+
+#define VOLUME_DEFUALT 	20
 #define DISP_FM_STR_WHEN_PAUS
 
 #if 1
@@ -1845,6 +1843,12 @@
 #define CHARGER_DET_USE_P17
 #define CHARGER_FLASH_TYPE_2
 
+
+#undef USE_RDAs_FM
+#undef USE_BK1080_FM
+#define OTP_MUSIC_FUNC_ENABLE
+#define OTP_DECODE_PLAY_FOLLOW_SYS_VOL
+#define Lamborghini_voice
 #endif
 
 #ifdef K1161_YJH_1161_V001

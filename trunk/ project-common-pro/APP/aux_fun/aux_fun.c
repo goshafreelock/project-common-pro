@@ -609,6 +609,9 @@ void deal_aux( void )
         if (play_status == MUSIC_PAUSE)
         {
 	       play_status =MUSIC_PLAY;
+#ifndef NO_AUX_MUTE_WHEN_PAUSE		  
+  		  Mute_Ext_PA(UNMUTE);
+#endif		   
 	 }
 #endif		
 	 clear_super_mute_lock();
