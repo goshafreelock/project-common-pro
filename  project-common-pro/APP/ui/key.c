@@ -185,7 +185,7 @@ extern bool pwr_up_flag;
 #define BAT_LOW_VOLT   	35
 #elif defined(K000_AOKAILIN_G01_V001)||defined(K000_AOKAILIN_537B_V001)||defined(K000_AOKAILIN_535B_V001)
 #define BAT_LOW_VOLT   	33
-#elif defined(K000_JLH_2402_V001)||defined(K2041_XFW_2041_V001)
+#elif defined(K000_JLH_2402_V001)||defined(K2041_XFW_2041_V001)||defined(K2041_XFW_2041_V002)
 #define BAT_LOW_VOLT   	35
 #define BAT_LOW_ALERT  	32
 #elif defined(K0000_MC_Q16A_V001)||defined(K0000_MC_Q18A_V001)||defined(K0000_MC_Q18A_V002)||defined(MEI_CHENG_BAT_PARA)
