@@ -498,7 +498,7 @@ void Disp_Stop()
 void Disp_Play(void)
 {
 #if defined(LED_USE_PLAY_MODE)
-#if defined(K223_BTL_CP153_V001)||defined(K2041_XFW_2041_V001)||defined(K000_XinLei_LC2092_V004)||defined(K1051_JIAMEI_1051_V001)||defined(K1051_JIAMEI_1051C_V001)||defined(K000_XinLei_LC2092_V001)||defined(K000_XinLei_LC2092_V002)||defined(K000_AOKAILIN_535B_V001)||defined(K1025_AIPU_1025_V001)||defined(K000_AOKAILIN_537B_V001)||defined(K1007_JinYiHeLi_1007_V001)||defined(K591_JiaLe_591_V001)||defined(K795_JinYeHeLi_795_V001)||defined(K796_JinYeHeLi_796_V001)||defined(K1025_JinYeHeLi_1025_V001)||defined(K762_JinYiHeLi_762_V001)||defined(K763_JinYiHeLi_763_V001)||defined(K585_YJH_585_V001)||defined(K737_JinYiHeLi_737_V001)||defined(K756_JinYiHeLi_756_V001)||defined(K000_AOKAILIN_G01_V001)||defined(K000_AOKAILIN_508_V001)
+#if defined(K223_BTL_CP153_V001)||defined(K2041_XFW_2041_V001)||defined(K2041_XFW_2041_V002)||defined(K000_XinLei_LC2092_V004)||defined(K1051_JIAMEI_1051_V001)||defined(K1051_JIAMEI_1051C_V001)||defined(K000_XinLei_LC2092_V001)||defined(K000_XinLei_LC2092_V002)||defined(K000_AOKAILIN_535B_V001)||defined(K1025_AIPU_1025_V001)||defined(K000_AOKAILIN_537B_V001)||defined(K1007_JinYiHeLi_1007_V001)||defined(K591_JiaLe_591_V001)||defined(K795_JinYeHeLi_795_V001)||defined(K796_JinYeHeLi_796_V001)||defined(K1025_JinYeHeLi_1025_V001)||defined(K762_JinYiHeLi_762_V001)||defined(K763_JinYiHeLi_763_V001)||defined(K585_YJH_585_V001)||defined(K737_JinYiHeLi_737_V001)||defined(K756_JinYiHeLi_756_V001)||defined(K000_AOKAILIN_G01_V001)||defined(K000_AOKAILIN_508_V001)
 
 #else	
     LED_STATUS |= LED_MP3;

@@ -40,7 +40,7 @@ _code u8 msg_tab[] ={1,1,2,3,5,8,13};
 #define MSG_CHK_B			0xCC
 
 #if defined(KPL_MSG_TYPE_1)
-#define MSG_LOCK_TIMER 		78
+#define MSG_LOCK_TIMER 		48
 #define MSG_UNLOCK_TIMER 	12
 #elif defined(KPL_MSG_TYPE_2)
 #define MSG_LOCK_TIMER 		88
