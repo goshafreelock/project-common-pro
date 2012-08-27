@@ -32,7 +32,7 @@ extern bool IR_KEY_Detect;
 extern xd_u8 my_music_vol; 
 extern u16 get_fm_id();
 
-#if defined(NEW_VOLUME_KEY_FEATURE)
+#if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 extern bool new_vol_feature;
 extern u8 last_disp_menu;
 #endif
@@ -265,6 +265,12 @@ void fm_rev( void )
 #if 1//def USE_POWER_KEY
 #ifdef USE_POWER_KEY_SHORT_SCAN
     	case INFO_POWER | KEY_SHORT_UP :
+#ifdef USE_IR_POWER_KEY_TO_POWER_OFF
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			goto _HOT_KEY_HDLR;	
+		}
+#endif		
 	goto __SCAN_FREQ;
 
 #endif
@@ -469,7 +475,7 @@ __SCAN_FREQ:
                 }
                 else if (DISP_FREQ != curr_menu)
                     Disp_Con(DISP_FREQ);
-#if defined(NEW_VOLUME_KEY_FEATURE)
+#if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 		if(new_vol_feature){
 			new_vol_feature =0;
                      Disp_Con(last_disp_menu);
@@ -511,7 +517,7 @@ _PICK_CH:
             write_info(MEM_FRE,frequency - MIN_FRE);
             break;
 
-#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)
+#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
         case INFO_PLUS:	
       	     frequency += 2;
             goto __FRE_DOWN;			

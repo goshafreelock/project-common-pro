@@ -70,7 +70,7 @@ static bool lcd_play_pattern_lock=0;
 #ifdef MATRIX_KEY_ENABLE
 bool key_scan_en=1;
 #endif
-#if defined(NEW_VOLUME_KEY_FEATURE)
+#if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 bool new_vol_feature=0;
 u8 last_disp_menu=0;
 #endif
@@ -1773,7 +1773,23 @@ u8 ap_handle_hotkey(u8 key)
 		break;
         case INFO_NEXT_FIL:
         case INFO_NEXT_FIL | KEY_HOLD:
-			
+#elif defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
+
+    	 case INFO_VOL_MINUS | KEY_SHORT_UP :
+		new_vol_feature=~new_vol_feature;
+		if(new_vol_feature){
+
+			last_disp_menu =curr_menu;
+			Disp_Con(DISP_VOL);
+		}
+		else{
+
+			Disp_Con(last_disp_menu);
+		}
+		break;
+    case INFO_VOL_PLUS:		
+    case INFO_VOL_PLUS | KEY_HOLD :
+		
 #else
 
     case INFO_VOL_PLUS:
@@ -1801,7 +1817,7 @@ u8 ap_handle_hotkey(u8 key)
 
 #if defined(NEW_VOLUME_KEY_FEATURE)
         case INFO_PREV_FIL:
-        case INFO_PREV_FIL | KEY_HOLD:
+        case INFO_PREV_FIL | KEY_HOLD:	
 #else
     case INFO_VOL_MINUS:
     case INFO_VOL_MINUS | KEY_HOLD :
@@ -1924,6 +1940,12 @@ _SYS_GO_IN_POWER_OFF:
 #ifdef  USE_POWER_KEY
 #ifdef POWER_KEY_SHORT_PWR_DOWN
         sys_power_down();
+#else
+	Mute_Ext_PA(MUTE);
+	work_mode =SYS_IDLE;
+       put_msg_fifo(INFO_SYS_IDLE);
+       pwr_up_flag =1;		   					
+       return 0;
 #endif
         break;
 #else

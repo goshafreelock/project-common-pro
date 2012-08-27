@@ -46,7 +46,7 @@ extern void disp_play_icon_flash();
 #if defined(K619_FXK_619_V001)
 extern bool config_led_by_gpio;
 #endif
-#if defined(NEW_VOLUME_KEY_FEATURE)
+#if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 extern bool new_vol_feature;
 extern u8 last_disp_menu;
 #endif
@@ -978,6 +978,12 @@ void music_play(void)
 #ifdef POWE_KEY_PLAY_KEY_IN_ONE_KEY
     case INFO_POWER | KEY_SHORT_UP :	
 #endif
+#ifdef USE_IR_POWER_KEY_TO_POWER_OFF
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			goto __hot_key;	
+		}
+#endif
         case INFO_PLAY | KEY_SHORT_UP :
 			
 #ifdef PLAY_KEY_USE_FOR_STOP_FUNC
@@ -1219,7 +1225,7 @@ void music_play(void)
                             Disp_Con(DISP_PLAY);
                     }
                 }
-#if defined(NEW_VOLUME_KEY_FEATURE)
+#if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 		if(new_vol_feature){
 			new_vol_feature =0;
                      Disp_Con(last_disp_menu);
