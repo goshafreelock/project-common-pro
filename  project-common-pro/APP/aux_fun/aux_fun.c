@@ -337,7 +337,14 @@ void deal_aux( void )
 #if defined(LINE_IN_PLAY_KEY_PAUSE)
 #if 1//defined(USE_ONLY_POWER_HOLD_CTRL)
 #if defined(USE_POWER_KEY_FOR_AUX_PLAY)
-        case INFO_POWER | KEY_SHORT_UP :		
+        case INFO_POWER | KEY_SHORT_UP :	
+#ifdef USE_IR_POWER_KEY_TO_POWER_OFF
+		if(IR_KEY_Detect){
+			goto _HOT_KEY_HDLR;	
+		}
+        case INFO_PLAY | KEY_SHORT_UP :		
+#endif		
+			
 #else
         case INFO_PLAY | KEY_SHORT_UP :
 #endif

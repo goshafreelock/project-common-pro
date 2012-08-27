@@ -41,7 +41,7 @@ extern bool aux_online;
 extern bool sys_led_protect_bit;
 #endif
 
-#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)
+#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 static bool radio_freq_tune_protect=0;
 bool get_radio_freq_tune_protect()
 {
@@ -1548,6 +1548,9 @@ void key_tone(void)
 xd_u8 touchkeyval;
 xd_u8 keyval_buf;
 xd_u8  JogBuf;
+#if defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
+extern bool new_vol_feature;
+#endif
 void JogDetect(void)
 {
 	u8 port_val=0;
@@ -1664,7 +1667,26 @@ void JogDetect(void)
 		}
 		else{
 	             put_msg_fifo(INFO_VOL_MINUS);
-		}		
+		}
+#elif defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
+
+		if((work_mode == SYS_FMREV)
+#ifdef RADIO_AM_WM_ENABLE						
+		   ||(work_mode == SYS_AMREV)
+#endif			
+		)
+		{
+			if(new_vol_feature){
+		             put_msg_fifo(INFO_VOL_MINUS);
+			}
+			else{
+			     	radio_freq_tune_protect =1;
+		             	put_msg_fifo(INFO_MINUS);
+			}
+		}
+		else{
+	             put_msg_fifo(INFO_VOL_MINUS);
+		}			
 #elif defined(K000_KT_AMFM_V001)||defined(VOL_TUNE_CH_VOL)
 		if((work_mode == SYS_FMREV)
 #ifdef RADIO_AM_WM_ENABLE			
@@ -1697,6 +1719,27 @@ void JogDetect(void)
 		else{
                     put_msg_fifo(INFO_PREV_FIL|KEY_SHORT_UP);
 		}
+		
+#elif defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
+
+		if((work_mode == SYS_FMREV)
+#ifdef RADIO_AM_WM_ENABLE						
+		   ||(work_mode == SYS_AMREV)
+#endif			
+		)
+		{
+			if(new_vol_feature){
+		             put_msg_fifo(INFO_VOL_PLUS);
+			}
+			else{
+			     	radio_freq_tune_protect =1;
+		             	put_msg_fifo(INFO_PLUS);
+			}
+		}
+		else{
+	             put_msg_fifo(INFO_VOL_PLUS);
+		}	
+
 #elif defined(VOL_TUNE_FREQ_ONLY)
 		if((work_mode == SYS_FMREV)
 #ifdef RADIO_AM_WM_ENABLE						

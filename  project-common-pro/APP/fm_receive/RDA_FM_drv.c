@@ -433,7 +433,7 @@ bool RDA5807P_ValidStop(u16 freq)
 	RDA5807P_reg_data[3]=(((curChan&0x0003)<<6)|0x10) | (RDA5807P_REG[3]&0x0f);
 	OperationRDAFM_2w(WRITE,&(RDA5807P_reg_data[0]), 4);
 	
-#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)
+#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 	if( get_radio_freq_tune_protect()){
 		
 	}

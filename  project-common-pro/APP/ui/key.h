@@ -77,7 +77,7 @@ void keyScan(void);
 u8 get_adkey_1_value(void);
 u8 get_adkey_2_value(void);
 #endif
-#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)
+#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 bool get_radio_freq_tune_protect();
 #endif	
 #if defined(TWO_ADKEY_ENABLE)
@@ -577,8 +577,8 @@ void bat_val_arg(void);
 #define ADKEY_2		INFO_PREV_FIL
 #define ADKEY_3		INFO_NEXT_FIL
 #define ADKEY_4		INFO_MODE
-#define ADKEY_5		INFO_FM_MOD
-#define ADKEY_6		INFO_WM_MOD
+#define ADKEY_5		INFO_PLAY_MODE
+#define ADKEY_6		INFO_EQ_UP
 #define ADKEY_7		INFO_VOL_MINUS
 #define ADKEY_8		INFO_VOL_PLUS
 #define ADKEY_NOKEY	NO_KEY

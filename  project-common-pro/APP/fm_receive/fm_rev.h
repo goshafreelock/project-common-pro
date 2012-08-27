@@ -11,13 +11,18 @@
 #define MIN_FRE	   875
 #endif
 
-#ifdef USE_BK1088_FM
-#define AM_MAX_FRE    1710
+#define FM_FREQ_STEP_100K	1
+
+#ifdef FM_USE_BK1086
+#define AM_MAX_FRE    1620
 #define AM_MIN_FRE	   522
 #else
 #define AM_MAX_FRE    1710
 #define AM_MIN_FRE	   504
 #endif
+
+#define AM_FREQ_STEP_9K	9
+#define AM_FREQ_STEP_10K	10
 
 #define AM_FREQ_MAGIC_NUM		0x80
 #if defined(FM_MAX_CHANNAL_50)

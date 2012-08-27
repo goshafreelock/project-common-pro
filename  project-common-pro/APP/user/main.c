@@ -52,6 +52,8 @@ extern xd_u8  return_cnt;
 extern void DSA_init(void);
 extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 #endif
+extern bool IR_KEY_Detect;
+
 
 #if defined(DEFAULT_GO_TO_CUSTOM_MODE)
 extern bool custom_first_time_pwr_flag;
@@ -1131,6 +1133,14 @@ void Idle_hdlr()
 		return;
 #endif
     	case INFO_POWER | KEY_SHORT_UP :
+#ifdef USE_IR_POWER_KEY_TO_POWER_OFF
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			pwr_up_flag=1;
+			return;
+		}
+#endif
+			
 #if defined(K723_LUOMAO_723_V001)
 	goto __HOT_MSG_HDL;
 #endif
