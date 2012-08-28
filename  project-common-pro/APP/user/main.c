@@ -1378,11 +1378,12 @@ void main(void)
             work_mode = SYS_MP3DECODE_USB;
             break;
         }
-
+#ifdef USE_SYS_MODE_RECOVER
 	if(work_mode !=SYS_IDLE){
 		//sys_printf("Write EEPROM in main While !! ");
               write_info(MEM_SYSMODE,work_mode);
     	}
+#endif	
     }
 
 }

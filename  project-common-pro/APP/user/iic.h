@@ -100,16 +100,25 @@ u8 RDAFM_read_data(u8 regaddr, u16 *Rdata, u8 datalen);
 #define MEM_VOL            3
 #define MEM_SYSMODE        4
 
-#define MEM_ALM_SW		   5
-#define MEM_ALM_HOUR       6
-#define MEM_ALM_MIN        7
+#define MEM_ALM_SW		   4
+#define MEM_ALM_HOUR       5
+#define MEM_ALM_MIN        6
 
-#define MEM_FRE            8
-#define MEM_ALL_CHANNL     9
-#define MEM_FRE_CHANNL     10
+#define MEM_FRE            7
+#define MEM_ALL_CHANNL     8
+#define MEM_FRE_CHANNL     9
 
+#define MEM_CHANNL         35//11
 
-#define MEM_CHANNL         40//11
+#define MEM_AM_FRE            	10
+#define MEM_AM_ALL_CHANNL     12
+#define MEM_AM_FRE_CHANNL     13
+
+#if defined(FM_MAX_CHANNAL_50)||defined(FM_MAX_CHANNAL_60)
+#define MEM_AM_CHANNL              100
+#else
+#define MEM_AM_CHANNL              80
+#endif
 
 #if defined(FM_MAX_CHANNAL_50)||defined(FM_MAX_CHANNAL_60)
 #ifdef EEPROM_RTC_RAM_COMPATIBLE
@@ -118,28 +127,20 @@ u8 RDAFM_read_data(u8 regaddr, u16 *Rdata, u8 datalen);
 #endif
 
 #if defined(TURN_ON_PLAY_BREAK_POINT_MEM)			
-#define MEM_SD_PLAYPOINT_INFO  21
-#define MEM_USB_PLAYPOINT_INFO 23
-#define MEM_USB_FRAME_CNT	25
-#define MEM_USB_NEXT_FRAME  29
-#define MEM_SD_FRAME_CNT	33
-#define MEM_SD_NEXT_FRAME   37	
+#define MEM_SD_PLAYPOINT_INFO  15
+#define MEM_USB_PLAYPOINT_INFO 17
+#define MEM_USB_FRAME_CNT	19
+#define MEM_USB_NEXT_FRAME  23
+#define MEM_SD_FRAME_CNT	27
+#define MEM_SD_NEXT_FRAME   31
 #endif
-#define MEM_FILENUM_USB 	20
-#define MEM_FILENUM_SD 	32
-#define MEM_FILENUM 		34
+#define MEM_FILENUM_USB 	15
+#define MEM_FILENUM_SD 	17
+#define MEM_FILENUM 		19
 
 #define IIC_VERIFY_BYTE_ADDR	36
 
-#define MEM_AM_FRE            	11
-#define MEM_AM_ALL_CHANNL     13
-#define MEM_AM_FRE_CHANNL     14
 
-#if defined(FM_MAX_CHANNAL_50)||defined(FM_MAX_CHANNAL_60)
-#define MEM_AM_CHANNL              100
-#else
-#define MEM_AM_CHANNL              80
-#endif
 #define MEM_BASE			100
 #define MEM_TREB 			101
 #define MEM_BAL 			102

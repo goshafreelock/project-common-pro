@@ -577,9 +577,9 @@ void bat_val_arg(void);
 #define ADKEY_2		INFO_PREV_FIL
 #define ADKEY_3		INFO_NEXT_FIL
 #define ADKEY_4		INFO_MODE
-#define ADKEY_5		INFO_PLAY_MODE
-#define ADKEY_6		INFO_EQ_UP
-#define ADKEY_7		INFO_VOL_MINUS
+#define ADKEY_5		INFO_EQ_UP
+#define ADKEY_6		INFO_PLAY_MODE
+#define ADKEY_7		INFO_CUS_KEY_1
 #define ADKEY_8		INFO_VOL_PLUS
 #define ADKEY_NOKEY	NO_KEY
 #elif defined(K1173_ZK_ALK936_V001)

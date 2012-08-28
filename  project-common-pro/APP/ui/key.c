@@ -1685,6 +1685,7 @@ void JogDetect(void)
 			}
 		}
 		else{
+			new_vol_feature=1;
 	             put_msg_fifo(INFO_VOL_MINUS);
 		}			
 #elif defined(K000_KT_AMFM_V001)||defined(VOL_TUNE_CH_VOL)
@@ -1737,6 +1738,7 @@ void JogDetect(void)
 			}
 		}
 		else{
+		      new_vol_feature=1;
 	             put_msg_fifo(INFO_VOL_PLUS);
 		}	
 
