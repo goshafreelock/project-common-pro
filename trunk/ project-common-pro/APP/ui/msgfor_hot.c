@@ -1775,7 +1775,7 @@ u8 ap_handle_hotkey(u8 key)
         case INFO_NEXT_FIL | KEY_HOLD:
 #elif defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 
-    	 case INFO_VOL_MINUS | KEY_SHORT_UP :
+    	 case INFO_CUS_KEY_1 | KEY_SHORT_UP :
 		new_vol_feature=~new_vol_feature;
 		if(new_vol_feature){
 
@@ -1789,7 +1789,9 @@ u8 ap_handle_hotkey(u8 key)
 		break;
     case INFO_VOL_PLUS:		
     case INFO_VOL_PLUS | KEY_HOLD :
-		
+		if(!new_vol_feature){
+			break;
+		}
 #else
 
     case INFO_VOL_PLUS:
@@ -1828,6 +1830,12 @@ u8 ap_handle_hotkey(u8 key)
 			break;
 		}
 #endif
+#endif
+
+#if defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
+		if(!new_vol_feature){
+			break;
+		}
 #endif
 
 	if(work_mode == SYS_IDLE)break;
