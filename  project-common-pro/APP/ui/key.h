@@ -542,7 +542,7 @@ void bat_val_arg(void);
 
 #if defined( CUSTOMER_DEFINED_ADKEY_RESISTOR)
 
-#if defined(SW_V001)||defined(K0000_GW_138B_V001)||defined(SW_V002_CUSTOMED_V001)||defined(SW_V002_CUSTOMED_V002)||defined(SW_V002)||defined(SW_V002_747)||defined(K109_SW001D_V001)||defined(K002_SW_002_Zhuoxin_V001)	//4 交换NEXT PREV按键
+#if defined(SW_V001)||defined(K0000_GW_138B_V001)||defined(SW_V002_CUSTOMED_V001)||defined(SW_V002_CUSTOMED_V003)||defined(SW_V002_CUSTOMED_V002)||defined(SW_V002)||defined(SW_V002_747)||defined(K109_SW001D_V001)||defined(K002_SW_002_Zhuoxin_V001)	//4 交换NEXT PREV按键
 #define ADKEY_1		INFO_PLAY
 #define ADKEY_2		INFO_NEXT_FIL 
 #define ADKEY_3		INFO_PREV_FIL

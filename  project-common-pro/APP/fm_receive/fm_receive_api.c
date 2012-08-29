@@ -1086,9 +1086,15 @@ void auto_scan(AUTO_DIR Dir)
 	}
 	else{
 
-		frequency+=MW_CHANNEL_STEP;
-          if(frequency++>freq_max)frequency = freq_min;
-
+		frequency=frequency+MW_CHANNEL_STEP;
+          	if(frequency>freq_max){
+#ifdef SEMI_SCAN_BAND_BREAK_AT_FREQ_LIMIT
+		  	frequency = freq_max;
+			break;
+#else
+		  	frequency = freq_min;
+#endif
+          	}
 	}
 #else
           if(frequency++>MAX_FRE)frequency = MIN_FRE;
@@ -1104,8 +1110,15 @@ void auto_scan(AUTO_DIR Dir)
 		}
 	else{
 
-		frequency-=MW_CHANNEL_STEP;
-          if(frequency<freq_min)frequency = freq_max;
+		frequency=frequency-MW_CHANNEL_STEP;
+          	if(frequency<freq_min){
+#ifdef SEMI_SCAN_BAND_BREAK_AT_FREQ_LIMIT
+		  	frequency = freq_min;
+			break;
+#else				
+		  	frequency = freq_max;
+#endif
+		}
 
 	}
 #else	
