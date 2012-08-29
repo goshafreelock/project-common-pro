@@ -925,7 +925,11 @@ void get_curr_setting_data(u8 setting)
 		case 0:
 			setting_buff_high=curr_date.year/100%100;
 			setting_buff_low=curr_date.year%100;
+#if defined(K2083_KPL_2083_V001)
+		    	LED_STATUS_COL&=~LED_2POINT;
+#else				
 	    		LED_STATUS &= ~LED_2POINT;			
+#endif
 			break;
 		case 1:
 		case 2:
@@ -936,8 +940,12 @@ void get_curr_setting_data(u8 setting)
 			else{
 				setting_buff_high=curr_date.month;
 				setting_buff_low = curr_date.day;
-			}			
+			}	
+#if defined(K2083_KPL_2083_V001)
+		    	LED_STATUS_COL|=LED_2POINT;
+#else				
 	    		LED_STATUS |= LED_2POINT;				
+#endif
 			break;
 		case 3:
 		case 4:
@@ -949,7 +957,11 @@ void get_curr_setting_data(u8 setting)
 				setting_buff_high=curr_date.hour;
 				setting_buff_low =curr_date.minutes;	
 			}
+#if defined(K2083_KPL_2083_V001)
+		    	LED_STATUS_COL|=LED_2POINT;
+#else				
 	    		LED_STATUS |= LED_2POINT;					
+#endif
 		break;
 		case 5:
   				setting_buff_low = curr_date.date;
@@ -977,13 +989,21 @@ void Disp_RTC_POINT()
     	static bit LED_Point = 0;
 		
 	if(LED_Point){
-	    LED_Point = 0;			
+	    LED_Point = 0;		
+#if defined(K2083_KPL_2083_V001)
+	    LED_STATUS_COL|=LED_2POINT;
+#else			
 	    LED_STATUS |= LED_2POINT;
+#endif
 	}
 	else{
 		
 	    LED_Point = 1;
+#if defined(K2083_KPL_2083_V001)
+    LED_STATUS_COL&= ~LED_2POINT;
+#else			
 	    LED_STATUS &= ~LED_2POINT;
+#endif
 	}
 }
 #if defined(USE_RTC_YEAR_FUNCTION)||defined(NEW_RTC_SETTING_CTRL)
@@ -1051,8 +1071,13 @@ void Disp_RTC()
     else if(rtc_mode == ALM_SET_MODE)
     {
     	if(alm_set==0){
-			
+
+#if defined(K2083_KPL_2083_V001)
+    LED_STATUS_COL&= ~LED_2POINT;
+#else	
 	  LED_STATUS &= ~LED_2POINT;
+#endif
+
 #if defined(MINI_DIGIT_BOX)
     	  if (alm_sw)
             dispstring("A ON",0);

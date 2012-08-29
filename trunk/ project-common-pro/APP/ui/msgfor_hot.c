@@ -1491,7 +1491,12 @@ u8 ap_handle_hotkey(u8 key)
 
 #endif
 
-#if defined(RTC_MODE_HOT_KEY_ENABLE)		
+#if defined(RTC_MODE_HOT_KEY_ENABLE)	
+#ifdef CUSTOM_KEY_LONG_FOR_RTC_HOTKEY
+    case INFO_CUS_KEY_1 | KEY_LONG:		
+#elif defined(MODE_KEY_LONG_FOR_RTC_HOTKEY)
+    case INFO_MODE| KEY_LONG:		
+#endif
     case INFO_RTC_MOD | KEY_SHORT_UP:
         if (work_mode != SYS_RTC)
         {
@@ -1806,6 +1811,10 @@ u8 ap_handle_hotkey(u8 key)
 
 #endif
 
+#ifdef RTC_VOL_FIXIED
+	if(work_mode == SYS_RTC)break;	
+#endif
+
 #ifdef SUPPORT_PT2313
 	if((audio_effect_state>0)){
 		audio_effect_hdlr(0x01);
@@ -1847,7 +1856,9 @@ u8 ap_handle_hotkey(u8 key)
 		break;
 	}
 #endif
-
+#ifdef RTC_VOL_FIXIED
+	if(work_mode == SYS_RTC)break;	
+#endif
 
         if (my_music_vol)
             my_music_vol--;

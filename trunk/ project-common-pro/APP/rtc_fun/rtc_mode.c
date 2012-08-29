@@ -501,6 +501,8 @@ void deal_rtc(void)
 
 #if defined(K686_ZhengYang_686_V001)||defined(USE_MODE_LONG_FOR_RTC_SETTING)
         case INFO_MODE | KEY_LONG:				//4RTC闹钟设置模式
+#elif defined(CUSTOM_KEY_LONG_FOR_RTC_HOTKEY)
+    case INFO_CUS_KEY_1 | KEY_LONG:       
 #elif defined(USE_PREV_LONG_FOR_RTC_SETTING)
         case INFO_PREV_FIL | KEY_LONG:				//4RTC闹钟设置模式
 #elif defined(USE_PLAY_MODE_LONG_FOR_RTC_SETTING)
@@ -674,6 +676,8 @@ void deal_rtc(void)
 		if(rtc_mode == RTC_PLAY_MODE){
 			goto _HOT_KEY_HDLR;
 		}
+#elif defined(CUSTOM_KEY_LONG_FOR_RTC_HOTKEY)
+    case INFO_CUS_KEY_1 | KEY_SHORT_UP:       
 #elif defined(MINI_DIGIT_BOX)        
 	case INFO_1|KEY_SHORT_UP:
 	case INFO_6|KEY_SHORT_UP:	

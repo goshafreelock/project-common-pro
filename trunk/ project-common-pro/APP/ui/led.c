@@ -960,8 +960,8 @@ void LED_scan(void)
 
 #ifdef NEW_RTC_SETTING_CTRL
 extern xd_u8 new_rtc_setting;
-extern bool alm_sw;
 #endif
+extern bool alm_sw;
 
 void updateLED(void)
 {
@@ -974,6 +974,14 @@ void updateLED(void)
 	}
 	if(alm_sw){
     		LED_STATUS |= LED_AUX;
+	}
+#elif defined(AUX_ICON_FOR_RTC_ALM)
+	if(alm_sw){
+    		LED_STATUS |= LED_AUX;
+	}
+	else{
+    		LED_STATUS &=~LED_AUX;
+
 	}
 #endif	
 
