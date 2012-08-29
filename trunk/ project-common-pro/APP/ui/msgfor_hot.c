@@ -1706,6 +1706,11 @@ u8 ap_handle_hotkey(u8 key)
 //__MODE_SKIP:
 
 		flush_all_msg();
+#if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
+	if(new_vol_feature){
+		new_vol_feature =0;
+	}
+#endif				
 
         	//printf(" ----->INFO_MODE %x -- \r\n",(u16)work_mode);
 		
