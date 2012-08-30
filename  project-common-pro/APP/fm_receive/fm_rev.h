@@ -45,7 +45,7 @@
 #endif
 
 #ifdef RADIO_AM_WM_ENABLE
-#define MAX_AM_CHANNL  20
+#define MAX_AM_CHANNL  15
 #endif
 
 #else
