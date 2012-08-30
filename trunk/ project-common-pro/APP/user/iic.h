@@ -117,7 +117,7 @@ u8 RDAFM_read_data(u8 regaddr, u16 *Rdata, u8 datalen);
 #if defined(FM_MAX_CHANNAL_50)||defined(FM_MAX_CHANNAL_60)
 #define MEM_AM_CHANNL              100
 #else
-#define MEM_AM_CHANNL              80
+#define MEM_AM_CHANNL              100
 #endif
 
 #if defined(FM_MAX_CHANNAL_50)||defined(FM_MAX_CHANNAL_60)

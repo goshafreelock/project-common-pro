@@ -128,6 +128,7 @@ void enter_am_rev(void)
 {
     u8 i;
     	all_channl = read_info(MEM_AM_ALL_CHANNL);
+
    	if (all_channl > MAX_CHANNL)
     	{
         	all_channl = MAX_CHANNL;
@@ -135,7 +136,7 @@ void enter_am_rev(void)
 
 	for (i = 0;i<all_channl;i++)
        {
-            am_fre_point[i] = Read_AM_Freq(MEM_AM_CHANNL+i);
+            am_fre_point[i] = Read_AM_Freq(i*2);
        }
 
 

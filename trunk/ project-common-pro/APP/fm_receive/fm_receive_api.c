@@ -48,8 +48,10 @@ extern xd_u16 am_fre_point[MAX_AM_CHANNL];    //4 AM收音搜索到的台的缓存
 extern bool radio_mode;
 void Save_AM_Freq(u16 am_freq,u8 ch)
 {
-	xd_u8 freq_reg=0;
 	
+	xd_u8 freq_reg=0;
+		xd_u16 freq_reg2=0;
+
 	if((ch&AM_FREQ_MAGIC_NUM)>0){
 		
 		freq_reg =(u8)am_freq&(0x00FF);
@@ -59,7 +61,7 @@ void Save_AM_Freq(u16 am_freq,u8 ch)
 	      	write_info(MEM_AM_FRE+1, freq_reg);
 	}
 	else{
-		
+
 		freq_reg =(u8)am_freq&(0x00FF);
 	      	write_info(MEM_AM_CHANNL +ch , freq_reg);
 
@@ -69,21 +71,27 @@ void Save_AM_Freq(u16 am_freq,u8 ch)
 }
 u16 Read_AM_Freq(u8 ch)
 {
-	xd_u16 freq_reg=0;
+	
+	xd_u8 freq_reg=0;
+	xd_u16 freq_reg_2=0;
 
 	if((ch&AM_FREQ_MAGIC_NUM)>0){
-		freq_reg = read_info(MEM_AM_FRE +1);
-		freq_reg=freq_reg<<8;
-		freq_reg |= read_info(MEM_AM_FRE);
+		freq_reg_2 = read_info(MEM_AM_FRE +1);
+		freq_reg_2=freq_reg_2<<8;
+		freq_reg_2 |= read_info(MEM_AM_FRE);
 	}
 	else{
-		
-		freq_reg = read_info(MEM_AM_CHANNL +ch+1);
-		freq_reg=freq_reg<<8;
-		freq_reg |= read_info(MEM_AM_CHANNL +ch);
+
+	
+		freq_reg= read_info(MEM_AM_CHANNL +ch);
+		freq_reg_2=freq_reg;
+
+		freq_reg = read_info(MEM_AM_CHANNL+ch+1);
+		freq_reg_2|=freq_reg<<8;
+
 		
 	}
-	return freq_reg;	
+	return freq_reg_2;	
 }
 bool is_AMFM_online(void)
 {
@@ -841,7 +849,6 @@ void scan_fre(void)
             all_channl++;
 #endif			
 	     Disp_Con(DISP_SCAN_NO);
-		 
 #if defined(KEEP_SILENT_WHEN_SCAN_CHANNEL)
 	     Mute_Ext_PA(MUTE);
 	     my_main_vol(0);
@@ -949,8 +956,9 @@ void scan_fre(void)
 		write_info(MEM_CHANNL + i , fre_point[i]);
 	}
 	else{
+
 		
-        	Save_AM_Freq(am_fre_point[i],i);
+        	Save_AM_Freq(am_fre_point[i],i*2);
 	}
 #else    
         write_info(MEM_CHANNL + i , fre_point[i]);
