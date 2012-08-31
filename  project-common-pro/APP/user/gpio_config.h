@@ -1326,6 +1326,11 @@
 #define DC_CHARGE_LED_INIT()	P0DIR &= ~(BIT(7));P0PU |= (BIT(7))
 #define DC_CHARGE_LED_H()		P07=1
 #define DC_CHARGE_LED_L()		P07=0
+#elif defined(DC_CHARGE_GPIO_DRV_LED_P05)
+#define DC_CHARGE_LED_INIT()	P0DIR &= ~(BIT(5));P0PU |= (BIT(5))
+#define DC_CHARGE_LED_H()		P05=1
+#define DC_CHARGE_LED_L()		P05=0
+#define DISABLE_P05_OSC_OUTPUT
 #elif defined(DC_CHARGE_GPIO_DRV_LED_P13)
 #define DC_CHARGE_LED_INIT()	P1DIR &= ~(BIT(3));P1PU |= (BIT(3))
 #define DC_CHARGE_LED_H()		P13=1

@@ -1242,6 +1242,9 @@ void main(void)
 	Set_Curr_Func(SYS_IDLE);
 #elif defined(SYS_DEFAULT_IN_AUX_MODE)
 	Set_Curr_Func(SYS_AUX);
+#elif defined(SYS_DEFAULT_IN_AUX_MODE_WITH_DETECTION)
+	if(aux_online)
+	Set_Curr_Func(SYS_AUX);
 #elif defined(SYS_DEFAULT_IN_BLUETOOTH_MODE)
 
 #if !defined(USE_BT_GPIO_SEL_MODE)

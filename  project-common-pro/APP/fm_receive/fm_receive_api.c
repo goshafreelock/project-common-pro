@@ -50,7 +50,6 @@ void Save_AM_Freq(u16 am_freq,u8 ch)
 {
 	
 	xd_u8 freq_reg=0;
-		xd_u16 freq_reg2=0;
 
 	if((ch&AM_FREQ_MAGIC_NUM)>0){
 		
@@ -81,15 +80,12 @@ u16 Read_AM_Freq(u8 ch)
 		freq_reg_2 |= read_info(MEM_AM_FRE);
 	}
 	else{
-
 	
 		freq_reg= read_info(MEM_AM_CHANNL +ch);
 		freq_reg_2=freq_reg;
 
 		freq_reg = read_info(MEM_AM_CHANNL+ch+1);
 		freq_reg_2|=freq_reg<<8;
-
-		
 	}
 	return freq_reg_2;	
 }

@@ -988,7 +988,26 @@ bool gpio_select_mode(void)
 		}
 	}
 	return 1;
-	
+#elif defined(K1192_FW_60_V001)	
+
+	WKUPPND|=BIT(6);	
+	_nop_();
+	_nop_();
+	if(WKUPPND&BIT(7)){
+
+		if(work_mode == SYS_AUX){
+			Set_Curr_Func(SYS_MP3DECODE_USB);
+			return 0;
+		}			
+	}
+	else{		
+		if(work_mode != SYS_AUX){
+			Set_Curr_Func(SYS_AUX);
+			set_play_flash(LED_FLASH_ON);
+			return 0;
+		}
+
+	}
 #else
 #if 0
 	P2DIR &=~(BIT(3));
@@ -1605,7 +1624,14 @@ u8 ap_handle_hotkey(u8 key)
 	 Add_Func_To_List(SD_DEV);
 #ifdef AC_SLAVE_ENABLE
 	DSA_init();
-#endif	 
+#endif	
+
+#ifdef DEVICE_PLUG_N_PLAY_DISBALE_AUX_MODE
+	 if((work_mode == SYS_AUX)){
+		break;
+	 }
+#endif
+
 #ifdef DEVICE_SEL_MANUAL_ONLY
 	 if((device_selected== BIT(SDMMC))&&(work_mode == SYS_MP3DECODE_SD))
 #endif
@@ -1635,6 +1661,11 @@ u8 ap_handle_hotkey(u8 key)
 #ifdef AC_SLAVE_ENABLE
 	DSA_init();
 #endif	 	 
+#ifdef DEVICE_PLUG_N_PLAY_DISBALE_AUX_MODE
+	 if((work_mode == SYS_AUX)){
+		break;
+	 }
+#endif
 #ifdef DEVICE_SEL_MANUAL_ONLY
 	 if((device_selected== BIT(USB_DISK))&&(work_mode == SYS_MP3DECODE_USB))
 #endif
