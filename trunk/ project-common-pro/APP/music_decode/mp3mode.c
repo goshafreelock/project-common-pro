@@ -923,13 +923,12 @@ void music_play(void)
 
         case INFO_NEXTMODE:                     ///<下一个模式	
 
-#ifdef GPIO_SWITCH_SELECT_MODE
-		work_mode = SYS_AUX;
-		return;
-#endif
 
 #ifdef DEFAULT_GO_TO_AUX
 		work_mode = SYS_AUX;
+#elif defined(DEFAULT_HOLD_IN_DECODE_MODE)			
+	  		set_play_flash(LED_FLASH_ON);	
+			break;
 #elif defined(DEFAULT_GO_TO_CUSTOM_MODE)
 		if(custom_first_time_pwr_flag){
 			custom_first_time_pwr_flag=0;
@@ -960,6 +959,11 @@ void music_play(void)
 		Set_Curr_Func(SYS_IDLE);
 #else
 		work_mode = Next_Func();
+#endif
+
+#ifdef GPIO_SWITCH_SELECT_MODE
+		work_mode = SYS_AUX;
+		return;
 #endif
 
 #if defined( K186_LM_186_V001)||defined(K000_Zhongwei_SP_016_V001)

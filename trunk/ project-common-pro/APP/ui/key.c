@@ -306,6 +306,9 @@ bool charger_detect(void)
     P0PU  &= ~(BIT(2));
     P0PD|= (BIT(2));
     P0DIR |= (BIT(2));
+#ifdef AC209_28PIN
+	P3DIR |= BIT(4);P3PU &= ~(BIT(4));P3PD&= ~(BIT(4));
+#endif
 #elif defined(DC_DETECT_USE_P05)
 
    	P05_source_select(0);
@@ -455,7 +458,12 @@ bool charger_detect(void)
 
 		DC_CHARGE_LED_INIT();
 		if(LDO_IN_Volt>=BAT_FULL_VOLT){
+#ifdef REVERSE_DC_CHARGER_LED_IND
+			DC_CHARGE_LED_L();		
+
+#else
 			DC_CHARGE_LED_H();		
+#endif
 			charger_in_flag =0;
 		}
 		else{
