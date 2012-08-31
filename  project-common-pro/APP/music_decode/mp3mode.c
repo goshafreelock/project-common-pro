@@ -1079,6 +1079,11 @@ void music_play(void)
             }
 #if 1//ined(MUTE_ON_FLASH_WHOLE_SCREEN)
 #if defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
+
+#ifdef NO_FLASH_MP3_SCREEN
+		set_led_flash_tpye(0);
+		break;
+#endif
             if (play_status == MUSIC_PAUSE)
 			set_led_flash_tpye(2);
 	     else{
