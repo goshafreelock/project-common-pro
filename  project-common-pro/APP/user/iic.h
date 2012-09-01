@@ -100,6 +100,7 @@ u8 RDAFM_read_data(u8 regaddr, u16 *Rdata, u8 datalen);
 #define MEM_VOL            3
 #define MEM_SYSMODE        4
 
+#define MEM_FOR_CUST	   4
 #define MEM_ALM_SW		   4
 #define MEM_ALM_HOUR       5
 #define MEM_ALM_MIN        6

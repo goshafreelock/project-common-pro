@@ -15,7 +15,7 @@
 extern void P0IE_ctl(u8, u8);
 extern u8 bP0IE;
 extern xd_u8 my_music_vol;
-
+extern u8 play_status;	
 extern void putbyte(u8);
 extern xd_u8 return_cnt;
 extern void Delay_us(u16 i );
@@ -1463,28 +1463,42 @@ bool get_pwr_on_rsp()
 	return power_on_rsp;
 }
 #if defined(K0000_XP_TN891_V001)
-u8 _code custom_vol[3]={16,22,30};
+u8 _code custom_vol[3]={18,23,30};
 void gpio_key_scan_one_or_two()
 {
 	static bool gpio_k1_edge=0;
 	static bool gpio_k2_edge=0;
 	static bool gpio_k3_edge=0;
+	static xd_u8 k1_timer=0;
 	static u8 vol_index=0;
 	
 	GPIO_KEY_INIT();
 	
 	if(GPIO_KEY_1_PORT){
 
-		if(!gpio_k1_edge){
-			gpio_k1_edge=1;
+		if(k1_timer++>6){
 
-			vol_index++;
-			if(vol_index>3)vol_index=0;
-			my_music_vol =custom_vol[vol_index];
-			my_main_vol(my_music_vol);
+			k1_timer=0;
+			if(!gpio_k1_edge){
+				gpio_k1_edge=1;
+
+				vol_index = read_info(MEM_FOR_CUST);
+
+				vol_index++;
+				if(vol_index>3)vol_index=0;
+				my_music_vol =custom_vol[vol_index];
+				my_main_vol(my_music_vol);
+			       write_info(MEM_FOR_CUST,vol_index);
+	        		write_info(MEM_VOL,my_music_vol);
+				   
+				if(play_status==MUSIC_STOP)
+			       	put_msg_fifo(INFO_PLAY|KEY_SHORT_UP);
+			}
 		}
 	}
 	else{
+
+		k1_timer=0;
 		gpio_k1_edge=0;
 	}
 

@@ -452,19 +452,21 @@ u8 decode_in_stop_state()
 					return 0x66;
 				else
 					break;			
-			#if 0
+#ifdef NEXT_PREV_REPLAY_IN_STOP_DECODE_MODE
 	        	case INFO_NEXT_FIL | KEY_SHORT_UP:
 				IR_KEY_Detect =0;
 	            		get_music_file1(GET_NEXT_FILE);
-				Disp_Con(DISP_FILENUM);								
-	            	break;
+				Disp_Con(DISP_FILENUM);		
+				return INIT_PLAY; 				
+		            	break;
 					
 	        	case INFO_PREV_FIL | KEY_SHORT_UP:
 				IR_KEY_Detect =0;
 	            		get_music_file1(GET_PREV_FILE);
-				Disp_Con(DISP_FILENUM);								
-	            	break;	
-			#endif		
+				Disp_Con(DISP_FILENUM);
+				return INIT_PLAY; 
+		            	break;	
+#endif		
 			case INFO_HALF_SECOND :
 
 #ifdef USE_USB_HOTPLUG_FUNC
@@ -911,6 +913,13 @@ void music_play(void)
 #elif defined(CUSTOM_WAIT_FOR_MCU_CMD_FOR_NEXT_MUSIC)		
 		stop_decode();
 		break;
+#elif defined(CUSTOM_WAIT_FOR_MCU_CMD_FOR_NEXT_MUSIC_HOLD_IN_STOP_MODE)
+	if(get_pwr_on_rsp()){
+	    flush_all_msg();
+           put_msg_lifo(INFO_STOP|KEY_SHORT_UP);	    
+	}
+#endif
+		
 #endif   
 
 #ifndef REP_ONE_SELECT_SONG_IMPROVE
