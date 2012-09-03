@@ -516,7 +516,7 @@
 //#define K6037_SES_6037_V001
 //#define K2059_SES_6038_V001
 //#define K1182_YJH_1182_V001
-#define K1182_YL_1182_V001
+//#define K1182_YL_1182_V001
 //#define K1182_ZK_1182_V001
 //#define K1186_YJH_1186_V001
 //#define K1186_ZK_990_V001
@@ -886,6 +886,8 @@
 #define CHARGER_FLASH_TYPE_2
 #define LOW_VOLT_SPARK_BAT_ICON
 
+#define Lamborghini_voice
+#define OTP_MUSIC_FUNC_ENABLE
 #endif
 
 #ifdef K1186_YJH_1186_V001
@@ -8801,7 +8803,7 @@
 #define ADKEY_PLAY_SHORT_SCAN_FRE
 #define DISP_VOL_V_CHAR
 //#define DISP_HIFI_STR_AT_POWER_ON
-#define VOL_DISP_COL_ICON
+//#define VOL_DISP_COL_ICON
 #define DISP_FILE_NUM_NEW_TYPE
 #define VOLUME_CUSTOMER_DEFINE_32
 #define NO_DEV_SHOW_HI_STR
