@@ -198,7 +198,11 @@ extern bool pwr_up_flag;
 #define BAT_LOW_VOLT   	32
 #endif
 
+#ifdef DEFINE_LOWER_BAT_FULL_VOL
+#define BAT_FULL_VOLT	40
+#else
 #define BAT_FULL_VOLT	42
+#endif
 #define BAT_HALF_VOLT  	36
 #ifndef  BAT_LOW_ALERT  	
 #define BAT_LOW_ALERT  	33
