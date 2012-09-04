@@ -18,6 +18,8 @@ void blue_tooth_hdlr(void);
 enum {
 
 	BT_PP,
+	BT_PP_HOLD,
+	BT_PP_HOLD_RELEASE,
 	BT_NEXT_FILE,	
 	BT_PREV_FILE,	
 	BT_VOL_UP,	

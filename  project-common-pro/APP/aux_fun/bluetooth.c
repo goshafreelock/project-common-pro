@@ -122,7 +122,7 @@ void blue_tooth_mute_detect(void)
 }
 #endif
 
-xd_u8 bt_key_release_cnt=0;
+xd_u8 bt_key_release_cnt=0,key_release_hdlr=0;
 void blue_tooth_key_hdlr(u8 key)
 {
 	switch(key)
@@ -131,6 +131,19 @@ void blue_tooth_key_hdlr(u8 key)
 #ifdef BLUETOOTH_GPIO_CTRL		
 			BT_PP_PORT_INIT();
 			BT_PP_ON();delay_10ms(BLUE_TOOTH_DELAY);BT_PP_OFF();
+#endif
+			break;
+	        case BT_PP_HOLD :
+			key_release_hdlr=BT_PP_HOLD;
+			bt_key_release_cnt=1;
+#ifdef BLUETOOTH_GPIO_CTRL		
+			BT_PP_PORT_INIT();
+			BT_PP_ON();
+#endif
+			break;
+	        case BT_PP_HOLD_RELEASE :
+#ifdef BLUETOOTH_GPIO_CTRL		
+			BT_PP_OFF();
 #endif
 			break;
 	        case BT_NEXT_FILE:
@@ -171,6 +184,7 @@ void blue_tooth_key_hdlr(u8 key)
 #endif
 			break;	
 		case BT_VOL_UP_HOLD:
+			key_release_hdlr=BT_VOL_UP_HOLD;
 			bt_key_release_cnt=1;
 #ifdef BLUETOOTH_GPIO_CTRL
 #ifdef BT_VOL_USE_NEXT_PREV_KEY
@@ -189,6 +203,7 @@ void blue_tooth_key_hdlr(u8 key)
 
 			break;			
 		case BT_VOL_DOWN_HOLD:
+			key_release_hdlr=BT_VOL_DOWN_HOLD;
 			bt_key_release_cnt=1;
 #ifdef BLUETOOTH_GPIO_CTRL
 #ifdef BT_VOL_USE_NEXT_PREV_KEY
@@ -206,6 +221,7 @@ void blue_tooth_key_hdlr(u8 key)
 #endif			
 			break;		
 		case BT_VOL_HOLD_RELEASE:
+			key_release_hdlr=0;
 			bt_key_release_cnt=0;
 #ifdef BLUETOOTH_GPIO_CTRL
 #ifdef BT_VOL_USE_NEXT_PREV_KEY
@@ -256,6 +272,10 @@ void blue_tooth_main(void)
  	switch (key)
         {
 
+
+        case INFO_PLAY | KEY_HOLD:
+	     blue_tooth_key_hdlr(BT_PP_HOLD);			
+	     break;
         case INFO_PLAY | KEY_SHORT_UP :
 
 	     blue_tooth_key_hdlr(BT_PP);
@@ -301,7 +321,13 @@ void blue_tooth_main(void)
 #endif
 
 	    if(bt_key_release_cnt--==0){
-	     	 blue_tooth_key_hdlr(BT_VOL_HOLD_RELEASE);
+		if(key_release_hdlr==BT_PP_HOLD){
+	     	 	blue_tooth_key_hdlr(BT_PP_HOLD_RELEASE);
+		}
+		else if((key_release_hdlr==BT_VOL_UP_HOLD)||(key_release_hdlr==BT_VOL_DOWN_HOLD)){
+	     	 	blue_tooth_key_hdlr(BT_VOL_HOLD_RELEASE);
+
+		}
 	    }
 		
 #ifdef USE_BT_ACTIVATED_PIN
@@ -397,6 +423,8 @@ void blue_tooth_main(void)
 #else			
 
     case INFO_VOL_PLUS:
+	break;
+    case INFO_VOL_PLUS| KEY_SHORT_UP:
 #ifdef BLUE_TOOTH_INDEPENDENT_VOLUME_KEY
       	blue_tooth_key_hdlr(BT_VOL_UP);
 	break;
@@ -437,6 +465,8 @@ void blue_tooth_main(void)
 #else				
 
     case INFO_VOL_MINUS:
+		break;
+    case INFO_VOL_MINUS| KEY_SHORT_UP:
 #ifdef BLUE_TOOTH_INDEPENDENT_VOLUME_KEY
       	blue_tooth_key_hdlr(BT_VOL_DOWN);
 	break;
