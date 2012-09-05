@@ -1046,6 +1046,11 @@
               <FileType>1</FileType>
               <FilePath>.\fm_receive\bk1088.c</FilePath>
             </File>
+            <File>
+              <FileName>CL5767.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\fm_receive\CL5767.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
