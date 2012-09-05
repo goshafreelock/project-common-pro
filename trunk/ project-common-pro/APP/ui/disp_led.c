@@ -6,8 +6,9 @@
 #include "decode.h"
 #include "mp3mode.h"
 #include "led.h"
+#include "led_1651.h"
 
-#if defined(LED_GPIO_DRV)||defined(LED_DRVER_USE_SM1628)
+#if defined(LED_GPIO_DRV)||defined(LED_DRVER_USE_SM1628)||defined(LED_1651_DRV)
 extern _xdata u8 LED_BUFF[5];
 extern xd_u8 my_music_vol;  
 extern FSAPIMSG _pdata fs_msg;
@@ -209,7 +210,7 @@ void disp_active(void)
 	 dispstring(" SD",0);
 #endif    
 
-#if defined(K2083_KPL_2083_V001)
+#if defined(KPL_BIG_LED_MODULE)
         LED_STATUS_SD|= LED_SD;
 #else
         LED_STATUS |= LED_SD;
@@ -443,7 +444,7 @@ void disp_file_time(void)
 
 #if defined(LED_USE_COMMON_4X8)	
     LED_STATUS |= LED_2POINT;
-#elif defined(K2083_KPL_2083_V001)
+#elif defined(KPL_BIG_LED_MODULE_MODULE)
     LED_STATUS &=~LED_2POINT;
     LED_STATUS_COL|=LED_2POINT;
 #endif
@@ -740,7 +741,7 @@ void Disp_Freq(void )
     		LED_STATUS |= LED_FM;
 	}
 	else if(work_mode == SYS_AMREV){
-#if defined(K2083_KPL_2083_V001)
+#if defined(KPL_BIG_LED_MODULE)
 		LED_STATUS_AM |=LED_AM;
 #endif
 	}
@@ -930,7 +931,7 @@ void get_curr_setting_data(u8 setting)
 		case 0:
 			setting_buff_high=curr_date.year/100%100;
 			setting_buff_low=curr_date.year%100;
-#if defined(K2083_KPL_2083_V001)
+#if defined(KPL_BIG_LED_MODULE)
 		    	LED_STATUS_COL&=~LED_2POINT;
 #else				
 	    		LED_STATUS &= ~LED_2POINT;			
@@ -946,7 +947,7 @@ void get_curr_setting_data(u8 setting)
 				setting_buff_high=curr_date.month;
 				setting_buff_low = curr_date.day;
 			}	
-#if defined(K2083_KPL_2083_V001)
+#if defined(KPL_BIG_LED_MODULE)
 		    	LED_STATUS_COL|=LED_2POINT;
 #else				
 	    		LED_STATUS |= LED_2POINT;				
@@ -962,7 +963,7 @@ void get_curr_setting_data(u8 setting)
 				setting_buff_high=curr_date.hour;
 				setting_buff_low =curr_date.minutes;	
 			}
-#if defined(K2083_KPL_2083_V001)
+#if defined(KPL_BIG_LED_MODULE)
 		    	LED_STATUS_COL|=LED_2POINT;
 #else				
 	    		LED_STATUS |= LED_2POINT;					
@@ -995,7 +996,7 @@ void Disp_RTC_POINT()
 		
 	if(LED_Point){
 	    LED_Point = 0;		
-#if defined(K2083_KPL_2083_V001)
+#if defined(KPL_BIG_LED_MODULE)
 	    LED_STATUS_COL|=LED_2POINT;
 #else			
 	    LED_STATUS |= LED_2POINT;
@@ -1004,7 +1005,7 @@ void Disp_RTC_POINT()
 	else{
 		
 	    LED_Point = 1;
-#if defined(K2083_KPL_2083_V001)
+#if defined(KPL_BIG_LED_MODULE)
     LED_STATUS_COL&= ~LED_2POINT;
 #else			
 	    LED_STATUS &= ~LED_2POINT;
@@ -1077,7 +1078,7 @@ void Disp_RTC()
     {
     	if(alm_set==0){
 
-#if defined(K2083_KPL_2083_V001)
+#if defined(KPL_BIG_LED_MODULE)
     LED_STATUS_COL&= ~LED_2POINT;
 #else	
 	  LED_STATUS &= ~LED_2POINT;

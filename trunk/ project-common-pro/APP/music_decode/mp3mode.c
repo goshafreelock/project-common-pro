@@ -918,8 +918,7 @@ void music_play(void)
 	    flush_all_msg();
            put_msg_lifo(INFO_STOP|KEY_SHORT_UP);	    
 	}
-#endif
-		
+	
 #endif   
 
 #ifndef REP_ONE_SELECT_SONG_IMPROVE

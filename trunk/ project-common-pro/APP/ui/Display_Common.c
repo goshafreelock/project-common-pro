@@ -17,6 +17,9 @@
 #include "lcd_ht1621_drv.h"
 #elif defined(USE_LCD_DRV_TM1721)
 #include "lcd_tm1721_drv.h"
+#elif defined(LED_1651_DRV)
+#include "led_1651.h"
+extern void disp_scan_1651(void);
 #endif
 
 #if defined(TIME_FORCE_SHOW_ON_SCREEN)
@@ -953,6 +956,8 @@ void Disp_Update(void)
 	UpdateLcd_TM1721_Buf();
 #elif defined(LCD_GPIO_DRV)
 
+#elif defined(LED_1651_DRV)
+	disp_scan_1651();
 #if defined(USE_SPECTRUM_PARTTERN)
 	Disp_Patern();
 #endif
