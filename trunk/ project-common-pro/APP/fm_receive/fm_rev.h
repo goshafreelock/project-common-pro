@@ -86,7 +86,7 @@ u16 Read_AM_Freq(u8 ch);
 #define CL6017G_ID	0x0A
 #define BK1080_ID	0x1080
 #define BK1088_ID	0x1080
-#define SP3777_ID	0x07
+#define SP3777_ID	0xA7
 #define QN8035_ID	0x84
 #define KT0830EQ_ID	0xb002
 #define AR1000_ID	0x1010
