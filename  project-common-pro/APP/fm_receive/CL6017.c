@@ -481,11 +481,7 @@ u16 CL6017G_Read_ID(void)
 
 void CL6017G_PowerOff(void)
 {
-//	if(set_fm_clock == 0)
-//	{
-// 		WKUPPND = 0x10;  //set bit[5:4] = 01, output OSC frequancy to P05
-//    	P0DIR |= (1<<5);  //P05 set input 
-//	 }
+
 	CL6017G_ControlData[0] |= 0x20;//mute on
 	CL6017G_ControlData[4] &= 0xf3;//tune=0,seek=0
 	I2C_WriteCL6017GReg(CL6017G_ControlData,5);

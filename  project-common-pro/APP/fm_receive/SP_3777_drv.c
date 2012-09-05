@@ -5,8 +5,8 @@
 #define CS1000_RD_CTRL   0x21 
 #define CS1000_WR_CTRL   0x20 
 
-_xdata u8 dat[32];
-_xdata u8 readdata[32]; 
+_xdata u8 dat[242];
+_xdata u8 readdata[24]; 
 
 void SP3777_Write(u16 size);
 void  SP3777_Read(u16 size);
@@ -20,49 +20,44 @@ void SP3777_init()
 {
 	dat[0] = 0xe4;  //0x64    standby
     	dat[1] = 0x81;   
-    	dat[2] = 0x42; 
-    	dat[3] = 0x30;
-	dat[4] = 0x19; 			
-	dat[5] = 0xc0; 
+    	dat[2] = 0x3e; 
+    	dat[3] = 0xf8;
+	dat[4] = 0x1f; 			
+	dat[5] = 0x40; 
 	dat[6] = 0x38; 
-	dat[7] = 0x56;
-	dat[8] =  0x05;
-	dat[9] =  0x73;
-	dat[10] = 0xB4;
-	dat[11] = 0xf4;  
-    	dat[12] = 0xad; //cd
-    	dat[13] = 0xc1;
-	dat[14] = 0xc2; 			
+	dat[7] = 0x5a;
+	dat[8] =  0xe8;
+	dat[9] =  0xac;
+	dat[10] = 0xB0;
+	dat[11] = 0xf1;  
+    	dat[12] = 0x8b; //cd
+    	dat[13] = 0xaa;
+	dat[14] = 0xc6; 			
 	dat[15] = 0x04; 
-	dat[16] = 0x01; 
+	dat[16] = 0x6d; 
 	dat[17] = 0x25;
 	dat[18] = 0xff;
-	dat[19] = 0xfd;
-	dat[20] = 0x06;
+	dat[19] = 0xfc;
+	dat[20] = 0x12;
    	dat[21] = 0x0f;   
-    	dat[22] = 0x41; 
+    	dat[22] = 0x45; 
     	dat[23] = 0x1d;
-	dat[24] = 0x21; 			
-	dat[25] = 0x0d; 
-	dat[26] = 0x3f; 
-	dat[27] = 0x6f;
-	dat[28] = 0x00;
-	dat[29] = 0x00;
+
 
     	dat[0] |= 0x20;	
 	dat[0] &= 0x7f; //power up	
 
 	SP3777_Write(1);
     	delay_10ms(10);
-    	SP3777_Write(30); // write the initial values for all R/W registers	
+    	SP3777_Write(24); // write the initial values for all R/W registers	
 	delay_10ms(20);
 
 	FM_volume(0xff);
 	#if 0
-    	my_memset((u8 _xdata*)readdata,0,32);
-	SP3777_Read(32);
+    	my_memset((u8 _xdata*)readdata,0,24);
+	SP3777_Read(24);
 	sys_printf("---------------------------------------------------------------");
-	for(i=0;i<32;i++)
+	for(i=0;i<24;i++)
 		printf("-->SP3777_Read %x <---\r\n",(u16)readdata[i]);
 	sys_printf("---------------------------------------------------------------");
 	#endif
@@ -163,18 +158,11 @@ void SP3777_init()
         fd=readdata[5];
         fm_rx_stereo = readdata[0] & 0x01; // st/mono bit
 
-#if 0
-	printf("----->stcflag 0x%x \r\n",stcflag);
-	printf("----->rssi %d \r\n",rssi);
-	printf("----->snr %d \r\n",snr);
-	printf("----->fd %d \r\n",fd);
-	printf("----->fm_rx_stereo 0x%x \r\n",fm_rx_stereo);
-#endif
        if(fd > 127)
         {
           fd = 256 - fd;	 		
         }
-       if((rssi >= 170) && (fd <= 20) && (snr <= 38)/*&&(fm_rx_stereo&0x01)*/) //seek threshold judgement      
+       if((rssi >= 170) && (fd <= 20) && (snr <= 42)/*&&(fm_rx_stereo&0x01)*/) //seek threshold judgement      
        {
            if(((TunerFrequency*10) != 9600))
               seekover=1;            
@@ -200,11 +188,11 @@ void SP3777_init()
  void Freq_Write(u16 TunerFrequency)
 {		
         u16 ch=0;
-	printf("------------------->TunerFrequency %d \r\n",TunerFrequency);
+	//printf("------------------->TunerFrequency %d \r\n",TunerFrequency);
 
     	ch = (TunerFrequency*10 - 7000) / 5;
 
-	printf("------------------->ch 0x%x \r\n",ch);
+	//printf("------------------->ch 0x%x \r\n",ch);
 		
     	dat[2] &= 0xfc;
     	dat[2] |= ((ch & 0x0300) >> 8);
@@ -222,7 +210,7 @@ void SP3777_init()
     	SP3777_Write(1);
 
 	delay_10ms(1);
-	#if 1
+	#if 0
 
 	sys_printf("-------------");
 	printf("000-->Freq_Write %x \r\n",(u16)dat[0]);
