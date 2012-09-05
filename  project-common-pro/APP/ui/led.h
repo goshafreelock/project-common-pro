@@ -18,7 +18,7 @@
 #define LED_BAT_L1		 BIT(LED_F)
 #define LED_MP3		 0//BIT(LED_H)
 #define LED_STATUS   LED_BUFF[4]
-#elif defined(K2083_KPL_2083_V001)
+#elif defined(K2083_KPL_2083_V001)||defined(K2083_SW_2083_V001)
 #define LED_AUX	 	BIT(LED_B)
 #define LED_FM		BIT(LED_A)|BIT(LED_D)
 
