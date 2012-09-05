@@ -629,7 +629,7 @@
 
   <Group>
     <GroupName>fm_receive</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <File>
@@ -680,7 +680,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
+      <ColumnNumber>19</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
       <TopLine>0</TopLine>
       <CurrentLine>0</CurrentLine>
@@ -799,6 +799,20 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\fm_receive\bk1088.c</PathWithFileName>
       <FilenameWithoutPath>bk1088.c</FilenameWithoutPath>
+    </File>
+    <File>
+      <GroupNumber>4</GroupNumber>
+      <FileNumber>0</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <Focus>0</Focus>
+      <ColumnNumber>0</ColumnNumber>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <TopLine>135</TopLine>
+      <CurrentLine>146</CurrentLine>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\fm_receive\CL5767.c</PathWithFileName>
+      <FilenameWithoutPath>CL5767.c</FilenameWithoutPath>
     </File>
   </Group>
 
@@ -2578,5 +2592,22 @@
       </Window>
     </View>
   </WinLayout>
+
+  <MDIGroups>
+    <Orientation>1</Orientation>
+    <ActiveMDIGroup>0</ActiveMDIGroup>
+    <MDIGroup>
+      <Size>100</Size>
+      <ActiveTab>0</ActiveTab>
+      <Documents>
+        <Doc>
+          <Name>.\fm_receive\CL5767.c</Name>
+          <ColumnNumber>0</ColumnNumber>
+          <TopLine>135</TopLine>
+          <CurrentLine>146</CurrentLine>
+        </Doc>
+      </Documents>
+    </MDIGroup>
+  </MDIGroups>
 
 </ProjectOpt>
