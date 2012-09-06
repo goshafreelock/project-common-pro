@@ -1331,6 +1331,11 @@
               <FileType>1</FileType>
               <FilePath>.\ui\lcd_tm1721_drv.c</FilePath>
             </File>
+            <File>
+              <FileName>led_1651.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\led_1651.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
