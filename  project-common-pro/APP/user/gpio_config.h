@@ -615,6 +615,11 @@
 #define  EARPHONE_DETECT_GPIO  	P03
 #define  hp_detect_begin()   			P0DIR |= (BIT(3));P0PU |= (BIT(3))
 #define hp_detect_in_off()			P0DIR &=~(BIT(3))
+#elif defined(EARPHONE_DETECT_USE_P17)
+#define  EARPHONE_DETECT_GPIO  	P17
+#define  hp_detect_begin()   			P1DIR |= (BIT(7));P1PU |= (BIT(7))
+#define hp_detect_in_off()			P1DIR &=~(BIT(7))
+#define INDEPENDENT_EARPHONE_DETECT_GPIO
 #else
 #if !defined(ADKEY_USE_P07_PORT)&&!defined(TWO_ADKEY_USE_PORT_P07)
 #define  EARPHONE_DETECT_GPIO  	P07
