@@ -9822,7 +9822,7 @@
 #endif
 
 #ifdef SW_V002_747
-//#define LED_USE_PLAY_MODE
+#define LED_USE_PLAY_MODE
 
 #undef ADKEY_PLAY_SHORT_SCAN_FRE
 #define ADKEY_NEXT_ADJST_FREQ
