@@ -159,10 +159,10 @@ void SP3777_init()
         fm_rx_stereo = readdata[0] & 0x01; // st/mono bit
 
        if(fd > 127)
-        {
+       {
           fd = 256 - fd;	 		
-        }
-       if((rssi >= 170) && (fd <= 20) && (snr <= 42)/*&&(fm_rx_stereo&0x01)*/) //seek threshold judgement      
+       }
+       if((rssi >= 156) && (fd <= 20) && (snr <= 44)/*&&(fm_rx_stereo&0x01)*/) //seek threshold judgement      
        {
            if(((TunerFrequency*10) != 9600))
               seekover=1;            
@@ -202,7 +202,7 @@ void SP3777_init()
     	dat[0] &= 0xDF;
     	dat[0] &= 0xfd; // tune=0
     	//writedata[0] |= 0x0020; // mute
-    	dat[0] &= ~0x20; // unmute
+    	dat[0] |= 0x20; // unmute
     	SP3777_Write(4);
     	
     	dat[0] |= 0x02; // TUNE=1, begin tune operation
