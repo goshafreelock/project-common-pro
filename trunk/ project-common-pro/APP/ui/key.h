@@ -198,8 +198,8 @@ void bat_val_arg(void);
 #endif
 
 
-#define INFO_CUS_KEY_1		0x2A
-#define INFO_CUS_KEY_2		0x29
+#define INFO_CUS_KEY_1		0x35
+#define INFO_CUS_KEY_2		0x36
 
 #define  INFO_POWER         0x1b
 #define INFO_ALM_BELL		0x1c

@@ -1962,7 +1962,7 @@ u8 ap_handle_hotkey(u8 key)
 	if(IR_Type == WITH_FM_CHIP)break;
 	
     case INFO_PLAY| KEY_LONG:
-#if defined(POWER_KEY_LONG_POWER_OFF)		
+#if defined(POWER_KEY_LONG_POWER_OFF)||defined(USE_PWR_KEY_LONG_PWR_ON)		
     case INFO_POWER| KEY_LONG:
 #else		
     case INFO_POWER | KEY_SHORT_UP :	
