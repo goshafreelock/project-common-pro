@@ -634,6 +634,12 @@
 #endif
 //main.c
 //1 ac209 48pin
+#ifdef AUX_DETECT_HIGH_LEVEL
+#define  aux_detect_in()      		P0DIR &= ~(BIT(2)); P02=0; P0DIR |= BIT(2);P0PD|= BIT(2);//linein check port
+#define  AUX_DETECT_GPIO  		P02
+#define  aux_detect_in_off()        	P0DIR &= ~(BIT(2));P02=0;  //linein check port
+#else
+
 #if defined(K116_FXK_V001)||defined(K619_FXK_619_V001)||defined(AUX_DETECT_USE_P02)
 #define  aux_detect_in()      		P0DIR &= ~(BIT(2)); P02=1; P0DIR |= BIT(2);P0PU |= BIT(2);//linein check port
 #define  AUX_DETECT_GPIO  		P02
@@ -674,6 +680,7 @@
 #define  aux_detect_in()      		P0DIR |= BIT(1);P0PU |= BIT(1);//linein check port
 #define  AUX_DETECT_GPIO  		P01
 #define  aux_detect_in_off()        	P0DIR &= ~(BIT(1)); //linein check port
+#endif
 #endif
 //iic.h
 //1 ac209 48pin

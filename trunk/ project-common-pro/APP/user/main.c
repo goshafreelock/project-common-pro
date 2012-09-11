@@ -315,6 +315,10 @@ void aux_check(void)
     }
 #endif	
 
+#ifdef AUX_DETECT_HIGH_LEVEL
+	AUX_DETECT_GPIO=0;
+
+#else
 #if defined(INDEPENDENT_AUX_DETECT_GPIO)
 	AUX_DETECT_GPIO=1;
 #elif defined(AUX_DETECT_USE_VPP)
@@ -324,7 +328,7 @@ void aux_check(void)
 #else
 	if(AUX_DETECT_GPIO==0)return;
 #endif
-
+#endif
     aux_detect_in();
 	
     //DACCON0 |= 0x80;
@@ -332,7 +336,11 @@ void aux_check(void)
     _nop_();
     _nop_();
 
+#ifdef AUX_DETECT_HIGH_LEVEL
+    if (!AUX_DETECT_GPIO)
+#else
     if (AUX_DETECT_GPIO)
+#endif		
     {
         aux_cnt_online = 0;
 

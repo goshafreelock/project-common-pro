@@ -479,6 +479,7 @@ __SCAN_FREQ:
 #if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 		if(new_vol_feature){
 			new_vol_feature =0;
+			if(last_disp_menu!=DISP_NULL)			
                      Disp_Con(last_disp_menu);
 		}
 #endif								
