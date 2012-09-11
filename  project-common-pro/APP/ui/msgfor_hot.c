@@ -1738,9 +1738,11 @@ u8 ap_handle_hotkey(u8 key)
 
 		flush_all_msg();
 #if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
-	if(new_vol_feature){
-		new_vol_feature =0;
-	}
+
+		last_disp_menu=DISP_NULL;
+		if(new_vol_feature){		
+			new_vol_feature =0;
+		}
 #endif				
 
         	//printf(" ----->INFO_MODE %x -- \r\n",(u16)work_mode);
@@ -1825,6 +1827,7 @@ u8 ap_handle_hotkey(u8 key)
 		}
 		else{
 
+			//if(last_disp_menu!=DISP_NULL)
 			Disp_Con(last_disp_menu);
 		}
 		break;

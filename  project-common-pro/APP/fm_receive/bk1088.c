@@ -708,9 +708,9 @@ void  BK1088_SetFreq(u16 curFreq)
 
 }
 
-#define PARAM_RSSI_FM 30
+#define PARAM_RSSI_FM 25
 #define PARAM_RSSI_AM 16
-#define PARAM_SNR_FM 4
+#define PARAM_SNR_FM 3
 #define PARAM_SNR_AM 15
 bool BK1088_AMValidStop(u16 freq,u16 start_freq)
 {	
