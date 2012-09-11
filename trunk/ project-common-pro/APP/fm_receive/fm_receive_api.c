@@ -806,7 +806,11 @@ void scan_fre(void)
     my_memset((u8 _xdata*)fre_point,0,30);
 #endif
 
+#ifdef LED_STATUS_FLASH_VERY_FAST_AT_FM_SCAN
+    set_play_flash(LED_FLASH_VERY_FAST);	
+#else
     set_play_flash(LED_FLASH_FAST);	
+#endif
 #ifndef FM_BY_PASS
     DACCON2 &= ~(1<<5);	//AMUX disable
 #endif
