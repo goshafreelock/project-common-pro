@@ -1329,7 +1329,7 @@
 #endif
 #endif
 
-#if defined(DC_CHARGE_GPIO_DRV_LED_IND)
+#if defined(DC_CHARGE_GPIO_DRV_LED_IND)||defined(DC_CHARGE_GPIO_DRV_LED_IND_2)
 #if defined(DC_CHARGE_GPIO_DRV_LED_P00)
 #define DC_CHARGE_LED_INIT()	P0DIR &= ~(BIT(0));P0PU |= (BIT(0))
 #define DC_CHARGE_LED_H()		P00=1
@@ -1343,6 +1343,10 @@
 #define DC_CHARGE_LED_H()		P05=1
 #define DC_CHARGE_LED_L()		P05=0
 #define DISABLE_P05_OSC_OUTPUT
+#elif defined(DC_CHARGE_GPIO_DRV_LED_P10)
+#define DC_CHARGE_LED_INIT()	P1DIR &= ~(BIT(0));P1PU |= (BIT(0))
+#define DC_CHARGE_LED_H()		P10=1
+#define DC_CHARGE_LED_L()		P10=0	
 #elif defined(DC_CHARGE_GPIO_DRV_LED_P13)
 #define DC_CHARGE_LED_INIT()	P1DIR &= ~(BIT(3));P1PU |= (BIT(3))
 #define DC_CHARGE_LED_H()		P13=1

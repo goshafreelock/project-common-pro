@@ -10,6 +10,7 @@
 #include "Custom_config.h"
 #include "power.h"
 #include "main.h"
+#include "msgfor_usb.h"
 
 bool sys_clock_flag;  ///<AD
 u8 clock_change_delay;
@@ -287,6 +288,11 @@ __PWR_ON:
 		key = get_msg();
 #ifdef DC_HW_POWER_UP	
 		if(DC_HW_POWER_PORT){
+			if(pwr_key_cnt >1)
+				goto __PWR_UP;
+		}
+#elif defined(USE_PC_DC_POWER_ON_ONLY)
+		if(get_usb_pc_status()){
 			if(pwr_key_cnt >1)
 				goto __PWR_UP;
 		}

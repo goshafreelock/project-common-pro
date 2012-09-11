@@ -19,6 +19,8 @@ extern u8 play_status;
 extern void putbyte(u8);
 extern xd_u8 return_cnt;
 extern void Delay_us(u16 i );
+extern void set_play_flash(u8 led_status);
+
 extern _xdata SYS_WORK_MODE work_mode;
 #ifdef _MY_IR_KEY_
 #include "my_IR_key.h"
@@ -455,8 +457,17 @@ bool charger_detect(void)
 		}		
 #elif defined(DC_CHARGE_GPIO_DRV_LED_IND_2)
 		DC_CHARGE_LED_INIT();
-		DC_CHARGE_LED_H();		
+		DC_CHARGE_LED_H();
 
+		set_play_flash(LED_FLASH_NOR);
+
+		if(LDO_IN_Volt>=BAT_FULL_VOLT){
+
+			if(play_status!=MUSIC_PLAY)
+				set_play_flash(LED_FLASH_STOP);
+
+			DC_CHARGE_LED_L();		
+		}
 #elif defined(DC_CHARGE_GPIO_DRV_LED_IND)
 
 

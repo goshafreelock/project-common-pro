@@ -27,6 +27,8 @@ void usb_audio_massstorage(void);
 #ifdef USE_USB_HOTPLUG_FUNC
 void usb_hotplug_hdlr();
 void set_usb_hotplug_protect(bool protectbit);
+#elif defined(USE_PC_DC_POWER_ON_ONLY)
+bool  get_usb_pc_status();
 #endif
 
 #endif

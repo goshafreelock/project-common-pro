@@ -58,7 +58,21 @@ void usb_hotplug_hdlr()
 	put_msg_lifo(INFO_PC_HOTPLUG);
     }
 }
+#elif defined(USE_PC_DC_POWER_ON_ONLY)
+bool  get_usb_pc_status()
+{	
+    EA = 0;
+    usb_pcin_detect();
+    Delay(100);
+    usb_pcin_detect();
+    device_check();
+    EA = 1;
 
+    if(pc_connect){
+	return 1;
+    }
+     return 0;
+}
 #endif
 
 u8 const _code ufi_inquiry_str[24] =	///<UFI设备信息，必须填充24个字符
@@ -302,7 +316,7 @@ void usb_device(void)
 /*----------------------------------------------------------------------------*/
 void usb_audio_massstorage(void)
 {
-#ifdef USE_USB_HOTPLUG_FUNC
+#if defined(USE_USB_HOTPLUG_FUNC)||defined(USE_PC_DC_POWER_ON_ONLY)
     if (pc_connect){
 		goto _USB_DEV;
     }
@@ -322,7 +336,7 @@ void usb_audio_massstorage(void)
 
     if (pc_connect)
     {
-#ifdef USE_USB_HOTPLUG_FUNC    
+#if defined(USE_USB_HOTPLUG_FUNC)||defined(USE_PC_DC_POWER_ON_ONLY)
 _USB_DEV:    
 #endif
         work_mode = SYS_USBDEVICE;
