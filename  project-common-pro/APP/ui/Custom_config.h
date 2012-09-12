@@ -433,6 +433,7 @@
 //#define K1091_XFW_1091_V001
 //#define K1097_WK_1097_V001
 //#define K2044_YJH_2044_V001
+//#define K2044_JM_850_V001
 //#define K2044_ZX_2044_V001
 //#define K2045_AJR_2045_V001
 //#define K0000_XFW_FW_29_V001
@@ -453,6 +454,7 @@
 //#define K1107_DCX_991_V001
 //#define K0000_XXX_SX_V001
 //#define K1111_SES_1111_V001
+//#define K1203_SES_A26_V001
 //#define K1111_ZK_1111_V001
 //#define K1115_WXD_1115_V001
 //#define K1102_JM_836_V001
@@ -492,7 +494,8 @@
 //#define K0000_JK_TEMP_FAN_V001
 //#define K0000_JK_PORTABLE_CHARGER_V001
 //#define K0000_JK_EARPHONE_BT_V001
-#define K0000_JK_GHD_830D_V001
+//#define K0000_JK_GHD_830D_V001
+//#define K5008_JK_5008_V001
 //#define K0000_ZG_BT260_V001
 //#define K0000_XP_TN891_V001
 //#define K0000_XP_TN891_V002
@@ -516,6 +519,7 @@
 //#define K1169_ZK_ALK982_V001
 //#define K1173_ZK_ALK936_V001
 //#define K1174_SES_2012_V001
+//#define K1204_SES_2012_V001
 //#define K2086_AJR_LS091_V001
 //#define K2094_DYT_2094_V001
 //#define K1177_HF_BJD_V3_V001
@@ -711,6 +715,48 @@
 #endif
 
 /*****************按 主板编号定义宏******************/
+
+
+#ifdef K5008_JK_5008_V001
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P04
+
+
+#define PROTECT_P17_FROM_LED_SCAN
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+#define DISP_OFF_STR_AT_PWR_DOWN
+#define DISP_PAUS_STRING
+#define ADKEY_PLAY_SHORT_ADJ_CH
+#define DISP_VOL_V_CHAR
+
+#define VOLUME_DEFUALT 	25
+
+#if 1
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+
+#define USE_POWER_KEY
+#define USE_ONLY_POWER_HOLD_CTRL
+#define PWR_CTRL_P17
+#define USE_PWR_KEY_LONG_PWR_ON
+#define PWR_ON_DELAY_1_SECOND
+#endif
+
+#define USE_LINE_IN_DETECT_FUNC
+#define AUX_DETECT_USE_P07
+#define JOG_STICK_FUNC
+
+#endif
+
 #ifdef K1197_DCX_855_V001
 
 #ifdef IIC_GPIO_USE_P02_P03
@@ -1557,6 +1603,44 @@
 #define EARPHONE_DETECT_USE_P04
 #endif
 
+#ifdef K1204_SES_2012_V001
+
+#define AC209_28PIN
+#define LED_1651_DRV
+#ifdef LED_GPIO_DRV
+#undef LED_GPIO_DRV
+#endif
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P26
+
+
+#define NO_PLAY_STATUS_LED
+
+#define DISP_PAUS_STRING
+#define DISP_VOL_V_CHAR
+#define VOLUME_DEFUALT 	30
+#define DISP_PC_STR
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+#define FM_BY_PASS
+#define TURN_ON_PLAY_BREAK_POINT_MEM
+
+#define EXCHANGE_FM_MP3_ICON
+//#define USE_LINE_IN_DETECT_FUNC
+//#define AUX_DETECT_USE_P02
+#define LINE_IN_PLAY_KEY_PAUSE
+
+
+#endif
+
 
 #ifdef K0000_ZG_BT260_V001
 
@@ -2078,6 +2162,7 @@
 #define AUX_DETECT_USE_P02
 
 #endif
+
 #ifdef K2083_SW_2083_V001
 
 #ifdef IIC_GPIO_USE_P02_P03
@@ -4231,6 +4316,36 @@
 
 #endif
 
+#ifdef K1203_SES_A26_V001
+
+#define AC209_28PIN
+#define LED_1651_DRV
+#ifdef LED_GPIO_DRV
+#undef LED_GPIO_DRV
+#endif
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P03
+#define FAST_BAND_SCAN_SPEED
+#define EXCHANGE_FM_MP3_ICON
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+#define VOLUME_DEFUALT 		25
+
+//#define SEMI_AUTO_SCAN_FREQ
+#define TURN_ON_PLAY_BREAK_POINT_MEM
+
+#define USE_GPIO_DETECT_EARPHONE_PLUGGED
+#define EARPHONE_DETECT_USE_VPP
+#endif
+
 #ifdef K1111_SES_1111_V001
 
 #define PLAY_STATUS_LED_P05
@@ -5249,6 +5364,36 @@
 
 #define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
 #define NO_VOLUME_LIMITE
+
+#undef LED_CTRL_LEVEL_NORMAL
+
+#define ADKEY_PLAY_SHORT_SCAN_FRE
+#define REVERSE_LED_FLASH_DIR
+
+#define USE_LINE_IN_DETECT_FUNC
+#define AUX_DETECT_USE_P17
+#endif
+
+#ifdef K2044_JM_850_V001
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P03
+
+#define DEFAULT_GO_TO_IDLE
+
+#define SPECTRUM_FUNC_ENABLE
+#define EXTENDED_LED_SPECTURM
+#define LED_ROLLING_FUNC
+#define LED_ROLLING_TYPE_1
+#define DISP_PAUS_STRING
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
 
 #undef LED_CTRL_LEVEL_NORMAL
 

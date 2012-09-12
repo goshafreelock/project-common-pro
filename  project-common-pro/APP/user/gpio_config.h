@@ -82,11 +82,21 @@
 #define AUX_P26_IN_USE
 #endif
 
+#ifdef LED_1651_DRV
+
+#ifdef LED_GPIO_DRV
+#undef LED_GPIO_DRV
+#endif
+
+#else
 
 #define NO_LED_DISPLAY
 #ifdef DISPLAY_TEST
 #undef NO_LED_DISPLAY
 #endif
+
+#endif
+
 //led.h
 #if defined(COMMON_CATHODE)
 #define led_com_out() P3DIR &= ~0x1F; P3PU &=~(0x1F);P3PD|=0x1F

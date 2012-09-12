@@ -136,23 +136,25 @@ void disp_scan_1651(void)
 	start();										//调用开始信号
 	write(0xc0);									//写起始地址命令（0C0H），地址从00H单元开始。
 #if 0
-	if(LED_STATUS1&LED_BAT_L1)
-		LED_BUFF[2]|=BIT(LED_H);
-	else  
-		LED_BUFF[2]&=~(BIT(LED_H));
-	if(LED_STATUS1&LED_BAT_L2)
-		LED_BUFF[3]|=BIT(LED_H);
-	else  
-		LED_BUFF[3]&=~(BIT(LED_H));
-	if(LED_STATUS1&LED_BAT_L3)
+	if(LED_STATUS&LED_PAUSE)
 		LED_BUFF[4]|=BIT(LED_H);
-	else  
-		LED_BUFF[4]&=~(BIT(LED_H));
+	if(LED_STATUS&LED_2POINT)
+		LED_BUFF[4]|=(BIT(LED_G));
+	if(LED_STATUS&LED_PLAY)
+		LED_BUFF[4]|=(BIT(LED_F));
+	if(LED_STATUS&LED_SD)
+		LED_BUFF[4]|=(BIT(LED_E));
+	if(LED_STATUS&LED_MP3)
+		LED_BUFF[4]|=(BIT(LED_C));
+	if(LED_STATUS&LED_FM)
+		LED_BUFF[4]|=(BIT(LED_B));
+	if(LED_STATUS&LED_USB)
+		LED_BUFF[4]|=(BIT(LED_A));	
 #endif		
 	write(0xff);
 	write(LED_BUFF[1]);	
 	write(LED_BUFF[2]);	
-	write(LED_BUFF[3]);	
+	write(LED_BUFF[3]);
 	write(LED_BUFF[4]);	
 	write(LED_BUFF[0]);	
 
