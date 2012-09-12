@@ -5,9 +5,13 @@
 #include "resource.h"
 #include "decode.h"
 #include "mp3mode.h"
-#include "led.h"
-#include "led_1651.h"
 
+#ifdef LED_1651_DRV
+#include "led_1651.h"
+#else
+#include "led.h"
+
+#endif
 #if defined(LED_GPIO_DRV)||defined(LED_DRVER_USE_SM1628)||defined(LED_1651_DRV)
 extern _xdata u8 LED_BUFF[5];
 extern xd_u8 my_music_vol;  
@@ -444,7 +448,7 @@ void disp_file_time(void)
 
 #if defined(LED_USE_COMMON_4X8)	
     LED_STATUS |= LED_2POINT;
-#elif defined(KPL_BIG_LED_MODULE_MODULE)
+#elif defined(KPL_BIG_LED_MODULE)
     LED_STATUS &=~LED_2POINT;
     LED_STATUS_COL|=LED_2POINT;
 #endif

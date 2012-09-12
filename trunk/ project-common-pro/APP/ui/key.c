@@ -1593,7 +1593,7 @@ void JogDetect(void)
 	u8 port_val=0;
 	
     touchkeyval = 0;
-#if defined(K523_DeYun_523_V001)
+#if defined(K523_DeYun_523_V001)||defined(K5008_JK_5008_V001)
     P0DIR &= ~(BIT(2)|(BIT(3)));    //P11, P12
     P0 |=(BIT(2)|(BIT(3)));
     P0PU	|= (BIT(2)|(BIT(3)));
