@@ -421,6 +421,15 @@
 #define Pwr_Key_Init()		DACCON0|=0x40; P2DIR &=~(BIT(4));P2PU |= (BIT(4));GPIO_POWER_KEY =1;;P2DIR |= (BIT(4));P2PU &= ~(BIT(4));
 #define Pwr_Key_output()		DACCON0|=0x40; P2DIR &=~(BIT(4));P2PU |= (BIT(4));GPIO_POWER_KEY =1;
 #define Pwr_Key_input()		DACCON0|=0x40; P2DIR |= (BIT(4));P2PU &= ~(BIT(4));
+#elif defined(PWR_CTRL_P27_KEY_P26)
+#define GPIO_POWER_CTRL 	P27
+#define power_ctl(n)  			DACCON0|=0x80;P2DIR &= ~(BIT(7));P2PU |= (BIT(7));GPIO_POWER_CTRL = n
+
+#define GPIO_POWER_KEY   	P26
+
+#define Pwr_Key_Init()		DACCON0|=0x80; P2DIR &=~(BIT(6));P2PU |= (BIT(6));GPIO_POWER_KEY =1;;P2DIR |= (BIT(6));P2PU &= ~(BIT(6));
+#define Pwr_Key_output()		DACCON0|=0x80; P2DIR &=~(BIT(6));P2PU |= (BIT(6));GPIO_POWER_KEY =1;
+#define Pwr_Key_input()		DACCON0|=0x80; P2DIR |= (BIT(6));P2PU &= ~(BIT(6));
 #elif defined(USE_ONLY_POWER_HOLD_CTRL)
 
 #if defined(PWR_CTRL_P02)

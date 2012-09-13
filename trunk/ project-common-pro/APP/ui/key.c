@@ -2231,6 +2231,22 @@ _code KEY_STRUCT KEY_MAP[KEY_PORT_NUM] =
 	PORT_2,BIT(7),
 	PORT_0,BIT(6),
 };
+#elif defined(K000_JK_ZHCX_V001)
+#define MAX_MATRIX_KEY		3
+_code u8 Key_Tab[MAX_MATRIX_KEY][2]=
+{
+	{0x00,INFO_POWER},			
+	{0x00,INFO_VOL_MINUS},			
+	{0x00,INFO_VOL_PLUS},	
+	
+};
+#define KEY_PORT_NUM	3
+_code KEY_STRUCT KEY_MAP[KEY_PORT_NUM] = 
+{
+	PORT_2,BIT(6),
+	PORT_3,BIT(7),
+	PORT_3,BIT(7),
+};
 #elif defined(K627_LHGC_627_V001)
 #define MAX_MATRIX_KEY		4
 _code u8 Key_Tab[MAX_MATRIX_KEY][2]=

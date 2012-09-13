@@ -605,9 +605,11 @@ void pll_init(void)
 
     P0PU = 0;
     PCON = 0;
+#ifndef DISABLE_USE_DECODE_FUNC	
     USBCON0 |= BIT(0);							//usb io is port
     P3PD |= 0xc0;
     P3PU &= ~0xC0;
+#endif
 #if defined(COMMON_CATHODE)	
     led_com_out();
 #endif	
@@ -851,10 +853,12 @@ void sys_init(void)
 #endif    
 #endif    
     timer3Init();
+#ifndef DISABLE_SD_MMC_CARD_DECODE_FUNC
     sd_speed_init(1,100);
     init_port_sd();
 #if SDMMC_CMD_MODE
 	sd_chk_ctl(SET_SD_H_CHK);
+#endif
 #endif
 
 #ifdef PWM3_IN_USE	
