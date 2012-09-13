@@ -88,9 +88,7 @@
 #define  My_IR_KEY_EQ_DN		0x41
 #define  My_IR_KEY_CHN_UP		0x08
 #define  My_IR_KEY_CHN_DN		0x00
-
-#elif defined(IR_USER_CODE_0xDF20)
-#ifdef IR_REMOTE_TYPE_JGY
+#elif defined(IR_USER_CODE_0xFD02)
 #define  My_IR_KEY_0			0x08
 #define  My_IR_KEY_1			0x0c
 #define  My_IR_KEY_2			0x0d
@@ -114,7 +112,7 @@
 #define  My_IR_KEY_EQ_DN		0x1a
 #define  My_IR_KEY_CHN_UP		0x02
 #define  My_IR_KEY_CHN_DN		0x04
-#else
+#elif defined(IR_USER_CODE_0xDF20)
 #define  My_IR_KEY_0			0x03
 #define  My_IR_KEY_1			0x00
 #define  My_IR_KEY_2			0x01
@@ -138,7 +136,6 @@
 #define  My_IR_KEY_EQ_DN		0x12
 #define  My_IR_KEY_CHN_UP		0x1F
 #define  My_IR_KEY_CHN_DN		0x09
-#endif
 #elif defined(IR_USER_CODE_0xBF00)
 #define  My_IR_KEY_0			0x10
 #define  My_IR_KEY_1			0x04
@@ -253,6 +250,8 @@
 #define USER_CODE	0xBF00
 #elif defined(IR_USER_CODE_0xDF20)
 #define USER_CODE	0xDF20
+#elif defined(IR_USER_CODE_0xFD02)
+#define USER_CODE	0xFD02
 #elif defined(IR_USER_CODE_0x00FF)
 #define USER_CODE	0x00FF
 #elif defined(IR_USER_CODE_0xFE01)
