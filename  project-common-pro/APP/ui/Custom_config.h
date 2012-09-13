@@ -14888,7 +14888,7 @@
 
 #define LINE_IN_PLAY_KEY_PAUSE
 
-#define IR_USER_CODE_0xDF20
+#define IR_USER_CODE_0xFD02
 #define IR_REMOTE_TYPE_JGY
 #endif
 

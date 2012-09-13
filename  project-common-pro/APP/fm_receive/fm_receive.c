@@ -834,15 +834,17 @@ void fm_radio(void)
     flush_low_msg();
     sysclock_div2(1);
 
+#ifdef RADIO_AM_WM_ENABLE
+	FMAM_Mode_Switch_Profile(work_mode);
+#endif
+
 #ifdef DISP_CH_NUM_IN_RADIO_AT_FISRT
     Disp_Con(DISP_CH_NO);
 #else
     Disp_Con(DISP_FREQ);
 #endif
 
-#ifdef RADIO_AM_WM_ENABLE
-	FMAM_Mode_Switch_Profile(work_mode);
-#else
+#ifndef RADIO_AM_WM_ENABLE
     init_fm_rev();
     set_fre(frequency,1);
 #endif
