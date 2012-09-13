@@ -111,7 +111,7 @@
 #define  My_IR_KEY_EQ_UP		0x04
 #define  My_IR_KEY_EQ_DN		0x1a
 #define  My_IR_KEY_CHN_UP		0x02
-#define  My_IR_KEY_CHN_DN		0x04
+#define  My_IR_KEY_CHN_DN		0x01
 #elif defined(IR_USER_CODE_0xDF20)
 #define  My_IR_KEY_0			0x03
 #define  My_IR_KEY_1			0x00
