@@ -90,6 +90,31 @@
 #define  My_IR_KEY_CHN_DN		0x00
 
 #elif defined(IR_USER_CODE_0xDF20)
+#ifdef IR_REMOTE_TYPE_JGY
+#define  My_IR_KEY_0			0x08
+#define  My_IR_KEY_1			0x0c
+#define  My_IR_KEY_2			0x0d
+#define  My_IR_KEY_3			0x0e
+#define  My_IR_KEY_4			0x10
+#define  My_IR_KEY_5			0x11
+#define  My_IR_KEY_6			0x12
+#define  My_IR_KEY_7			0x14
+#define  My_IR_KEY_8			0x15
+#define  My_IR_KEY_9			0x16
+#define  My_IR_KEY_100			0xff
+
+#define  My_IR_KEY_MODE		0xFF
+#define  My_IR_KEY_PLAY			0x00
+#define  My_IR_KEY_PLAY_M		0x18
+#define  My_IR_KEY_VOL_UP		0x06
+#define  My_IR_KEY_VOL_DN		0x05	
+#define  My_IR_KEY_PREV			0x09
+#define  My_IR_KEY_NEXT			0x0a
+#define  My_IR_KEY_EQ_UP		0x04
+#define  My_IR_KEY_EQ_DN		0x1a
+#define  My_IR_KEY_CHN_UP		0x02
+#define  My_IR_KEY_CHN_DN		0x04
+#else
 #define  My_IR_KEY_0			0x03
 #define  My_IR_KEY_1			0x00
 #define  My_IR_KEY_2			0x01
@@ -113,6 +138,7 @@
 #define  My_IR_KEY_EQ_DN		0x12
 #define  My_IR_KEY_CHN_UP		0x1F
 #define  My_IR_KEY_CHN_DN		0x09
+#endif
 #elif defined(IR_USER_CODE_0xBF00)
 #define  My_IR_KEY_0			0x10
 #define  My_IR_KEY_1			0x04

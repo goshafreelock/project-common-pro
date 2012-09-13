@@ -1453,6 +1453,9 @@ __hot_key:
 /*----------------------------------------------------------------------------*/
 void decode_play(void)
 {
+#if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
+	last_disp_menu=DISP_NULL;
+#endif				
 
 #if defined(MP3_DISP_LOAD_STRING)
       Disp_Con(DISP_LOAD);

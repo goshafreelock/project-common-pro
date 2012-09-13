@@ -162,7 +162,12 @@ void enter_am_rev(void)
 }
 void FMAM_Mode_Switch_Profile(u8 fm_wm)
 {
-
+	if((fm_wm==SYS_FMREV)||(fm_wm==SYS_AMREV)){
+	}
+	else{
+		work_mode = SYS_FMREV;
+	}
+	
     	my_main_vol(0);
 	if(fm_wm==SYS_FMREV){
 
@@ -174,7 +179,7 @@ void FMAM_Mode_Switch_Profile(u8 fm_wm)
 	       Disp_Con(DISP_FREQ);
 
 	}
-	else{
+	else if(fm_wm==SYS_AMREV){
 
 		//printf(" -----AM   %x \r\n",(u16)fm_wm);
 		radio_mode=0;
