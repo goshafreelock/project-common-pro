@@ -1819,6 +1819,7 @@ u8 ap_handle_hotkey(u8 key)
 #elif defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 
     	 case INFO_CUS_KEY_1 | KEY_SHORT_UP :
+		if(work_mode == SYS_RTC)break;
 		new_vol_feature=~new_vol_feature;
 		if(new_vol_feature){
 
@@ -1975,8 +1976,13 @@ u8 ap_handle_hotkey(u8 key)
     case INFO_CH_DOWN| KEY_SHORT_UP:
 		
 		if(IR_Type == WITH_FM_CHIP)break;
+#if defined(USE_PWR_KEY_LONG_PWR_ON)	
+    case INFO_POWER | KEY_LONG :
+		break;
+#else
 #if !defined(USE_POWER_KEY_TO_SWITCH_MODE)				
     case INFO_POWER | KEY_SHORT_UP :
+#endif		
 #endif		
 #endif	
 

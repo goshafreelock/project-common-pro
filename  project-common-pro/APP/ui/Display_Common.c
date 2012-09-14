@@ -701,6 +701,10 @@ void play_led_flash()
 #endif
 #ifndef NO_PLAY_STATUS_LED
 
+#ifdef SKIP_PLAY_STATUS_LED_SPARK
+	if((LED_Flash_mode!=0xFF)&&(LED_Flash_mode!=0xF6))
+		return;
+#endif
 #if defined(PLAY_STATUS_LED_SHARE_WITH_IIC_SCL)
 	if(iic_busy)return;
 #endif
