@@ -31,6 +31,7 @@
 #define LED_MP3		 BIT(LED_E)
 #define LED_PAUSE	 0//BIT(LED_C)
 #define LED_PLAY	 0//BIT(LED_G)
+#define LED_STATUS   LED_BUFF[4]
 
 #else
 

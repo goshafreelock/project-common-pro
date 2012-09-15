@@ -691,6 +691,7 @@
 //#define K1188_ZX_1188_V001
 //#define K1192_FW_60_V001
 //#define K1196_YHD_852_V001
+//#define K2110_YHD_856_V001
 
 
 /*****************≤‚ ‘—È÷§******************/
@@ -5674,7 +5675,7 @@
 //#define AUX_DETECT_USE_P04
 #define LINE_IN_PLAY_KEY_NO_PAUSE_ICON_INDICATOR
 
-#define EQ_MODE_DEFUALT_ROCK
+//#define EQ_MODE_DEFUALT_ROCK
 
 #undef USE_RDAs_FM
 #undef USE_QN8035_FM
@@ -10189,9 +10190,9 @@
 #define ADKEY_NEXT_ADJST_FREQ
 #define MUTE_PORT_USE_P26
 #define PLAY_STATUS_LED_P27
-#define SEMI_AUTO_SCAN_FREQ
+
 #define IR_NEXT_PREV_HOLD_AUTO_SCAN
-#define ADKEY_NEXT_PREV_HOLD_AUTO_SCAN
+
 #define KEY_100_ENABLE
 #define USE_VOL_LIMTATION
 #ifdef USE_VOL_LIMTATION
@@ -10206,6 +10207,7 @@
 #endif
 #define LED_1651_DRV
 #define AC209_28PIN		//28 PIN IC GPIO CONFIG
+#define FM_BY_PASS
 
 #endif
 
@@ -14807,7 +14809,7 @@
 #endif
 #define MUTE_PORT_USE_P26
 
-#define PLAY_STATUS_LED_P27
+#define PLAY_STATUS_LED_P02
 
 #define FM_BY_PASS
 
@@ -15090,4 +15092,30 @@
 #define TURN_ON_PLAY_BREAK_POINT_MEM
 #define IR_REMOTER_WITH_POWER_MUTE_PRINT
 #endif
+
+
+#ifdef K2110_YHD_856_V001
+
+#define AC209_28PIN		//28 PIN IC GPIO CONFIG
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#define MUTE_PORT_USE_P26
+
+#define PLAY_STATUS_LED_P27
+
+#ifdef LED_GPIO_DRV
+#undef LED_GPIO_DRV
+#endif
+#define LED_1651_DRV
+
+#define USE_LINE_IN_DETECT_FUNC
+#define AUX_DETECT_USE_VPP
+#define LINE_IN_PLAY_KEY_PAUSE
+#define FM_PLAY_KEY_PAUSE
+#endif
+
 
