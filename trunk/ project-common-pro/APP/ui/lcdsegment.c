@@ -165,7 +165,7 @@ void lcd_gpio_scan(void)
    cnt++;
   if(cnt>7)cnt = 0;
 }
-#elif defined(K000_XingChuang_x821_V001)||defined(K2038_DCX_2038_V001)
+#elif defined(K000_XingChuang_x821_V001)||defined(K2038_DCX_2038_V001)||defined(LCD_SEGMENT_USE_8_SEGS_5_COMS)
 void lcd_gpio_scan(void)
 {
     static u8 cnt = 0;
