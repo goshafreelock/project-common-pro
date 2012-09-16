@@ -685,7 +685,7 @@
 #elif defined(AUX_DETECT_USE_P07)
 #define  aux_detect_in()      		P0DIR |= BIT(7);P0PU |= BIT(7)//;//linein check port
 #define  AUX_DETECT_GPIO  		P07
-#define  aux_detect_in_off()        	P0DIR &= ~(BIT(7))//; //linein check port
+#define  aux_detect_in_off()        	P0DIR &= ~(BIT(7));P07=1 //linein check port
 #elif defined(AUX_DETECT_USE_P06)
 #define  aux_detect_in()      		P0DIR |= BIT(6);P0PU |= BIT(6);//linein check port
 #define  AUX_DETECT_GPIO  		P06
@@ -698,7 +698,7 @@
 #else
 #define  aux_detect_in()      		P0DIR |= BIT(1);P0PU |= BIT(1);//linein check port
 #define  AUX_DETECT_GPIO  		P01
-#define  aux_detect_in_off()        	P0DIR &= ~(BIT(1)); //linein check port
+#define  aux_detect_in_off()        	P0DIR &= ~(BIT(1));P01=1 //linein check port
 #endif
 #endif
 //iic.h

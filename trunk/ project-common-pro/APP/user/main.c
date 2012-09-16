@@ -996,6 +996,15 @@ void sys_info_init(void)
     sys_printf("sys_init phase two finish");
 #endif
 }
+void custom_gpio_setting()
+{
+#if defined(K5008_JK_5008_V001)
+	P0DIR &= ~(BIT(7));
+	P0PU |= BIT(7);
+	P07 = 1;	   
+#endif
+
+}
 void Idle_hdlr()
 {
     u8 key;	
@@ -1233,7 +1242,7 @@ void main(void)
 #endif    
     sys_info_init();
     flush_all_msg();
-
+    custom_gpio_setting();
 #ifdef IR_DEBUG
 	IR_Debug_func();
 #endif
