@@ -496,6 +496,7 @@
 //#define K0000_JK_EARPHONE_BT_V001
 //#define K0000_JK_GHD_830D_V001
 //#define K5008_JK_5008_V001
+#define K5018_JK_5018_V001
 //#define K0000_ZG_BT260_V001
 //#define K0000_XP_TN891_V001
 //#define K0000_XP_TN891_V002
@@ -719,6 +720,65 @@
 
 /*****************按 主板编号定义宏******************/
 
+#ifdef K5018_JK_5018_V001
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P04
+
+#ifdef LED_GPIO_DRV
+#undef  LED_GPIO_DRV
+#endif
+#define LCD_GPIO_DRV
+#define LCD_SEGMENT_USE_8_SEGS_5_COMS
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+#define ADKEY_PLAY_SHORT_ADJ_CH
+#define DISP_VOL_V_CHAR
+#define NO_PLAY_STATUS_LED
+#define SEMI_AUTO_SCAN_FREQ
+#define ADKEY_NEXT_PREV_HOLD_AUTO_SCAN
+
+#define DISP_PAUS_STRING
+#define VOLUME_DEFUALT 	30
+#define INDEPENDENT_VOLUME_KEY
+
+#define FM_USE_KT0913
+#define RADIO_AM_WM_ENABLE
+#define SUPERIOR_CUSTOMER
+#undef KPL_MSG_COMPATIBLE
+
+#if 0
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+
+#define USE_POWER_KEY
+#define USE_ONLY_POWER_HOLD_CTRL
+#define PWR_CTRL_P17
+#define USE_PWR_KEY_LONG_PWR_ON
+#define PWR_ON_DELAY_1_SECOND
+#endif
+
+#define USE_LINE_IN_DETECT_FUNC
+#define AUX_DETECT_USE_P07
+#define JOG_STICK_FUNC
+
+
+#define USE_RTC_FUNCTION
+#define USE_RTC_TIME_ONLY
+#define RTC_SETTING_NO_CYC
+
+#define DEFAULT_GO_TO_TIME_MODE
+#undef USE_RDAs_FM
+#undef USE_QN8035_FM
+#undef USE_BK1080_FM
+#endif
 
 #ifdef K5008_JK_5008_V001
 
@@ -732,6 +792,7 @@
 #endif
 #define MUTE_PORT_USE_P04
 #define COMMON_CATHODE
+#define EXCHANGE_FM_MP3_ICON
 
 #define PROTECT_P17_FROM_LED_SCAN
 
@@ -739,7 +800,7 @@
 
 #define DISP_OFF_STR_AT_PWR_DOWN
 //#define DISP_PAUS_STRING
-#define ADKEY_PLAY_SHORT_ADJ_CH
+//#define ADKEY_PLAY_SHORT_ADJ_CH
 #define DISP_VOL_V_CHAR
 #define NO_PLAY_STATUS_LED
 #define SEMI_AUTO_SCAN_FREQ
@@ -752,6 +813,7 @@
 
 #define USE_POWER_KEY
 #define USE_ONLY_POWER_HOLD_CTRL
+#define SUPERIOR_CUSTOMER
 #define PWR_CTRL_P17
 #define USE_PWR_KEY_LONG_PWR_ON
 #define PWR_ON_DELAY_1_SECOND

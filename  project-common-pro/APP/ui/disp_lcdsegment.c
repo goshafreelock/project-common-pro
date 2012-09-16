@@ -49,7 +49,7 @@ u8 _code letter_tab[] =
     0x77,0x40,0x40,0x5E,0x79,///<ABCDE
     0x71,0x40,0x76,0x06,0x40,///<FGHIJ
     0x40,0x38,0x40,0x37,0x3F,///<KLMNO
-    0x73,0x40,0x50,0x40,0x40,///<PQRST
+    0x73,0x40,0x50,0x6d,0x40,///<PQRST
     0x3e,0x3e,0x40,0x76,0x40,///<UVWXY
     0x40,///<Z
 
@@ -115,6 +115,10 @@ u8 get_lcd_disbuf_offset(u8 lcd_digit)
 
 u8 _code get_lcd_disbuf_offset[4] ={6,4,2,0};
 
+#elif defined(K5018_JK_5018_V001)
+
+u8 _code get_lcd_disbuf_offset[4] ={6,4,2,0};
+
 #elif defined(K2045_AJR_2045_V001)
 
 u8 _code get_lcd_disbuf_offset[4] ={6,4,2,0};
@@ -145,7 +149,7 @@ u8 dispchar(u8 chardata,u8 offset)
     u16  letter_temp;
     u8 digit_idx=0;
 
-#if defined(K000_ZhuoYue_003_V001)||defined(K2045_AJR_2045_V001)||defined(K000_KT_AMFM_V001)||defined(K000_XingChuang_x821_V001)||defined(K2038_DCX_2038_V001)
+#if defined(K000_ZhuoYue_003_V001)||defined(K5018_JK_5018_V001)||defined(K2045_AJR_2045_V001)||defined(K000_KT_AMFM_V001)||defined(K000_XingChuang_x821_V001)||defined(K2038_DCX_2038_V001)
 
 
 #else	
@@ -172,7 +176,6 @@ u8 dispchar(u8 chardata,u8 offset)
  
 #if defined(K000_ZhuoYue_003_V001)
 
-	letter_temp = letter_tab[chardata];
 	offset =3- offset;
 	digit_idx= (offset*2);
 	
@@ -187,7 +190,6 @@ u8 dispchar(u8 chardata,u8 offset)
        lcd_buff[3] |= (((letter_temp & DIG_D)>>2)|((letter_temp & DIG_E)>>4))<<digit_idx;
 #elif defined(K1150_LS_1150_V001)
 
-	letter_temp = letter_tab[chardata];
 
 	digit_idx= get_lcd_disbuf_offset[offset];
 
@@ -199,10 +201,23 @@ u8 dispchar(u8 chardata,u8 offset)
        lcd_buff[1] |= (((letter_temp & DIG_A)<<1)|((letter_temp & DIG_F)>>5))<<digit_idx;
        lcd_buff[2] |= (((letter_temp & DIG_G)>>6)|((letter_temp & DIG_B)))<<digit_idx;
        lcd_buff[3] |= (((letter_temp & DIG_C)>>1)|((letter_temp & DIG_E)>>4))<<digit_idx;
-       lcd_buff[4] |= (((letter_temp & DIG_D)>>2))<<digit_idx;  		   
-#elif defined(K2045_AJR_2045_V001)
+       lcd_buff[4] |= (((letter_temp & DIG_D)>>2))<<digit_idx;  
+#elif defined(K5018_JK_5018_V001)
 
-	letter_temp = letter_tab[chardata];
+
+	digit_idx= get_lcd_disbuf_offset[offset];
+
+	lcd_buff[1] &= ~(0x0002<<digit_idx);
+	lcd_buff[2] &= ~(0x0003<<digit_idx);
+	lcd_buff[3] &= ~(0x0003<<digit_idx);
+	lcd_buff[4] &= ~(0x0003<<digit_idx);
+
+       lcd_buff[1] |= ((letter_temp & DIG_A)<<1)<<digit_idx;
+       lcd_buff[2] |= (((letter_temp & DIG_B))|((letter_temp & DIG_F)>>5))<<digit_idx;
+       lcd_buff[3] |= (((letter_temp & DIG_C)>>1)|((letter_temp & DIG_G)>>6))<<digit_idx;
+       lcd_buff[4] |= (((letter_temp & DIG_D)>>2)|((letter_temp & DIG_E)>>4))<<digit_idx;   	
+	   
+#elif defined(K2045_AJR_2045_V001)
 
 	digit_idx= get_lcd_disbuf_offset[offset];
 
@@ -217,15 +232,12 @@ u8 dispchar(u8 chardata,u8 offset)
        lcd_buff[3] |= (((letter_temp & DIG_D)>>2))<<digit_idx;  	   
 #elif defined(K2038_DCX_2038_V001)
 
-	letter_temp = letter_tab[chardata];
-
 	digit_idx= get_lcd_disbuf_offset(offset);
 	
 	lcd_buff[digit_idx] = 0x00;
        lcd_buff[digit_idx] = (((letter_temp & DIG_A)<<3)|((letter_temp & DIG_B)<<1)|((letter_temp & DIG_D)<<3)|((letter_temp & DIG_C)>>1)|((letter_temp & DIG_E)<<1)|((letter_temp & DIG_F)>>1)|((letter_temp & DIG_G)>>6));
 
 #elif defined(K000_KT_AMFM_V001)
-	letter_temp = letter_tab[chardata];
 
 	digit_idx= get_lcd_disbuf_offset(offset);
 	
@@ -239,7 +251,6 @@ u8 dispchar(u8 chardata,u8 offset)
        lcd_buff[2] |= (((letter_temp & DIG_E)>>4)|((letter_temp & DIG_G)>>5))<<digit_idx;
        lcd_buff[3] |= (((letter_temp & DIG_D)>>3)|((letter_temp & DIG_C)>>1))<<digit_idx;  
 #elif defined(K000_XingChuang_x821_V001)
-	letter_temp = letter_tab[chardata];
 
 	digit_idx= get_lcd_disbuf_offset(offset);
 	
@@ -253,7 +264,7 @@ u8 dispchar(u8 chardata,u8 offset)
        lcd_buff[2] |= (((letter_temp & DIG_C)>>2)|((letter_temp & DIG_G)>>5))<<digit_idx;
        lcd_buff[3] |= (((letter_temp & DIG_D)>>3)|((letter_temp & DIG_E)>>3))<<digit_idx;   	   
 #elif defined(K820_LHD_820_V001)
-	letter_temp = letter_tab[chardata];
+
 	digit_idx= get_lcd_disbuf_offset(offset);
 	   
 	lcd_buff[0] &= ~(0x0003<<digit_idx);
@@ -267,7 +278,6 @@ u8 dispchar(u8 chardata,u8 offset)
        lcd_buff[3] |= (((letter_temp & DIG_D)>>3)|((letter_temp & DIG_H)>>7))<<digit_idx;   	 	   
 #else
 
-	letter_temp = letter_tab[chardata];
 	offset =3- offset;
 	digit_idx= (offset*2)-1;
 	
@@ -293,7 +303,7 @@ u8 dispchar(u8 chardata,u8 offset)
 /*----------------------------------------------------------------------------*/
 void dispstring(u8 *str,u8 offset0)
 {
-#if defined(K000_ZhuoYue_003_V001)||defined(K000_KT_AMFM_V001)||defined(K000_XingChuang_x821_V001)||defined(K2038_DCX_2038_V001)
+#if defined(K000_ZhuoYue_003_V001)||defined(K5018_JK_5018_V001)||defined(K000_KT_AMFM_V001)||defined(K000_XingChuang_x821_V001)||defined(K2038_DCX_2038_V001)
     u8 cnt = 3;
 #else
     u8 cnt = 2;
@@ -318,9 +328,10 @@ u8 dispNum(u8 chardata,u8 cnt)
     u8  letter_temp;
     u8 digit_idx=0;
 
+	letter_temp = figure_tab[chardata];
+
 #if defined(K000_ZhuoYue_003_V001)	
 	
-	letter_temp = figure_tab[chardata];
 	cnt =3- cnt;
 	digit_idx= (cnt*2);
 
@@ -335,7 +346,6 @@ u8 dispNum(u8 chardata,u8 cnt)
        lcd_buff[3] |= (((letter_temp & DIG_D)>>2)|((letter_temp & DIG_E)>>4))<<digit_idx;
 #elif defined(K1150_LS_1150_V001)
 
-	letter_temp = figure_tab[chardata];
 
 	digit_idx= get_lcd_disbuf_offset[cnt];
 
@@ -347,10 +357,24 @@ u8 dispNum(u8 chardata,u8 cnt)
        lcd_buff[1] |= (((letter_temp & DIG_A)<<1)|((letter_temp & DIG_F)>>5))<<digit_idx;
        lcd_buff[2] |= (((letter_temp & DIG_G)>>6)|((letter_temp & DIG_B)))<<digit_idx;
        lcd_buff[3] |= (((letter_temp & DIG_C)>>1)|((letter_temp & DIG_E)>>4))<<digit_idx;
-       lcd_buff[4] |= (((letter_temp & DIG_D)>>2))<<digit_idx;  		   
+       lcd_buff[4] |= (((letter_temp & DIG_D)>>2))<<digit_idx;  	
+#elif defined(K5018_JK_5018_V001)
+
+
+	digit_idx= get_lcd_disbuf_offset[cnt];
+
+	lcd_buff[1] &= ~(0x0002<<digit_idx);
+	lcd_buff[2] &= ~(0x0003<<digit_idx);
+	lcd_buff[3] &= ~(0x0003<<digit_idx);
+	lcd_buff[4] &= ~(0x0003<<digit_idx);
+
+       lcd_buff[1] |= ((letter_temp & DIG_A)<<1)<<digit_idx;
+       lcd_buff[2] |= (((letter_temp & DIG_B))|((letter_temp & DIG_F)>>5))<<digit_idx;
+       lcd_buff[3] |= (((letter_temp & DIG_C)>>1)|((letter_temp & DIG_G)>>6))<<digit_idx;
+       lcd_buff[4] |= (((letter_temp & DIG_D)>>2)|((letter_temp & DIG_E)>>4))<<digit_idx;   	
+	   
 #elif defined(K2045_AJR_2045_V001)
 
-	letter_temp = figure_tab[chardata];
 
 	digit_idx= get_lcd_disbuf_offset[cnt];
 
@@ -365,7 +389,6 @@ u8 dispNum(u8 chardata,u8 cnt)
        lcd_buff[3] |= (((letter_temp & DIG_D)>>2))<<digit_idx;  
 	   
 #elif defined(K2038_DCX_2038_V001)	   
-	letter_temp = figure_tab[chardata];
 
 	digit_idx= get_lcd_disbuf_offset(cnt);
 	
@@ -374,7 +397,6 @@ u8 dispNum(u8 chardata,u8 cnt)
 	   
 #elif defined(K000_KT_AMFM_V001)
 
-	letter_temp = figure_tab[chardata];
 	digit_idx= get_lcd_disbuf_offset(cnt);
 
 	lcd_buff[0] &= ~(0x0001<<digit_idx);
@@ -388,7 +410,6 @@ u8 dispNum(u8 chardata,u8 cnt)
        lcd_buff[3] |= (((letter_temp & DIG_D)>>3)|((letter_temp & DIG_C)>>1))<<digit_idx;
 #elif defined(K000_XingChuang_x821_V001)
 
-	letter_temp = figure_tab[chardata];
 	digit_idx= get_lcd_disbuf_offset(cnt);
 
 	lcd_buff[0] &= ~(0x0001<<digit_idx);
@@ -413,7 +434,6 @@ u8 dispNum(u8 chardata,u8 cnt)
 	    }
 	    return 1;
 	}
-	letter_temp = figure_tab[chardata];
 
 	digit_idx= get_lcd_disbuf_offset(cnt);
 
@@ -440,7 +460,7 @@ u8 dispNum(u8 chardata,u8 cnt)
 	    }
 	    return 1;
 	}
-	letter_temp = figure_tab[chardata];
+
 	cnt =3- cnt;
 	digit_idx= (cnt*2)-1;
 	
@@ -479,8 +499,8 @@ void disp_active(void)
 	}
 	else if(device_active == BIT(USB_DISK))
 	{
-		 F_USB_DEV |=USB_DEV_MASK;
 		 F_SD_DEV  &= ~SD_DEV_MASK;
+		 F_USB_DEV |=USB_DEV_MASK;		 
 	}
 
 	F_FM_DEV  &= ~FM_DEV_MASK;
@@ -515,7 +535,7 @@ void Disp_Freq(void )
 	if(radio_mode){
 
 	F_FM_DEV  |= FM_DEV_MASK;
-#if defined(K000_KT_AMFM_V001)
+#if defined(K000_KT_AMFM_V001)||defined(K5018_JK_5018_V001)
 	F_MHZ_DEV |=FM_MHZ_MASK;
 	F_P1_DEV |=FM_P1_MASK;
 #endif
@@ -523,8 +543,13 @@ void Disp_Freq(void )
 	}
 	else{
 
+#if defined(K5018_JK_5018_V001)
+	F_KHZ_DEV |=AM_KHZ_MASK;
+	F_AM_DEV|= AM_DEV_MASK;
+#else
 	F_KHZ_DEV |=AM_KHZ_MASK;
 	SPK_ICON|=SPK_MUTE_MASK;
+#endif	
 	}
 		
 #else	
@@ -582,6 +607,9 @@ void Disp_Nodevice(void)
 /*----------------------------------------------------------------------------*/
 void Disp_Vol(void)
 {
+#ifdef DISP_VOL_V_CHAR
+	dispchar('V');
+#endif
 	dispNum((my_music_vol/10),1);
 	dispNum(my_music_vol%10,0);
 }
@@ -654,6 +682,8 @@ void Disp_Pause(void)
 #if defined(K1150_LS_1150_V001)
     F_PAU_ICON |=PAU_ICON_MASK;
     dispstring("PAUS",0);
+#elif defined(DISP_PAUS_STRING)	
+    dispstring("PAUS",0);
 #else	
     dispstring("PAU",0);
 #endif
@@ -707,9 +737,13 @@ void Disp_USB_Slave(void)
 void Disp_AUX(void)
 {
 
-    F_AUX_DEV  |= AUX_DEV_MASK;
-    dispstring("AUX",0);
 
+    F_AUX_DEV  |= AUX_DEV_MASK;
+#ifdef K5018_JK_5018_V001
+    dispstring(" AUX",0);
+#else
+    dispstring("AUX",0);
+#endif
 }
 void Disp_Error(void)
 {
@@ -722,7 +756,6 @@ void Disp_Start(void)
       // dispstring("HI",0);
 #elif defined(K1150_LS_1150_V001)
        dispstring("HI",0);
-
 #else
        dispstring(" HI",0);
 #endif
@@ -744,6 +777,7 @@ void Disp_Power_up(void)
       lcd_buff[1] = 0x0000;	  /* 百位 */
       lcd_buff[2] = 0x0000;	  /* 十位 */
       lcd_buff[3] = 0x0000;	  /* 十位 */
+      lcd_buff[4] = 0x0000;	  /* 十位 */
 }
 void Disp_CH_NO(void )
 {
@@ -804,7 +838,12 @@ void oppo_area_rtc(u8 setting)
 			lcd_buff[0]&=~(0x000A);
 			lcd_buff[1]&=~(0x000F);			
 			lcd_buff[2]&=~(0x000F);
-			lcd_buff[3]&=~(0x000F);	
+			lcd_buff[3]&=~(0x000F);
+#elif defined(K5018_JK_5018_V001)
+			lcd_buff[4]&=~(0x000F);
+			lcd_buff[1]&=~(0x000A);			
+			lcd_buff[2]&=~(0x000F);
+			lcd_buff[3]&=~(0x000F);
 #else				
 			lcd_buff[0]&=~(0x003);
 			lcd_buff[1]&=~(0x003);			
@@ -818,6 +857,11 @@ void oppo_area_rtc(u8 setting)
 			lcd_buff[1]&=~(0x00F0);			
 			lcd_buff[2]&=~(0x00F0);
 			lcd_buff[3]&=~(0x00F0);
+#elif defined(K5018_JK_5018_V001)			
+			lcd_buff[4]&=~(0x00F0);
+			lcd_buff[1]&=~(0x00A0);			
+			lcd_buff[2]&=~(0x00F0);
+			lcd_buff[3]&=~(0x00F0);			
 #else				
 			lcd_buff[0]&=~(0x003<<2);
 			lcd_buff[1]&=~(0x003<<2);			
@@ -831,6 +875,11 @@ void oppo_area_rtc(u8 setting)
 			lcd_buff[1]&=~(0x000F);			
 			lcd_buff[2]&=~(0x000F);
 			lcd_buff[3]&=~(0x000F);	
+#elif defined(K5018_JK_5018_V001)			
+			lcd_buff[4]&=~(0x000F);
+			lcd_buff[1]&=~(0x000A);			
+			lcd_buff[2]&=~(0x000F);
+			lcd_buff[3]&=~(0x000F);			
 #else			
 			lcd_buff[0]&=~(0x0007);
 			lcd_buff[1]&=~(0x0007);			
@@ -844,6 +893,11 @@ void oppo_area_rtc(u8 setting)
 			lcd_buff[1]&=~(0x00F0);			
 			lcd_buff[2]&=~(0x00F0);
 			lcd_buff[3]&=~(0x00F0);
+#elif defined(K5018_JK_5018_V001)			
+			lcd_buff[4]&=~(0x00F0);
+			lcd_buff[1]&=~(0x00A0);			
+			lcd_buff[2]&=~(0x00F0);
+			lcd_buff[3]&=~(0x00F0);			
 #else			
 			lcd_buff[0]&=~(0x0078);
 			lcd_buff[1]&=~(0x0078);			

@@ -933,6 +933,9 @@ void sys_info_init(void)
         my_music_vol = VOLUME_DEFUALT;
 #endif
 
+#ifdef K5018_JK_5018_V001
+    Disp_Con(DISP_START);//zdy 0321 add  dispay "HI" when power on 
+#endif
 #if 1
 #ifdef FAST_DEV_INIT
 	delay_10ms(2);	
