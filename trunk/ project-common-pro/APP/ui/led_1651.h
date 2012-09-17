@@ -38,7 +38,7 @@
 #define LED_AUX	 	0//BIT(LED_A)
 
 #define LED_USB		 BIT(LED_A)
-#define LED_FM		 BIT(LED_B)
+#define LED_FM		 BIT(LED_B)|BIT(LED_E)
 #define LED_MP3		 BIT(LED_C)
 #define LED_SD		 BIT(LED_D)
 #define LED_PLAY	 BIT(LED_F)

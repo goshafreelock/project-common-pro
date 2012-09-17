@@ -459,12 +459,13 @@ bool charger_detect(void)
 		DC_CHARGE_LED_INIT();
 		DC_CHARGE_LED_H();
 
+		if(play_status!=MUSIC_PLAY)
 		set_play_flash(LED_FLASH_NOR);
 
 		if(LDO_IN_Volt>=BAT_FULL_VOLT){
 
 			if(play_status!=MUSIC_PLAY)
-				set_play_flash(LED_FLASH_STOP);
+				set_play_flash(LED_FLASH_ON);
 
 			DC_CHARGE_LED_L();		
 		}
@@ -524,10 +525,13 @@ bool charger_detect(void)
 #ifdef K0000_MY_FT18_BT_V001
 	return 0;
 #endif
-#if defined(DC_CHARGE_GPIO_DRV_LED_IND)
+#if defined(DC_CHARGE_GPIO_DRV_LED_IND)|| defined(DC_CHARGE_GPIO_DRV_LED_IND_2)
 		DC_CHARGE_LED_L();		
 #endif
-
+#ifdef K0000_JK_GHD_830D_V001
+	if(play_status!=MUSIC_PLAY)
+		set_play_flash(LED_FLASH_ON);
+#endif
 	return 0;
 }
 #endif

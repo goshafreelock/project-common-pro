@@ -877,9 +877,13 @@ void fm_radio(void)
 #ifdef FM_BY_PASS
  //   Mute_Ext_PA(UNMUTE); 
     //my_main_vol(my_music_vol);	
-    	dac_out_select(DAC_DECODE);	//4  
+    	aux_channel_crosstalk_improve(DAC_AMUX0);//4P24,P25 FM_IN	  
+	//dac_out_select(DAC_DECODE);	//4  
+	//aux_ch_reg=DAC_AMUX0;
+
     	main_vol(0);  
-//    dac_highz_output_enable();
+   // dac_highz_output_enable();
+
 #else
 
 #ifdef FM_LINE_IN_SHARE_SAME_CHANNEL
