@@ -45,6 +45,10 @@ extern xd_u8 audio_effect_state;
 static bool aux_2_sel=0;
 #endif
 extern xd_u8 aux_ch_reg;
+#ifdef VOL_ADJ_SPARK_LED
+extern bool vol_adj_spark_bit;
+#endif
+extern xd_u8 last_led_play_mod;
 
 #if defined(ADC_DETECT_LINE_IN)
 extern bool Line_In_Detect;
@@ -467,6 +471,14 @@ void deal_aux( void )
 		usb_hotplug_hdlr();
 #endif
 
+#ifdef VOL_ADJ_SPARK_LED
+		if(vol_adj_spark_bit){
+			vol_adj_spark_bit=0;
+			restore_led_flash_mod(last_led_play_mod);		
+		}
+#endif	 
+
+
             if (return_cnt < RETURN_TIME)
             {
                 return_cnt++;
@@ -607,6 +619,14 @@ void deal_aux( void )
 
         if(my_music_vol)
             my_music_vol--;
+#ifdef VOL_ADJ_SPARK_LED
+
+	if(!vol_adj_spark_bit){
+		vol_adj_spark_bit=1;
+		last_led_play_mod = get_led_flash_mode();
+	}
+	set_play_flash(LED_FLASH_VERY_FAST);
+#endif
 
         if (my_music_vol > MAX_VOL)
         {
