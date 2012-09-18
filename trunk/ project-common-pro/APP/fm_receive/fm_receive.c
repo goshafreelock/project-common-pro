@@ -31,6 +31,10 @@ extern _xdata SYS_WORK_MODE work_mode;
 extern bool IR_KEY_Detect;
 extern xd_u8 my_music_vol; 
 extern u16 get_fm_id();
+#ifdef VOL_ADJ_SPARK_LED
+extern bool vol_adj_spark_bit;
+#endif
+extern xd_u8 last_led_play_mod;
 
 #if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 extern bool new_vol_feature;
@@ -445,6 +449,12 @@ __SCAN_FREQ:
 		usb_hotplug_hdlr();
 #endif
 
+#ifdef VOL_ADJ_SPARK_LED
+		if(vol_adj_spark_bit){
+			vol_adj_spark_bit=0;
+			restore_led_flash_mod(last_led_play_mod);		
+		}
+#endif	 
             if (return_cnt < RETURN_TIME)
             {
                 return_cnt++;

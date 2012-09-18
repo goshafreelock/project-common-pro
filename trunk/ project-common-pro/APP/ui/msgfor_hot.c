@@ -46,6 +46,10 @@ extern void DSA_if_hdlr(void);
 extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 #endif
 
+#ifdef VOL_ADJ_SPARK_LED
+bool vol_adj_spark_bit=0;
+#endif
+
 #if defined(WKUP_PIN_USE_ENABLE)||defined(MUTE_PORT_USE_WKUP)||defined(PWR_CTRL_WKUP)
 extern void wkup_pin_ctrl(bool dir);
 #endif
@@ -101,6 +105,8 @@ extern bool charger_in_flag;
 #ifdef DEVICE_SEL_MANUAL_ONLY
 xd_u8 device_selected=0;
 #endif
+
+xd_u8 last_led_play_mod=0;
 
 #if defined(SPECTRUM_FUNC_ENABLE)
 bool spectrum_reflesh_en;
@@ -1064,7 +1070,6 @@ void LED_MODE_INDICATOR()
 }
 #endif
 #if defined(KEY_PRESS_LED_INDICATOR)
-xd_u8 last_led_play_mod=0;
 extern void set_play_flash(u8 led_status);
 void key_press_led_indicator(u8 key_t)
 {
@@ -1903,6 +1908,14 @@ u8 ap_handle_hotkey(u8 key)
         if (my_music_vol)
             my_music_vol--;
 
+#ifdef VOL_ADJ_SPARK_LED
+
+	if(!vol_adj_spark_bit){
+		vol_adj_spark_bit=1;
+		last_led_play_mod = get_led_flash_mode();
+	}
+	set_play_flash(LED_FLASH_VERY_FAST);
+#endif
 	 clear_super_mute_lock();
 
         if (my_music_vol > MAX_VOL)
