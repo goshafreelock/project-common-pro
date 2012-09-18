@@ -278,7 +278,7 @@ void init_fm_rev(void)
 #ifdef FM_USE_KT0913
 	if(FM_chip_id  == KT0913_CHIP_ID){
 
-		KT_AMFMInit();
+		KT_AMFMWakeUp();
 	}
 #endif		
 

@@ -844,6 +844,11 @@ void fm_radio(void)
     flush_low_msg();
     sysclock_div2(1);
 
+#if 1//ndef RADIO_AM_WM_ENABLE
+    init_fm_rev();
+    set_fre(frequency,1);
+#endif
+
 #ifdef RADIO_AM_WM_ENABLE
 	FMAM_Mode_Switch_Profile(work_mode);
 #endif
@@ -854,10 +859,6 @@ void fm_radio(void)
     Disp_Con(DISP_FREQ);
 #endif
 
-#ifndef RADIO_AM_WM_ENABLE
-    init_fm_rev();
-    set_fre(frequency,1);
-#endif
 
 //    delay_10ms(1);
 	
