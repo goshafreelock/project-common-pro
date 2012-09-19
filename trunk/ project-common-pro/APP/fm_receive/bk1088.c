@@ -1,11 +1,11 @@
 
+#include "Custom_config.h"
 
 #include "bk1088.h"
 #include "clock.h"
 #include"uart.h"
 #include "config.h"
 #include "fm_rev.h"
-#include "Custom_config.h"
 
 #include "entry.h"
 

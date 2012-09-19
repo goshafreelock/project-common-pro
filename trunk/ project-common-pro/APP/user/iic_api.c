@@ -28,7 +28,7 @@ bool iic_busy = 0;
    @note    void  iic_write(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n)
 */
 /*----------------------------------------------------------------------------*/
-void  iic_write(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n)
+void  iic_write(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n) large
 {
     iic_busy  = 1;
     iic_start();                //I2CÆô¶¯
@@ -54,7 +54,7 @@ void  iic_write(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n)
 */
 /*----------------------------------------------------------------------------*/
 
-void iic_readn(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n)
+void iic_readn(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n) large
 {
 
     iic_busy = 1;

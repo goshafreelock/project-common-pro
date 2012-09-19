@@ -483,3 +483,6 @@ void usb_config(u8 mode);
 */
 /*----------------------------------------------------------------------------*/
 void Usb_Audio_Mute_Ctl(void);
+
+
+void usb_otg_polling(void);

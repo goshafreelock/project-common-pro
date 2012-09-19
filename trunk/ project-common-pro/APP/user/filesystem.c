@@ -18,7 +18,7 @@ FIL _pdata fat_file _at_ 0x29;
 FIL _pdata * _xdata fat_file_maskrom _at_ (0x2380 + 0x62); 
 FSINFO _xdata fs_info _at_ 0x5B0;
 extern void stop_decode(void);
-
+extern u8 music_type;
 u16 filename_len;               ///< 最终提取的文件信息的长度
 /*----------------------------------------------------------------------------*/
 /**@brief     处理已经获取到的长文件名，当期转换为ASCII码
@@ -43,7 +43,29 @@ void deal_longname(u8 _xdata *p,u8 _xdata *sou_p,u8 max_copy)
             }
             else if ((sou_p[i*2] < 0x80) && (0 == sou_p[i*2+1]))
             {
-                p[i] = sou_p[i*2];
+                 p[i] = sou_p[i*2];
+                 /**/
+                 if (2 == music_type)     //wav文件
+                 {        
+                      if((p[i-1] =='v') &&(p[i-2] =='a')&&(p[i-3] =='w')&&(p[i-4] =='.'))
+                      {                       
+                         p[i] = 0;
+                      }  
+                 }
+                 else if(1 == music_type )
+                 {
+                      if((p[i-1] =='3') &&(p[i-2] =='p')&&(p[i-3] =='m')&&(p[i-4] =='.'))
+                      {                       
+                         p[i] = 0;
+                      }  
+                 }  
+                if((fs_msg.fname[8]== 'S')&&(fs_msg.fname[9]== 'M')&&(fs_msg.fname[10]== 'P'))
+                {
+                     if((p[i-1] == 'p') &&(p[i-2] =='m')&&(p[i-3] =='s')&&(p[i-4] =='.'))
+                     {                   
+                           p[i] = 0;
+                     }
+                }
             }
             else
             {
@@ -72,8 +94,17 @@ bool get_filename( u8 _xdata *p )
 
     my_memset(buffer, 0, 100);
     my_memset(p, 0, 100);
-
-    if (fs_getfile_longname(buffer))
+#if FILE_ENCRYPTION
+    password_start(0);
+#endif
+    flag = fs_getfile_longname(buffer);
+#if FILE_ENCRYPTION
+    if((fs_msg.fname[8]== 'S')&&(fs_msg.fname[9]== 'M')&&(fs_msg.fname[10]== 'P'))
+    {
+        password_start(1);
+    }
+#endif
+    if (flag)
     {
         deal_longname(p,buffer,90);
         p[99] = 1;

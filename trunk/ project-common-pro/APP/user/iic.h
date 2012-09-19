@@ -12,7 +12,11 @@
 #ifndef _IIC_H_
 #define _IIC_H_
 
+#define USE_EEPROM     0   // 使用EEPROM记忆
+#define USE_RTCRAM     1   // 使用RTC_RAM记忆
+#define USE_DEVICE     2   // 使用播放设备记忆
 
+#define MEMORY_STYLE    USE_RTCRAM      //记忆方式选择
 #ifdef __C51__
 #include "AC209N.h"
 #include "typedef.h"
@@ -67,13 +71,13 @@ void iic_start(void);
 void iic_stop(void);
 u8 r_ack(void);
 void s_ack(u8 flag);
-u8 iic_revbyte_io( void );
-u8 iic_revbyte( u8 para );
-void iic_sendbyte_io(u8 byteI2C);
+u8 iic_revbyte_io( void ) large;
+u8 iic_revbyte( u8 para ) large;
+void iic_sendbyte_io(u8 byteI2C) large;
 u8 iic_sendbyte(u8 byte);
 
-void  iic_write(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n);
-void iic_readn(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n);
+void  iic_write(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n) large;
+void iic_readn(u8 chip_id,u8 iic_addr,u8 *iic_dat,u8 n) large;
 
 u8 read_eerom(u8 iic_addr);
 void write_eerom(u8 addr,u8 dat);

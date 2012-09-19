@@ -1,3 +1,11 @@
+/*--------------------------------------------------------------------------*/
+/**@file     AC209N.h
+   @brief    AC209NÍ·ÎÄ¼þ
+   @author
+   @date   2010-12-13
+   @note   AC209N
+*/
+/*----------------------------------------------------------------------------*/
 #ifndef _AC209N_
 #define _AC209N_
 
@@ -78,6 +86,7 @@ sfr SPIBUF = 0xD3;
 sfr SPIDMACON = 0xD4;
 sfr SPIDMACNT = 0xD5;
 sfr SPIDMAADR = 0xD6;
+sfr CPUOBUF = 0xD7;
 sfr ACC = 0xE0;
 sfr P3IE = 0xE1;
 sfr P0DIR = 0xE4;

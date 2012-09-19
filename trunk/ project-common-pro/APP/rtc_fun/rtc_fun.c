@@ -79,7 +79,7 @@ u8 nowmonth(u8 nmonth,u16 nyear)
    @note   void sec_date(RTC_TIME *now_time,u32 sec)
 */
 /*----------------------------------------------------------------------------*/
-void sec_date(RTC_TIME *now_time,u32 sec)
+void sec_date(RTC_TIME *now_time,u32 sec) large
 {
 
     u16 temp_day;
@@ -139,7 +139,7 @@ void sec_date(RTC_TIME *now_time,u32 sec)
    @note   u32 date_sec(RTC_TIME *time,bit flag)
 */
 /*----------------------------------------------------------------------------*/
-u32 date_sec(RTC_TIME *time,bit flag)
+u32 date_sec(RTC_TIME *time,bit flag) large
 {
     u16 y_i;
     u32 sec;

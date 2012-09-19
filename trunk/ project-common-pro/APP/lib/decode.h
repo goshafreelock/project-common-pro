@@ -129,7 +129,7 @@ PLAYPOINT_TIME;
 
 void save_playpoint(u8 cnt);
 void load_playpoint(void);
-void write_dev_playtime(u8 dev);
+void write_dev_playtime(u8 dev) large;
 void clean_playpoint(u8 dev);
 void write_playpoint_info(u8 dev);
 u16 read_playpoint_info(u8 dev);

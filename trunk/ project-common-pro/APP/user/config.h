@@ -88,5 +88,17 @@ typedef enum
 #define SDMMC_CLK_MODE   0	  ///<使用SD clk 查询模式
 #define SDMMC_GPIO_MODE  0	  ///<使用独立的GPIO做SD在线查询模式
 #endif
+#define FF_FR_MUSIC                      1			//在快进快退时，是否需要听到声音
+#define USB_DEVICE_OTG                   0          //1：从机支持热插拔，0：只在开机时检测一下是否有从机
+
+//#define RTC_ENABLE                       1		    //<是否需要使用RTC功能(与是否使用RTC内部的RAM无关)
+#define OTP_MUSIC_ENABLE                 0			//<是否需要使用开机音乐
+#define VOICE_TIME_ENABLE                0          //语音报时功能使能；     1：打开  0：关闭
+#define FM_ENABLE                        0          //fm功能使能；           1：打开  0：关闭
+
+
+#define FILE_ENCRYPTION                  0          //文件加密功能使能;      1：打开  0：关闭
+#define DEVICE_ENCRYPTION                0          //设备加密功能使能；     1：打开  0：关闭
+#define FAT_MEMORY                       0          //设备记忆功能使能；     1：打开  0：关闭
 //void Delay_us(u16 i );
 #endif

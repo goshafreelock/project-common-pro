@@ -49,7 +49,7 @@ u8 _code id3_tag[3][5] =
    @note     u8 compare_str(u8  * buf)
 */
 /*----------------------------------------------------------------------------*/
-u8 compare_str(u8  * buf)
+u8 compare_str(u8  * buf) large
 {
     u8 i,j;
     for (j = 0;j < MAX_ID3; j++)
@@ -84,7 +84,7 @@ u8 compare_str(u8  * buf)
    @note    u8 f_seek(u8 type, u32 offset)
 */
 /*----------------------------------------------------------------------------*/
-u8 f_seek(u8 type, u32 offset)
+u8 f_seek(u8 type, u32 offset) large
 {
     fs_seek_offset(offset);
     return fs_seek(type);

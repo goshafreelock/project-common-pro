@@ -8,6 +8,8 @@
 */
 /*----------------------------------------------------------------------------*/
 #include "aux_fun.h"
+#include "fat_memory.h"
+#include "voice_time.h"
 #include "led.h"
 #include "rtc_mode.h"
 #include "PT2313.h"
@@ -462,6 +464,9 @@ void deal_aux( void )
 	break;
 #endif
         case INFO_HALF_SECOND :
+#if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))           
+            updata_fat_memory();
+#endif
 			
 #if defined(AD_MEASURE_TEMP_FUNC)
 		adc_diode_temp_measure_hdlr();

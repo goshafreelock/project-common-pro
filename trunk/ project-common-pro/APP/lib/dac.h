@@ -66,19 +66,11 @@ void dac_sw(u8 flag);
 /*----------------------------------------------------------------------------*/
 u8 main_vol_set(u8 vol, u8 mode);
 /*----------------------------------------------------------------------------*/
-/**@brief   DAC通道选择
-   @param   sel:DAC通道
-   @return  无
-   @note	void dac_channel_sel(u8 sel)
-*/
-/*----------------------------------------------------------------------------*/
-void dac_channel_sel(u8 sel);
-/*----------------------------------------------------------------------------*/
 /**@brief   DAC mute控制
    @param   mute：Mute控制位；mode：设置模式
    //mute :1 mute enable ,0 mute disable, mode: 1 change  main_vol_mute & dac, 0 chang main_vol_mute only
    @return  无
-   @note	void dac_channel_sel(u8 sel)
+   @note	void dac_mute_control(u8 mute, u8 mode)
 */
 /*----------------------------------------------------------------------------*/
 void dac_mute_control(u8 mute, u8 mode);
@@ -98,19 +90,38 @@ bool dac_mute_toggle(void);
 */
 /*----------------------------------------------------------------------------*/
 void set_max_vol(u8 max_analog, u8 max_digital);
-
+/*----------------------------------------------------------------------------*/
+/**@brief   DAC 初始化
+   @param   无
+   @return  无
+   @note	void dac_init(void)
+*/
+/*----------------------------------------------------------------------------*/
 void dac_init(void);
-
-
+/*----------------------------------------------------------------------------*/
+/**@brief   DAC 通道选择并调节当前音量
+   @param   无
+   @return  无
+   @note	void dac_out_select(u8 sel)
+*/
+/*----------------------------------------------------------------------------*/
 void dac_out_select(u8 sel);
-
+/*----------------------------------------------------------------------------*/
+/**@brief   设置DAC 模拟音量
+   @param   vol：模拟音量值
+   @return  无
+   @note	void analog_vol_set(u8 vol)
+*/
+/*----------------------------------------------------------------------------*/
+void analog_vol_set(u8 vol);
+void dac_unmute(void);
+void dac_mute(void);
+/*
 void dac_mute(void);
 void dac_unmute(void);
-void analog_vol_set(u8 vol);
 u8 digital_vol_set(u8 vol);
-
 void dsp_set_volume(u16 vol);
-
+*/
 extern u8 _idata max_analog_vol,max_digital_vol;
 extern u8 _idata dac_channel;
 #endif
