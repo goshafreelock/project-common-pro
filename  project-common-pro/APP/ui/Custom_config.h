@@ -15257,6 +15257,11 @@
 #endif
 #define IIC_GPIO_USE_P00_P01
 
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+
 #define MUTE_PORT_USE_P26
 
 #define PLAY_STATUS_LED_P05
