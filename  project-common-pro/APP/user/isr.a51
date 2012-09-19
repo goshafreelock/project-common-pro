@@ -49,6 +49,9 @@
 	extrn code (key_power)
 #endif
 	extrn code (flush_low_msg)
+#if VOICE_TIME_ENABLE
+    extrn data (otp_music_addr)
+#endif
 	
 #if defined( LED_DRVER_USE_SM1628	)
     extrn code (SM1628_Key_Scan)
@@ -669,15 +672,22 @@ normal_key1:
 	RET    	
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-#if OTP_MUSIC_ENABLE
+#if ((VOICE_TIME_ENABLE== 1) ||(OTP_MUSIC_ENABLE== 1))
         ?PR?_code_otp_read?CODE_ENTRY SEGMENT CODE 
         RSEG     ?PR?_code_otp_read?CODE_ENTRY
         PUBLIC   _code_otp_read
 _code_otp_read:
         PUSH    DPCON
-        MOV     DPCON,#0x0    
-                     
-        MOV     DPTR, #music_file_hello
+        MOV     DPCON,#0x0                                 
+    //  MOV     DPTR,  #otp_music_addr
+#if VOICE_TIME_ENABLE
+        MOV     A, otp_music_addr
+        MOV     DPH,a
+        MOV     A, otp_music_addr+1
+        MOV     DPL,A
+#else
+        MOV     DPTR, #music_file
+#endif
         MOV     A, R3
         CLR     C
         RLC     A

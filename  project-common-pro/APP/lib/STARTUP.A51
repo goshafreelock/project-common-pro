@@ -16,7 +16,7 @@ $NOMOD51
 
 ?C_C51STARTUP   SEGMENT   CODE
 
-
+               
 				EXTRN CODE (pll_init)
                 EXTRN CODE (?C_START)
 				extrn code (dac_on)
@@ -41,6 +41,7 @@ STARTUP1:
 				MOV     LVDCON, #0x65		//LVDµÁ—π2.4V(0x61:2.2V, 0x65:2.4V, 0x69:2.6V, 0x6D:2.8V)
 				CALL	dac_on
 				CALL    pll_init
+             
 
                 MOV		DPCON, #0x20		//DPTR0 AUTO DEC
                 MOV     DPTR,#0x23FF		//9k

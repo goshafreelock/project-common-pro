@@ -9,6 +9,7 @@
 /*----------------------------------------------------------------------------*/
 #include "Custom_config.h"
 #include "fm_rev.h"
+#include "fat_memory.h"
 #include "led.h"
 #include "rtc_mode.h"
 #include "aux_fun.h"
@@ -440,6 +441,9 @@ __SCAN_FREQ:
 			break;
 #endif
         case INFO_HALF_SECOND :
+#if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))          
+             updata_fat_memory();
+#endif
 			
 #if defined(AD_MEASURE_TEMP_FUNC)
 		adc_diode_temp_measure_hdlr();

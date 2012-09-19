@@ -12,6 +12,8 @@
 #include "Custom_config.h"
 #ifndef REMOVE_USE_DEVICE_MODE
 #include "msgfor_usb.h"
+#include "fat_memory.h"
+#include "voice_time.h"
 
 
 extern xd_u8 my_music_vol;  
@@ -116,6 +118,43 @@ void usb_hid_control(u8 Audio_Flag)
     usb_hid_key(0);
 }
 /*----------------------------------------------------------------------------*/
+/**@brief   usb Audio 接口函数
+   @param   无
+   @return  无
+   @note    void USB_Audio_Vol_set(void)
+*/
+/*----------------------------------------------------------------------------*/
+void USB_Audio_Vol_set(void)
+{
+    u8 vol;
+    vol = USB_Audio_Volume(1, 0); //0~255
+    music_vol = vol >> 3;   	
+    music_vol = (music_vol > 30) ? 30 : music_vol;
+    if (vol == 0)
+	{
+		if (vol == 0)
+			music_vol = 0;
+		else
+			music_vol = 1;
+	}
+	if (music_vol == 0)
+    {
+        if (usb_audio_mute_status() == 0)
+		{
+			Usb_Audio_Mute_Ctl();
+		}
+    }
+    else
+    {
+        if (usb_audio_mute_status() == 1)
+		{
+            Usb_Audio_Mute_Ctl();
+		}
+    }
+	write_info(MEM_VOL, music_vol);
+		
+}
+/*----------------------------------------------------------------------------*/
 /**@brief   usb 从机任务 主循环函数
    @param   无
    @return  无
@@ -131,6 +170,7 @@ void usb_device(void)
     usb_config(USB_DEVICE_CFG);
     dac_out_select(DAC_DECODE);
     write_protect_set(0);                           //不使用写保护功能,如果需要，请根据卡座写保护的状态改变配置
+    USB_Audio_Volume(0, music_vol);
     init_usb_device_hardware();
     flush_low_msg();
     dac_mute_control(0, 1);
@@ -150,6 +190,9 @@ void usb_device(void)
 #if ((USB_DEVICE_CFG & USB_MASS) == USB_MASS)
         UFI_massstorage();
 #endif
+#if ((USB_DEVICE_CFG & USB_SPEAKER) == USB_SPEAKER)
+		dac_out_select(DAC_DECODE);
+#endif	
         key = get_msg();
 
         switch (key)
@@ -261,6 +304,9 @@ void usb_device(void)
             break;
 
         case INFO_HALF_SECOND :
+#if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))           
+            updata_fat_memory();
+#endif
             return_cnt++;
             if (RETURN_TIME == return_cnt)
             {
@@ -321,6 +367,9 @@ void usb_audio_massstorage(void)
 		goto _USB_DEV;
     }
 #endif
+#if USB_DEVICE_OTG
+    device_check();
+#else 
     EA = 0;
     if(usb_diskin_detect())
     {
@@ -332,7 +381,7 @@ void usb_audio_massstorage(void)
     usb_pcin_detect();
     device_check();
     EA = 1;
-
+#endif
 
     if (pc_connect)
     {
@@ -349,6 +398,12 @@ _USB_DEV:
         IE1 &= ~(BIT(1));
         disable_usb();	
     }
+#if USB_DEVICE_OTG
+    else
+    {
+        work_mode++;
+    }
+#endif
 }
 
 #endif

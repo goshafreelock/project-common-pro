@@ -8,11 +8,12 @@
 */
 /*----------------------------------------------------------------------------*/
 #include "config.h"
-
+#include "fat_memory.h"
 #if RTC_ENABLE
 #include "rtc_mode.h"
 #include "rtc_cpu.h"
 #include "rtc_fun.h"
+#include "voice_time.h"
 extern u16 cfilenum;
 extern xd_u8 curr_menu;
 extern xd_u8  return_cnt;
@@ -972,6 +973,9 @@ __TIME_ADJ_POS:
             break;
 
         case INFO_HALF_SECOND :
+#if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))          
+             updata_fat_memory();
+#endif            
 			
 #if defined(AD_MEASURE_TEMP_FUNC)
 		adc_diode_temp_measure_hdlr();

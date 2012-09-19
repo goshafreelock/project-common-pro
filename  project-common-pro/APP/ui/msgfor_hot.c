@@ -12,6 +12,8 @@
 #include "rtc_mode.h"
 #include "rtc_cpu.h"
 #include "PT2313.h"
+#include "config.h"
+#include "mp3mode.h"
 
 extern u8 _idata music_vol;  
 xd_u8 my_music_vol=0;
@@ -1369,6 +1371,15 @@ u8 ap_handle_hotkey(u8 key)
 
     switch (key)
     {
+#if USB_DEVICE_OTG
+    case MSG_USB_PC_IN:
+        if (work_mode != SYS_USBDEVICE)
+        {
+            work_mode = SYS_USBDEVICE;
+            return 0;
+        }
+        break;
+#endif
 #if defined(MINI_DIGIT_BOX)        
 	case INFO_1|KEY_LONG:
 	     Set_Curr_Func(RTC_DEV);
@@ -1982,9 +1993,10 @@ u8 ap_handle_hotkey(u8 key)
 #if defined(POWER_KEY_LONG_POWER_OFF)		
     case INFO_POWER| KEY_LONG:
 #else		
+#ifndef  USE_POWER_KEY	
     case INFO_POWER | KEY_SHORT_UP :	
 #endif		
-		
+#endif		
 #else
     case INFO_CH_DOWN| KEY_SHORT_UP:
 		
@@ -2250,7 +2262,7 @@ _SYS_GO_IN_POWER_OFF:
 	break;
 #endif		
         eq_mode++;
-#if defined(K170_ZK_170_V001)	
+#if defined(K170_ZK_170_V001)||defined(K0000_GW_238_V001)	
         if (eq_mode > USER)
 #else			
         if (eq_mode > CLASSIC)

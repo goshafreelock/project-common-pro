@@ -5,11 +5,15 @@ Compiler:uVision2 2.40
 *****************
 * website: http://www.bekencorp.com
 ---------------------------------------------------------------------------------------*/
+#include "Custom_config.h"
 #ifdef __C51__
 
 #include "typedef.h"
 #define CODE code
+
+#ifndef BK_SHARE_MCU_CRY
 #define XTAL_CLOCK
+#endif
 #define REG_RW_I2C_MODE
 
 

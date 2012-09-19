@@ -13,6 +13,9 @@
 #ifdef __C51__
 #include "config.h"
 
+#define FAT_MEMORY_SIZE       69
+#define DEVICE_COMPARE        67
+#define FAT_MEMORY_VERIRY     65
 typedef struct _FSAPIMSG
 {
     u16     fileCounter;		// 文件计数,搜索文件时,可以用它来计算总的文件数
@@ -52,6 +55,7 @@ enum
 {
 	FIND_NEXT_DIR = 0,
 	FIND_PREV_DIR,
+	FIND_NEXT_ROOT_DIR,
 };
 
 u16 get_dir_file(u8 cmd);

@@ -13,6 +13,9 @@
 #include "lcd.h"
 #include "led.h"
 #include "fm_rev.h"
+#include "fat_memory.h"
+#include "uart.h"
+#include "voice_time.h"
 #include "aux_fun.h"
 #include "aux_fun.h"
 #include "msgfor_usb.h"
@@ -489,8 +492,13 @@ void timer1isr(void)
         adc_scan();
 #endif
 
+#if USB_DEVICE_OTG       
+   usb_otg_polling();
+#else
         udisk_disconnect_check();
         usb_diskin_detect();
+#endif
+
 
 #if defined(USE_GPIO_DETECT_EARPHONE_PLUGGED)||defined(LINE_IN_DETECT_SHARE_LED_STATUS_PORT)
 #ifndef USE_ADKEY_DETECT_HP
@@ -950,6 +958,13 @@ void sys_info_init(void)
 #endif
 
 #endif
+#if DEVICE_ENCRYPTION
+    device_password_init(0x12345678);  //输入加密设备的密码
+#endif 
+#if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))    
+	get_info_memory();
+	get_info();
+#endif  
 
 #ifdef SUPPORT_PT2313
 	PT2313_Init();
@@ -963,7 +978,16 @@ void sys_info_init(void)
 #endif
     {
 #ifndef REMOVE_USE_DEVICE_MODE   
+#if USB_DEVICE_OTG
+        device_check();
+        if (pc_connect)
+        {
+            work_mode = SYS_USBDEVICE;
+        }
+        else
+#else  
         usb_audio_massstorage();									//每次上电判断是否连接电脑
+#endif
 #endif
 
 #if defined(AUX_MODE_HOT_KEY_ENABLE)||defined(MUSIC_MODE_HOT_KEY_ENABLE)||defined(RADIO_MODE_HOT_KEY_ENABLE)||defined(RTC_MODE_HOT_KEY_ENABLE)
@@ -1245,6 +1269,9 @@ void main(void)
 #endif    
     sys_info_init();
     flush_all_msg();
+#if FILE_ENCRYPTION
+    password_init(0xaa);  //输入加密文件的密码
+#endif   
     custom_gpio_setting();
 #ifdef IR_DEBUG
 	IR_Debug_func();

@@ -18,6 +18,7 @@
    @note u8 read_rtc_ram(u8 addr)
 */
 /*----------------------------------------------------------------------------*/
+#pragma disable
 u8 read_rtc_ram(u8 addr)
 {
     u8 dat;
@@ -65,6 +66,7 @@ void write_rtc_reg(u8 cmd)
    @note  u8 read_rtc_reg(void)
 */
 /*----------------------------------------------------------------------------*/
+#pragma disable
 u8 read_rtc_reg(void)
 {
     u8 tmp;
@@ -101,7 +103,7 @@ u32 irtc_read32(u8 cmd)
    @note   void irtc_write32(u8 cmd,u32 sec)
 */
 /*----------------------------------------------------------------------------*/
-void irtc_write32(u8 cmd,u32 sec)
+void irtc_write32(u8 cmd,u32 sec) large
 {
     u8 buf;
     IRTC_CSEN;
@@ -190,4 +192,19 @@ void disable_alm(void)
     rtccon=read_rtc_reg();
     write_rtc_reg(rtccon&0xfd);
 
+}
+/*----------------------------------------------------------------------------*/
+/**@brief µôµçºóRTC RAMÇå¿Õ
+   @param 	void
+   @return  void
+   @note  void reset_rtc_ram(void)
+*/
+/*----------------------------------------------------------------------------*/
+void reset_rtc_ram(void)
+{
+    u8 i;
+    for (i = 0; i < 64; i++)
+    {
+        write_rtc_ram(i, 0);
+    }
 }

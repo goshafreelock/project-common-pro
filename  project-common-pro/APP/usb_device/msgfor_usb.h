@@ -54,7 +54,8 @@ bool  get_usb_pc_status();
 #define USB_AUDIO_NONE        0x00
 
 
-
+#define VOLUME_UP	0x01
+#define VOLUME_DOWN	0x02
 
 
 #endif

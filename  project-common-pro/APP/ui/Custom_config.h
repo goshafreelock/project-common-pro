@@ -694,6 +694,7 @@
 //#define K1192_FW_60_V001
 //#define K1196_YHD_852_V001
 //#define K2110_YHD_856_V001
+//#define K2114_XFW_FW70_V001
 
 
 /*****************测试验证******************/
@@ -15246,4 +15247,41 @@
 #define FM_PLAY_KEY_PAUSE
 #endif
 
+
+#ifdef K2114_XFW_FW70_V001
+
+#define AC209_28PIN		//28 PIN IC GPIO CONFIG
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#define MUTE_PORT_USE_P26
+
+#define PLAY_STATUS_LED_P05
+#define DISABLE_P05_OSC_OUTPUT
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+#define MUTE_GPIO_FM_GPIO_COMPATIBALE
+#define USE_FM_GPIO
+
+#define USE_GPIO_DETECT_EARPHONE_PLUGGED
+#define EARPHONE_DETECT_USE_VPP
+
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+#define ADKEY_PLAY_SHORT_SCAN_FRE
+
+#define POWE_KEY_PLAY_KEY_IN_ONE_KEY
+#define USE_POWER_KEY_SHORT_SCAN
+#define BK_SHARE_MCU_CRY
+
+#if 1
+#define USE_POWER_KEY
+#define USE_ONLY_POWER_HOLD_CTRL
+#define PWR_CTRL_P02
+#define USE_PWR_KEY_LONG_PWR_ON
+#endif
+
+#endif
 

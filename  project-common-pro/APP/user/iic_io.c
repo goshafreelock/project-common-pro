@@ -123,7 +123,7 @@ void s_ack(u8 flag)
    @note    u8 iic_revbyte_io( void )
 */
 /*----------------------------------------------------------------------------*/
-u8 iic_revbyte_io( void )
+u8 iic_revbyte_io( void ) large
 {
     u8 byteI2C = 0;
     u8 i;
@@ -150,7 +150,7 @@ u8 iic_revbyte_io( void )
    @note    u8 iic_revbyte( u8 para )
 */
 /*----------------------------------------------------------------------------*/
-u8 iic_revbyte( u8 para )
+u8 iic_revbyte( u8 para ) large
 {
     u8 byte;
     byte = iic_revbyte_io();
@@ -164,7 +164,7 @@ u8 iic_revbyte( u8 para )
    @note    void iic_sendbyte_io(u8 byte)
 */
 /*----------------------------------------------------------------------------*/
-void iic_sendbyte_io(u8 byte)
+void iic_sendbyte_io(u8 byte) large
 {
     u8 i;
     iic_data_out();

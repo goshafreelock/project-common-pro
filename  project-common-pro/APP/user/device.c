@@ -24,7 +24,7 @@ sbit sdmmc_connect = device_online^0;   ///<SD卡在线状态标记寄存器；1:在线 0：不
 sbit udisk_connect = device_online^1;   ///<USB MASS storage在线状态标记寄存器；1:在线 0：不在线
 sbit pc_connect = device_online^4;      ///<PC在线状态标记寄存器；1:在线 0：不在线
 u8 device_active;                       ///<当前在线活动设备
-u8 const _code file_type[] = "MP3WAVMP1MP2";  ///<解码文件格式
+u8 const _code file_type[] = "MP3WAVMP1MP2SMP";  ///<解码文件格式
 
 u16 playpoint_filenum;							///<成功读取断点信息后的文件号：0为没有找到 非0为找到
 u16 read_playpoint_info(u8 dev);
@@ -50,7 +50,9 @@ u8 device_init(void)
     {
         flush_all_msg();                ///<清空全部消息
         stop_decode();                  ///<停止解码
-
+#if FILE_ENCRYPTION
+         password_start(0);
+#endif
         if (device_active == BIT(USB_DISK))
         {
 			if (usb_host_emuerate_devcie(win_buffer))     ///<USB MASS STORAGE 枚举
@@ -96,6 +98,9 @@ u8 device_init(void)
 
 			return 0xfe;
         }
+#if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))    
+        check_reserve_sector(device_active);
+#endif 
         return 0;
     }
     else
@@ -113,6 +118,7 @@ u8 device_init(void)
 /*----------------------------------------------------------------------------*/
 u8 find_device(u8 select)
 {
+    static u8 last_device;
     u8 i;
 
     given_device = 0;
@@ -132,37 +138,70 @@ u8 find_device(u8 select)
 		if (select & device_online)
         {
             device_active = select;
-
+			last_device = select;
             if (!device_init())
 			{
                 return 0;
 			}
+        }
+        else
+        {
+            last_device = select;
         }
         device_active = 0;
         return 1;
     }
     else
     {
+        if (device_active)
+		{
 		for (i = 0;i < MAX_DEVICE;i++)
         {
             if (device_active == BIT(SDMMC))
             {
 				device_active = BIT(USB_DISK);
             }
-            else
-                device_active = BIT(SDMMC);
-
-            if ((device_active & device_online) == 0)
-                continue;
-
-            if (!device_init())             //找到有效设备
+	            else// if (device_active == BIT(USB_DISK))
+				{  
+					device_active = BIT(SDMMC);
+				}
+	            if ((device_active & device_online) == 0)
+                {
+	                continue;
+	            }
+	            if (!device_init())             //找到有效设备
+				{
+                    break;
+				}
+	        }
+		}
+		else	//设备第一次初始化失败
+		{
+            if (last_device == BIT(SDMMC))
 			{
-                break;
+				device_active = BIT(USB_DISK);
 			}
-        }
+			else if (last_device == BIT(USB_DISK))
+			{       
+				device_active = BIT(SDMMC);	
+			}
+			if ((device_active & device_online))
+			{                
+				if (!device_init())             //找到有效设备
+				{
+					i = 0;
+				}
+			}   
+			else
+			{           
+                i = MAX_DEVICE;
+			}
+			last_device = 0;		
+		}
 
         if (i == MAX_DEVICE)
         {
+            last_device = 0;	       
             device_active = 0;
             return 1;                       //无有效设备或无有效文件
         }

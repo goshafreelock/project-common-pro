@@ -3,7 +3,7 @@
    @brief    解码任务模块
    @details
    @author
-   @date   2010-12-13
+   @date   2011-3-7
    @note
 */
 /*----------------------------------------------------------------------------*/
@@ -14,6 +14,9 @@
 #include "rtc_mode.h"
 #include "PT2313.h"
 
+#include "fat_memory.h"
+#include "config.h"
+#include "voice_time.h"
 //#include "common.h"
 extern u8 _xdata buffer[1024];              //<解码BUFF
 extern u8 _xdata win_buffer[512];           //<文件系统读BUFF
@@ -290,6 +293,16 @@ bool start_decode(void)
  u8 i;
  char *fname;
 #endif
+#if FILE_ENCRYPTION
+    if((fs_msg.fname[8]== 'S')&&(fs_msg.fname[9]== 'M')&&(fs_msg.fname[10]== 'P'))
+    {
+        password_start(1);
+    }
+    else
+    {
+        password_start(0);
+    }
+#endif
     Disp_Con(DISP_FILENUM);
     mad_control(0,(u16)buffer);
     set_eq(eq_mode);                             //必须在每首歌曲播放前初始化EQ
@@ -374,8 +387,8 @@ bool start_decode(void)
 //breakpoint
 	load_playpoint();
 	write_playpoint_info(device_active);
+    update_playpoint(&playpoint_time);		//半秒更新断点进度，不写入存储器
 	write_dev_playtime(device_active);			 //更新断点信息
-	update_playpoint(&playpoint_time);		//半秒更新断点进度，不写入存储器
        playpoint_filenum = 0;
 //breakpoint
 #endif
@@ -386,6 +399,10 @@ bool start_decode(void)
     decode_user_exit(0);				  //非正常歌曲可通过按键强行停止解码,每次播放前必须清除	
     enable_softint();
     enable_decode_isr();
+    if (2 == music_type)                   //wav文件，
+    {
+      delay_10ms(5);
+    }
     cfilenum = 0;
 #if defined(TWO_PLAY_LED_IN_USE)
 	 led_open_enable = 0;
@@ -583,6 +600,9 @@ void music_play(void)
 		    playpoint_flag = 1;
 		    given_file_number = playpoint_filenum;
 	     }
+#endif
+#if FILE_ENCRYPTION
+            password_start(0);
 #endif
             if (!fs_getfile_bynumber(given_file_number))
             {
@@ -1127,6 +1147,9 @@ void music_play(void)
             break;
 
         case INFO_HALF_SECOND :
+#if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))      
+            updata_fat_memory();
+#endif
 			
 #if defined(TURN_ON_PLAY_BREAK_POINT_MEM)			
 		update_playpoint(&playpoint_time);		//半秒更新断点进度，不写入存储器
@@ -1494,7 +1517,9 @@ void decode_play(void)
     set_play_flash(LED_FLASH_STOP);
 #endif
     stop_decode();
+#if(MEMORY_STYLE != USE_DEVICE)
     usb_suspend();			//Entered Suspend mode	
+#endif
 #if defined(TURN_ON_PLAY_BREAK_POINT_MEM)			    
     write_playtime(&playpoint_time);				//记录断点信息（EEPROM）
 #endif	
