@@ -294,7 +294,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\decode_otp;.\fm_transmitter;.\codec</IncludePath>
+              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\decode_otp;.\fm_transmitter;.\codec;.\voice_time</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -941,6 +941,11 @@
               <FileType>1</FileType>
               <FilePath>.\music_decode\id3.c</FilePath>
             </File>
+            <File>
+              <FileName>dac_vol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lib\dac_vol.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1435,6 +1440,21 @@
               <FileName>PT2313.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\codec\PT2313.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>voice_time</GroupName>
+          <Files>
+            <File>
+              <FileName>voice_time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\voice_time\voice_time.c</FilePath>
+            </File>
+            <File>
+              <FileName>voicetime_reource.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\voice_time\voicetime_reource.c</FilePath>
             </File>
           </Files>
         </Group>
