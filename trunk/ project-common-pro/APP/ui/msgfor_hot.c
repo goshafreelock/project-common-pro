@@ -346,10 +346,9 @@ void gpio_ctrl_if(bool ctrl_f)
 #endif	
 }
 #endif
-xd_u8 aux_ch_reg=0;
+u8 aux_ch_reg=0;
 void aux_channel_crosstalk_improve(u8 ch_num)
 {
-
 	aux_ch_reg=ch_num;
 	//printf("-------->%aux_ch_reg  %d \r\n",(u16)aux_ch_reg);
 

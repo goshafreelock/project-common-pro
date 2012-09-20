@@ -20,8 +20,8 @@
 #define KT0913
 //#define KT0915
 
-//#define X32P768K					//32.768KHz crystal
-#define R32P768K					//32.768KHz reference clock
+#define X32P768K					//32.768KHz crystal
+//#define R32P768K					//32.768KHz reference clock
 //#define X38K						//38KHz crystal
 //#define R38K						//38KHz reference clock
 //#define R7P6M						//7.6MHz reference clock

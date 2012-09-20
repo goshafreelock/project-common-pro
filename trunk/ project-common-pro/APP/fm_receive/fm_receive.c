@@ -56,7 +56,7 @@ xd_u8 fre_point[MAX_CHANNL]	_at_ 0xd80;    ///< FM收音搜索到的台的缓存
 xd_u8 fre_point[MAX_CHANNL];    ///< FM收音搜索到的台的缓存
 #endif
 extern _idata u16 dac_cnt;
-extern xd_u8 aux_ch_reg;
+extern u8 aux_ch_reg;
 
 void fm_osc_output_select(bool flag)
 {

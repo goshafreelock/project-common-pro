@@ -341,7 +341,7 @@ u8 KT_AMFMWakeUp(void) //0->Fail 1->Success
 {
 	xd_u16 regx;
 	regx=KT_Bus_Read(0x0F);
-	KT_Bus_Write(0x0F, regx&0xe000);			//Write Standby bit to 0
+	KT_Bus_Write(0x0F, regx&0xeFFF);			//Write Standby bit to 0
 	return (KT_AMFMInit());
 }
 
@@ -735,7 +735,7 @@ u8 KT_FMGetSNR(void)
 //	regx = regx <<1;
 	return( (regx & 0x1FC0) >> 5);								// 1)SNR>>6 2)SNR<<1
 }
-
+#if 0
 u8 KT_FMSeekFromCurrentCh(u16 seekDir, u16 *Frequency)   //     seekDir: 0-->seek down 1-->seek up
 {
 	xd_u16 NextFreq;
@@ -790,7 +790,7 @@ u8 KT_FMSeekFromCurrentCh(u16 seekDir, u16 *Frequency)   //     seekDir: 0-->see
 		}
 	}
 }
-
+#endif
 u8 KT_FMValidStation(u16 Frequency) //0-->False Station 1-->Good Station //check AFC_DELTA only
 {
 	xd_u16 nextfreq;
@@ -853,7 +853,7 @@ u8 KT_FMValidStation(u16 Frequency) //0-->False Station 1-->Good Station //check
 	}
 	else return(0);
 }
-
+#if 0
 u8 KT_MWSeekFromCurrentCh(u16 seekDir, u16 *Frequency)   //	seekDir: 0-->seek down 1-->seek up
 {
 	xd_u16 NextFreq;
@@ -909,7 +909,7 @@ u8 KT_MWSeekFromCurrentCh(u16 seekDir, u16 *Frequency)   //	seekDir: 0-->seek do
 		}
 	}
 }
-
+#endif
 #ifdef	KT0915
 u8 KT_SWSeekFromCurrentCh(u16 seekDir, u16 *Frequency)   //	seekDir: 0-->seek down 1-->seek up
 {
