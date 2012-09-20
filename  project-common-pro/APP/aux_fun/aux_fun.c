@@ -46,7 +46,7 @@ extern xd_u8 audio_effect_state;
 #ifdef USE_AUX_2
 static bool aux_2_sel=0;
 #endif
-extern xd_u8 aux_ch_reg;
+extern u8 aux_ch_reg;
 #ifdef VOL_ADJ_SPARK_LED
 extern bool vol_adj_spark_bit;
 #endif
