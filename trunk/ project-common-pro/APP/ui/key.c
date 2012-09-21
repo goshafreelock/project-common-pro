@@ -528,7 +528,7 @@ bool charger_detect(void)
 #if defined(DC_CHARGE_GPIO_DRV_LED_IND)|| defined(DC_CHARGE_GPIO_DRV_LED_IND_2)
 		DC_CHARGE_LED_L();		
 #endif
-#ifdef K0000_JK_GHD_830D_V001
+#ifdef K0000_JK_KHT_830D_V001
 	if(play_status!=MUSIC_PLAY)
 		set_play_flash(LED_FLASH_ON);
 #endif
