@@ -499,7 +499,7 @@ void sys_power_down(void)
 	key_pwr_up_flag =0;
 #endif
     set_play_flash(LED_FLASH_STOP);
-#endif	
+#endif
 #if defined(K1069_AJE_1069_V001)||defined(K1069_AJE_1069_V002)||defined(DISP_OFF_STR_AT_PWR_DOWN)||defined(DISP_OFF_ANIMIATION_AT_PWR_DOWN)
 	Disp_Con(DISP_PWR_OFF);
 #endif	
@@ -508,6 +508,8 @@ void sys_power_down(void)
     lcd_power_down();
     //delay_10ms(20);
 #endif
+
+    delay_10ms(10);//4 wait for  all off
 
     EA = 0;
 
