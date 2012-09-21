@@ -245,7 +245,7 @@ u8 KT_AMFMInit(void)                            //0->Fail 1->Success
 	
 	for (i=0;i<INIT_FAIL_TH;i++)
 	{
-		delay_10ms(5);
+ 		delay_10ms(5);
 		regx=KT_Bus_Read(0x12);						//Read power-up indicator
 		if ((regx&0x8000)!=0x8000) continue;
 		break;
@@ -470,6 +470,8 @@ u8 KT_FMTune(u16 Frequency) //87.5MHz-->Frequency=8750; Mute the chip and Tune t
 		KT_Bus_Write(0x03, 0x8000 | (Frequency/5) );	   		//set tune bit to 1
 	}
 
+	KT_AMFMUnMute();
+
 	delay_10ms(5);
 	return(1);
 }
@@ -523,6 +525,7 @@ u8 KT_MWTune(u16 Frequency) //1710KHz --> Frequency=1710; Mute the chip and Tune
 		KT_Bus_Write(0x17, 0x8000 | Frequency);	   				//set tune bit to 1
 	}
 	delay_10ms(10);
+	KT_AMFMUnMute();
 
 #ifdef DISABLE_FAST_GAIN_UP
 	reg23=KT_Bus_Read(0x23);
