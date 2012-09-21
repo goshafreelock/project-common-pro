@@ -42,6 +42,11 @@ extern bool led_open_enable;
 extern xd_u8 time_show_return_cnt; 
 #endif
 
+#ifdef VOL_ADJ_SPARK_LED
+extern bool vol_adj_spark_bit;
+extern xd_u8 last_led_play_mod;
+#endif
+
 #if defined(PLAY_ICON_FLASH)
 extern void disp_play_icon_flash();
 #endif
@@ -1154,6 +1159,13 @@ void music_play(void)
 #if defined(TURN_ON_PLAY_BREAK_POINT_MEM)			
 		update_playpoint(&playpoint_time);		//半秒更新断点进度，不写入存储器
 #endif
+
+#ifdef VOL_ADJ_SPARK_LED
+		if(vol_adj_spark_bit){
+			vol_adj_spark_bit=0;
+			restore_led_flash_mod(last_led_play_mod);		
+		}
+#endif	 
 
 #ifdef PLAY_MODE_USE_INTRO_MODE
 		intro_play_hdlr();
