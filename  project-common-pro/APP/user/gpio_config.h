@@ -1194,7 +1194,7 @@
 #define BT_VOL_DOWN_ON() 			
 #define BT_VOL_DOWN_OFF() 					
 
-#elif defined(K0000_JK_EARPHONE_BT_V001)
+#elif defined(K0000_JK_KHT_842_BT_V001)
 #define BT_PWR_PORT_INIT() 			
 #define BT_PWR_ON() 				
 #define BT_PWR_OFF() 				
