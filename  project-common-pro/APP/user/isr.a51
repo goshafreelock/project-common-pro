@@ -686,7 +686,7 @@ _code_otp_read:
         MOV     A, otp_music_addr+1
         MOV     DPL,A
 #else
-        MOV     DPTR, #music_file
+        MOV     DPTR, #music_file_hello
 #endif
         MOV     A, R3
         CLR     C
