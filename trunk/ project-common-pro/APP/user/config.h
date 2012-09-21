@@ -92,7 +92,7 @@ typedef enum
 #define USB_DEVICE_OTG                   0          //1：从机支持热插拔，0：只在开机时检测一下是否有从机
 
 //#define RTC_ENABLE                       1		    //<是否需要使用RTC功能(与是否使用RTC内部的RAM无关)
-#define OTP_MUSIC_ENABLE                 0			//<是否需要使用开机音乐
+//#define OTP_MUSIC_ENABLE                 0			//<是否需要使用开机音乐
 #define VOICE_TIME_ENABLE                0          //语音报时功能使能；     1：打开  0：关闭
 #define FM_ENABLE                        0          //fm功能使能；           1：打开  0：关闭
 
