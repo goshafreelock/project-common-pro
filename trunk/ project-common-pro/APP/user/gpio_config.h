@@ -607,6 +607,7 @@
 #endif
 
 #endif
+//1 ac209 48pin
 
 #if defined(EARPHONE_DETECT_USE_VPP)
 #define  EARPHONE_DETECT_GPIO  	(WKUPPND&BIT(7))
@@ -901,6 +902,16 @@
 #if defined(PWR_CTRL_P02)
 #define GPIO_POWER_CTRL 	P02
 #define power_ctl(n)  			P0DIR &= ~(BIT(2));P0PU |= (BIT(2));GPIO_POWER_CTRL = n
+
+#define Pwr_Key_Init()		
+#define Pwr_Key_output()		
+#define Pwr_Key_input()		
+
+#define GPIO_POWER_KEY
+
+#elif defined(PWR_CTRL_P04)
+#define GPIO_POWER_CTRL 	P04
+#define power_ctl(n)  			P0DIR &= ~(BIT(4));P0PU |= (BIT(4));GPIO_POWER_CTRL = n
 
 #define Pwr_Key_Init()		
 #define Pwr_Key_output()		
