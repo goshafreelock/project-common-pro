@@ -233,6 +233,7 @@
 //#define K003_V001		//K026_XXX_V001
 //#define SW_V007_502K
 //#define Kxxx_931_V001
+//#define K2116_SW_017KT_V001
 
 //4 按 主板编号定义宏
 /***/
@@ -539,6 +540,8 @@
 //#define K3025_YL_3025_V001
 //#define K1195_YJH_11830_V001
 //#define K1197_DCX_855_V001
+//#define K0000_KM_LBJN_V001
+//#define K0000_HF_6001_V001
 
 
 
@@ -721,6 +724,127 @@
 #endif
 
 /*****************按 主板编号定义宏******************/
+#ifdef K0000_HF_6001_V001
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P03
+
+#define LED_USE_1X888
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+#define USE_POWER_KEY_SHORT_SCAN
+#define POWE_KEY_PLAY_KEY_IN_ONE_KEY
+
+#define DISP_OFF_STR_AT_PWR_DOWN
+#define DISP_PAU_STRING
+
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+
+#define LINE_IN_PLAY_KEY_PAUSE
+#define USE_POWER_KEY_FOR_AUX_PLAY
+
+#if 1
+#define USE_POWER_KEY
+#define USE_ONLY_POWER_HOLD_CTRL
+#define PWR_CTRL_P02
+#define USE_PWR_KEY_LONG_PWR_ON
+#define PWR_ON_DELAY_1_SECOND
+#endif
+
+#define USE_GPIO_DETECT_EARPHONE_PLUGGED
+#define EARPHONE_DETECT_USE_P04
+
+//#define USE_LINE_IN_DETECT_FUNC
+//#define AUX_DETECT_USE_P34
+
+
+//#define Lamborghini_voice
+//#define OTP_MUSIC_FUNC_ENABLE
+#endif
+
+
+#ifdef K0000_KM_LBJN_V001
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P00
+
+#define LED_USE_PLAY_MODE
+#define LED_USE_ROUND_LED
+#define LED_MODE_EXCHANGE_TF_USB_ICON
+#define PROTECT_P17_FROM_LED_SCAN
+
+#define PLAY_STATUS_LED_P17
+
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+#define USE_MODE_KEY_LONG_SCAN
+#define POWE_KEY_PLAY_KEY_IN_ONE_KEY
+
+#define DISP_OFF_STR_AT_PWR_DOWN
+#define DISP_PAUS_STRING
+
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+#define DISP_VOL_V_CHAR
+#define ADKEY_INTERNAL_RES_PULLUP
+#if 1
+#define USE_POWER_KEY
+#define USE_ONLY_POWER_HOLD_CTRL
+#define PWR_CTRL_P04
+#define USE_PWR_KEY_LONG_PWR_ON
+#define PWR_ON_DELAY_1_SECOND
+//#define PWR_OFF_NO_RESP_WHEN_CHARGER_PLUGGED
+#endif
+
+#define TURN_ON_PLAY_BREAK_POINT_MEM
+#define USE_BAT_MANAGEMENT
+#define BAT_LEVEL_LED_ICON_IND
+#define CHARGER_DETECT_INDICATOR
+#define CHARGER_DET_USE_P01
+#define CHARGER_FLASH_TYPE_2
+
+#define USE_GPIO_DETECT_EARPHONE_PLUGGED
+#define EARPHONE_DETECT_USE_P07
+#endif
+
+
+#ifdef K2116_SW_017KT_V001
+
+#define LED_USE_PLAY_MODE
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P03
+
+#define LED_GPIO_PORT_CUSTOMERIZED
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+#define FM_USE_KT0913
+#define RADIO_AM_WM_ENABLE
+#undef USE_RDAs_FM
+#undef USE_QN8035_FM
+#undef USE_BK1080_FM
+
+#endif
+
+
 
 #ifdef K5018_JK_5018_V001
 
@@ -863,7 +987,7 @@
 #define USE_POWER_KEY_FOR_FM_PLAY
 
 
-#define VOLUME_DEFUALT 	25
+#define VOLUME_DEFUALT 	20
 #define DISP_FM_STR_WHEN_PAUS
 
 #if 1
@@ -9451,7 +9575,7 @@
 #define LINE_IN_PLAY_KEY_PAUSE
 #define NO_AUX_ICON_DISP
 #define DISP_FM_STR_WHEN_PAUS
-#define FM_LINE_IN_ONLY_ONE_MODE_EXIST
+
 #define FM_PLAY_KEY_PAUSE
 #define USE_POWER_KEY_FOR_AUX_PLAY
 #define USE_POWER_KEY_FOR_FM_PLAY

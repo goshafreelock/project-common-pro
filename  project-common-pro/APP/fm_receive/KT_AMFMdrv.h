@@ -20,8 +20,11 @@
 #define KT0913
 //#define KT0915
 
+#ifdef KT_INDEPENDENT_CRY
 #define X32P768K					//32.768KHz crystal
-//#define R32P768K					//32.768KHz reference clock
+#else
+#define R32P768K					//32.768KHz reference clock
+#endif
 //#define X38K						//38KHz crystal
 //#define R38K						//38KHz reference clock
 //#define R7P6M						//7.6MHz reference clock

@@ -279,6 +279,8 @@ bool get_low_bat_power_lock()
 #define CHARGER_PORT	P33
 #elif defined(CHARGER_DET_USE_P24)
 #define CHARGER_PORT	P24
+#elif defined(CHARGER_DET_USE_P01)
+#define CHARGER_PORT	P01
 #else
 #define CHARGER_PORT	P04
 #endif
@@ -315,6 +317,12 @@ bool charger_detect(void)
 #ifdef AC209_28PIN
 	P3DIR |= BIT(4);P3PU &= ~(BIT(4));P3PD&= ~(BIT(4));
 #endif
+#elif defined(CHARGER_DET_USE_P01)
+
+       P0PU &=~(BIT(1));
+       P0DIR |=(BIT(1));
+       P0PD  |=(BIT(1));
+	   
 #elif defined(DC_DETECT_USE_P05)
 
    	P05_source_select(0);
@@ -1249,7 +1257,12 @@ void adc_scan(void)
         P0IE &= ~(BIT(4));
 	 P0PU &=~(BIT(4)); 
 #else
+
+#ifdef ADKEY_INTERNAL_RES_PULLUP
+	 P0PU |=(BIT(6));
+#else
 	 P0PU &=~(BIT(6));
+#endif
         P0IE &= ~(BIT(6));
 #endif
     }
