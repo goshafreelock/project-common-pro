@@ -272,7 +272,11 @@ void blue_tooth_main(void)
  	switch (key)
         {
 
-
+#ifdef BLUE_TOOTH_DETECTION_FOR_POWER_OFF
+        case INFO_POWER|KEY_SHORT_UP:
+	    sys_power_down();
+	    break;
+#endif 
         case INFO_PLAY | KEY_HOLD:
 	     blue_tooth_key_hdlr(BT_PP_HOLD);			
 	     break;

@@ -1007,6 +1007,10 @@
 #define BT_GPIO_INIT()				P1DIR |=(BIT(5));P1PU &=~(BIT(5))
 #define BT_GPIO_READ				P15
 #define BT_GPIO_RELEASE()			P1DIR &=~(BIT(5));P15=1
+#elif defined(BT_GPIO_DETECTION_USE_PORT_P33)
+#define BT_GPIO_INIT()				P3DIR |=(BIT(3));P3PU &=~(BIT(3))
+#define BT_GPIO_READ				P33
+#define BT_GPIO_RELEASE()			P3DIR &=~(BIT(3));P33=1
 #else
 #define BT_GPIO_INIT()				P3DIR |=(BIT(1));P3PU &=~(BIT(1));P3PD |=BIT(1)
 #define BT_GPIO_READ				P31
@@ -1085,6 +1089,44 @@
 #define BT_VOLD_PORT_INIT() 		P1DIR &= ~(BIT(5));P1PU |=BIT(5);P15 =0
 #define BT_VOL_DOWN_ON() 			P15 =1
 #define BT_VOL_DOWN_OFF() 			P15 =0
+
+#elif defined(K000_XC_BC_BT_V001)
+#define BT_PWR_PORT_INIT() 			
+#define BT_PWR_ON() 				
+#define BT_PWR_OFF() 				
+
+#define BT_RST_PORT_INIT() 		
+#define BT_RST_ON() 				
+#define BT_RST_OFF() 			
+
+#define BT_PP_PORT_INIT() 			//P1DIR &= ~(BIT(0));P1PU |=BIT(0);P10 =0
+#define BT_PP_ON() 					//P10 =1
+#define BT_PP_OFF() 					//P10 =0
+
+#define BT_NEXT_PORT_INIT() 		P3DIR &= ~(BIT(0));P3PU |=BIT(0);P30 =0
+#define BT_NEXT_ON() 				P30 =1
+#define BT_NEXT_OFF() 				P30 =0
+
+#define BT_PREV_PORT_INIT() 		P3DIR &= ~(BIT(1));P3PU |=BIT(1);P31 =0
+#define BT_PREV_ON() 				P31=1
+#define BT_PREV_OFF() 				P31 =0
+
+#define BT_VOLU_PORT_INIT() 		
+#define BT_VOL_UP_ON() 				
+#define BT_VOL_UP_OFF() 			
+
+#define BT_VOLD_PORT_INIT() 		
+#define BT_VOL_DOWN_ON() 			
+#define BT_VOL_DOWN_OFF() 	
+
+#define BT_CONFIG_PORT_INIT() 			P1DIR &= ~(BIT(6));P1PU &= ~(BIT(6));P16 =0
+#define BT_CONFIG_ON() 					P16 =1
+#define BT_CONFIG_OFF() 				P16 =0	
+
+
+#define BT_MUTE_DETECT_INIT()	P0DIR |=(BIT(7));P0PU |=(BIT(7));
+#define BT_MUTE_DETECT_PORT	P07
+#define BT_MUTE_DETECT_RELEASE()	P0DIR &= ~(BIT(7));P07=1
 
 #elif defined(K0000_MY_FT18_BT_V001)
 

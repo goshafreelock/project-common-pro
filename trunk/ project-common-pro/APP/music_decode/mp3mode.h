@@ -132,6 +132,10 @@ void init_intro_play_mode(void);
 #undef MAX_VOL
 #define MAX_VOL MAX_VOL_SHOW
 #define VOL_LIMIT 28
+#elif defined(USE_VOL_LIMTATION_AT_25)
+#undef MAX_VOL
+#define MAX_VOL MAX_VOL_SHOW
+#define VOL_LIMIT 25
 #elif defined(VOLUME_CUSTOMER_DEFINE)||defined(VOLUME_CUSTOMER_DEFINE_1)
 #undef MAX_VOL
 #define MAX_VOL MAX_VOL_SHOW

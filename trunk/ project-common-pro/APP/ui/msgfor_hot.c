@@ -420,8 +420,19 @@ void my_main_vol(u8 my_vol)
 	vol_temp = (VOL_LIMIT*my_vol);
 	vol_temp =(vol_temp/MAX_VOL_SHOW);
 	//printf("-------------------->%dmy_main_vol  %d \r\n",(u16)my_vol,vol_temp);
-	    main_vol((u8)vol_temp);
-	
+
+#if defined(FM_BY_PASS)
+	if(work_mode != SYS_FMREV)
+	{
+		    main_vol(vol_temp);
+	}
+	else{
+		FM_Chip_Set_Vol(vol_temp);
+	}
+#else
+	    main_vol(vol_temp);
+#endif
+
 #elif defined(SUPPORT_PT2313)
 
 	if(my_vol==0){
@@ -456,7 +467,19 @@ void my_main_vol(u8 my_vol)
 		vol_temp =(u16)((((VOL_POINT_B -VOL_POINT_A)*my_vol)/(VOL_POINT_TWO -VOL_POINT_ONE))+b);
 	}
 	//printf("-------------------->%dmy_main_vol  %d \r\n",(u16)my_vol,(u16)vol_temp);
-	main_vol(vol_temp);
+
+#if defined(FM_BY_PASS)
+	if(work_mode != SYS_FMREV)
+	{
+		    main_vol(vol_temp);
+	}
+	else{
+		FM_Chip_Set_Vol(vol_temp);
+	}
+#else
+	    main_vol(vol_temp);
+#endif
+
 #elif defined( VOLUME_CUSTOMER_DEFINE_1)
 	u16 vol_temp=0;
 	if(my_vol == 0){
