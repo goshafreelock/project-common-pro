@@ -156,6 +156,16 @@ mode_led _code mode_led_tab[LED_MAX_NUM]=
 	SYS_FMREV,				BIT(7),PORT_P0,
  	SYS_AUX,				BIT(6),PORT_P1, 	
 };
+#elif defined(K000_XC_BC_BT_V001)
+#define LED_MAX_NUM	5
+mode_led _code mode_led_tab[LED_MAX_NUM]=
+{
+	SYS_MP3DECODE_USB,		BIT(7),PORT_N,BIT(0),PORT_N,
+	SYS_MP3DECODE_SD,		BIT(1),PORT_P1,BIT(0),PORT_N,
+	SYS_FMREV,				BIT(5),PORT_N,BIT(0),PORT_N,
+	SYS_AUX,				BIT(1),PORT_P1,BIT(2),PORT_P1,
+	SYS_BT,					BIT(2),PORT_P1,BIT(0),PORT_N,		
+};
 #elif defined(K1162_AJR_1162_V001)
 #define LED_MAX_NUM	4
 mode_led _code mode_led_tab[LED_MAX_NUM]=

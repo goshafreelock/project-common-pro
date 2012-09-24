@@ -189,7 +189,12 @@ static void bt_check(void)
         {
             if (!bt_online)
             {
+#ifdef BLUE_TOOTH_DETECTION_FOR_POWER_OFF
+                put_msg_lifo(INFO_POWER| KEY_SHORT_UP);
+
+#else
                 put_msg_lifo(INFO_BT_MOD | KEY_SHORT_UP);
+#endif
                 bt_online = 1;
             }
         }
@@ -329,7 +334,7 @@ void aux_check(void)
 #elif defined(LINE_IN_DETECT_SHARE_LED_STATUS_PORT)
 	if(AUX_DETECT_GPIO==0)return;
 #else
-	if(AUX_DETECT_GPIO==0)return;
+	//if(AUX_DETECT_GPIO==0)return;
 #endif
 #endif
     aux_detect_in();

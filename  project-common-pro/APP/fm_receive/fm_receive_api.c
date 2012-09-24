@@ -617,7 +617,7 @@ bool FM_Chip_ValidStop(fre)
 void FM_Chip_Set_Vol(u8 fm_vol)
 {
 	u16 vol_temp=0;
-	//printf(" FM_Chip_Set_Vol %d \r\n",(u16)fm_vol);
+	printf(" FM_Chip_Set_Vol %d \r\n",(u16)fm_vol);
 #if defined(CUSTOM_VOL_LIMIT_AT_VOL_DEF)
 	vol_temp = (15*fm_vol);
 	vol_temp =(vol_temp/VOLUME_DEFUALT);
@@ -626,7 +626,7 @@ void FM_Chip_Set_Vol(u8 fm_vol)
 	vol_temp = (15*fm_vol);
 	vol_temp =(vol_temp/MAX_VOL_SHOW);
 #endif
-	//printf(" FM_Chip_Set_Vol %d \r\n",vol_temp);
+	printf(" FM_Chip_Set_Vol %d \r\n",vol_temp);
 	
 #ifdef USE_RDAs_FM	
 	if(FM_chip_id  == RDAFM_ID)
