@@ -469,10 +469,11 @@ u8 KT_FMTune(u16 Frequency) //87.5MHz-->Frequency=8750; Mute the chip and Tune t
 		KT_Bus_Write(0x16, 	reg16 & 0xD0FF);       				//reference clock=32.768K;
 		KT_Bus_Write(0x03, 0x8000 | (Frequency/5) );	   		//set tune bit to 1
 	}
+	delay_10ms(5);
 
 	KT_AMFMUnMute();
 
-	delay_10ms(5);
+
 	return(1);
 }
 
@@ -630,6 +631,9 @@ u8 KT_FMTune(u16 Frequency) //87.5MHz-->Frequency=8750; Mute the chip and Tune t
 	KT_Bus_Write(0x03, 0x8000 | (Frequency/5) );	   		//set tune bit to 1
 
 	delay_10ms(5);
+	KT_AMFMUnMute();
+
+	
 	return(1);
 }
 
@@ -650,6 +654,7 @@ u8 KT_MWTune(u16 Frequency) //1710KHz --> Frequency=1710; Mute the chip and Tune
 	reg23=KT_Bus_Read(0x23);
 	KT_Bus_Write(0x23, reg23 & 0xDFFF | 0x2000);				//disable the function of fast up in baseband AGC, by chend, 2010-05-21
 #endif
+	KT_AMFMUnMute();
 
 	return(1);
 }
@@ -710,7 +715,11 @@ u8 KT_SWTune(u16 Frequency) //1710KHz --> Frequency=1710; Mute the chip and Tune
 u8 KT_FMGetST(void)
 {
 	xd_u16 regx;
-    regx= KT_Bus_Read(0x06);
+
+	regx= KT_Bus_Read(0x06);
+
+	//printf("-->KT_FMGetST  %x \r\n ",(u16)(regx&0x7F00));
+	
 	return ((regx&0x7F00)<TST_TH);
 }
 

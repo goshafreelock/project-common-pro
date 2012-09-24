@@ -832,7 +832,7 @@ void Init_Func_List()
 	       	Add_Func_To_List(AM_DEV);
 #endif
 #endif
- 	    	enter_fm_rev();  
+ 	    	//enter_fm_rev();  
 		fm_rev_powerdown();
     	}
 #endif
@@ -1834,7 +1834,9 @@ u8 ap_handle_hotkey(u8 key)
 #elif defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 
     	 case INFO_CUS_KEY_1 | KEY_SHORT_UP :
+#ifdef USE_RTC_FUNCTION	 	
 		if(work_mode == SYS_RTC)break;
+#endif		
 		new_vol_feature=~new_vol_feature;
 		if(new_vol_feature){
 

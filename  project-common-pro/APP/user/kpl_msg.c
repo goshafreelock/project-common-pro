@@ -62,7 +62,7 @@ void kpl_msg_preinit_setting(u8 init_flag,u8 init_type)
 
 void kpl_msg_unlock()
 {
-	msg_unlock_timer = read_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_UNLOCK_TIMER));
+	msg_unlock_timer = read_eerom((ADDR_UNLOCK_TIMER));
 	
 	if(my_music_vol==8){		
 		msg_unlock_timer=msg_unlock_timer+(MSG_UNLOCK_TIMER/6);
@@ -76,14 +76,14 @@ void kpl_msg_unlock()
 
 	if(msg_unlock_timer>=MSG_UNLOCK_TIMER){
 		kpl_msg_lock = 0;
-		write_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_ENABLE),MSG_UNLOCK);
+		write_eerom((ADDR_ENABLE),MSG_UNLOCK);
 #ifdef KPL_MSG_DEBUG
 	sys_printf("-----> sys unlock <----");
 	//printf("----->msg_unlock_timer %x \r\n",(u16)msg_unlock_timer);
 #endif	
 	}
 	
-	write_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_UNLOCK_TIMER),msg_unlock_timer);
+	write_eerom((ADDR_UNLOCK_TIMER),msg_unlock_timer);
 }
 void init_kpl_msg()
 {
@@ -104,13 +104,13 @@ void init_kpl_msg()
 
 	if(kpl_msg_lock){	
 
-		msg_reg1 = read_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_CHK_1));
-		msg_reg2 = read_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_CHK_2));
+		msg_reg1 = read_eerom((ADDR_CHK_1));
+		msg_reg2 = read_eerom((ADDR_CHK_2));
 
 	 	if((msg_reg1==MSG_CHK_A)&&(msg_reg2==MSG_CHK_B)){
 
 #ifdef KPL_MSG_UNLOCK_EN
-		msg_reg1 = read_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_ENABLE));
+		msg_reg1 = read_eerom((ADDR_ENABLE));
 
 	     if(kpl_msg_unlock_type==1){
 //#if defined(KPL_MSG_TYPE_1)
@@ -162,11 +162,11 @@ void init_kpl_msg()
 #ifdef KPL_MSG_DEBUG
 		sys_printf("-----> init_kpl_msg ----init tab<----");
 #endif
-			write_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_CHK_1),MSG_CHK_A);
-			write_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_CHK_2),MSG_CHK_B);
-			write_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_LOCK_TIMER),0X00);
-			write_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_ENABLE),MSG_ENABLE);
-			write_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_UNLOCK_TIMER),0X00);
+			write_eerom((ADDR_CHK_1),MSG_CHK_A);
+			write_eerom((ADDR_CHK_2),MSG_CHK_B);
+			write_eerom((ADDR_LOCK_TIMER),0X00);
+			write_eerom((ADDR_ENABLE),MSG_ENABLE);
+			write_eerom((ADDR_UNLOCK_TIMER),0X00);
 			write_eerom(MEM_EQ_MODE,0X00);
 		}		
 	}
@@ -263,7 +263,7 @@ void kpl_msg_hdlr(u8 key)
 #ifdef KPL_MSG_DEBUG
 				sys_printf("-----> kpl_msg_activated <----");
 #endif
-				write_eerom((IIC_VERIFY_BYTE_ADDR+ADDR_ENABLE),MSG_LOCK);
+				write_eerom((ADDR_ENABLE),MSG_LOCK);
 
 			}
 				
