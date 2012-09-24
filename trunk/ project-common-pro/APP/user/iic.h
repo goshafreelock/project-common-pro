@@ -116,8 +116,8 @@ u8 RDAFM_read_data(u8 regaddr, u16 *Rdata, u8 datalen);
 #define MEM_CHANNL         35//11
 
 #define MEM_AM_FRE            	10
-#define MEM_AM_ALL_CHANNL     12
-#define MEM_AM_FRE_CHANNL     13
+#define MEM_AM_ALL_CHANNL     13
+#define MEM_AM_FRE_CHANNL     14
 
 #if defined(FM_MAX_CHANNAL_50)||defined(FM_MAX_CHANNAL_60)
 #define MEM_AM_CHANNL              100
@@ -143,7 +143,7 @@ u8 RDAFM_read_data(u8 regaddr, u16 *Rdata, u8 datalen);
 #define MEM_FILENUM_SD 	17
 #define MEM_FILENUM 		19
 
-#define IIC_VERIFY_BYTE_ADDR	36
+#define IIC_VERIFY_BYTE_ADDR	120
 
 
 #define MEM_BASE			100

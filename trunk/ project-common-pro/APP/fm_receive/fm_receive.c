@@ -96,6 +96,10 @@ void enter_fm_rev(void)
 	for (i = 0;i<all_channl;i++)
        {
             fre_point[i] = read_info(MEM_CHANNL+i);
+
+#ifdef UART_ENABLE		
+	     printf(" ----FM read  station from ROM  %4u \r\n",(u16)(fre_point[i]+MIN_FRE));
+#endif			
        }
 
 
@@ -848,14 +852,14 @@ void fm_radio(void)
     flush_low_msg();
     sysclock_div2(1);
 
-#if 1//ndef RADIO_AM_WM_ENABLE
     init_fm_rev();
-    set_fre(frequency,1);
-#endif
 
 #ifdef RADIO_AM_WM_ENABLE
 	FMAM_Mode_Switch_Profile(work_mode);
+#else
+    	enter_fm_rev();  
 #endif
+    set_fre(frequency,1);
 
 #ifdef DISP_CH_NUM_IN_RADIO_AT_FISRT
     Disp_Con(DISP_CH_NO);

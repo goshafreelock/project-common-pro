@@ -364,6 +364,11 @@ bool set_fre(u16 fre, u8 mode)
 {
 	bool rtvar;
 	mode=mode;
+
+#ifdef UART_ENABLE
+	printf("----->set_fre  %4u \r\n ",(u16)fre);
+#endif
+	
 #if SDMMC_CMD_MODE   
 	sd_chk_ctl(DIS_SD_CMD_CHK);
 #endif

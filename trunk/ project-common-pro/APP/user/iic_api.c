@@ -146,6 +146,11 @@ bool get_eeprom_status(void)
 /*----------------------------------------------------------------------------*/
 u8 read_info(u8 addr)
 {
+
+#ifdef UART_ENABLE
+	printf("---->read_info  %d \r\n",(u16)addr);
+#endif
+
 #if defined(EEPROM_RTC_RAM_COMPATIBLE)
 
 	if(eeprom_type==0)
@@ -172,6 +177,11 @@ u8 read_info(u8 addr)
 /*----------------------------------------------------------------------------*/
 void write_info(u8 addr,u8 dat)
 {
+
+#ifdef UART_ENABLE
+	printf("---->write_info  %d \r\n",(u16)addr);
+#endif
+
 #if defined(EEPROM_RTC_RAM_COMPATIBLE)
 
 	if(eeprom_type==0)

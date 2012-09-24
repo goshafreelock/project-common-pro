@@ -781,6 +781,9 @@ void Disp_Freq(void )
 	}
 #endif
 	
+#ifdef UART_ENABLE
+	printf("-----> Disp_Freq  %4u \r\n ",frequency);
+#endif
 
 }
 void Disp_CH_NO(void )
