@@ -9,6 +9,7 @@
 /*----------------------------------------------------------------------------*/
 
 /*mp3mode.c*/
+#include "Custom_config.h"
 
 #include "mp3mode.h"
 #include "rtc_mode.h"
