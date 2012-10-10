@@ -162,7 +162,6 @@ extern bool pwr_up_flag;
 #define BAT_HALF_VOLT  	61
 
 
-
 #elif defined(NEW_BAT_ICON_DISP_AT_LEVEL_THREE)
 
 #define BAT_FULL_VOLT	40
@@ -279,6 +278,8 @@ bool get_low_bat_power_lock()
 #define CHARGER_PORT	P33
 #elif defined(CHARGER_DET_USE_P24)
 #define CHARGER_PORT	P24
+#elif defined(CHARGER_DET_USE_P11)
+#define CHARGER_PORT	P11
 #elif defined(CHARGER_DET_USE_P01)
 #define CHARGER_PORT	P01
 #else
@@ -317,6 +318,12 @@ bool charger_detect(void)
 #ifdef AC209_28PIN
 	P3DIR |= BIT(4);P3PU &= ~(BIT(4));P3PD&= ~(BIT(4));
 #endif
+#elif defined(CHARGER_DET_USE_P11)
+
+    	//P11 =0;
+       P1PU &=~(BIT(1));
+       P1DIR |=(BIT(1));
+       //P1PDA|=(BIT(1));
 #elif defined(CHARGER_DET_USE_P01)
 
        P0PU &=~(BIT(1));
@@ -477,6 +484,9 @@ bool charger_detect(void)
 
 			DC_CHARGE_LED_L();		
 		}
+              if((work_mode==SYS_IDLE)){
+			set_play_flash(LED_FLASH_STOP);
+		}		
 #elif defined(DC_CHARGE_GPIO_DRV_LED_IND)
 
 
@@ -786,7 +796,9 @@ void bmt_hdlr(void)
 #ifdef USB_SD_PORTABLE_BAT_CHARGER
 	portable_charger_hdlr();
 #endif
-
+#ifdef UART_ENABLE
+  	  printf("LDO_IN_Volt %d \r\n",(u16)LDO_IN_Volt);
+#endif
 #if defined(CHARGER_DETECT_INDICATOR)
 	if(charger_detect()){
 
@@ -1234,6 +1246,10 @@ void adc_scan(void)
         ADCCON = ADC_BAT_IO; //
         P0IE &= ~(BIT(4));
 	 P0PU &=~(BIT(4));
+#elif defined(BAT_MEASURE_USE_P03_PORT)
+        ADCCON = ADC_BAT_IO; //
+        P0IE &= ~(BIT(3));
+	 P0PU &=~(BIT(3)); 	 	 
 #elif defined(BAT_MEASURE_USE_P02_PORT)
         ADCCON = ADC_BAT_IO; //
         P0IE &= ~(BIT(2));

@@ -427,7 +427,7 @@ void my_main_vol(u8 my_vol)
 		    main_vol(vol_temp);
 	}
 	else{
-		FM_Chip_Set_Vol(vol_temp);
+		FM_Chip_Set_Vol(my_vol);
 	}
 #else
 	    main_vol(vol_temp);
@@ -474,7 +474,7 @@ void my_main_vol(u8 my_vol)
 		    main_vol(vol_temp);
 	}
 	else{
-		FM_Chip_Set_Vol(vol_temp);
+		FM_Chip_Set_Vol(my_vol);
 	}
 #else
 	    main_vol(vol_temp);
@@ -844,6 +844,11 @@ void Init_Func_List()
 #ifndef NO_FM_CHIP_ON_BOARD
        if(get_fm_id() ==0xFFFF){	//NO FM 
 		IR_Type  = NO_FM_CHIP;
+		
+#ifdef UART_ENABLE
+       	Add_Func_To_List(FM_DEV);
+#endif
+		
     	}
     	else{
 		IR_Type  = WITH_FM_CHIP; 
@@ -855,7 +860,7 @@ void Init_Func_List()
 	       	Add_Func_To_List(AM_DEV);
 #endif
 #endif
- 	    	//enter_fm_rev();  
+		//enter_fm_rev();  
 		fm_rev_powerdown();
     	}
 #endif

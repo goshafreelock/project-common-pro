@@ -45,6 +45,11 @@ extern void set_play_flash(u8 led_status);
 #define DC_HW_POWER_PORT	P17
 #define Init_dc_hw_if()		P17 =0;P1PU  &= ~(BIT(7)); P1PDA |= (BIT(7));P1DIR |= (BIT(7));
 #endif
+
+#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+#define DC_HW_POWER_PORT	P11
+#define Init_dc_hw_if()		P11 =0;P1PU  &= ~(BIT(1));P1DIR |= (BIT(1));
+#endif
 /*----------------------------------------------------------------------------*/
 /**@brief 系统进入省电(sleep)模式
    @param 无
@@ -209,6 +214,10 @@ void timer_pwr_off()
 }
 #endif
 #ifdef  USE_POWER_KEY
+
+#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+bool dc_hw_pwer_up_sel_mode=0;
+#endif
 void waiting_power_key()
 {
  #if defined(USE_PWR_KEY_LONG_PWR_ON)
@@ -216,7 +225,7 @@ void waiting_power_key()
 #endif
     Pwr_Key_output();
     Pwr_Key_Init();
-#ifdef DC_HW_POWER_UP	
+#if defined( DC_HW_POWER_UP	)||defined(DC_HW_POWER_UP_IN_IDLE_MODE)
 	Init_dc_hw_if();
 #endif
 
@@ -292,10 +301,12 @@ __PWR_ON:
 				goto __PWR_UP;
 		}
 #elif defined(USE_PC_DC_POWER_ON_ONLY)
+		//delay_10ms(6);
 		if(get_usb_pc_status()){
 			if(pwr_key_cnt >1)
 				goto __PWR_UP;
 		}
+	
 #elif defined(USB_SD_PORTABLE_BAT_CHARGER)
 
 		BATT_CHARGER_PORT_INIT();
@@ -304,6 +315,14 @@ __PWR_ON:
 			goto __PWR_UP;
 		}
 
+#endif
+
+#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+		if(DC_HW_POWER_PORT){
+			dc_hw_pwer_up_sel_mode=1;
+			//if(pwr_key_cnt >1)
+				goto __PWR_UP;
+		}
 #endif
 
 #ifdef PWR_OFF_WAKEUP_FUNC
