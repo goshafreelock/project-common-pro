@@ -653,6 +653,8 @@ void music_play(void)
 			Set_Curr_Func(SYS_MP3DECODE_USB);
 #if defined(PLAY_STATUS_LED_IN_SLOW_MODE)
 	  	set_play_flash(LED_FLASH_SLOW);
+#elif defined(PLAY_STATUS_LED_PLAY_NO_SPARK)
+	  	set_play_flash(LED_FLASH_ON);
 #else
 		set_play_flash(LED_FLASH_NOR);
 #endif
@@ -666,6 +668,11 @@ void music_play(void)
 #elif defined(LED_RUN_SLOW_WHEN_PLAY_MODE_AT_REP_ONE)
 		if(play_mode == REPEAT_ONE)
 		  	set_play_flash(LED_FLASH_SLOW);
+#elif defined(LED_RUN_SLOW_WHEN_PLAY_MODE_AT_REP_ONE_ONLY)
+		if(play_mode == REPEAT_DEV_ALL)
+		  set_play_flash(LED_FLASH_ON);
+		else
+		  set_play_flash(LED_FLASH_NOR);		
 #endif		
             break;
 
@@ -1062,6 +1069,11 @@ void music_play(void)
 		  set_play_flash(LED_FLASH_NOR);
 		else
 		  set_play_flash(LED_FLASH_SLOW);
+#elif defined(LED_RUN_SLOW_WHEN_PLAY_MODE_AT_REP_ONE_ONLY)
+		if(play_mode == REPEAT_DEV_ALL)
+		  set_play_flash(LED_FLASH_ON);
+		else
+		  set_play_flash(LED_FLASH_NOR);		
 #elif defined(PLAY_STATUS_LED_IN_SLOW_MODE)
 	  	set_play_flash(LED_FLASH_SLOW);
 #else			
@@ -1370,6 +1382,11 @@ void music_play(void)
 		  set_play_flash(LED_FLASH_NOR);
 		else
 		  set_play_flash(LED_FLASH_SLOW);
+#elif defined(LED_RUN_SLOW_WHEN_PLAY_MODE_AT_REP_ONE_ONLY)
+		if(play_mode == REPEAT_DEV_ALL)
+		  set_play_flash(LED_FLASH_ON);
+		else
+		  set_play_flash(LED_FLASH_NOR);		
 #endif
 
 #elif defined(PALY_MODE_USE_RAN_ALL)
@@ -1515,9 +1532,14 @@ void decode_play(void)
 
     set_max_vol(MAX_ANALOG_VOL, MAX_DIGITAL_VOL);			//设置Music模式的音量上限
 
+#ifdef LED_LIGHT_ON_ENABLE_IN_IDLE_MODE
+    set_play_flash(LED_FLASH_ON);
+#else
 #ifndef 	NO_DEV_LED_IMPROVE
     set_play_flash(LED_FLASH_NOR);
 #endif
+#endif
+
 
 #ifdef BLUETOOTH_GPIO_CTRL
     BT_PWR_OFF();

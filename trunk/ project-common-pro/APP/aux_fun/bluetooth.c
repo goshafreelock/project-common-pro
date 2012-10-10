@@ -568,10 +568,6 @@ void blue_tooth_hdlr(void)
 
     blue_tooth_init();
 	
-#ifdef BT_DEFAULT_VOL
-    my_music_vol = BT_DEFAULT_VOL;
-#endif
-
     set_max_vol(MAX_ANALOG_VOL, MAX_DIGITAL_VOL);			//设置AUX模式的音量上限
 
 #ifdef SUPPORT_PT2313

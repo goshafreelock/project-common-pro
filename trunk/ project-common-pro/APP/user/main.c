@@ -57,6 +57,9 @@ extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 #endif
 extern bool IR_KEY_Detect;
 
+#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+extern bool dc_hw_pwer_up_sel_mode;
+#endif
 
 #if defined(DEFAULT_GO_TO_CUSTOM_MODE)
 extern bool custom_first_time_pwr_flag;
@@ -1049,8 +1052,10 @@ void Idle_hdlr()
 	put_msg_lifo(INFO_SYS_IDLE);
 #endif
 
+#ifndef PLAY_STATUS_LED_OFF_AT_IDLE_NODEV
 #ifdef LED_LIGHT_ON_ENABLE_IN_IDLE_MODE
     set_play_flash(LED_FLASH_ON);
+#endif	
 #endif	
 
 #if defined(SPECTRUM_FUNC_ENABLE)
@@ -1074,6 +1079,23 @@ void Idle_hdlr()
     while (1)
     {
         key = get_msg();
+#ifdef  USE_POWER_KEY			
+#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+		if(dc_hw_pwer_up_sel_mode){
+
+			if(key==(INFO_POWER | KEY_HOLD)){
+				
+				dc_hw_pwer_up_sel_mode =0;				
+				Set_Curr_Func(SYS_MP3DECODE_USB);
+				return;
+			}
+			else if(key!= INFO_HALF_SECOND){
+				
+				key = NO_KEY;
+			}
+		}
+#endif
+#endif
 
 #if defined(KPL_MSG_COMPATIBLE)
 	kpl_msg_hdlr(key);
@@ -1089,7 +1111,9 @@ void Idle_hdlr()
 #endif
 		  set_play_flash(LED_FLASH_ON);				
 	         flush_all_msg();
-
+#ifdef PLAY_STATUS_LED_OFF_AT_IDLE_NODEV
+		  set_play_flash(LED_FLASH_STOP);				
+#endif
             break;	
         case INFO_SYS_IDLE:
 			
@@ -1324,6 +1348,12 @@ void main(void)
 	}
 #endif
 
+#endif
+
+#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+	if(dc_hw_pwer_up_sel_mode){
+		Set_Curr_Func(SYS_IDLE);
+	}
 #endif
 
 #if 0
