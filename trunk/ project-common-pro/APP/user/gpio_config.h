@@ -635,6 +635,11 @@
 #define  EARPHONE_DETECT_GPIO  	P03
 #define  hp_detect_begin()   			P0DIR |= (BIT(3));P0PU |= (BIT(3))
 #define hp_detect_in_off()			P0DIR &=~(BIT(3))
+#elif defined(EARPHONE_DETECT_USE_P11)
+#define  EARPHONE_DETECT_GPIO  	P11
+#define  hp_detect_begin()   			P1DIR |= (BIT(1));P1PU |= (BIT(1))
+#define hp_detect_in_off()			P1DIR &=~(BIT(1))
+#define INDEPENDENT_EARPHONE_DETECT_GPIO
 #elif defined(EARPHONE_DETECT_USE_P17)
 #define  EARPHONE_DETECT_GPIO  	P17
 #define  hp_detect_begin()   			P1DIR |= (BIT(7));P1PU |= (BIT(7))
@@ -1094,25 +1099,25 @@
 #define BT_VOL_DOWN_OFF() 			P15 =0
 
 #elif defined(K000_XC_BC_BT_V001)
-#define BT_PWR_PORT_INIT() 			
-#define BT_PWR_ON() 				
-#define BT_PWR_OFF() 				
+#define BT_PWR_PORT_INIT() 			P3DIR &= ~(BIT(0)|BIT(1)|BIT(2));P3PU &= ~(BIT(0)|BIT(1)|BIT(2));P30=1;P31=1;P32=1;
+#define BT_PWR_ON() 				P30=1;P31=1;P32=0
+#define BT_PWR_OFF() 				P30=0;P31=0;P32=0;
 
 #define BT_RST_PORT_INIT() 		
 #define BT_RST_ON() 				
 #define BT_RST_OFF() 			
 
-#define BT_PP_PORT_INIT() 			//P1DIR &= ~(BIT(0));P1PU |=BIT(0);P10 =0
-#define BT_PP_ON() 					//P10 =1
-#define BT_PP_OFF() 					//P10 =0
+#define BT_PP_PORT_INIT() 			P3DIR &= ~(BIT(2));P3PU |=BIT(2);P32=1
+#define BT_PP_ON() 					P32=0
+#define BT_PP_OFF() 					P32=1
 
-#define BT_NEXT_PORT_INIT() 		P3DIR &= ~(BIT(0));P3PU |=BIT(0);P30 =0
-#define BT_NEXT_ON() 				P30 =1
-#define BT_NEXT_OFF() 				P30 =0
+#define BT_NEXT_PORT_INIT() 		P3DIR &= ~(BIT(0));P3PU |=BIT(0);P30 =1
+#define BT_NEXT_ON() 				P30 =0
+#define BT_NEXT_OFF() 				P30 =1
 
-#define BT_PREV_PORT_INIT() 		P3DIR &= ~(BIT(1));P3PU |=BIT(1);P31 =0
-#define BT_PREV_ON() 				P31=1
-#define BT_PREV_OFF() 				P31 =0
+#define BT_PREV_PORT_INIT() 		P3DIR &= ~(BIT(1));P3PU |=BIT(1);P31 =1
+#define BT_PREV_ON() 				P31=0
+#define BT_PREV_OFF() 				P31=1
 
 #define BT_VOLU_PORT_INIT() 		
 #define BT_VOL_UP_ON() 				
@@ -1122,14 +1127,20 @@
 #define BT_VOL_DOWN_ON() 			
 #define BT_VOL_DOWN_OFF() 	
 
-#define BT_CONFIG_PORT_INIT() 			P1DIR &= ~(BIT(6));P1PU &= ~(BIT(6));P16 =0
-#define BT_CONFIG_ON() 					P16 =1
-#define BT_CONFIG_OFF() 				P16 =0	
+#define BT_CONFIG_PORT_INIT() 		P3DIR &= ~(BIT(0)|BIT(1)|BIT(2));P3PU &= ~(BIT(0)|BIT(1)|BIT(2));P30=1;P31=1;P32=1;
+#define BT_CONFIG_ON() 				P30=0;P31=0;P32=1;
+#define BT_CONFIG_OFF() 			P30=1;P31=1;P32=1;	
 
 
-#define BT_MUTE_DETECT_INIT()	P0DIR |=(BIT(7));P0PU |=(BIT(7));
-#define BT_MUTE_DETECT_PORT	P07
-#define BT_MUTE_DETECT_RELEASE()	P0DIR &= ~(BIT(7));P07=1
+#define BT_MUTE_DETECT_INIT()		P1DIR |=(BIT(4));P1PU |=(BIT(4));
+#define BT_MUTE_DETECT_PORT		P14
+#define BT_MUTE_DETECT_RELEASE()	P1DIR &= ~(BIT(4));P14=1
+
+
+#define BT_STATUS_DETECT_INIT()		P1DIR |=(BIT(4));P1PU |=(BIT(4));
+#define BT_STATUS_DETECT_PORT			P14
+#define BT_STATUS_DETECT_RELEASE()	P1DIR &= ~(BIT(4));P14=1
+
 
 #elif defined(K0000_MY_FT18_BT_V001)
 

@@ -57,6 +57,10 @@ extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 #endif
 extern bool IR_KEY_Detect;
 
+#ifdef BLUE_TOOTH_GPIO_STATUS
+extern bool blue_tooth_detect;
+#endif
+
 #ifdef DC_HW_POWER_UP_IN_IDLE_MODE
 extern bool dc_hw_pwer_up_sel_mode;
 #endif
@@ -478,6 +482,11 @@ void timer1isr(void)
     counter++;
 
     Disp_Scan();
+
+#ifdef BLUE_TOOTH_GPIO_STATUS
+	blue_tooth_detect=1;
+#endif
+	
 #ifdef MATRIX_KEY_ENABLE
 	key_scan_en=1;
 #endif	

@@ -80,13 +80,27 @@ void bt_disp_time_hdlr()
 }
 #endif
 
+#ifdef BLUE_TOOTH_GPIO_STATUS
+bool blue_tooth_detect=0;
+void bt_disp_status_hdlr()
+{
+	BT_STATUS_DETECT_INIT();
+	if(!BT_STATUS_DETECT_PORT){
+
+
+	}
+	else{
+
+	}
+}
+#endif
 void blue_tooth_init(void)
 {
 #ifdef BLUETOOTH_GPIO_CTRL
 	BT_PWR_PORT_INIT();
 	BT_RST_PORT_INIT();
 	BT_PWR_ON();
-	delay_10ms(20);
+	delay_10ms(85);
 
 #ifdef USE_BT_ACTIVATED_PIN
 	BT_RST_ON();
@@ -144,6 +158,19 @@ void blue_tooth_key_hdlr(u8 key)
 	        case BT_PP_HOLD_RELEASE :
 #ifdef BLUETOOTH_GPIO_CTRL		
 			BT_PP_OFF();
+#endif
+			break;
+		 case BT_CONFIG_HOLD:
+			key_release_hdlr=BT_CONFIG_HOLD;
+			bt_key_release_cnt=1;
+#ifdef BLUETOOTH_GPIO_CTRL		
+			BT_CONFIG_PORT_INIT();
+			BT_CONFIG_ON();
+#endif		 	
+		 	break;
+	        case BT_CONFIG_HOLD_RELEASE :
+#ifdef BLUETOOTH_GPIO_CTRL		
+			BT_CONFIG_OFF();
 #endif
 			break;
 	        case BT_NEXT_FILE:
@@ -262,7 +289,12 @@ void blue_tooth_main(void)
 #elif defined(CUSTOM_KEY_FEATURE_USE)
 	custom_key_hdlr(key);
 #endif
-
+#ifdef BLUE_TOOTH_GPIO_STATUS
+	if(blue_tooth_detect){
+		blue_tooth_detect=0;
+		bt_disp_status_hdlr();		
+	}
+#endif
 #if defined(KPL_MSG_COMPATIBLE)
 	kpl_msg_hdlr(key);
 #endif
@@ -278,7 +310,11 @@ void blue_tooth_main(void)
 	    break;
 #endif 
         case INFO_PLAY | KEY_HOLD:
+#ifdef PP_KEY_HOLD_CONFIG_BT
+	     blue_tooth_key_hdlr(BT_CONFIG_HOLD);			
+#else
 	     blue_tooth_key_hdlr(BT_PP_HOLD);			
+#endif
 	     break;
         case INFO_PLAY | KEY_SHORT_UP :
 
@@ -325,8 +361,15 @@ void blue_tooth_main(void)
 #endif
 
 	    if(bt_key_release_cnt--==0){
+#ifdef PP_KEY_HOLD_CONFIG_BT
+		if(key_release_hdlr==BT_CONFIG_HOLD){
+
+	     	 	blue_tooth_key_hdlr(BT_CONFIG_HOLD_RELEASE);
+#else				
 		if(key_release_hdlr==BT_PP_HOLD){
+		
 	     	 	blue_tooth_key_hdlr(BT_PP_HOLD_RELEASE);
+#endif
 		}
 		else if((key_release_hdlr==BT_VOL_UP_HOLD)||(key_release_hdlr==BT_VOL_DOWN_HOLD)){
 	     	 	blue_tooth_key_hdlr(BT_VOL_HOLD_RELEASE);
