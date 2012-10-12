@@ -195,7 +195,7 @@
 //#define LED_DRV_IN_COM_CATHODE	//LED 共阴类型
 //#define LED_DRV_IN_COM_ANODE		//LED共阳类型
 
-
+#if 1
 /************************************************************
 *	OTHER CUSTOMED OPTIONS
 *************************************************************/
@@ -549,6 +549,7 @@
 //#define K1197_AJR_855_V001
 //#define K0000_KM_LBJN_V001
 //#define K0000_HF_6001_V001
+#define K2121_WXD_2121_V001
 
 
 
@@ -776,6 +777,64 @@
 #define USE_LINE_IN_DETECT_FUNC
 #define AUX_DETECT_USE_P03
 #define AUX_DETECT_SHARE_WITH_IIC_SCL
+
+#endif
+
+
+#ifdef K2121_WXD_2121_V001
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P03
+
+#define LED_GPIO_PORT_CUSTOMERIZED
+#define LED_COMMON_SCAN_COM_USE_P17
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+#define USE_POWER_KEY_SHORT_SCAN
+#define POWE_KEY_PLAY_KEY_IN_ONE_KEY
+
+#define DISP_OFF_STR_AT_PWR_DOWN
+#define DISP_PAU_STRING
+
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+
+#define LINE_IN_PLAY_KEY_PAUSE
+#define USE_POWER_KEY_FOR_AUX_PLAY
+#define DISP_PAUS_STRING
+
+#if 1
+#define USE_POWER_KEY
+#define USE_ONLY_POWER_HOLD_CTRL
+#define PWR_CTRL_P02
+#define USE_PWR_KEY_LONG_PWR_ON
+#define PWR_ON_DELAY_1_SECOND
+#endif
+
+#define USE_GPIO_DETECT_EARPHONE_PLUGGED
+#define EARPHONE_DETECT_USE_P04
+
+#define USE_LINE_IN_DETECT_FUNC
+#define AUX_DETECT_USE_P34
+
+#define USE_BAT_MANAGEMENT
+#define BAT_LEVEL_LED_ICON_IND
+#define CHARGER_DETECT_INDICATOR
+#define CHARGER_DET_USE_P04
+#define CHARGER_FLASH_TYPE_2
+
+
+#undef USE_RDAs_FM
+#undef USE_QN8035_FM
+#define Lamborghini_voice
+#define OTP_MUSIC_FUNC_ENABLE
 
 #endif
 
@@ -15893,6 +15952,27 @@
 #define PWR_CTRL_P02
 #define USE_PWR_KEY_LONG_PWR_ON
 #endif
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #endif
 
