@@ -1659,7 +1659,7 @@ void JogDetect(void)
     Delay_us(1);
     port_val =(P0&(BIT(4)));
     touchkeyval = ((port_val & (BIT(4)))>>4)|((P3&(BIT(4)))>>3);	
-#elif defined(K000_JR_210_V001)||defined(K2321_JM_2321_V001)||defined(K6037_SES_6037_V001)||defined(K2083_SW_2083_V001)||defined(K2083_KPL_2083_V001)||defined(K2086_AJR_LS091_V001)
+#elif defined(K000_JR_210_V001)||defined(K2321_JM_2321_V001)||defined(K2083_KPL_2083_V002)||defined(K6037_SES_6037_V001)||defined(K2083_SW_2083_V001)||defined(K2083_KPL_2083_V001)||defined(K2086_AJR_LS091_V001)
     P0DIR &= ~(BIT(2)|(BIT(4)));    //P11, P12
     P0 |=(BIT(2)|(BIT(4)));
     P0PU	|= (BIT(2)|(BIT(4)));

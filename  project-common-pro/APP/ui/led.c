@@ -575,7 +575,7 @@ void LED_SEG_OUT(u8 SEG_Data)
  	P12 =((SEG_Data&0x20)>0)?1:0;
  	P15 =((SEG_Data&0x40)>0)?1:0;
 }
-#elif defined(K568_ZX_568_V001)||defined(K0000_GW_ZX015_V001)
+#elif defined(K568_ZX_568_V001)||defined(K0000_GW_ZX015_V001)||defined(K568_ZX_568_V002)
 void LED_COM_OUT(u8 COM_Data)
 {
     	LED_COM &= ~0x1f;

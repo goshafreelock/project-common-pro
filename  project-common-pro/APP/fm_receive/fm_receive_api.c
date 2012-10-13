@@ -716,8 +716,10 @@ else
     write_info(MEM_FRE,frequency - MIN_FRE);
 }	
     Disp_Con(DISP_CH_NO);
-	
+
+#ifndef DISABLE_FM_CH_SEL_MUTE	
     Mute_Ext_PA(MUTE);
+#endif
     my_main_vol(0);		
     //set_fre_rda5807(frequency,1);
     set_fre(frequency,0);
