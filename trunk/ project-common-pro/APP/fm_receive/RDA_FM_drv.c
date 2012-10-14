@@ -443,6 +443,8 @@ bool RDA5807P_ValidStop(u16 freq)
 	
 #if defined(K302_ZhengYang_ZY302_V001	)||defined(FAST_BAND_SCAN_SPEED)
 	delay_10ms(2);    //Dealy 25 ms
+#elif defined(MID_SPEED_BAND_SCAN)
+	delay_10ms(8);    //Dealy 25 ms
 #else
 	delay_10ms(15);    //Dealy 25 ms
 #endif	

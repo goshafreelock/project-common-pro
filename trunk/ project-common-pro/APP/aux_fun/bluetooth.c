@@ -679,6 +679,7 @@ void blue_tooth_hdlr(void)
 #elif defined(BLUE_TOOTH_BYPASS)||defined(BLUE_TOOTH_PATH_DIRECT_IN_PA)
 
     dac_out_select(DAC_DECODE);
+    my_main_vol(0);	
 
 #else
 
