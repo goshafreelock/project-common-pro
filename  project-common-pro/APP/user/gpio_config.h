@@ -967,29 +967,6 @@
 #endif
 #endif
 
-#ifdef USE_AMP_MODE_SELECT
-#if defined(AMP_MODE_SELECT_PORT_USE_P04)
-#define D_CLASS_AMP_GPIO_INIT()			P0DIR &= ~(BIT(4));P0PU |=BIT(4);
-#define D_CLASS_AMP_HIGH()				P0|=(BIT(4))
-#define D_CLASS_AMP_LOW()				P0&=~(BIT(4))
-#elif defined(AMP_MODE_SELECT_PORT_USE_P34)
-#define D_CLASS_AMP_GPIO_INIT()		P3DIR &= ~(BIT(4));P3PU |=BIT(4)
-#define D_CLASS_AMP_HIGH()				P3|=(BIT(4))
-#define D_CLASS_AMP_LOW()				P3&=~(BIT(4))
-#elif defined(AMP_MODE_SELECT_PORT_USE_P17)
-#define D_CLASS_AMP_GPIO_INIT()		P1DIR &= ~(BIT(7));P1PU |=BIT(7);
-#define D_CLASS_AMP_HIGH()				P17=1
-#define D_CLASS_AMP_LOW()				P17=0
-#elif defined(AMP_MODE_SELECT_PORT_USE_P10)
-#define D_CLASS_AMP_GPIO_INIT()		P1DIR &= ~(BIT(0));P1PU |=BIT(0);
-#define D_CLASS_AMP_HIGH()				P10=1
-#define D_CLASS_AMP_LOW()				P10=0
-#else
-#define D_CLASS_AMP_GPIO_INIT()		P0DIR &= ~(BIT(7));P0PU |=BIT(7);
-#define D_CLASS_AMP_HIGH()				P0|=(BIT(7))
-#define D_CLASS_AMP_LOW()				P0&=~(BIT(7))
-#endif
-#endif
 
 #ifdef USE_MICPHONE_GPIO_DETECTION
 
@@ -1067,6 +1044,44 @@
 #endif
 #endif
 
+#ifdef USE_AMP_MODE_SELECT
+
+#ifdef HI_AB_LOW_D_CLASS_LEVEL
+#define AB_CLASS_LEVEL		1
+#define D_CLASS_LEVEL		0
+#else
+#define AB_CLASS_LEVEL		0
+#define D_CLASS_LEVEL		1
+#endif
+
+#if defined(AMP_MODE_SELECT_PORT_USE_P04)
+#define D_CLASS_AMP_GPIO_INIT()			P0DIR &= ~(BIT(4));P0PU |=BIT(4);
+#define D_CLASS_AMP_HIGH()					P04=D_CLASS_LEVEL
+#define D_CLASS_AMP_LOW()					P04=AB_CLASS_LEVEL
+#elif defined(AMP_MODE_SELECT_PORT_USE_P05)
+#define D_CLASS_AMP_GPIO_INIT()			P0DIR &= ~(BIT(5));P0PU |=BIT(5);
+#define D_CLASS_AMP_HIGH()					P05=D_CLASS_LEVEL
+#define D_CLASS_AMP_LOW()					P05=AB_CLASS_LEVEL
+#elif defined(AMP_MODE_SELECT_PORT_USE_P34)
+#define D_CLASS_AMP_GPIO_INIT()			P3DIR &= ~(BIT(4));P3PU |=BIT(4)
+#define D_CLASS_AMP_HIGH()					P34=D_CLASS_LEVEL
+#define D_CLASS_AMP_LOW()					P34=AB_CLASS_LEVEL
+#elif defined(AMP_MODE_SELECT_PORT_USE_P17)
+#define D_CLASS_AMP_GPIO_INIT()			P1DIR &= ~(BIT(7));P1PU |=BIT(7);
+#define D_CLASS_AMP_HIGH()					P17=D_CLASS_LEVEL
+#define D_CLASS_AMP_LOW()					P17=AB_CLASS_LEVEL
+#elif defined(AMP_MODE_SELECT_PORT_USE_P10)
+#define D_CLASS_AMP_GPIO_INIT()			P1DIR &= ~(BIT(0));P1PU |=BIT(0);
+#define D_CLASS_AMP_HIGH()					P10=D_CLASS_LEVEL
+#define D_CLASS_AMP_LOW()					P10=AB_CLASS_LEVEL
+#else
+#define D_CLASS_AMP_GPIO_INIT()			P0DIR &= ~(BIT(7));P0PU |=BIT(7);
+#define D_CLASS_AMP_HIGH()					P07=D_CLASS_LEVEL
+#define D_CLASS_AMP_LOW()					P07=AB_CLASS_LEVEL
+#endif
+#endif
+
+
 #ifdef BLUETOOTH_GPIO_CTRL
 
 #if defined( K000_XingChuang_x821_V002)
@@ -1097,6 +1112,39 @@
 #define BT_VOLD_PORT_INIT() 		P1DIR &= ~(BIT(5));P1PU |=BIT(5);P15 =0
 #define BT_VOL_DOWN_ON() 			P15 =1
 #define BT_VOL_DOWN_OFF() 			P15 =0
+
+#elif defined(K000_JK_LBR_BT_V001)
+#define BT_PWR_PORT_INIT() 			P0DIR &= ~(BIT(2));P0PU |= (BIT(2));P3DIR |= (BIT(4));P3PU &= ~(BIT(4));P3PD&= ~(BIT(4))
+#define BT_PWR_ON() 				P02 =1
+#define BT_PWR_OFF() 				P02 =0	
+
+#define BT_RST_PORT_INIT() 		
+#define BT_RST_ON() 				
+#define BT_RST_OFF() 			
+
+#define BT_PP_PORT_INIT() 			//P1DIR &= ~(BIT(0));P1PU |=BIT(0);P10 =0
+#define BT_PP_ON() 					//P10 =1
+#define BT_PP_OFF() 					//P10 =0
+
+#define BT_NEXT_PORT_INIT() 		//P1DIR &= ~(BIT(1));P1PU |=BIT(1);P11 =0
+#define BT_NEXT_ON() 				//P11 =1
+#define BT_NEXT_OFF() 				//P11 =0
+
+#define BT_PREV_PORT_INIT() 		//P1DIR &= ~(BIT(2));P1PU |=BIT(2);P12 =0
+#define BT_PREV_ON() 				//P12 =1
+#define BT_PREV_OFF() 				//P12 =0
+
+#define BT_VOLU_PORT_INIT() 		
+#define BT_VOL_UP_ON() 				
+#define BT_VOL_UP_OFF() 			
+
+#define BT_VOLD_PORT_INIT() 		
+#define BT_VOL_DOWN_ON() 			
+#define BT_VOL_DOWN_OFF() 	
+
+#define BT_CONFIG_PORT_INIT() 			
+#define BT_CONFIG_ON() 					
+#define BT_CONFIG_OFF() 				
 
 #elif defined(K000_XC_BC_BT_V001)
 #define BT_PWR_PORT_INIT() 			P3DIR &= ~(BIT(0)|BIT(1)|BIT(2));P3PU &= ~(BIT(0)|BIT(1)|BIT(2));P30=1;P31=1;P32=1;
