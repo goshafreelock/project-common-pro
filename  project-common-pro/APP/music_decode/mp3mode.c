@@ -67,6 +67,14 @@ extern xd_u8 device_selected;
 bool custom_first_time_pwr_flag=0;
 #endif
 
+#ifdef PREV_KEY_SKIP_SONG_DELAY
+bool prev_skip_timer=0;
+#endif
+
+#ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
+bool dev_first_plugged_flag=0;
+#endif
+
 extern xd_u8 my_music_vol;
 extern FSINFO _xdata fs_info;
 
@@ -275,14 +283,18 @@ void music_info_init(void)
 void stop_decode(void)
 {
 #if defined(SPECTRUM_FUNC_ENABLE)
-     set_spectrum_lock(LOCK);
+     	set_spectrum_lock(LOCK);
 #endif		  
-    play_status = MUSIC_STOP;
+    	play_status = MUSIC_STOP;
     //main_vol_set(0, CHANGE_VOL_NO_MEM);//digital_fade_out();
-    read_usb_remain_data();
-    disable_decode_isr();
-    disable_softint();
-    cfilenum = 0;
+    	read_usb_remain_data();
+    	disable_decode_isr();
+    	disable_softint();
+    	cfilenum = 0;
+#ifdef PREV_KEY_SKIP_SONG_DELAY
+	prev_skip_timer=0;
+#endif
+	
 }
 
 /*----------------------------------------------------------------------------*/
@@ -599,6 +611,15 @@ void music_play(void)
             file_end_time = 0;
             stop_decode();
 			
+#ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
+		if(dev_first_plugged_flag){
+			dev_first_plugged_flag=0;
+		   	play_status = MUSIC_STOP;            
+			flush_all_msg();
+			break;
+		}
+#endif
+
 #if defined(TURN_ON_PLAY_BREAK_POINT_MEM)
 	     playpoint_flag = 0;
             if(playpoint_filenum)
@@ -726,6 +747,15 @@ void music_play(void)
 			break;
 		}
 #endif
+
+#ifdef PREV_KEY_SKIP_SONG_DELAY
+		if(prev_skip_timer){
+			put_msg_lifo(INIT_PLAY);			
+			prev_skip_timer=0;
+			break;
+		}
+#endif
+
 
 #ifdef NEXT_PREV_KEY_NO_RSP_WHEN_REP_ONE
 		if(play_mode == REPEAT_ONE){
@@ -880,7 +910,15 @@ void music_play(void)
 
 #if defined(INDEPENDENT_VOLUME_KEY)
 
-#if defined(NEXT_PREV_HOLD_SEL_FILE)	
+#if defined(NEXT_PREV_HOLD_SEL_FILE)
+
+#ifdef PREV_KEY_SKIP_SONG_DELAY
+		if(prev_skip_timer){
+			put_msg_lifo(INIT_PLAY);
+			prev_skip_timer=0;
+			break;
+		}
+#endif
             get_music_file1(GET_PREV_FILE);
 		break;
 #elif defined(NEXT_PREV_HOLD_DO_NOTHING)		  
@@ -898,6 +936,15 @@ void music_play(void)
 #elif defined(NEXT_PREV_HOLD_DO_NOTHING)		  
 		break;
 #elif defined(NEXT_PREV_HOLD_SEL_FILE)	
+
+#ifdef PREV_KEY_SKIP_SONG_DELAY
+		if(prev_skip_timer){
+			put_msg_lifo(INIT_PLAY);			
+			prev_skip_timer=0;
+			break;
+		}
+#endif
+
             get_music_file1(GET_PREV_FILE);
 		break;
 #elif defined(NEXT_PREV_HOLD_USE_VOL_TUNE)
@@ -1123,6 +1170,11 @@ void music_play(void)
 		 set_spectrum_lock(LOCK);
 #endif		  
             }
+            else if (play_status == MUSIC_STOP){
+
+                	put_msg_lifo(INIT_PLAY);
+
+	     }
 #if 1//ined(MUTE_ON_FLASH_WHOLE_SCREEN)
 #if defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
 
@@ -1261,6 +1313,10 @@ void music_play(void)
 #endif
             if (DISP_PLAY == curr_menu)
             {
+
+#ifdef PREV_KEY_SKIP_SONG_DELAY
+		   prev_skip_timer=1;
+#endif            
                  disp_file_time();
               //  draw_lcd(0, 1);
             }
@@ -1508,7 +1564,11 @@ void decode_play(void)
 {
 #if defined(NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 	last_disp_menu=DISP_NULL;
-#endif				
+#endif		
+
+#ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
+	dev_first_plugged_flag=1;
+#endif
 
 #if defined(MP3_DISP_LOAD_STRING)
       Disp_Con(DISP_LOAD);

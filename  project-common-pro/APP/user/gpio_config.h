@@ -46,7 +46,7 @@
 #define MUTE_PORT_HIGH()			P00  =MUTE_LEVEL
 #define MUTE_PORT_LOW()			P00  =UNMUTE_LEVEL
 #elif defined(MUTE_PORT_USE_P02)
-#define SET_MUTE_PORT_DIR()		P0DIR &= ~(BIT(2))
+#define SET_MUTE_PORT_DIR()		P0DIR &= ~(BIT(2));P3DIR |= (BIT(4));P3PU &= ~(BIT(4));P3PD&= ~(BIT(4))
 #define SET_MUTE_PORT_PU() 			P0PU |= (BIT(2))
 #define MUTE_PORT_HIGH()			P02  =MUTE_LEVEL
 #define MUTE_PORT_LOW()			P02  =UNMUTE_LEVEL
@@ -1148,8 +1148,8 @@
 
 #elif defined(K000_XC_BC_BT_V001)
 #define BT_PWR_PORT_INIT() 			P3DIR &= ~(BIT(0)|BIT(1)|BIT(2));P3PU &= ~(BIT(0)|BIT(1)|BIT(2));P30=1;P31=1;P32=1;
-#define BT_PWR_ON() 				P30=1;P31=1;P32=0
-#define BT_PWR_OFF() 				P30=0;P31=0;P32=0;
+#define BT_PWR_ON() 				P30=1;P31=1;P32=0;delay_10ms(90);P30=1;P31=1;P32=1;
+#define BT_PWR_OFF() 				P30=0;P31=0;P32=0;delay_10ms(25);P30=1;P31=1;P32=1;
 
 #define BT_RST_PORT_INIT() 		
 #define BT_RST_ON() 				
@@ -1176,7 +1176,7 @@
 #define BT_VOL_DOWN_OFF() 	
 
 #define BT_CONFIG_PORT_INIT() 		P3DIR &= ~(BIT(0)|BIT(1)|BIT(2));P3PU &= ~(BIT(0)|BIT(1)|BIT(2));P30=1;P31=1;P32=1;
-#define BT_CONFIG_ON() 				P30=0;P31=0;P32=1;
+#define BT_CONFIG_ON() 				P30=0;P31=0;P32=1;delay_10ms(25);P30=1;P31=1;P32=1;	
 #define BT_CONFIG_OFF() 			P30=1;P31=1;P32=1;	
 
 
