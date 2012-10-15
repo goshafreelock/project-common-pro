@@ -52,6 +52,10 @@ extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 bool vol_adj_spark_bit=0;
 #endif
 
+#ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
+extern bool dev_first_plugged_flag;
+#endif
+
 #if defined(WKUP_PIN_USE_ENABLE)||defined(MUTE_PORT_USE_WKUP)||defined(PWR_CTRL_WKUP)
 extern void wkup_pin_ctrl(bool dir);
 #endif
@@ -2319,10 +2323,13 @@ _SYS_GO_IN_POWER_OFF:
 #ifdef MP3_MODE_EQ_DOWN_DO_NOTHING
 			break;
 #endif
+
 		if(work_mode==SYS_MP3DECODE_SD){
 
 			if((get_device_online_status()&0x02)){
-
+#ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
+				dev_first_plugged_flag=1;
+#endif			
 				 Mute_Ext_PA(MUTE);
 				 Set_Curr_Func(SYS_MP3DECODE_USB);
 			        given_device = BIT(USB_DISK);
@@ -2335,6 +2342,9 @@ _SYS_GO_IN_POWER_OFF:
 
 			if((get_device_online_status()&0x01)){
 
+#ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
+				dev_first_plugged_flag=1;
+#endif			
 				 Mute_Ext_PA(MUTE); 
 				 Set_Curr_Func(SYS_MP3DECODE_SD);
 			        given_device = BIT(SDMMC);

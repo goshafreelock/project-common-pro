@@ -83,7 +83,7 @@ void bt_disp_time_hdlr()
 #ifdef BLUE_TOOTH_GPIO_STATUS
 
 #define BLUE_TOOTH_PWR_ON			10
-#define BLUE_TOOTH_	CONFIG			2000
+#define BLUE_TOOTH_CONFIG			2000
 #define BLUE_TOOTH_CONFIG_OK		15
 #define BLUE_TOOTH_DIS_CON		15000
 #define BLUE_TOOTH_PP				20
@@ -91,6 +91,7 @@ void bt_disp_time_hdlr()
 
 bool blue_tooth_detect=0,blue_tooth_status=0;
 xd_u8 gpio_H_timer=0,gpio_L_timer=0,gpio_debounc_timer=0;
+xd_u16 gpio_reset_timer=0;
 void bt_disp_status_hdlr()
 {
 	BT_STATUS_DETECT_INIT();
@@ -103,6 +104,7 @@ void bt_disp_status_hdlr()
 	}
 	else{
 		gpio_H_timer++;
+		
 		if(gpio_H_timer>2){
 
 			if(gpio_L_timer>6){
@@ -113,27 +115,50 @@ void bt_disp_status_hdlr()
 				
 			}
 		}
+
+		gpio_reset_timer++;
+		if(gpio_reset_timer>2000){
+
+			gpio_reset_timer=0;
+			gpio_H_timer=0;
+			gpio_L_timer=0;
+			blue_tooth_status=0;
+		}
 	}
 
 	if(blue_tooth_status){
 		
 		blue_tooth_status=0;
-		
+		gpio_reset_timer=0;
+
 		if(gpio_L_timer<BLUE_TOOTH_PWR_ON){
-			gpio_debounc_timer++;		
+			gpio_debounc_timer++;
+			if(gpio_debounc_timer>2){
+				gpio_debounc_timer=0;
+			    set_play_flash(LED_FLASH_ON);
+			}
 
 		}
 		else if(gpio_L_timer<BLUE_TOOTH_CONFIG_OK){
 			gpio_debounc_timer++;		
-
+			if(gpio_debounc_timer>2){
+				gpio_debounc_timer=0;
+			    set_play_flash(LED_FLASH_ON);
+			}
 		}
-		else if(gpio_L_timer<BLUE_TOOTH_PP){
+		else if(gpio_L_timer<BLUE_TOOTH_CONFIG){
 			gpio_debounc_timer++;		
-
+			if(gpio_debounc_timer>2){
+				gpio_debounc_timer=0;
+			    set_play_flash(LED_FLASH_VERY_FAST);
+			}
 		}
 		else if(gpio_L_timer<BLUE_TOOTH_CONNECTED){
 			gpio_debounc_timer++;		
-
+			if(gpio_debounc_timer>2){
+				gpio_debounc_timer=0;
+			    set_play_flash(LED_FLASH_ON);
+			}
 		}
 		else{
 			gpio_debounc_timer=0;		
@@ -151,7 +176,7 @@ void blue_tooth_init(void)
 	BT_PWR_PORT_INIT();
 	BT_RST_PORT_INIT();
 	BT_PWR_ON();
-	delay_10ms(85);
+	delay_10ms(10);
 
 #ifdef USE_BT_ACTIVATED_PIN
 	BT_RST_ON();
