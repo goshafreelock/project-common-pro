@@ -121,6 +121,12 @@ u8 find_device(u8 select)
     static u8 last_device;
     u8 i;
 
+#ifdef NOT_SEL_ALTERNATIVE_DEV
+    	if(select==0){
+
+		return 0;
+	}
+#endif
     given_device = 0;
     device_online = get_device_online_status();
 	

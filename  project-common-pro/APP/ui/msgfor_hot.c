@@ -1672,6 +1672,9 @@ u8 ap_handle_hotkey(u8 key)
 #ifdef AC_SLAVE_ENABLE
 	DSA_init();
 #endif	
+#ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
+	dev_first_plugged_flag=1;
+#endif			
 
 #ifdef DEVICE_PLUG_N_PLAY_DISBALE_AUX_MODE
 	 if((work_mode == SYS_AUX)){
@@ -1707,7 +1710,12 @@ u8 ap_handle_hotkey(u8 key)
 	 Add_Func_To_List(USB_DEV);	
 #ifdef AC_SLAVE_ENABLE
 	DSA_init();
-#endif	 	 
+#endif	 
+
+#ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
+	dev_first_plugged_flag=1;
+#endif			
+
 #ifdef DEVICE_PLUG_N_PLAY_DISBALE_AUX_MODE
 	 if((work_mode == SYS_AUX)){
 		break;

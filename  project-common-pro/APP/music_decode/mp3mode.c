@@ -614,7 +614,11 @@ void music_play(void)
 #ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
 		if(dev_first_plugged_flag){
 			dev_first_plugged_flag=0;
-		   	play_status = MUSIC_STOP;            
+		   	play_status = MUSIC_STOP;  
+
+#if defined(PLAY_STATUS_LED_PLAY_NO_SPARK)
+	  		set_play_flash(LED_FLASH_ON);
+#endif
 			flush_all_msg();
 			break;
 		}
@@ -672,6 +676,7 @@ void music_play(void)
 			Set_Curr_Func(SYS_MP3DECODE_SD);		
 		else if(device_active ==0x02)
 			Set_Curr_Func(SYS_MP3DECODE_USB);
+
 #if defined(PLAY_STATUS_LED_IN_SLOW_MODE)
 	  	set_play_flash(LED_FLASH_SLOW);
 #elif defined(PLAY_STATUS_LED_PLAY_NO_SPARK)
@@ -1043,6 +1048,8 @@ void music_play(void)
 			work_mode = SYS_FMREV;
 		else
 			work_mode = SYS_AUX;
+#elif defined(DEFAULT_GO_HOLD_IN_DECODE_MODE)		
+		break;
 #elif defined(DEFAULT_GO_TO_IDLE)		
 		Set_Curr_Func(SYS_IDLE);
 #else
