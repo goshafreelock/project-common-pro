@@ -1626,7 +1626,7 @@ void JogDetect(void)
 	u8 port_val=0;
 	
     touchkeyval = 0;
-#if defined(K523_DeYun_523_V001)||defined(K5008_JK_5008_V001)||defined(K5018_JK_5018_V001)
+#if defined(K523_DeYun_523_V001)||defined(K5008_JK_5008_V001)||defined(K5018_JK_5018_V001)||defined(K5058_JK_5058_V001)
     P0DIR &= ~(BIT(2)|(BIT(3)));    //P11, P12
     P0 |=(BIT(2)|(BIT(3)));
     P0PU	|= (BIT(2)|(BIT(3)));
@@ -2272,7 +2272,7 @@ _code u8 Key_Tab[MAX_MATRIX_KEY][2]=
 	{0x32,INFO_NEXT_FIL},			
 	{0x21,INFO_PREV_FIL},	
 	{0x20,INFO_STOP},
-	{0x30,INFO_EQ_DOWN},
+	{0x30,INFO_MODE},
 };
 #define KEY_PORT_NUM	4
 _code KEY_STRUCT KEY_MAP[KEY_PORT_NUM] = 

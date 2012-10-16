@@ -948,6 +948,10 @@ void sys_info_init(void)
 	if(my_music_vol <=5){
 		my_music_vol =10;
 	}
+#elif defined(K1226_AP_750_V001)||defined(K2125_AP_751C_V001)
+	if(my_music_vol <=10){
+		my_music_vol =20;
+	}	
 #endif
 
     if ((my_music_vol > MAX_VOL) || (my_music_vol == 0))              //每次开机时，不要超过最大音量的一半，以免开机音量过大
