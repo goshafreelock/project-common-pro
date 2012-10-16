@@ -52,6 +52,10 @@ extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 bool vol_adj_spark_bit=0;
 #endif
 
+#ifdef USB_SD_DEV_PLUG_MEM
+xd_u8 last_plug_dev=0;
+#endif
+
 #ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
 extern bool dev_first_plugged_flag;
 #endif
@@ -1592,9 +1596,26 @@ u8 ap_handle_hotkey(u8 key)
 
     case MSG_USB_DISK_OUT:                           		
 	Remov_Func_From_List(USB_DEV);
+#ifdef DEVICE_ON_LINE_LED_IND
+
+	if((get_device_online_status()&0x01)>0){
+		device_selected= BIT(SDMMC);
+	}
+	
+	set_play_flash(LED_FLASH_STOP);
+#endif
+	
         break;
     case MSG_SDMMC_OUT:
 	Remov_Func_From_List(SD_DEV);
+
+#ifdef DEVICE_ON_LINE_LED_IND
+
+	if((get_device_online_status()&0x02)>0){
+		device_selected= BIT(USB_DISK);
+	}
+	set_play_flash(LED_FLASH_STOP);
+#endif	
         break;
 
 #if !defined(NOT_USE_LINE_IN_FUNC)||defined(LINE_IN_DETECT_SHARE_LED_STATUS_PORT)
@@ -1672,8 +1693,18 @@ u8 ap_handle_hotkey(u8 key)
 #ifdef AC_SLAVE_ENABLE
 	DSA_init();
 #endif	
+
+#ifdef USB_SD_DEV_PLUG_MEM
+	 last_plug_dev=BIT(SDMMC);
+#endif
+
+#ifdef DEVICE_ON_LINE_LED_IND
+		set_play_flash(LED_FLASH_NOR);
+#endif
+
 #ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
-	dev_first_plugged_flag=1;
+	if((get_device_online_status()&0x01)==0)
+		dev_first_plugged_flag=1;
 #endif			
 
 #ifdef DEVICE_PLUG_N_PLAY_DISBALE_AUX_MODE
@@ -1712,8 +1743,17 @@ u8 ap_handle_hotkey(u8 key)
 	DSA_init();
 #endif	 
 
+#ifdef USB_SD_DEV_PLUG_MEM
+	 last_plug_dev=BIT(USB_DISK);
+#endif
+
+#ifdef DEVICE_ON_LINE_LED_IND
+		set_play_flash(LED_FLASH_NOR);
+#endif
+
 #ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
-	dev_first_plugged_flag=1;
+	if((get_device_online_status()&0x02)==0)
+		dev_first_plugged_flag=1;
 #endif			
 
 #ifdef DEVICE_PLUG_N_PLAY_DISBALE_AUX_MODE

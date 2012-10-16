@@ -142,6 +142,9 @@
 #if defined(TWO_PLAY_LED_USE_PORT_P00)
 #define play_led_seg_out_NO2() 		P0DIR &= ~(BIT(0));P0PU |= (BIT(0))
 #define PLAY_STATUS_PORT_NO2 		P00
+#elif defined(TWO_PLAY_LED_USE_PORT_P01)
+#define play_led_seg_out_NO2() 		P0DIR &= ~(BIT(1));P0PU |= (BIT(1))
+#define PLAY_STATUS_PORT_NO2 		P01
 #else
 #define play_led_seg_out_NO2() 		DACCON0|=0x80;P0DIR &= ~(1<<2);P0PU |= (1<<2); P3DIR |= (1<<4);P3PU &= ~(1<<4);P3PD&= ~(1<<4)
 #define PLAY_STATUS_PORT_NO2 		P02

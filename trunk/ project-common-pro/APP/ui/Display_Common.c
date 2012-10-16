@@ -90,6 +90,10 @@ extern bool iic_busy;
 extern void Disp_Patern();
 #endif
 
+#ifdef USB_SD_DEV_PLUG_MEM
+extern xd_u8 last_plug_dev;
+#endif
+
 #if defined(MUTE_ON_FLASH_WHOLE_SCREEN)
 extern bool mute_on_flash_enable;
 #endif
@@ -611,8 +615,13 @@ void set_play_flash(LED_FLASH_TYPE led_status)
 #if defined(TWO_PLAY_LED_IN_USE)
 	if(led_open_enable){
 
+#if defined(K000_JK_HY_SM001_V001)
+		goto __LED_HANDLE;
+#endif
+
 		    set_play_flash_no2(LED_FLASH_STOP);
 		    led_status = LED_FLASH_ON;	
+			
 	}
 	else{
 		
@@ -650,6 +659,40 @@ void set_play_flash(LED_FLASH_TYPE led_status)
 			
 		    set_play_flash_no2(LED_FLASH_STOP);
 		    led_status = LED_FLASH_STOP;		
+		}
+		
+#elif defined(K000_JK_HY_SM001_V001)
+__LED_HANDLE:
+		if(work_mode <=SYS_MP3DECODE_SD){
+
+			
+			if((last_plug_dev==BIT(SDMMC))&&(led_status==LED_FLASH_NOR)&&((get_device_online_status()&0x02)>0)){
+				last_plug_dev=0;
+			    	set_play_flash_no2(LED_FLASH_NOR);
+
+			}
+			else if(((get_device_online_status()&0x01)>0)){
+			    set_play_flash_no2(LED_FLASH_ON);
+
+			}
+			else{
+			    set_play_flash_no2(LED_FLASH_STOP);
+
+			}
+			
+			if(((last_plug_dev==BIT(USB_DISK))&&(led_status==LED_FLASH_NOR)&&((get_device_online_status()&0x01)>0))){
+				last_plug_dev=0;
+			    	led_status=LED_FLASH_NOR;
+
+			}
+			else if(((get_device_online_status()&0x02)>0)){
+				    led_status=LED_FLASH_ON;
+			}
+			else{
+				    led_status=LED_FLASH_STOP;
+
+			}
+
 		}
 #elif defined(K583_ZX_583_V001)
 
