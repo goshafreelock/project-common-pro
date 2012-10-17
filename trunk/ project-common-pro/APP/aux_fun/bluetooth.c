@@ -261,6 +261,8 @@ void blue_tooth_key_hdlr(u8 key)
 			BT_PREV_ON();delay_10ms(BLUE_TOOTH_DELAY);BT_PREV_OFF();				
 #endif
 			break;
+
+#ifndef BLUE_TOOTH_DISABLE_GPIO_VOL_ADJ
 		case BT_VOL_UP:
 #ifdef BLUETOOTH_GPIO_CTRL
 			BT_VOLU_PORT_INIT();
@@ -336,6 +338,7 @@ void blue_tooth_key_hdlr(u8 key)
 #endif			
 #endif			
 			break;
+#endif
 	}
 }
 
@@ -385,9 +388,16 @@ void blue_tooth_main(void)
 	    sys_power_down();
 	    break;
 #endif 
+
+#ifdef PP_KEY_LONG_CONFIG_BT
+        case INFO_PLAY | KEY_LONG:
+	     blue_tooth_key_hdlr(BT_CONFIG_HOLD);
+		 break;
+#endif
         case INFO_PLAY | KEY_HOLD:
-#ifdef PP_KEY_HOLD_CONFIG_BT
-	     blue_tooth_key_hdlr(BT_CONFIG_HOLD);			
+#ifdef PP_KEY_LONG_CONFIG_BT
+		 break;
+	     //blue_tooth_key_hdlr(BT_CONFIG_HOLD);			
 #else
 	     blue_tooth_key_hdlr(BT_PP_HOLD);			
 #endif
@@ -401,14 +411,16 @@ void blue_tooth_main(void)
             {
 	         play_status =MUSIC_PLAY;
 		  my_main_vol(my_music_vol);
+#ifndef BLUE_TOOTH_PP_NOT_EXT_MUTE
   		  Mute_Ext_PA(UNMUTE);
-
+#endif
             }
 	     else if (play_status == MUSIC_PLAY){
 
 	        play_status =MUSIC_PAUSE;
-		 	
+#ifndef BLUE_TOOTH_PP_NOT_EXT_MUTE	 	
   		Mute_Ext_PA(MUTE);		 	
+#endif
 		my_main_vol(0);	
 	     }
 #endif		 
