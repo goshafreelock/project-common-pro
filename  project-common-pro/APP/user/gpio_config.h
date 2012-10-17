@@ -203,7 +203,9 @@
 #define  aux_detect_in()      		P0DIR &=~(BIT(5));P05=1; P0DIR |= BIT(5);P0PU |= BIT(5);
 #define  AUX_DETECT_GPIO  		P05
 #define  aux_detect_in_off()      	P0DIR &= ~(BIT(5)); //linein check port
+#ifndef K1226_AP_750_V001
 #define INDEPENDENT_AUX_DETECT_GPIO
+#endif
 #elif defined(AUX_DETECT_USE_P00)
 #define  aux_detect_in()      		P0DIR &=~(BIT(0));P00=1; P0DIR |= BIT(0);P0PU |= BIT(0);
 #define  AUX_DETECT_GPIO  		P00
@@ -1179,7 +1181,7 @@
 #define BT_VOL_DOWN_OFF() 	
 
 #define BT_CONFIG_PORT_INIT() 		P3DIR &= ~(BIT(0)|BIT(1)|BIT(2));P3PU &= ~(BIT(0)|BIT(1)|BIT(2));P30=1;P31=1;P32=1;
-#define BT_CONFIG_ON() 				P30=0;P31=0;P32=1;delay_10ms(25);P30=1;P31=1;P32=1;	
+#define BT_CONFIG_ON() 				P30=0;P31=0;P32=1;delay_10ms(25);P30=1;P31=1;P32=1;delay_10ms(25);
 #define BT_CONFIG_OFF() 			P30=1;P31=1;P32=1;	
 
 
