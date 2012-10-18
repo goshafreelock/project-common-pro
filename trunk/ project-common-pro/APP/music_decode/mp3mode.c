@@ -42,6 +42,9 @@ extern bool led_open_enable;
 #if defined(TIME_FORCE_SHOW_ON_SCREEN)
 extern xd_u8 time_show_return_cnt; 
 #endif
+#ifdef USB_SD_DEV_PLUG_MEM
+extern xd_u8 last_plug_dev;
+#endif
 
 #ifdef VOL_ADJ_SPARK_LED
 extern bool vol_adj_spark_bit;
@@ -602,7 +605,7 @@ void music_play(void)
 #endif
 
 #if 0
-	if(key!=0xff)
+	if(key!=0xff&&key!=0x1f)
 	printf(" music_play get_msg %x \r\n",(u16)key);
 #endif
         switch (key)
@@ -632,9 +635,59 @@ void music_play(void)
 		    given_file_number = playpoint_filenum;
 	     }
 #endif
+#ifdef DEVICE_ON_LINE_LED_IND
+
+	printf(" music_play last_plug_dev %x \r\n",(u16)last_plug_dev);
+	printf(" music_play given_device %x \r\n",(u16)device_active);
+
+		if((get_device_online_status()&0x03)==0){
+
+	  		set_play_flash(LED_FLASH_STOP);
+
+			flush_all_msg();
+			break;
+		}
+		else{
+
+			if((device_active==BIT(SDMMC))){
+
+				if((get_device_online_status()&0x01)==0){
+
+#ifdef USB_SD_DEV_PLUG_MEM
+					if((get_device_online_status()&0x02)>0){
+				 		last_plug_dev=0;
+					}
+#endif
+					set_play_flash(LED_FLASH_STOP);
+					flush_all_msg();
+					break;
+				}
+
+			}
+			
+			if((device_active==BIT(USB_DISK))){
+
+				if((get_device_online_status()&0x02)==0){
+
+#ifdef USB_SD_DEV_PLUG_MEM
+					if((get_device_online_status()&0x01)>0){
+				 		last_plug_dev=0;
+					}
+#endif
+					set_play_flash(LED_FLASH_STOP);
+					flush_all_msg();
+					break;
+				}
+
+			}
+		}
+#endif		
+
 #if FILE_ENCRYPTION
             password_start(0);
 #endif
+
+
             if (!fs_getfile_bynumber(given_file_number))
             {
                 //printf("err next file\n");
@@ -660,6 +713,9 @@ void music_play(void)
 #endif
 
 #ifdef DEVICE_SEL_MANUAL_ONLY
+
+		  printf(" device_selected %x--- device_active %x \r\n",(u16)device_selected,(u16)device_active);
+
 	    	    if(device_selected!=device_active){
 		  		set_play_flash(LED_FLASH_ON);	
 				stop_decode();
@@ -1179,6 +1235,62 @@ void music_play(void)
             }
             else if (play_status == MUSIC_STOP){
 
+		if((get_device_online_status()&0x03)==0)break;
+
+#ifdef DEVICE_ON_LINE_LED_IND
+		if((get_device_online_status()&0x03)==0x03){
+
+			if(last_plug_dev ==0){
+
+				if(given_device==BIT(SDMMC)){
+
+					given_file_number =1;
+
+				}
+				else{
+					given_file_number =1;
+				}
+			}
+			else{
+				
+				if(last_plug_dev!=BIT(SDMMC)){
+					given_file_number =1;
+		        		given_device = BIT(SDMMC);
+
+				}
+				else{
+					given_file_number =1;
+		        		given_device = BIT(USB_DISK);
+
+				}
+			}
+			 // printf(" last_plug_dev %x--- device_active %x \r\n",(u16)last_plug_dev,(u16)device_active);
+
+	            	put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
+			break;
+		}
+		else{
+
+				if((get_device_online_status()&0x01)>0){
+
+					given_file_number =1;
+	        			given_device = BIT(SDMMC);
+	       		     	put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
+					break;						
+					
+				}
+
+				if((get_device_online_status()&0x02)>0){
+
+					given_file_number =1;
+	        			given_device = BIT(USB_DISK);
+	       		     	put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
+					break;		
+				}
+
+		}
+#endif
+			
                 	put_msg_lifo(INIT_PLAY);
 
 	     }

@@ -684,6 +684,9 @@ __FRE_DOWN:
             //delay_ms(20);
             break;
 
+#if defined(USE_MODE_LONG_FOR_FM_CH_UP)
+    	 case INFO_MODE| KEY_LONG:
+#endif		 	
         case INFO_CH_NEXT | KEY_SHORT_UP:
         case INFO_CH_UP| KEY_SHORT_UP:
 	__CH_UP:

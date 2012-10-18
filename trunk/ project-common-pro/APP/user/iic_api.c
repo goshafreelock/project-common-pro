@@ -179,7 +179,7 @@ void write_info(u8 addr,u8 dat)
 {
 
 #ifdef UART_ENABLE
-	printf("---->write_info  %d \r\n",(u16)addr);
+	printf("---->write_info  %d ,write-data %x   \r\n",(u16)addr,(u16)dat);
 #endif
 
 #if defined(EEPROM_RTC_RAM_COMPATIBLE)

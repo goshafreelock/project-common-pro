@@ -24,7 +24,7 @@ extern u16 cfilenum;
 extern u8 eq_mode;
 extern bool aux_online;
 extern bool IR_KEY_Detect;
-extern u8 play_status;
+extern u8 play_status,device_active;
 extern _xdata u8 rtc_mode;
 extern _xdata u8 alm_flag;
 extern _xdata u8 rtc_set;
@@ -531,9 +531,9 @@ void my_main_vol(u8 my_vol)
 }
 
 #if defined(USE_GPIO_DETECT_EARPHONE_PLUGGED)//||defined(LINE_IN_DETECT_SHARE_LED_STATUS_PORT)
+static bool plugged_flag=0;
 void check_earphone_plugged(void)
 {
-	static bit plugged_flag=0;
 
 	if(plugged_flag == earphone_plugged_flag){
 		return;
@@ -951,7 +951,7 @@ SYS_WORK_MODE Next_Func()
 	u8 i;
 	//printf(" -111-->Sys_Func_List %x \r\n",(u16)Sys_Func_List);
 	//printf(" -222-->CURR FUNC %x \r\n",(u16)((Sys_Func_List&0xFF00)));
-	
+
 	if((Sys_Func_List&0x0FF)>0)
 	{
 		for(i=(((Sys_Func_List&0xFF00)>>8)+1);i<MAX_FUNC_LIST;i++){
@@ -1596,11 +1596,22 @@ u8 ap_handle_hotkey(u8 key)
 
     case MSG_USB_DISK_OUT:                           		
 	Remov_Func_From_List(USB_DEV);
+	
+#if defined(USE_GPIO_DETECT_EARPHONE_PLUGGED)
+#if defined(MUTE_GPIO_FM_GPIO_COMPATIBALE)
+	plugged_flag=0;	
+#endif
+#endif
+	
 #ifdef DEVICE_ON_LINE_LED_IND
 
 	if((get_device_online_status()&0x01)>0){
-		device_selected= BIT(SDMMC);
+		given_device=BIT(SDMMC);
+		
 	}
+#ifdef USB_SD_DEV_PLUG_MEM
+	 last_plug_dev=0;
+#endif
 	
 	set_play_flash(LED_FLASH_STOP);
 #endif
@@ -1608,12 +1619,22 @@ u8 ap_handle_hotkey(u8 key)
         break;
     case MSG_SDMMC_OUT:
 	Remov_Func_From_List(SD_DEV);
+#if defined(USE_GPIO_DETECT_EARPHONE_PLUGGED)
+#if defined(MUTE_GPIO_FM_GPIO_COMPATIBALE)
+	plugged_flag=0;	
+#endif
+#endif
 
 #ifdef DEVICE_ON_LINE_LED_IND
 
 	if((get_device_online_status()&0x02)>0){
-		device_selected= BIT(USB_DISK);
+		given_device=BIT(USB_DISK);
 	}
+#ifdef USB_SD_DEV_PLUG_MEM
+	 last_plug_dev=0;
+#endif
+
+	
 	set_play_flash(LED_FLASH_STOP);
 #endif	
         break;
@@ -1646,6 +1667,13 @@ u8 ap_handle_hotkey(u8 key)
 
     case MSG_AUX_OUT :
 	Remov_Func_From_List(AUX_DEV);
+
+#if defined(USE_GPIO_DETECT_EARPHONE_PLUGGED)
+#if defined(MUTE_GPIO_FM_GPIO_COMPATIBALE)
+	plugged_flag=0;	
+#endif
+#endif
+	
         if (SYS_AUX == work_mode)
         {
 #ifdef GPIO_SWITCH_SELECT_MODE
@@ -1695,7 +1723,13 @@ u8 ap_handle_hotkey(u8 key)
 #endif	
 
 #ifdef USB_SD_DEV_PLUG_MEM
-	 last_plug_dev=BIT(SDMMC);
+	if((get_device_online_status()&0x02)>0){
+	 	last_plug_dev=BIT(SDMMC);
+	}
+	else{
+	        given_device = BIT(SDMMC);
+
+	}
 #endif
 
 #ifdef DEVICE_ON_LINE_LED_IND
@@ -1744,7 +1778,14 @@ u8 ap_handle_hotkey(u8 key)
 #endif	 
 
 #ifdef USB_SD_DEV_PLUG_MEM
-	 last_plug_dev=BIT(USB_DISK);
+	if((get_device_online_status()&0x01)>0){
+		
+	 	last_plug_dev=BIT(USB_DISK);
+	}
+	else{
+
+	        given_device = BIT(USB_DISK);
+	}
 #endif
 
 #ifdef DEVICE_ON_LINE_LED_IND
@@ -1862,6 +1903,13 @@ u8 ap_handle_hotkey(u8 key)
 
 		}
 		else if(work_mode==SYS_FMREV){
+
+#if defined(USE_GPIO_DETECT_EARPHONE_PLUGGED)
+#if defined(MUTE_GPIO_FM_GPIO_COMPATIBALE)
+			plugged_flag=0;	
+#endif
+#endif
+			
 #ifdef RADIO_AM_WM_ENABLE
 			FMAM_Mode_Switch_Profile(SYS_FMREV);
 #endif
@@ -2372,18 +2420,31 @@ _SYS_GO_IN_POWER_OFF:
 			break;
 #endif
 
+		printf("  SEL  INFO_EQ_DOWN %x  \r\n ",(u16)work_mode);
+
 		if(work_mode==SYS_MP3DECODE_SD){
 
 			if((get_device_online_status()&0x02)){
 #ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
 				dev_first_plugged_flag=1;
 #endif			
+#ifdef USB_SD_DEV_PLUG_MEM
+
+				device_active=BIT(USB_DISK);
+			 	last_plug_dev=0;
+#endif
+
+				 sys_printf("  SEL  SYS_MP3DECODE_USB");
 				 Mute_Ext_PA(MUTE);
 				 Set_Curr_Func(SYS_MP3DECODE_USB);
 			        given_device = BIT(USB_DISK);
 			        given_file_number = 1;
 			        put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
-			        return 0;
+					
+				 if(work_mode <=SYS_MP3DECODE_SD)
+				 	break;
+				 else
+			        	return 0;
 			}
 		}
 		else if(work_mode==SYS_MP3DECODE_USB){
@@ -2392,12 +2453,23 @@ _SYS_GO_IN_POWER_OFF:
 
 #ifdef USB_SD_PWR_UP_AND_PLUG_NOT_PLAY
 				dev_first_plugged_flag=1;
-#endif			
+#endif	
+#ifdef USB_SD_DEV_PLUG_MEM
+				device_active=BIT(SDMMC);
+			 	last_plug_dev=0;
+#endif
+				 sys_printf("  SEL  SYS_MP3DECODE_SD");
+
+
 				 Mute_Ext_PA(MUTE); 
 				 Set_Curr_Func(SYS_MP3DECODE_SD);
 			        given_device = BIT(SDMMC);
 			        given_file_number = 1;
 			        put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
+					
+				 if(work_mode <=SYS_MP3DECODE_SD)
+				 	break;
+				 else					
 			        return 0;
 			}		
 		}			
