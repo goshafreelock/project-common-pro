@@ -665,28 +665,42 @@ void set_play_flash(LED_FLASH_TYPE led_status)
 __LED_HANDLE:
 		if(work_mode <=SYS_MP3DECODE_SD){
 
-			
-			if((last_plug_dev==BIT(SDMMC))&&(led_status==LED_FLASH_NOR)&&((get_device_online_status()&0x02)>0)){
-				last_plug_dev=0;
-			    	set_play_flash_no2(LED_FLASH_NOR);
 
-			}
-			else if(((get_device_online_status()&0x01)>0)){
-			    set_play_flash_no2(LED_FLASH_ON);
+			if(((get_device_online_status()&0x01)>0)){
+
+				if(last_plug_dev==BIT(SDMMC)){
+					
+					if((led_status==LED_FLASH_NOR)){
+						//last_plug_dev=0;
+					    	set_play_flash_no2(LED_FLASH_NOR);
+
+					}
+				}
+				else{
+				    set_play_flash_no2(LED_FLASH_ON);
+
+				}
 
 			}
 			else{
 			    set_play_flash_no2(LED_FLASH_STOP);
 
 			}
-			
-			if(((last_plug_dev==BIT(USB_DISK))&&(led_status==LED_FLASH_NOR)&&((get_device_online_status()&0x01)>0))){
-				last_plug_dev=0;
-			    	led_status=LED_FLASH_NOR;
 
-			}
-			else if(((get_device_online_status()&0x02)>0)){
-				    led_status=LED_FLASH_ON;
+			if(((get_device_online_status()&0x02)>0)){
+
+				if(last_plug_dev==BIT(USB_DISK)){
+					//if(((led_status==LED_FLASH_NOR))){
+						//last_plug_dev=0;
+					    	led_status=LED_FLASH_NOR;
+
+					//}
+				}
+				else{
+
+					led_status=LED_FLASH_ON;
+
+				}
 			}
 			else{
 				    led_status=LED_FLASH_STOP;

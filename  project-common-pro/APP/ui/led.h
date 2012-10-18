@@ -229,7 +229,7 @@
 #define LED_PAUSE	 BIT(LED_B)
 
 #define LED_STATUS   LED_BUFF[4]
-#elif defined(K1032_AJE_1032_V001)
+#elif defined(K1032_AJE_1032_V001)||defined(K1032_AP_1032_V001)
 #define LED_AUX	 		BIT(LED_A)
 #define LED_FM			BIT(LED_C)
 #define LED_USB		 	BIT(LED_E)
@@ -433,6 +433,13 @@ enum {
 #define LED_COM    P3
 #define LED_SEG    P1
 #endif
+
+#ifdef AUX_ICON_FOR_RTC_ALM
+#ifndef LED_AUX
+#define LED_AUX	0
+#endif
+#endif
+
 
 #ifdef USE_BAT_MANAGEMENT
 

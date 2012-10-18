@@ -355,6 +355,10 @@ void blue_tooth_main(void)
 #ifdef TURN_OFF_PLAY_STATUS_LED_IN_BLUETOOTH_MODE
     set_play_flash(LED_FLASH_STOP);
 #endif
+
+#ifdef K000_XC_BC_BT_V001
+        play_status =MUSIC_PAUSE;
+#endif
     while (1)
     {
         key = get_msg();
