@@ -151,6 +151,16 @@ mode_led _code mode_led_tab[LED_MAX_NUM]=
 	SYS_MP3DECODE_SD,		BIT(4),PORT_P2,
 	SYS_FMREV,				BIT(5),PORT_P2,
 };
+#elif defined(K0000_JK_QGAC18_V001)
+#define LED_MAX_NUM	5
+mode_led _code mode_led_tab[LED_MAX_NUM]=
+{
+	SYS_MP3DECODE_USB,		BIT(7),PORT_P2, 
+	SYS_MP3DECODE_SD,		BIT(7),PORT_P2, 
+	SYS_FMREV,				BIT(7),PORT_N,
+ 	SYS_AUX,				BIT(2),PORT_P0, 
+	SYS_IDLE,				BIT(2),PORT_P0,
+};
 #elif defined(K000_JK_HY_SM001_V001)
 #define LED_MAX_NUM	3
 mode_led _code mode_led_tab[LED_MAX_NUM]=

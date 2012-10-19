@@ -637,8 +637,8 @@ void music_play(void)
 #endif
 #ifdef DEVICE_ON_LINE_LED_IND
 
-	printf(" music_play last_plug_dev %x \r\n",(u16)last_plug_dev);
-	printf(" music_play given_device %x \r\n",(u16)device_active);
+	//printf(" music_play last_plug_dev %x \r\n",(u16)last_plug_dev);
+	//printf(" music_play given_device %x \r\n",(u16)device_active);
 
 		if((get_device_online_status()&0x03)==0){
 
@@ -714,7 +714,7 @@ void music_play(void)
 
 #ifdef DEVICE_SEL_MANUAL_ONLY
 
-		  printf(" device_selected %x--- device_active %x \r\n",(u16)device_selected,(u16)device_active);
+		  //printf(" device_selected %x--- device_active %x \r\n",(u16)device_selected,(u16)device_active);
 
 	    	    if(device_selected!=device_active){
 		  		set_play_flash(LED_FLASH_ON);	

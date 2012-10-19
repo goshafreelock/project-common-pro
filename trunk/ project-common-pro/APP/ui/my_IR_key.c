@@ -168,7 +168,7 @@ _code MY_IR_KEY_STRUCT My_IRTab[]=       /*user code is 0xFF*/
 	{My_IR_KEY_CHN_UP,		INFO_MUTE},
 	{My_IR_KEY_CHN_DN,		INFO_POWER},
 };
-#elif defined(K0000_SRS_6032_V002)||defined(K0000_JK_QGAC18_V001)||defined(K0000_XDS_6032_V002)
+#elif defined(K0000_SRS_6032_V002)||defined(K0000_XDS_6032_V002)
 _code MY_IR_KEY_STRUCT My_IRTab[]=       /*user code is 0xFF*/
 {
 	//{My_IR_KEY_TATOL,		My_IR_KEY_TATOL},	//4 总共键个数
