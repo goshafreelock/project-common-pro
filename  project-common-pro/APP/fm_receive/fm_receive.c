@@ -640,6 +640,9 @@ _PICK_CH:
 		
 __FRE_DOWN:
             frequency--;
+#ifdef MUTE_EXAMP_AT_FM_NEXT_PREV
+		Mute_Ext_PA(MUTE);
+#endif
 
 #ifdef RADIO_AM_WM_ENABLE			
 	    if(work_mode==SYS_FMREV){
@@ -681,6 +684,10 @@ __FRE_DOWN:
 	            write_info(MEM_FRE,frequency - MIN_FRE);
 #endif
             Disp_Con(DISP_FREQ);
+#ifdef MUTE_EXAMP_AT_FM_NEXT_PREV
+		Mute_Ext_PA(UNMUTE);
+#endif
+
             //delay_ms(20);
             break;
 

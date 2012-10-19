@@ -1062,7 +1062,7 @@ void bat_val_arg(void);
 #define ADKEY_10	NO_KEY
 #define ADKEY_11	NO_KEY
 #define ADKEY_NOKEY	NO_KEY
-#elif defined(K0000_MC_M73A_V001)||defined(K0000_MC_H2_V001)
+#elif defined(K0000_MC_M73A_V001)||defined(K0000_MC_H2_V001)||defined(NOR_ADKEY_DEFINITION)
 #define ADKEY_1		INFO_PLAY
 #define ADKEY_2		INFO_PREV_FIL
 #define ADKEY_3		INFO_NEXT_FIL

@@ -993,6 +993,9 @@ void sys_info_init(void)
 
 #if OTP_MUSIC_ENABLE
     decode_opt_music_file(0);
+#ifdef PLAY_OTP_MUSIC_OTHER_TIME
+    decode_opt_music_file(0);
+#endif
 #endif
 #if RTC_ENABLE
     if (work_mode != SYS_RTC)
