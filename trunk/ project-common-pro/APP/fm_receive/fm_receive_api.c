@@ -720,10 +720,12 @@ else
 #ifndef DISABLE_FM_CH_SEL_MUTE	
     Mute_Ext_PA(MUTE);
 #endif
+
     my_main_vol(0);		
     //set_fre_rda5807(frequency,1);
     set_fre(frequency,0);
 
+    delay_10ms(20);
     my_main_vol(my_music_vol);	
     Mute_Ext_PA(UNMUTE);
 

@@ -642,6 +642,7 @@ __FRE_DOWN:
             frequency--;
 #ifdef MUTE_EXAMP_AT_FM_NEXT_PREV
 		Mute_Ext_PA(MUTE);
+		my_main_vol(0);		
 #endif
 
 #ifdef RADIO_AM_WM_ENABLE			
@@ -685,6 +686,8 @@ __FRE_DOWN:
 #endif
             Disp_Con(DISP_FREQ);
 #ifdef MUTE_EXAMP_AT_FM_NEXT_PREV
+		delay_10ms(10);
+		my_main_vol(my_music_vol);	
 		Mute_Ext_PA(UNMUTE);
 #endif
 
