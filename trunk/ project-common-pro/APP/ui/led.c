@@ -233,7 +233,7 @@ void LED_SEG_OUT(u8 SEG_Data)
  	P30 =((SEG_Data&0x20)>0)?1:0;
  	P33 =((SEG_Data&0x40)>0)?1:0;
 }
-#elif defined(K2041_XFW_2041_V001)||defined(K2041_XFW_2041_V002)
+#elif defined(K2041_XFW_2041_V001)||defined(K2041_XFW_2041_V002)||defined(K1229_WXD_1229_V001)
 void LED_COM_OUT(u8 COM_Data)
 {
     	LED_COM &= ~0x1f;

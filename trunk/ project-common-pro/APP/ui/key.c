@@ -122,6 +122,8 @@ void adc_measure_stragic();
 #if defined(TWO_ADKEY_ENABLE)
 u8 key_value_2;
 u8 ad_key=0;
+#elif defined(CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ)
+u8 key_value_2;
 #endif
 #ifdef ADC_DETECT_LINE_IN
 volatile u8 line_in_level,level_last_time= 0,temp_level=0;
@@ -1118,6 +1120,30 @@ void keyInit(void)
 #endif
 
 }
+#ifdef CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ
+xd_u8 vol_reg=0,filter_timer=0;
+void use_adkey_port_for_volume_adj(u8 volt)
+{	
+	xd_u16 volt_reg=0;
+
+	volt_reg=volt*30;
+	vol_reg = (u8)(volt_reg/255);
+
+	if(vol_reg!=my_music_vol){
+
+		if(filter_timer++>36){
+			
+			my_music_vol=vol_reg;		
+			put_msg_fifo(INFO_ADVOL_ADJ);
+		}
+	}
+	else{
+
+		filter_timer=0;
+	}
+}
+#endif
+
 #ifdef CUSTOM_DEFINE_ADPORT_FUNC
 void use_adkey_port_for_voice_det(u8 volt)
 {	
@@ -1305,6 +1331,12 @@ void adc_scan(void)
         P0IE &= ~(BIT(4));
 #endif
 
+#elif defined(CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ)
+
+        ADCCON = ADC_KEY_IO_2;
+	 P0PU &=~(BIT(7)); 
+        P0IE &= ~(BIT(7));
+		
 #elif defined(AD_MEASURE_TEMP_FUNC)
 
 #if 1
@@ -1332,6 +1364,14 @@ void adc_scan(void)
         //((u8 *)(&adc_temp))[1]=ADCDATL;
 	 adc_temp=ADCDATH;
 	 ADCCON = ADC_VDD_12;
+    }
+#elif defined(CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ)
+    else if (cnt == 3){
+
+        key_value_2 = ADCDATH;//READ VDDIO
+
+	use_adkey_port_for_volume_adj(key_value_2);	
+	
     }
 #endif	
     else

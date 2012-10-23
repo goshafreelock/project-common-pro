@@ -1286,13 +1286,18 @@ void JOY_Stick_Debug_func()
 
 #ifdef ADKEY_DEBUG
 extern u8  key_value;   ///<红外遥控提取的用户码
+//extern u8  key_value_2;   ///<红外遥控提取的用户码
+//extern xd_u8 vol_reg;
+
 void AD_Debug_func()
 {
 	while(1){
+
+		//printf("use_adkey_port_for_volume_adj   -->  %d  \r\n",(u16)((vol_reg)));
 			
 		printf("ad read value %x \r\n",(u16)((key_value)));
 		//printf("ad read value %d \r\n",(u16)((key_value*33)/255));
-		delay_10ms(2);
+		delay_10ms(20);
 	}		
 }
 #endif
