@@ -200,6 +200,7 @@ void bat_val_arg(void);
 
 #define INFO_CUS_KEY_1		0x35
 #define INFO_CUS_KEY_2		0x36
+#define INFO_ADVOL_ADJ		0x37
 
 #define  INFO_POWER         0x1b
 #define INFO_ALM_BELL		0x1c
@@ -719,6 +720,16 @@ void bat_val_arg(void);
 #define ADKEY_4		INFO_MODE
 #define ADKEY_5		INFO_CUS_KEY_1
 #define ADKEY_6		INFO_POWER
+#define ADKEY_7		INFO_VOL_MINUS
+#define ADKEY_8		INFO_VOL_PLUS
+#define ADKEY_NOKEY	NO_KEY
+#elif defined(K1229_WXD_1229_V001)
+#define ADKEY_1		INFO_PLAY
+#define ADKEY_2		INFO_PREV_FIL
+#define ADKEY_3		INFO_NEXT_FIL
+#define ADKEY_4		INFO_MODE
+#define ADKEY_5		INFO_FM_MOD
+#define ADKEY_6		INFO_MP3_MOD
 #define ADKEY_7		INFO_VOL_MINUS
 #define ADKEY_8		INFO_VOL_PLUS
 #define ADKEY_NOKEY	NO_KEY

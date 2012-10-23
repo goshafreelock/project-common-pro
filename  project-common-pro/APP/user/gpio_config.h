@@ -399,6 +399,8 @@
 
 #if defined(ADC_DETECT_LINE_IN)
 #define ADC_MAX_USED 0x04
+#elif defined(CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ)
+#define ADC_MAX_USED 0x04
 #elif defined(TWO_ADKEY_ENABLE)
 #define ADC_MAX_USED 0x04
 #else
@@ -808,6 +810,8 @@
 #else
 #define ADC_KEY_IO_2  0x4C//P04
 #endif
+#elif defined(CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ)
+#define ADC_KEY_IO_2  0x4F
 #endif
 
 #if defined(BAT_MEASURE_USE_P04_PORT)
@@ -835,6 +839,8 @@
 #elif defined(AD_MEASURE_TEMP_FUNC)
 #define ADC_MAX_USED 0x04
 #elif defined(TWO_ADKEY_ENABLE)
+#define ADC_MAX_USED 0x04
+#elif defined(CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ)
 #define ADC_MAX_USED 0x04
 #else
 #define ADC_MAX_USED 0x03

@@ -1637,6 +1637,8 @@ void music_play(void)
 #if defined(DECODE_STOP_MODE_ENABLE)
 #if defined(PLAY_LONG_PRESS_STOP)
     	case INFO_PLAY| KEY_LONG:
+#elif defined(MP3_HOT_KEY_LONG_PRESS_STOP)			
+    	case INFO_MP3_MOD| KEY_LONG:
 #else
     	case INFO_STOP | KEY_SHORT_UP :
 #endif			

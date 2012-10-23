@@ -267,7 +267,12 @@ void fm_rev( void )
     	case INFO_MODE | KEY_LONG :
 	goto __SCAN_FREQ;
 #endif
-
+#ifdef RADIO_MODE_HOT_KEY_ENABLE	
+#ifdef RADIO_MODE_HOT_KEY_LONG_SCAN
+    	case INFO_FM_MOD| KEY_LONG :
+	goto __SCAN_FREQ;
+#endif	
+#endif
 #ifdef USE_EQ_KEY_SHORT_SCAN
     	case INFO_EQ_UP| KEY_SHORT_UP :
 	goto __SCAN_FREQ;

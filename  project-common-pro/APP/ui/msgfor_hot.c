@@ -1464,7 +1464,11 @@ u8 ap_handle_hotkey(u8 key)
 #endif	
 
 #ifdef AUX_MODE_HOT_KEY_ENABLE
+#ifdef AUX_MODE_HOT_KEY_USE_PLAY_LONG
+    case INFO_PLAY | KEY_LONG:
+#else
     case INFO_AUX_MOD | KEY_SHORT_UP:
+#endif		
         if (work_mode != SYS_AUX)
         {
 #ifdef USE_USB_HOTPLUG_FUNC
@@ -2047,6 +2051,9 @@ u8 ap_handle_hotkey(u8 key)
 
         if (my_music_vol)
             my_music_vol--;
+#ifdef CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ
+    	case INFO_ADVOL_ADJ:
+#endif
 
 #ifdef VOL_ADJ_SPARK_LED
 
