@@ -1177,6 +1177,10 @@ void music_play(void)
 #ifdef PLAY_KEY_USE_FOR_STOP_FUNC
 	    goto __PLAY_KEY_STOP;
 #endif
+
+#ifdef MP3_SELECT_SONG_WHILE_PLAY
+		select_file_timer=0;
+#endif			
             if (DISP_DWORD_NUMBER == curr_menu)
             {
                 put_msg_fifo(INFO_PICK_SONG | KEY_SHORT_UP);
