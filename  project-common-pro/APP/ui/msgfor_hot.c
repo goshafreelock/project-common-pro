@@ -1509,6 +1509,9 @@ u8 ap_handle_hotkey(u8 key)
 	     Set_Curr_Func(USB_DEV);
             return 0;
         }
+#ifdef MUSIC_MODE_HOT_KEY_SHORT_FOR_USB_SD_SEL
+        put_msg_lifo(INFO_EQ_DOWN| KEY_SHORT_UP);
+#endif
         break;
 #endif
 		
@@ -2053,6 +2056,11 @@ u8 ap_handle_hotkey(u8 key)
             my_music_vol--;
 #ifdef CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ
     	case INFO_ADVOL_ADJ:
+
+#ifdef UART_ENABLE
+	printf("use_adkey_port_for_volume_adj   -->  %d  \r\n",(u16)((my_music_vol)));
+#endif
+
 #endif
 
 #ifdef VOL_ADJ_SPARK_LED
@@ -2427,8 +2435,9 @@ _SYS_GO_IN_POWER_OFF:
 			break;
 #endif
 
+#ifdef UART_ENABLE
 		printf("  SEL  INFO_EQ_DOWN %x  \r\n ",(u16)work_mode);
-
+#endif
 		if(work_mode==SYS_MP3DECODE_SD){
 
 			if((get_device_online_status()&0x02)){

@@ -97,6 +97,10 @@ u8 music_type _at_ 0x74;
 /** 文件信息滚动显示的计数值 */
 u16 filenameCnt _at_ 0x75;
 
+#ifdef MP3_SELECT_SONG_WHILE_PLAY
+xd_u8 select_file_timer=0;
+#endif
+
 #if defined(TURN_ON_PLAY_BREAK_POINT_MEM)
 bool playpoint_flag;
 extern u16 playpoint_filenum;
@@ -635,6 +639,7 @@ void music_play(void)
 		    given_file_number = playpoint_filenum;
 	     }
 #endif
+
 #ifdef DEVICE_ON_LINE_LED_IND
 
 	//printf(" music_play last_plug_dev %x \r\n",(u16)last_plug_dev);
@@ -776,6 +781,19 @@ void music_play(void)
 		}
 #endif
 
+#ifdef MP3_SELECT_SONG_WHILE_PLAY
+		if(select_file_timer>0){
+
+			select_file_timer=30;
+			cfilenum++;		
+			if(cfilenum>fs_msg.fileTotal){
+				cfilenum=1;
+			}
+			Disp_Con(DISP_DWORD_NUMBER);
+			break;
+		}			
+#endif
+
 #ifdef NEXT_PREV_KEY_NO_RSP_WHEN_REP_ONE
 		if(play_mode == REPEAT_ONE){
 			break;
@@ -807,6 +825,21 @@ void music_play(void)
 		if(new_vol_feature){
 			break;
 		}
+#endif
+
+#ifdef MP3_SELECT_SONG_WHILE_PLAY
+		if(select_file_timer>0){
+
+			select_file_timer=30;
+
+			cfilenum--;		
+			if(cfilenum==0){
+				cfilenum=fs_msg.fileTotal;
+			}
+
+			Disp_Con(DISP_DWORD_NUMBER);
+			break;		
+		}			
 #endif
 
 #ifdef PREV_KEY_SKIP_SONG_DELAY
@@ -1395,6 +1428,26 @@ void music_play(void)
 		usb_hotplug_hdlr();
 #endif
 
+#ifdef MP3_SELECT_SONG_WHILE_PLAY
+		if(select_file_timer>0){
+			
+			select_file_timer--;
+			if(select_file_timer ==0){
+
+		                if (DISP_DWORD_NUMBER == curr_menu)
+		                {
+               	              //    Disp_Con(DISP_PLAY);
+		                    //put_msg_fifo(INFO_PICK_SONG | KEY_SHORT_UP);
+		                }
+			}
+			else{
+				
+				break;
+
+			}
+		}
+#endif			
+
 #if defined(TIME_FORCE_SHOW_ON_SCREEN)
 
             if ((DISP_PLAY == curr_menu)||(DISP_PAUSE== curr_menu)){
@@ -1443,11 +1496,13 @@ void music_play(void)
 		bmt_hdlr();
 #endif
             return_cnt++;
+
             if (RETURN_TIME == return_cnt)
             {
 #ifdef SUPPORT_PT2313
 		  clr_aud_effect_state();
 #endif            
+
                 if (DISP_DWORD_NUMBER == curr_menu)
                 {
                     put_msg_fifo(INFO_PICK_SONG | KEY_SHORT_UP);
@@ -1633,6 +1688,18 @@ void music_play(void)
 #endif
             break;
 
+#ifdef MP3_SELECT_SONG_WHILE_PLAY
+#ifdef MP3_HOT_KEY_LONG_SELECT_SONG
+    	case INFO_MP3_MOD| KEY_LONG:
+		if(select_file_timer==0)
+		    select_file_timer=30;
+
+		cfilenum=given_file_number;
+		Disp_Con(DISP_DWORD_NUMBER);
+			
+	    break;	
+#endif
+#endif
 			
 #if defined(DECODE_STOP_MODE_ENABLE)
 #if defined(PLAY_LONG_PRESS_STOP)

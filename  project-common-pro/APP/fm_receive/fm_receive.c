@@ -406,6 +406,11 @@ void fm_rev( void )
 #ifdef USE_LONG_PLAY_KEY_TO_SWITCH_MODE		
 		goto _HOT_KEY_HDLR;
 #endif
+
+#ifdef AUX_MODE_HOT_KEY_USE_PLAY_LONG		
+		goto _HOT_KEY_HDLR;
+#endif
+
 #ifdef USE_EQ_KEY_SHORT_SCAN
 		break;
 #endif
