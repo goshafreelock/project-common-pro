@@ -1121,21 +1121,41 @@ void keyInit(void)
 
 }
 #ifdef CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ
-xd_u8 vol_reg=0,filter_timer=0;
+xd_u8 vol_reg=0,filter_timer=0,volt_tab_idx=0;
+xd_u8 volt_tab[8]={0};
 void use_adkey_port_for_volume_adj(u8 volt)
 {	
 	xd_u16 volt_reg=0;
 
-	volt_reg=volt*30;
+	volt_tab[volt_tab_idx]=volt;
+	volt_tab_idx++;
+	if(volt_tab_idx<8){
+		return;
+	}
+	else
+	{
+		volt_tab_idx=0;
+	}
+
+	for(volt_tab_idx=0;volt_tab_idx<8;volt_tab_idx++){
+
+		volt_reg=volt_tab[volt_tab_idx];
+	}
+	volt_tab_idx =0;
+	
+	volt_reg=volt_reg>>3;
+	
+	volt_reg=volt*16;
+	
 	vol_reg = (u8)(volt_reg/255);
 
 	if(vol_reg!=my_music_vol){
 
-		if(filter_timer++>36){
+		//if(filter_timer++>2){
 			
 			my_music_vol=vol_reg;		
 			put_msg_fifo(INFO_ADVOL_ADJ);
-		}
+		//}
 	}
 	else{
 
