@@ -1389,6 +1389,7 @@ void adc_scan(void)
     else if (cnt == 3){
 
         key_value_2 = ADCDATH;//READ VDDIO
+	 ADCCON = ADC_VDD_12;
 
 	use_adkey_port_for_volume_adj(key_value_2);	
 	
