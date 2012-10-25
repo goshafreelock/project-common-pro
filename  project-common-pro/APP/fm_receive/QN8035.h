@@ -208,7 +208,7 @@ void QN8035_MUTE(bit On);
 void QN8035_set_vol(u8 vol);
 //void QN8035_setch(u8 db);
 bool QND_RXValidCH(u16 freq);
-
+void QND_TuneToCH(u16 ch);
 #endif
 #endif
 

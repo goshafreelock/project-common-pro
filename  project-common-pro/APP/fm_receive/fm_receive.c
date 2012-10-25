@@ -466,6 +466,15 @@ __SCAN_FREQ:
 #ifdef USE_USB_HOTPLUG_FUNC
 		usb_hotplug_hdlr();
 #endif
+#ifdef MUTE_EXAMP_AT_FM_NEXT_PREV_IMPROVE
+		if(mute_release_timer>0)
+			mute_release_timer--;
+
+		 if(mute_release_timer==0){
+			my_main_vol(my_music_vol);	
+			Mute_Ext_PA(UNMUTE);
+		 }
+#endif
 
 #ifdef VOL_ADJ_SPARK_LED
 		if(vol_adj_spark_bit){
@@ -651,8 +660,14 @@ _PICK_CH:
 __FRE_DOWN:
             frequency--;
 #ifdef MUTE_EXAMP_AT_FM_NEXT_PREV
-		Mute_Ext_PA(MUTE);
-		my_main_vol(0);		
+
+#ifdef MUTE_EXAMP_AT_FM_NEXT_PREV_IMPROVE
+		 if(mute_release_timer==0)
+#endif
+		{
+			Mute_Ext_PA(MUTE);
+			my_main_vol(0);		
+		}
 #endif
 
 #ifdef RADIO_AM_WM_ENABLE			
@@ -696,9 +711,12 @@ __FRE_DOWN:
 #endif
             Disp_Con(DISP_FREQ);
 #ifdef MUTE_EXAMP_AT_FM_NEXT_PREV
-		delay_10ms(10);
+#ifdef MUTE_EXAMP_AT_FM_NEXT_PREV_IMPROVE
+		 mute_release_timer=2;
+#else
 		my_main_vol(my_music_vol);	
 		Mute_Ext_PA(UNMUTE);
+#endif
 #endif
 
             //delay_ms(20);
