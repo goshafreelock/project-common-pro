@@ -1122,14 +1122,14 @@ void keyInit(void)
 }
 #ifdef CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ
 xd_u8 vol_reg=0,filter_timer=0,volt_tab_idx=0;
-xd_u8 volt_tab[8]={0};
+xd_u8 volt_tab[3]={0};
 void use_adkey_port_for_volume_adj(u8 volt)
 {	
 	xd_u16 volt_reg=0;
-
+#if 1
 	volt_tab[volt_tab_idx]=volt;
 	volt_tab_idx++;
-	if(volt_tab_idx<8){
+	if(volt_tab_idx<3){
 		return;
 	}
 	else
@@ -1137,15 +1137,15 @@ void use_adkey_port_for_volume_adj(u8 volt)
 		volt_tab_idx=0;
 	}
 
-	for(volt_tab_idx=0;volt_tab_idx<8;volt_tab_idx++){
+	for(volt_tab_idx=0;volt_tab_idx<3;volt_tab_idx++){
 
 		volt_reg=volt_tab[volt_tab_idx];
 	}
 	volt_tab_idx =0;
 	
-	volt_reg=volt_reg>>3;
-	
-	volt_reg=volt*16;
+	volt_reg=volt_reg/3;
+#endif	
+	volt_reg=volt_reg*16;
 	
 	vol_reg = (u8)(volt_reg/255);
 
