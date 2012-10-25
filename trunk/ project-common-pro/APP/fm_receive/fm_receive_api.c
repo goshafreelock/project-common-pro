@@ -420,7 +420,7 @@ bool set_fre(u16 fre, u8 mode)
 #endif
 #ifdef USE_QN8035_FM
 	if(FM_chip_id  == QN8035_ID){
-		set_fre_QN8035(fre);
+		QND_TuneToCH(fre*10);
 		QN8035_MUTE(FALSE);
 	}
 #endif		
