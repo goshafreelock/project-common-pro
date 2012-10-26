@@ -49,7 +49,7 @@
 //global variables
 xd_u8 mem_afc[3];			  //Rememberred afc values for previous, current and next stations
 xd_u16 mem_freq[3];			  //Rememberred channel frequencies for previous, current and next stations
-xd_u8 mem_vol;				  //Rememberred volume before mute
+//xd_u8 mem_vol;				  //Rememberred volume before mute
 #ifdef SEEK_WITH_SNR
 xd_u8 mem_snr[3];			  //Rememberred SNR values for previous, current and next stations
 #endif
@@ -173,7 +173,7 @@ u8 KT_AMFMPreInit(void)
 //or before reference clock is applied
 {
 	//xd_u16 regx;
-	mem_vol= 30;
+	//mem_vol= 30;
 	
 #ifdef X32P768K
 	KT_Bus_Write(0x16, 0x0002);       				//reference clock=32.768K; XTALD=0
@@ -348,9 +348,9 @@ u8 KT_AMFMWakeUp(void) //0->Fail 1->Success
 u8 KT_AMFMVolumeSet(u8 vol)			//Input: 0~31
 {
 	xd_u16 regx;
-	mem_vol=vol;
+	//mem_vol=vol;
 	regx=KT_Bus_Read(0x0F); 
-	KT_Bus_Write(0x0F, regx & 0xFFE0 | mem_vol);
+	KT_Bus_Write(0x0F, regx & 0xFFE0 | vol);
 	return(1);
 }
 
@@ -366,7 +366,7 @@ u8 KT_AMFMUnMute(void)
 {
 	u16 regx;
 	regx=KT_Bus_Read(0x0f); 
-	KT_Bus_Write(0x0f, regx & 0xFFE0 | mem_vol); 
+	KT_Bus_Write(0x0f, regx & 0xFFE0 | 0x1f); 
 	return(1);
 }
 void KT_Mute_Ctrl(bool m_f)
@@ -378,7 +378,7 @@ void KT_Mute_Ctrl(bool m_f)
 		KT_Bus_Write(0x0F, regx & 0xFFE0 );		//Write volume to 0
 	}
 	else{
-		KT_Bus_Write(0x0f, regx & 0xFFE0 | mem_vol); 
+		KT_Bus_Write(0x0f, regx & 0xFFE0 | 0x1F); 
 	}
 }
 #ifdef C32P768K
@@ -623,7 +623,7 @@ u16 KT_AMGetFreq(void)
 #else
 u8 KT_FMTune(u16 Frequency) //87.5MHz-->Frequency=8750; Mute the chip and Tune to Frequency
 {
-	u16 reg3,reg16;
+	u16 reg3;
 
 	KT_AMFMMute();
 
@@ -639,7 +639,7 @@ u8 KT_FMTune(u16 Frequency) //87.5MHz-->Frequency=8750; Mute the chip and Tune t
 
 u8 KT_MWTune(u16 Frequency) //1710KHz --> Frequency=1710; Mute the chip and Tune to Frequency
 {
-	u16 reg16,reg23;
+
 	KT_AMFMMute();
 
 #ifdef DISABLE_FAST_GAIN_UP

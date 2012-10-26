@@ -573,7 +573,7 @@ void bat_val_arg(void);
 #define ADKEY_7		INFO_VOL_MINUS
 #define ADKEY_8		INFO_VOL_PLUS
 #define ADKEY_NOKEY	NO_KEY
-#elif defined(K2083_KPL_2083_V001)||defined(K2083_SW_2083_V001)||defined(K2083_KPL_2083_V002)
+#elif defined(K2083_KPL_2083_V001)||defined(K2083_SW_2083_V001)||defined(K2083_SW_2083_V002)||defined(K2083_KPL_2083_V002)||defined(K2083_KPL_2083_V003)
 #define ADKEY_1		INFO_PLAY
 #define ADKEY_2		INFO_PREV_FIL
 #define ADKEY_3		INFO_NEXT_FIL

@@ -910,7 +910,7 @@ void Disp_CLR(void)
        dispstring("    ",0);
 }
 #if defined(NEW_BAT_ICON_DISP)
-extern xd_u8 bat_level;
+extern u8 bat_level;
 void disp_buf_update_bat_icon()
 {
 	BAT_LEVEL_1_ICON_OFF;
