@@ -46,7 +46,8 @@ SEG8     P34
 #define   seg8_port(n)	P34 = n
 #define   seg9_port(n)	P02 = n
 #define   bklt_init()	  	P0DIR &= ~(BIT(7));P0PU|= (BIT(7))
-#elif defined(K000_XingChuang_x821_V001)
+
+#elif defined(K000_XingChuang_x821_V001)|| defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
 
 #define   com_init()      	P3PU |= (0x1F);P3PD |= (0x1F)
 #define   close_com(n)    com_init();P3DIR |= (0x1F);P3DIR &= ~(1<<(n))
@@ -56,7 +57,7 @@ SEG8     P34
 	
 #define   seg_init()      	P1DIR = 0;//P3DIR &= ~(1<<4)//;P3PU &= ~(1<<4);P3PD &= ~(1<<4)
 #define   seg07_port(n)   	P1 = n
-#define   bklt_init()	  	P0DIR &= ~(1<<0);P0PU |= (1<<0);P0 |= (1<<0)
+#define   bklt_init()	  	//P0DIR &= ~(1<<0);P0PU |= (1<<0);P0 |= (1<<0)
 #elif defined(K1150_LS_1150_V001)
 #define   com_init()      P3PU |= (0x1F);P3PD |= (0x1F)
 #define   close_com(n)    com_init();P3DIR |= (0x1F);P3DIR &= ~(1<<(n))
@@ -89,6 +90,7 @@ SEG8     P34
 #define   seg07_port(n)   	P1 = n
 #define   seg8_port(n)	P34 = n
 #define   bklt_init()	  P3DIR &= ~(1<<0);P3 |= (1<<0);
+
 #else
 
 #define   com_init()      P3PU |= (0x1F);P3PD |= (0x1F)
@@ -215,6 +217,83 @@ SEG8     P34
 #define L3_ICON_BUF		(lcd_buff[0])
 #define L4_ICON_MASK	0x0020
 #define L4_ICON_BUF		(lcd_buff[0])
+
+#elif defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
+
+#define USB_DEV_MASK	0x0004
+#define F_USB_DEV  		(lcd_buff[4])	
+
+#define AUX_DEV_MASK	0x0001
+#define F_AUX_DEV  		(lcd_buff[4])
+
+#define SD_DEV_MASK	0x0010
+#define F_SD_DEV		(lcd_buff[4])	
+
+#define FM_DEV_MASK	0x0002
+#define F_FM_DEV		(lcd_buff[0])	
+
+#define POINTS_MASK		0x0010
+#define F_POINTS		(lcd_buff[0])	
+
+#define FM_MHZ_MASK	0x0002
+#define F_MHZ_DEV		(lcd_buff[0])	
+
+#define AM_KHZ_MASK	0x0004
+#define F_KHZ_DEV		(lcd_buff[0])	
+
+#define FM_P1_MASK		0x0002
+#define F_P1_DEV		(lcd_buff[0])	
+
+
+#define RTC_ICON_MASK	0x0000
+#define F_RTC_ICON		(lcd_buff[3])
+
+#define RTC_ALM_MASK	0x0000
+#define F_RTC_ALM		(lcd_buff[3])	
+
+#define RTC_PM_MASK	0x0000
+#define F_RTC_PM		(lcd_buff[2])
+
+#define RTC_AM_MASK	0x0000
+#define F_RTC_AM		(lcd_buff[3])
+
+#define MP3_FAT_MASK		0x0000
+#define F_MP3_FAT		(lcd_buff[4])	
+
+#define SPK_MUTE_MASK	0x0000
+#define SPK_ICON		(lcd_buff[1])	
+
+#define PLAY_ICON_MASK	0x0000
+#define F_PLAY_ICON		(lcd_buff[0])	
+
+#define PAU_ICON_MASK	0x0000
+#define F_PAU_ICON		(lcd_buff[0])	
+
+#define BATTERY_MASK	0x0080
+#define BAT_ICON		(lcd_buff[1])	
+
+#define TRADEMARK_MASK	0x0000
+#define TRADEMARK_ICON		(lcd_buff[0])	
+
+#define NUM_1BC_MASK	0x0000
+#define F_NUM_1BC		(lcd_buff[2])	
+
+#define REP_ALL_MASK	0x0000
+#define REP_ONE_MASK	0x0000
+#define REP_RND_MASK	0x0000
+#define F_REP_ALL		(lcd_buff[2])
+#define F_REP_ONE 		(lcd_buff[3])
+#define F_REP_RND 		(lcd_buff[1])
+
+//#define L_ICON_BUF		(lcd_buff[4])
+#define L1_ICON_MASK	0x0080
+#define L1_ICON_BUF		(lcd_buff[4])
+#define L2_ICON_MASK	0x0080
+#define L2_ICON_BUF		(lcd_buff[3])
+#define L3_ICON_MASK	0x0080
+#define L3_ICON_BUF		(lcd_buff[2])
+#define L4_ICON_MASK	0x0080
+#define L4_ICON_BUF		(lcd_buff[2])
 
 #elif defined(K5018_JK_5018_V001)
 

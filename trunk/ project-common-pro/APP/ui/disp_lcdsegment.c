@@ -123,6 +123,10 @@ u8 _code get_lcd_disbuf_offset[4] ={6,4,2,0};
 
 u8 _code get_lcd_disbuf_offset[4] ={6,4,2,0};
 
+#elif defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
+
+u8 _code get_lcd_disbuf_offset[4] ={6,4,2,0};
+
 #else
 u8 get_lcd_disbuf_offset(u8 lcd_digit)
 {
@@ -188,6 +192,39 @@ u8 dispchar(u8 chardata,u8 offset)
        lcd_buff[1] |= ((letter_temp & DIG_B)|((letter_temp & DIG_F)>>5))<<digit_idx;
        lcd_buff[2] |= (((letter_temp & DIG_C)>>1)|((letter_temp & DIG_G)>>6))<<digit_idx;
        lcd_buff[3] |= (((letter_temp & DIG_D)>>2)|((letter_temp & DIG_E)>>4))<<digit_idx;
+#elif defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
+
+
+	digit_idx= get_lcd_disbuf_offset[offset];
+
+	if(offset == 0){
+		
+		lcd_buff[0] &= ~(BIT(3)|BIT(5)|BIT(6));
+		lcd_buff[1] &= ~(BIT(6));
+		lcd_buff[2] &= ~(BIT(6));
+		lcd_buff[3] &= ~(BIT(6));
+		lcd_buff[4] &= ~(BIT(6));
+		
+	       lcd_buff[0] |= (((letter_temp & DIG_E)>>1)|((letter_temp & DIG_F))|((letter_temp & DIG_D)<<3));
+	       lcd_buff[4] |= ((letter_temp & DIG_A)<<6);
+	       lcd_buff[3] |= ((letter_temp & DIG_B)<<5);
+	       lcd_buff[2] |= (((letter_temp & DIG_G)));
+	       lcd_buff[1] |= (((letter_temp & DIG_C)<<4));
+
+	}
+	else{
+
+		lcd_buff[1] &= ~(0x0003<<digit_idx);
+		lcd_buff[2] &= ~(0x0003<<digit_idx);
+		lcd_buff[3] &= ~(0x0003<<digit_idx);
+		lcd_buff[4] &= ~(0x0002<<digit_idx);
+		
+	       lcd_buff[4] |= ((letter_temp & DIG_A)<<1)<<digit_idx;
+	       lcd_buff[3] |= ((letter_temp & DIG_B)|((letter_temp & DIG_F)>>5))<<digit_idx;
+	       lcd_buff[2] |= (((letter_temp & DIG_C)>>1)|((letter_temp & DIG_G)>>6))<<digit_idx;
+	       lcd_buff[1] |= (((letter_temp & DIG_D)>>2)|((letter_temp & DIG_E)>>4))<<digit_idx;
+
+	}
 #elif defined(K1150_LS_1150_V001)
 
 
@@ -344,6 +381,37 @@ u8 dispNum(u8 chardata,u8 cnt)
        lcd_buff[1] |= ((letter_temp & DIG_B)|((letter_temp & DIG_F)>>5))<<digit_idx;
        lcd_buff[2] |= (((letter_temp & DIG_C)>>1)|((letter_temp & DIG_G)>>6))<<digit_idx;
        lcd_buff[3] |= (((letter_temp & DIG_D)>>2)|((letter_temp & DIG_E)>>4))<<digit_idx;
+#elif defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
+
+	digit_idx= get_lcd_disbuf_offset[cnt];
+
+	if(cnt == 0){
+		
+		lcd_buff[0] &= ~(BIT(3)|BIT(5)|BIT(6));
+		lcd_buff[1] &= ~(BIT(6));
+		lcd_buff[2] &= ~(BIT(6));
+		lcd_buff[3] &= ~(BIT(6));
+		lcd_buff[4] &= ~(BIT(6));
+		
+	       lcd_buff[0] |= (((letter_temp & DIG_E)>>1)|((letter_temp & DIG_F))|((letter_temp & DIG_D)<<3));
+	       lcd_buff[4] |= ((letter_temp & DIG_A)<<6);
+	       lcd_buff[3] |= ((letter_temp & DIG_B)<<5);
+	       lcd_buff[2] |= ((letter_temp & DIG_G));
+	       lcd_buff[1] |= (((letter_temp & DIG_C)<<4));
+
+	}
+	else{
+		
+		lcd_buff[1] &= ~(0x0003<<digit_idx);
+		lcd_buff[2] &= ~(0x0003<<digit_idx);
+		lcd_buff[3] &= ~(0x0003<<digit_idx);
+		lcd_buff[4] &= ~(0x0002<<digit_idx);
+		
+	       lcd_buff[4] |= ((letter_temp & DIG_A)<<1)<<digit_idx;
+	       lcd_buff[3] |= ((letter_temp & DIG_B)|((letter_temp & DIG_F)>>5))<<digit_idx;
+	       lcd_buff[2] |= (((letter_temp & DIG_C)>>1)|((letter_temp & DIG_G)>>6))<<digit_idx;
+	       lcd_buff[1] |= (((letter_temp & DIG_D)>>2)|((letter_temp & DIG_E)>>4))<<digit_idx;	   
+	}
 #elif defined(K1150_LS_1150_V001)
 
 
@@ -608,7 +676,7 @@ void Disp_Nodevice(void)
 void Disp_Vol(void)
 {
 #ifdef DISP_VOL_V_CHAR
-	dispchar('V');
+	dispchar('V',2);
 #endif
 	dispNum((my_music_vol/10),1);
 	dispNum(my_music_vol%10,0);
@@ -754,7 +822,7 @@ void Disp_Start(void)
 {
 #if defined(K820_LHD_820_V001)
       // dispstring("HI",0);
-#elif defined(K1150_LS_1150_V001)
+#elif defined(K1150_LS_1150_V001)|| defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
        dispstring("HI",0);
 #else
        dispstring(" HI",0);
@@ -1078,7 +1146,7 @@ void Disp_CLR(void)
        dispstring("    ",0);
 }
 #ifdef CUSTOM_BAT_ICON_DISP
-extern xd_u8 bat_level;
+extern u8 bat_level;
 void Disp_custom_bat_icon()
 {
 #ifdef USE_RTC_FUNCTION

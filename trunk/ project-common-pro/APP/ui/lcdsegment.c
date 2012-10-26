@@ -171,6 +171,10 @@ void lcd_gpio_scan(void)
     static u8 cnt = 0;
     u8 temp;
 
+#ifdef CUSTOM_BAT_ICON_DISP
+	Disp_custom_bat_icon();
+#endif	
+
     temp = cnt>>1;
     close_com(temp);
     if(cnt & 0x01){

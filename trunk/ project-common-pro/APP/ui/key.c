@@ -215,7 +215,7 @@ extern bool pwr_up_flag;
 #endif
 
 #if defined(NEW_BAT_ICON_DISP)||defined(NEW_BAT_ICON_DISP_AT_LEVEL_THREE)||defined(NEW_BAT_ICON_DISP_AT_LEVEL_FOUR)
-xd_u8 bat_level=0;
+u8 bat_level=0;
 #endif
 xd_u8 LDO_IN_Volt=0;
 bool low_bat_lock=0;
@@ -817,6 +817,7 @@ void bmt_hdlr(void)
 	}
 #endif
 
+
 #if defined(BAT_LEVEL_GPIO_DRV_LED_IND)
 
 		BAT_LEVEL_LED_INIT();
@@ -910,6 +911,7 @@ void bmt_hdlr(void)
 	}
 #endif	
 
+
 #if defined(NEW_BAT_ICON_DISP)
 	if(LDO_IN_Volt>=BAT_FULL_VOLT){
 		bat_level =3;
@@ -938,6 +940,7 @@ void bmt_hdlr(void)
 	else if(LDO_IN_Volt>BAT_LOW_ALERT){
 		bat_level =0;
 	}
+
 #elif defined(NEW_BAT_ICON_DISP_AT_LEVEL_FOUR)
 	if(LDO_IN_Volt>=BAT_FULL_VOLT){
 		bat_level =4;
@@ -1039,6 +1042,7 @@ void Bat_icon_chk()
 
 #if defined(NEW_BAT_ICON_DISP_AT_LEVEL_THREE)
 
+#ifdef LED_GPIO_DRV
 	LED_STATUS &= ~LED_BAT_L3;
 	LED_STATUS &= ~LED_BAT_L2;
 	LED_STATUS &= ~LED_BAT_L1;
@@ -1055,6 +1059,8 @@ void Bat_icon_chk()
 	else if(bat_level==1){
 		LED_STATUS |= LED_BAT_L1;
 	}
+#endif
+
 #elif defined(NEW_BAT_ICON_DISP_AT_LEVEL_FOUR)
 
 #elif defined(BAT_LEVEL_LED_ICON_IND)
@@ -1720,7 +1726,7 @@ void JogDetect(void)
     Delay_us(1);
     port_val =(P0&(BIT(4)));
     touchkeyval = ((port_val & (BIT(4)))>>4)|((P3&(BIT(4)))>>3);	
-#elif defined(K000_JR_210_V001)||defined(K2321_JM_2321_V001)||defined(K2083_KPL_2083_V002)||defined(K6037_SES_6037_V001)||defined(K2083_SW_2083_V001)||defined(K2083_KPL_2083_V001)||defined(K2086_AJR_LS091_V001)
+#elif defined(K000_JR_210_V001)||defined(K2321_JM_2321_V001)||defined(K2083_SW_2083_V002)||defined(K2083_KPL_2083_V002)||defined(K2083_KPL_2083_V003)||defined(K6037_SES_6037_V001)||defined(K2083_SW_2083_V001)||defined(K2083_KPL_2083_V001)||defined(K2086_AJR_LS091_V001)
     P0DIR &= ~(BIT(2)|(BIT(4)));    //P11, P12
     P0 |=(BIT(2)|(BIT(4)));
     P0PU	|= (BIT(2)|(BIT(4)));

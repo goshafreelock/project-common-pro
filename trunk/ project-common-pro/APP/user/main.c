@@ -1054,7 +1054,15 @@ void custom_gpio_setting()
 	P0PU |= BIT(7);
 	P07 = 1;	   
 #endif
+#ifdef K000_JK_HY_SM001_V001
+	P0DIR &= ~(BIT(1));
+	P0PU |= BIT(1);
+	P01 = 1;	 
 
+	P2DIR &= ~(BIT(7));
+	P2PU |= BIT(7);
+	P27 = 1;	 
+#endif
 }
 void Idle_hdlr()
 {
@@ -1312,6 +1320,7 @@ void AD_Debug_func()
 void main(void)
 {
 //u16 pwm_cnt=0;
+    custom_gpio_setting();
     sys_clock_pll();//(MAIN_CLK_PLL);
     sys_init();
 #ifdef  USE_POWER_KEY
