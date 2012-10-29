@@ -462,6 +462,9 @@ __SCAN_FREQ:
 #if defined(AD_MEASURE_TEMP_FUNC)
 		adc_diode_temp_measure_hdlr();
 #endif
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	 	Disp_BL_time_out();
+#endif
 
 #ifdef USE_USB_HOTPLUG_FUNC
 		usb_hotplug_hdlr();

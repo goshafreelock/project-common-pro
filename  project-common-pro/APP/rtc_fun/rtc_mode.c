@@ -980,6 +980,9 @@ __TIME_ADJ_POS:
 #if defined(AD_MEASURE_TEMP_FUNC)
 		adc_diode_temp_measure_hdlr();
 #endif
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	 	Disp_BL_time_out();
+#endif
 
 #if defined(USE_SNOOZE_FUNC)        
 		snooze_hdlr();

@@ -514,6 +514,9 @@ u8 decode_in_stop_state()
 #ifdef USE_USB_HOTPLUG_FUNC
 				usb_hotplug_hdlr();
 #endif
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	 			Disp_BL_time_out();
+#endif
 				
 				if(half_sec_cnt++>3){
 					half_sec_cnt = 0;
@@ -1379,6 +1382,9 @@ void music_play(void)
 			
 #if defined(TURN_ON_PLAY_BREAK_POINT_MEM)			
 		update_playpoint(&playpoint_time);		//半秒更新断点进度，不写入存储器
+#endif
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	 	Disp_BL_time_out();
 #endif
 
 #ifdef VOL_ADJ_SPARK_LED

@@ -1177,6 +1177,9 @@ void Idle_hdlr()
 #ifdef USE_USB_HOTPLUG_FUNC
 		usb_hotplug_hdlr();
 #endif
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	 	Disp_BL_time_out();
+#endif
 		
 #if defined(USE_BAT_MANAGEMENT)
 
