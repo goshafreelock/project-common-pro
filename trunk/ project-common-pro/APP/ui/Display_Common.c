@@ -1002,7 +1002,26 @@ void get_spectrum_data(void)
 
 }
 #endif
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+extern void lcd_backlight_ctrl(bool on);
 
+xd_u8 backlight_timer=0;
+void Disp_BL_time_out()
+{
+	if(backlight_timer>0){
+
+		backlight_timer--;
+		if(backlight_timer==0){
+    			lcd_backlight_ctrl(FALSE);
+		}
+	}
+}
+void Disp_BL_turn_on()
+{
+	backlight_timer=30;
+	lcd_backlight_ctrl(TRUE);
+}
+#endif
 void Disp_Init(void)
 {
     init_disp();

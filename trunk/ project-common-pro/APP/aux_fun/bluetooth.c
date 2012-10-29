@@ -451,6 +451,9 @@ void blue_tooth_main(void)
 #if defined(USE_BAT_MANAGEMENT)
 		bmt_hdlr();
 #endif
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	 	Disp_BL_time_out();
+#endif
 
 	    if(bt_key_release_cnt--==0){
 #ifdef PP_KEY_HOLD_CONFIG_BT

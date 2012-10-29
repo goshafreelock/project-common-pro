@@ -99,4 +99,9 @@ void get_spectrum_data(void);
 void set_led_enable_bit(bool led);
 #endif
 
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+void Disp_BL_time_out();
+void Disp_BL_turn_on();
+#endif
+
 #endif

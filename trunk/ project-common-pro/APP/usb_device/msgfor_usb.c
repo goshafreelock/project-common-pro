@@ -307,6 +307,9 @@ void usb_device(void)
 #if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))           
             updata_fat_memory();
 #endif
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	 	Disp_BL_time_out();
+#endif
             return_cnt++;
             if (RETURN_TIME == return_cnt)
             {

@@ -156,6 +156,9 @@ void ipone_hdlr()
 		usb_hotplug_hdlr();
 #endif
 
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	 	Disp_BL_time_out();
+#endif
             if (return_cnt < RETURN_TIME)
             {
                 return_cnt++;
@@ -482,6 +485,9 @@ void deal_aux( void )
 			restore_led_flash_mod(last_led_play_mod);		
 		}
 #endif	 
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	 	Disp_BL_time_out();
+#endif
 
 
             if (return_cnt < RETURN_TIME)
