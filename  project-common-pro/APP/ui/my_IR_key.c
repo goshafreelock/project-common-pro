@@ -44,7 +44,7 @@ _code MY_IR_KEY_STRUCT My_IRTab[]=       /*user code is 0xFF*/
 	{My_IR_KEY_CHN_UP,		INFO_MUTE},
 	{My_IR_KEY_CHN_DN,		INFO_POWER},
 };
-#elif defined(K568_ZX_568_V002)
+#elif defined(K568_ZX_568_V002)||defined(K015_983_SW005_ZhuoXin_V002)
 _code MY_IR_KEY_STRUCT My_IRTab[]=       /*user code is 0xFF*/
 {
 	//{My_IR_KEY_TATOL,		My_IR_KEY_TATOL},	//4 总共键个数
