@@ -35,10 +35,10 @@
 //#define R12288KHz					//12.288MHz reference clock
 
 #ifdef X32P768K
-	//#define C32P768K
+	#define C32P768K
 #endif
 #ifdef R32P768K
-	//#define C32P768K
+	#define C32P768K
 #endif
 
 #define KTAMw_address 	0x6A
