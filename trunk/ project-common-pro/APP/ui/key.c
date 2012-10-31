@@ -1667,6 +1667,9 @@ void gpio_key_scan_one_or_two()
 #endif
 void key_tone(void)
 {
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	Disp_BL_turn_on();
+#endif
     power_down_cnt = 0;
 	dac_cnt = 0;
     if (key_voice_disable)

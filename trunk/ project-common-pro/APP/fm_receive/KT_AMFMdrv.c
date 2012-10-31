@@ -245,7 +245,7 @@ u8 KT_AMFMInit(void)                            //0->Fail 1->Success
 	
 	for (i=0;i<INIT_FAIL_TH;i++)
 	{
- 		delay_10ms(5);
+ 		delay_10ms(50);
 		regx=KT_Bus_Read(0x12);						//Read power-up indicator
 		if ((regx&0x8000)!=0x8000) continue;
 		break;
@@ -265,6 +265,8 @@ u8 KT_AMFMInit(void)                            //0->Fail 1->Success
 
 	regx=KT_Bus_Read(0x23);
 	KT_Bus_Write(0x23,regx | 0x1C00);				//Low_TH_B<2:0>=111
+	regx=KT_Bus_Read(0x05);
+	KT_Bus_Write(0x05, regx | 0x0800);				//De_emphasis time = 50us
 
 #ifdef LOWFM_MODE
 	regx=KT_Bus_Read(0x0C);
@@ -311,7 +313,7 @@ u8 KT_AMFMSetMode(u8 AMFM_MODE)
 		regx=KT_Bus_Read(0x16);
 		KT_Bus_Write(0x16,regx | 0x8000);				//AM_FM=1
 
-//		KT_Bus_Write(0x18,0x8000);			//cali_dis=1; osc_en=0; cap=0;
+		KT_Bus_Write(0x18,0x0000);			// Enable  
 //		KT_Bus_Write(0x18,0x8000);			//cali_dis=1; osc_en=0; cap=0;
 	}
 	return(1);
@@ -997,11 +999,13 @@ u8 KT_AMValidStation(u16 Frequency) //0-->False Station 1-->Good Station //check
 //    Display_Channel_AM(Frequency);			//display current channel frequency
 
 	KT_MWTune( Frequency - 1 );
+	delay_10ms(20);
 	AM_afc[0] = KT_AMGetAFC();
 
 	if( AM_afc[0] < -AM_AFCTH_PREV )
 	{
 		KT_MWTune( Frequency );
+		delay_10ms(2);		
 		AM_afc[1] = KT_AMGetAFC();
 		
 		if( (AM_afc[1] > -AM_AFCTH) && (AM_afc[1] < AM_AFCTH) )

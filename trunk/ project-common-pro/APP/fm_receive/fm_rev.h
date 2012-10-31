@@ -13,7 +13,7 @@
 
 #define FM_FREQ_STEP_100K	1
 
-#ifdef FM_USE_BK1086
+#if defined(FM_USE_BK1086)||defined(AM_BAND_522_TO_1720)
 #define AM_MAX_FRE    1720
 #define AM_MIN_FRE	   522
 #else
