@@ -35,7 +35,7 @@ extern xd_u8 fre_channl;
 extern xd_u8 fre_point[];
 extern MAD_DECODE_INFO _pdata mad_decode_dsc;
 
-xd_u16 lcd_buff[4];
+xd_u16 lcd_buff[5];
 
 u8 _code playmodestr[4][7] = 
 {
@@ -1075,6 +1075,8 @@ void get_curr_setting_data(u8 setting)
 
 			}
 			else{
+#ifdef AM_PM_RTC_TIME_DISP_MODE	
+				
 				if(curr_date.hour>12){
 					setting_buff_high=curr_date.hour-12;
 				}
@@ -1084,6 +1086,10 @@ void get_curr_setting_data(u8 setting)
 				if(setting_buff_high==0){
 					setting_buff_high = 12;
 				}
+#else
+				setting_buff_high=curr_date.hour;
+
+#endif
 				setting_buff_low =curr_date.minutes;	
 			}
 	    		F_POINTS |= POINTS_MASK;				
@@ -1164,6 +1170,8 @@ void Disp_RTC()
 
     if (rtc_mode == RTC_PLAY_MODE)
     {
+
+#ifdef AM_PM_RTC_TIME_DISP_MODE	
     		if(curr_date.hour>12){
 			setting_buff_high=curr_date.hour-12;
 		}
@@ -1173,6 +1181,9 @@ void Disp_RTC()
 		if(setting_buff_high==0){
 			setting_buff_high = 12;
 		}
+#else
+		setting_buff_high=curr_date.hour;
+#endif
 	    dispNum((u8)((setting_buff_high/10)%10),3);
 	    dispNum(setting_buff_high%10,2);
 	    dispNum((u8)((curr_date.minutes/10)%10),1);

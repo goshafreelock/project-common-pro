@@ -1135,7 +1135,7 @@ xd_u8 volt_tab[6]={0};
 void use_adkey_port_for_volume_adj(u8 volt)
 {	
 	xd_u16 volt_reg=0;
-#if 1
+#ifdef ADPORT_FOR_VOLUME_ADJ_USE_AVR_SAMPLE
 	volt_tab[volt_tab_idx]=volt;
 	volt_tab_idx++;
 	
@@ -1152,7 +1152,10 @@ void use_adkey_port_for_volume_adj(u8 volt)
 	volt_tab_idx =0;
 	
 	volt_reg=(volt_reg/6);
+#else
+	volt_reg=volt;
 #endif	
+
 	volt_reg=volt_reg*16;
 
 	vol_reg = (u8)(volt_reg/255);
