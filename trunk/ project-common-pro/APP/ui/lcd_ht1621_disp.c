@@ -5,7 +5,7 @@
 #include "lcd_ht1621_drv.h"
 
 #if defined(USE_LCD_DRV_HT1621)
-extern xd_u8 my_music_vol;  
+extern u8 _idata  my_music_vol;  
 extern _xdata u8 filename_buff[100];
 extern FSAPIMSG _pdata fs_msg;
 extern volatile u8 play_mode;

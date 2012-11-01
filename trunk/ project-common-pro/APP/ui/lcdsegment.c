@@ -19,9 +19,11 @@ extern void wkup_pin_ctrl(bool dir);
 #define LCD_BACKLIGHT_HIGH()		P02 =1;
 #endif
 
+#if defined(USE_BAT_MANAGEMENT)
 #ifdef CUSTOM_BAT_ICON_DISP
 extern void Disp_custom_bat_icon();
 #endif	
+#endif
 
 void disp_buf_clear(void)
 {
@@ -171,9 +173,11 @@ void lcd_gpio_scan(void)
     static u8 cnt = 0;
     u8 temp;
 
+#if defined(USE_BAT_MANAGEMENT)
 #ifdef CUSTOM_BAT_ICON_DISP
 	Disp_custom_bat_icon();
 #endif	
+#endif
 
     temp = cnt>>1;
     close_com(temp);
@@ -196,11 +200,11 @@ void lcd_gpio_scan(void)
 {
     static u8 cnt = 0;
     u8 temp;
-
+#if defined(USE_BAT_MANAGEMENT)
 #ifdef CUSTOM_BAT_ICON_DISP
 	Disp_custom_bat_icon();
 #endif	
-
+#endif
 
     temp = cnt>>1;
     close_com(temp);

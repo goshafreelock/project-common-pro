@@ -14,7 +14,7 @@
 
 extern void P0IE_ctl(u8, u8);
 extern u8 bP0IE;
-extern xd_u8 my_music_vol;
+extern u8 _idata  my_music_vol;
 extern u8 play_status;	
 extern void putbyte(u8);
 extern xd_u8 return_cnt;
@@ -56,7 +56,7 @@ bool get_radio_freq_tune_protect()
 
 #endif
 extern u8 get_my_IR_key_MAX();
-u16 _idata MAX_IR_KEY = 0;
+u8 _idata MAX_IR_KEY = 0;
 bool IR_KEY_Detect =0;
 #endif
 #ifdef MATRIX_KEY_ENABLE
@@ -64,13 +64,13 @@ u8 key_gpio_scan_parse(u8 K_mask,KEY_CMD k_cmd,KEY_REG_TYPE k_reg,KEY_PORT k_por
 void config_gpio_dir(DIR_CMD k_cmd,u8 dir_idx);
 void config_gpio_port(GPIO_CMD k_cmd);
 #endif
-bool key_voice_disable;
+//bool key_voice_disable;
 u8 keyBack;  ///<上一次按键扫描结果
 u8 keyCnt;   ///<连续有效的按键扫描计数
 u16 _idata user_code;   ///<红外遥控提取的用户码
 u8 _idata irStep;      ///<IR当前状态
 u16 _idata irBuffer;   ///<IR读取读取出的数据
-u8 power_down_cnt;
+//u8 power_down_cnt;
 xd_u8 dac_cnt =0;
 #if 0
 _code u8 IRTab03[] = 	   /*user code is 0x00*/
@@ -794,7 +794,6 @@ void portable_charger_hdlr()
 
 void bmt_hdlr(void)
 {
-	static u8 low_volt_cnt=0,high_volt_cnt=0;
 #ifdef USB_SD_PORTABLE_BAT_CHARGER
 	portable_charger_hdlr();
 #endif
@@ -819,6 +818,7 @@ void bmt_hdlr(void)
 
 
 #if defined(BAT_LEVEL_GPIO_DRV_LED_IND)
+	static u8 low_volt_cnt=0,high_volt_cnt=0;
 
 		BAT_LEVEL_LED_INIT();
 
@@ -859,6 +859,9 @@ void bmt_hdlr(void)
 #endif
 
 #ifdef LOW_BAT_POWER_OFF_MODE
+
+	static u8 low_volt_cnt=0,high_volt_cnt=0;
+
 		if(LDO_IN_Volt<=BAT_LOW_POWER_OFF_VOLT){
 
 			low_volt_cnt++;			
@@ -1670,9 +1673,9 @@ void key_tone(void)
 #ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
 	Disp_BL_turn_on();
 #endif
-    power_down_cnt = 0;
+    //power_down_cnt = 0;
 	dac_cnt = 0;
-    if (key_voice_disable)
+    //if (key_voice_disable)
     {
         return ;
     }

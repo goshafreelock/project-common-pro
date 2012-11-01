@@ -51,7 +51,7 @@ _code u8 msg_tab[] ={1,1,2,3,5,8,13};
 #endif
 
 extern bool get_eeprom_status(void);
-extern xd_u8 my_music_vol;
+extern u8 _idata  my_music_vol;
 extern void main_vol(u8 vol);
 
 void kpl_msg_preinit_setting(u8 init_flag,u8 init_type)

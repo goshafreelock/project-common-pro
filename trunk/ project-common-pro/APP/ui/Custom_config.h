@@ -3194,6 +3194,7 @@
 #endif
 
 #define KT_INDEPENDENT_CRY
+#define AM_BAND_522_TO_1720
 //#define LED_USE_PLAY_MODE
 //#define KPL_BIG_LED_MODULE
 
@@ -3208,9 +3209,9 @@
 
 #undef USE_RDAs_FM
 #undef USE_BK1080_FM
-#undef USE_QN8035_FM
+//#undef USE_QN8035_FM
 
-#define RADIO_AM_WM_ENABLE
+//#define RADIO_AM_WM_ENABLE
 #define FM_USE_KT0913
 //#define ADKEY_PLAY_SHORT_SCAN_FRE
 //#define RADIO_MODE_HOT_KEY_ENABLE
@@ -3253,7 +3254,6 @@
 #define USE_RTC_ALM_CUSTOM_INIT
 #define RTC_SETTING_NO_CYC
 #define AUX_ICON_FOR_RTC_ALM
-
 
 #endif
 
@@ -12089,6 +12089,7 @@
 #define VOLUME_DEFUALT 50
 #define USB_SD_PLAY_INFO_DIV
 #define TURN_ON_PLAY_BREAK_POINT_MEM
+#define KEY_10_ENABLE
 //#define IR_REMOTER_WITH_POWER_MUTE_PRINT
 #endif
 

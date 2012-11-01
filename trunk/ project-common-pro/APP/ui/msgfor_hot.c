@@ -16,7 +16,7 @@
 #include "mp3mode.h"
 
 extern u8 _idata music_vol;  
-xd_u8 my_music_vol=0;
+u8 _idata my_music_vol=0;
 extern u8 given_device;
 extern u16 given_file_number;
 extern _xdata SYS_WORK_MODE work_mode;
@@ -74,13 +74,18 @@ extern bool radio_mode;
 extern void FMAM_Mode_Switch_Profile(u8 fm_wm);
 extern bool is_AMFM_online(void);
 #endif
+
+#if defined(KEY_100_ENABLE)||defined(KEY_10_ENABLE)
 xd_u8 key_100_flag=0;
+#endif
 bool pwr_up_flag=0;
 #ifdef K800_MingYang_800_V001		
 static bool mos_ctrl =0;
 #endif
 static bool supper_mute_lock=0;
+#if defined(USE_SPECTRUM_PARTTERN)
 static bool lcd_play_pattern_lock=0;
+#endif
 #ifdef MATRIX_KEY_ENABLE
 bool key_scan_en=1;
 #endif
@@ -116,7 +121,9 @@ extern bool charger_in_flag;
 xd_u8 device_selected=0;
 #endif
 
+#ifdef VOL_ADJ_SPARK_LED
 xd_u8 last_led_play_mod=0;
+#endif
 
 #if defined(SPECTRUM_FUNC_ENABLE)
 bool spectrum_reflesh_en;
@@ -415,7 +422,10 @@ void aux_channel_crosstalk_improve(u8 ch_num)
 }
 void main_vol(u8 vol)
 {
-	//printf("-------->%main_vol  %d \r\n",(u16)vol);
+#ifdef UART_ENABLE
+	printf("-------->  sys set main_vol  %d \r\n",(u16)vol);
+#endif
+
 	music_vol = vol;
 	dac_mute_control(0, 1);
 	main_vol_set(0, SET_USE_CURRENT_VOL);
@@ -2099,7 +2109,7 @@ u8 ap_handle_hotkey(u8 key)
 		Mute_Ext_PA(UNMUTE);
 		#endif
 	 }
-	
+
         write_info(MEM_VOL,my_music_vol);
 		
 	 my_main_vol(my_music_vol);	
@@ -2230,7 +2240,9 @@ _SYS_GO_IN_POWER_OFF:
 			}
 				
 			cfilenum = cfilenum *10 + key;
+#if defined(KEY_100_ENABLE)||defined(KEY_10_ENABLE)		
 			key_100_flag = 0x00;			
+#endif
 #if 1
 	            if (cfilenum > 9999)
 	            {

@@ -14,7 +14,7 @@
 #endif
 #if defined(LED_GPIO_DRV)||defined(LED_DRVER_USE_SM1628)||defined(LED_1651_DRV)
 extern _xdata u8 LED_BUFF[5];
-extern xd_u8 my_music_vol;  
+extern u8 _idata  my_music_vol;  
 extern FSAPIMSG _pdata fs_msg;
 extern u16 given_file_number;
 extern u8 play_mode;
@@ -31,8 +31,8 @@ extern u8 play_status;
 #if defined(K619_FXK_619_V001)
 extern bool config_led_by_gpio;
 #endif
-extern u16 filenameCnt;
-extern u16 filenameNum;
+//extern u16 filenameCnt;
+//extern u16 filenameNum;
 #ifdef ALARM_SEL_SOURCE		
 extern xd_u8 alm_source;
 #endif

@@ -248,8 +248,8 @@ SEG8     P34
 #define RTC_ICON_MASK	0x0000
 #define F_RTC_ICON		(lcd_buff[3])
 
-#define RTC_ALM_MASK	0x0000
-#define F_RTC_ALM		(lcd_buff[3])	
+#define RTC_ALM_MASK	0x0080
+#define F_RTC_ALM		(lcd_buff[0])	
 
 #define RTC_PM_MASK	0x0000
 #define F_RTC_PM		(lcd_buff[2])

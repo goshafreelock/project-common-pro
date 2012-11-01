@@ -19,7 +19,7 @@
 extern _xdata u8 LCDBuff[LCDPAGE][LCDCOLUMN];      ///< 屏幕显存
 extern coordinate LCDsite;                         ///< 当前屏幕显示的坐标
 extern FSAPIMSG _pdata fs_msg;                     ///< 带有文件文件系统信息的结构体变量
-extern xd_u8 my_music_vol;  
+extern u8 _idata  my_music_vol;  
 extern u8 play_mode;                               ///< 当前播放的循环模式
 extern u8 eq_mode;                                 ///< 当前播放的音效模式
 extern u16 cfilenum;                               ///< 当前数字输入的结果
@@ -31,7 +31,7 @@ extern xd_u8 fre_point[];                      ///< FM收音搜索到的台的缓存
 extern MAD_DECODE_INFO _pdata mad_decode_dsc;      ///< 带有解码信息的结构体变量
 extern u16 filename_len;                           ///< 当前显示的文件名的长度（可能会拼接有ID3V2信息）
 extern _xdata u8 filename_buff[100];               ///< 当前显示的文件名的缓存BUFF（可能会拼接有ID3V2信息）
-extern u16 filenameCnt;                            ///< 文件名滚动显示计数
+//extern u16 filenameCnt;                            ///< 文件名滚动显示计数
 
 
 
@@ -495,7 +495,7 @@ void Disp_Play(void)
     LCD_Buff_position(EQ_COLUMN,0);
     disp_bmp(2,17,(u8 _code *)eq_tab[eq_mode]);
 
-    filenameCnt = 0;
+    //filenameCnt = 0;
     dispfilename();
 }
 
