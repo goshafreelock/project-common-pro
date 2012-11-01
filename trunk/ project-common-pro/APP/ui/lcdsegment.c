@@ -6,7 +6,7 @@
 
 #ifdef LCD_GPIO_DRV
 
-extern xd_u16 lcd_buff[4];
+extern xd_u16 lcd_buff[5];
 extern xd_u8 return_cnt;  
 
 #if defined(K2038_DCX_2038_V001)||defined(K2045_AJR_2045_V001)||defined(LCD_BACKLIGHT_USE_PORT_WKUP)
