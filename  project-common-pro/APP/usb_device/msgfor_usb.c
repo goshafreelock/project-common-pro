@@ -16,7 +16,7 @@
 #include "voice_time.h"
 
 
-extern xd_u8 my_music_vol;  
+extern u8 _idata  my_music_vol;  
 extern u8 _idata music_vol;  
 extern u8 eq_mode;
 extern xd_u8 return_cnt;

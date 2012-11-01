@@ -59,7 +59,7 @@ _code MY_IR_KEY_STRUCT My_IRTab[]=       /*user code is 0xFF*/
 	{My_IR_KEY_7,			INFO_7},
 	{My_IR_KEY_8,			INFO_8},
 	{My_IR_KEY_9,			INFO_9},
-#ifdef KEY_100_ENABLE	
+#if 1//def KEY_100_ENABLE	
 	{My_IR_KEY_100,			INFO_100},
 #endif	
 	

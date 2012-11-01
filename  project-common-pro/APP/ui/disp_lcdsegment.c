@@ -10,10 +10,11 @@
 u8 dispchar(u8 chardata,u8 offset);
 void dispstring(u8 *,u8);
 
-extern xd_u8 my_music_vol;  
+extern u8 _idata  my_music_vol;  
 extern _xdata u8 filename_buff[100];
 
 extern FSAPIMSG _pdata fs_msg;
+extern u8 play_status;
 
 extern volatile u8 play_mode;
 extern volatile u8 eq_mode;
@@ -157,9 +158,9 @@ u8 dispchar(u8 chardata,u8 offset)
 
 
 #else	
-	if(offset>2)
+	//if(offset>2)
 	{
-	    return 0;
+	//    return 0;
 	}
 #endif	
 	
@@ -172,6 +173,10 @@ u8 dispchar(u8 chardata,u8 offset)
     {
         chardata -= 'A';
         letter_temp = letter_tab[chardata];
+    }
+    else if((chardata>='-'))
+    {
+        letter_temp -= 'Z';
     }
     else
     {
@@ -340,7 +345,7 @@ u8 dispchar(u8 chardata,u8 offset)
 /*----------------------------------------------------------------------------*/
 void dispstring(u8 *str,u8 offset0)
 {
-#if defined(K000_ZhuoYue_003_V001)||defined(K5018_JK_5018_V001)||defined(K000_KT_AMFM_V001)||defined(K000_XingChuang_x821_V001)||defined(K2038_DCX_2038_V001)
+#if defined(K000_ZhuoYue_003_V001)||defined(K5018_JK_5018_V001)||defined(K000_KT_AMFM_V001)||defined(K000_XingChuang_x821_V001)||defined(K2038_DCX_2038_V001)|| defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
     u8 cnt = 3;
 #else
     u8 cnt = 2;
@@ -631,6 +636,22 @@ void Disp_Freq(void )
 	
 #endif
 #endif
+
+#if defined(FM_PLAY_KEY_PAUSE)    
+#if defined(DISP_PAUS_STRING)
+      if (play_status==0){
+    		dispstring("PAUS",0);
+
+      }
+#elif defined(DISP_PAU_STRING_ONLY_IN_FM_MODE)
+      if (play_status==0){
+    		dispstring("PAU",0);
+#ifndef DISP_FM_STR_WHEN_PAUS			
+		LED_STATUS &=~LED_FM;
+      	}
+#endif	  
+#endif
+#endif
 	
 }
 /*----------------------------------------------------------------------------*/
@@ -807,11 +828,35 @@ void Disp_AUX(void)
 
 
     F_AUX_DEV  |= AUX_DEV_MASK;
-#ifdef K5018_JK_5018_V001
+#if defined(K5018_JK_5018_V001)|| defined(K2083_KPL_2083_V003)
     dispstring(" AUX",0);
 #else
     dispstring("AUX",0);
 #endif
+
+
+#if defined(LINE_IN_PLAY_KEY_PAUSE)
+
+#if defined(DISP_PAUS_STRING)
+#ifndef LINE_IN_NO_DISP_PAUS
+	if(play_status == MUSIC_PAUSE){
+	    	dispstring("PAUS",0);
+	}
+#endif	
+#else
+#if !defined(LINE_IN_PLAY_KEY_NO_PAUSE_ICON_INDICATOR)
+	if(play_status){
+		LED_STATUS &= ~LED_PAUSE;
+		LED_STATUS |= LED_PLAY;
+	}
+	else{
+		LED_STATUS |= LED_PAUSE;
+		LED_STATUS &= ~LED_PLAY;
+	}
+#endif
+#endif
+#endif
+
 }
 void Disp_Error(void)
 {
@@ -822,7 +867,7 @@ void Disp_Start(void)
 {
 #if defined(K820_LHD_820_V001)
       // dispstring("HI",0);
-#elif defined(K1150_LS_1150_V001)|| defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
+#elif defined(K1150_LS_1150_V001)||defined(K2083_SW_2083_V002)
        dispstring("HI",0);
 #else
        dispstring(" HI",0);
@@ -907,6 +952,11 @@ void oppo_area_rtc(u8 setting)
 			lcd_buff[1]&=~(0x000F);			
 			lcd_buff[2]&=~(0x000F);
 			lcd_buff[3]&=~(0x000F);
+#elif defined(K2083_KPL_2083_V003)	
+			lcd_buff[4]&=~(0x000F);
+			lcd_buff[1]&=~(0x000F);			
+			lcd_buff[2]&=~(0x000F);
+			lcd_buff[3]&=~(0x000F);			
 #elif defined(K5018_JK_5018_V001)
 			lcd_buff[4]&=~(0x000F);
 			lcd_buff[1]&=~(0x000A);			
@@ -925,6 +975,12 @@ void oppo_area_rtc(u8 setting)
 			lcd_buff[1]&=~(0x00F0);			
 			lcd_buff[2]&=~(0x00F0);
 			lcd_buff[3]&=~(0x00F0);
+#elif defined(K2083_KPL_2083_V003)	
+			lcd_buff[0]&=~(0x0068);
+			lcd_buff[4]&=~(0x00F0);
+			lcd_buff[1]&=~(0x00F0);			
+			lcd_buff[2]&=~(0x00F0);
+			lcd_buff[3]&=~(0x00F0);				
 #elif defined(K5018_JK_5018_V001)			
 			lcd_buff[4]&=~(0x00F0);
 			lcd_buff[1]&=~(0x00A0);			
@@ -943,7 +999,13 @@ void oppo_area_rtc(u8 setting)
 			lcd_buff[1]&=~(0x000F);			
 			lcd_buff[2]&=~(0x000F);
 			lcd_buff[3]&=~(0x000F);	
-#elif defined(K5018_JK_5018_V001)			
+#elif defined(K2083_KPL_2083_V003)	
+			//lcd_buff[0]&=~(0x0078);
+			lcd_buff[4]&=~(0x000F);
+			lcd_buff[1]&=~(0x000f);			
+			lcd_buff[2]&=~(0x000F);
+			lcd_buff[3]&=~(0x000F);	
+#elif defined(K5018_JK_5018_V001)	
 			lcd_buff[4]&=~(0x000F);
 			lcd_buff[1]&=~(0x000A);			
 			lcd_buff[2]&=~(0x000F);
@@ -961,7 +1023,13 @@ void oppo_area_rtc(u8 setting)
 			lcd_buff[1]&=~(0x00F0);			
 			lcd_buff[2]&=~(0x00F0);
 			lcd_buff[3]&=~(0x00F0);
-#elif defined(K5018_JK_5018_V001)			
+#elif defined(K2083_KPL_2083_V003)	
+			lcd_buff[0]&=~(0x0068);
+			lcd_buff[4]&=~(0x00F0);
+			lcd_buff[1]&=~(0x00F0);			
+			lcd_buff[2]&=~(0x00F0);
+			lcd_buff[3]&=~(0x00F0);	
+#elif defined(K5018_JK_5018_V001)
 			lcd_buff[4]&=~(0x00F0);
 			lcd_buff[1]&=~(0x00A0);			
 			lcd_buff[2]&=~(0x00F0);
@@ -1138,13 +1206,19 @@ void Disp_RTC()
 }
 void Disp_Alm_Up(void)
 {
+
+#if defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
+	lcd_buff[2]=0x0055;
+#else
     dispstring("----",0);
+#endif
 }
 #endif
 void Disp_CLR(void)
 {
        dispstring("    ",0);
 }
+#if defined(USE_BAT_MANAGEMENT)
 #ifdef CUSTOM_BAT_ICON_DISP
 extern u8 bat_level;
 void Disp_custom_bat_icon()
@@ -1184,6 +1258,7 @@ void Disp_custom_bat_icon()
 			break;	
 	}	
 }
+#endif
 #endif
 #if defined(USE_SPECTRUM_PARTTERN)
 xd_u8 patern_idx=0;
@@ -1225,6 +1300,19 @@ void Disp_Patern()
 	}	
 }
 #endif
+void lcd_buf_icon_disp_update()
+{
+#if(RTC_ENABLE)
+    	  if (alm_sw){
+
+		F_RTC_ALM |= RTC_ALM_MASK;
+	}
+	else{
+
+		F_RTC_ALM &= ~RTC_ALM_MASK;
+	}
+#endif
+}
 #if 0//defined(SPECTRUM_FUNC_ENABLE)
 void clear_spectrum_buf(void)
 {

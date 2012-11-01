@@ -35,7 +35,7 @@
 
 #include "PT2313.h"
 
-extern xd_u8 my_music_vol;  
+extern u8 _idata  my_music_vol;  
 extern xd_u8 curr_menu;
 extern bit pc_connect;
 extern bit iic_busy;

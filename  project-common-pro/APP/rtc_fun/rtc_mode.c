@@ -19,10 +19,10 @@ extern xd_u8 curr_menu;
 extern xd_u8  return_cnt;
 extern bit aux_online;
 extern _xdata SYS_WORK_MODE work_mode;
-extern bit key_voice_disable;
+//extern bit key_voice_disable;
 //extern void disp_rtc(void);
-extern xd_u8 my_music_vol;  
-extern u8 power_down_cnt;
+extern u8 _idata  my_music_vol;  
+//extern u8 power_down_cnt;
 
 extern u8 given_device;
 _xdata RTC_TIME curr_date;
@@ -254,7 +254,7 @@ void close_alm_bell(void)
 	      set_alm_sec();
 	      alm_flag = 0;
 	      my_main_vol(0);	
-	 	key_voice_disable = 0;
+	 	//key_voice_disable = 0;
 		rtc_mode = RTC_PLAY_MODE;
 		Mute_Ext_PA(MUTE);		     
 	}
@@ -277,7 +277,7 @@ bool alm_bell(void)
     {
 		rtc_mode = ALM_UP_MODE;
         alm_flag++;
-        key_voice_disable = 1;
+        //key_voice_disable = 1;
         sys_clock_pll();
 		dac_sw(1);								//闹钟时打开DAC EN0/1
         main_vol(30);	
@@ -1009,7 +1009,7 @@ __TIME_ADJ_POS:
                 {
 			rtc_mode = ALM_UP_MODE;
                     alm_flag++;
-                    key_voice_disable = 1;
+                    //key_voice_disable = 1;
     		      Mute_Ext_PA(UNMUTE);
     		      set_max_vol(MAX_ANALOG_VOL, MAX_DIGITAL_VOL);			//设置RTC模式的音量上限
     			dac_out_select(DAC_DECODE);				  

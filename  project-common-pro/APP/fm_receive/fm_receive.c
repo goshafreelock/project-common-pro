@@ -30,7 +30,7 @@ extern void set_play_flash(u8 led_status);
 extern xd_u8 IR_Type;
 extern _xdata SYS_WORK_MODE work_mode;
 extern bool IR_KEY_Detect;
-extern xd_u8 my_music_vol; 
+extern u8 _idata  my_music_vol; 
 extern u16 get_fm_id();
 #ifdef VOL_ADJ_SPARK_LED
 extern bool vol_adj_spark_bit;

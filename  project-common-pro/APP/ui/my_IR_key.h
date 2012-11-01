@@ -63,7 +63,7 @@
 #define  My_IR_KEY_CHN_UP		0x1E
 #define  My_IR_KEY_CHN_DN		0x12
 #endif
-#elif defined(K568_ZX_568_V002)
+#elif defined(K568_ZX_568_V002)||defined(K015_983_SW005_ZhuoXin_V002)
 #define  My_IR_KEY_0			0x0C
 #define  My_IR_KEY_1			0x03
 #define  My_IR_KEY_2			0x04
@@ -74,7 +74,7 @@
 #define  My_IR_KEY_7			0x09
 #define  My_IR_KEY_8			0x0A
 #define  My_IR_KEY_9			0x0B
-#define  My_IR_KEY_100			0x0D
+#define  My_IR_KEY_100			0x14
 
 #define  My_IR_KEY_MODE		0x02
 #define  My_IR_KEY_PLAY			0x01

@@ -110,7 +110,10 @@ bool sys_pwr_on_led_protect_bit=0;
 bool sys_led_protect_bit=0;
 #endif
 
-extern xd_u8 my_music_vol;
+#if defined(LCD_GPIO_DRV)
+extern void lcd_buf_icon_disp_update();
+#endif
+extern u8 _idata  my_music_vol;
 
 extern _xdata SYS_WORK_MODE work_mode;
 extern xd_u8 IR_Type;
@@ -1065,7 +1068,7 @@ void Disp_Update(void)
 #elif defined(USE_LCD_DRV_TM1721)
 	UpdateLcd_TM1721_Buf();
 #elif defined(LCD_GPIO_DRV)
-
+	lcd_buf_icon_disp_update();
 #elif defined(LED_1651_DRV)
 	disp_scan_1651();
 #if defined(USE_SPECTRUM_PARTTERN)

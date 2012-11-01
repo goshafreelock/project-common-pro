@@ -28,13 +28,13 @@
 
 extern void set_play_flash(u8 led_status);
 extern xd_u8 fre_point[];
-extern bit key_voice_disable;
+//extern bit key_voice_disable;
 extern u8 device_active;                           ///< 当前活动的设备
 extern xd_u8 all_channl;                              ///< FM收音当前搜索到的台总数
 extern xd_u16 frequency;                              ///< 当前频率
 extern xd_u8 fre_channl;                              ///< FM收音当前所在的台号
 static xd_u16  FM_chip_id=0xFFFF;
-extern xd_u8 my_music_vol;  
+extern u8 _idata  my_music_vol;  
 extern u8 given_device;
 extern u8 play_status;
 
@@ -775,7 +775,7 @@ void scan_fre(void)
     xd_u16 freq_max_range=0;
     xd_u8 max_channel=0;
 #endif	
-    key_voice_disable = 1;
+    //key_voice_disable = 1;
     Mute_Ext_PA(MUTE);
 #ifdef FM_BY_PASS
     FM_Chip_SetMute(TRUE);
@@ -956,7 +956,7 @@ void scan_fre(void)
 #ifndef FM_BY_PASS	 
 	DACCON2 |= (1<<5);	//AMUX enable
 #endif	
-    key_voice_disable = 0;
+    //key_voice_disable = 0;
     for (i = 0; i < all_channl; i++)
     {
 #ifdef RADIO_AM_WM_ENABLE
@@ -1031,7 +1031,7 @@ void auto_scan(AUTO_DIR Dir)
 	}
 #endif	
 	
-    key_voice_disable = 1;
+    //key_voice_disable = 1;
     fre_old = frequency;
 	
 #ifdef K619_FXK_619_V001
@@ -1164,7 +1164,7 @@ void auto_scan(AUTO_DIR Dir)
      my_main_vol(my_music_vol);		
      Mute_Ext_PA(UNMUTE);
      
-    key_voice_disable = 0;
+    //key_voice_disable = 0;
     set_play_flash(LED_FLASH_ON);
 }
 #if defined(USE_FM_GPIO)

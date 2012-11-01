@@ -78,7 +78,7 @@ bool prev_skip_timer=0;
 bool dev_first_plugged_flag=0;
 #endif
 
-extern xd_u8 my_music_vol;
+extern u8 _idata  my_music_vol;
 extern FSINFO _xdata fs_info;
 
 extern s8 _idata ff_fr_step;  ///<快进 快退步径 负数为快退 正数为快进
@@ -95,7 +95,7 @@ u16 given_file_number _at_ 0x72;
 /** 当前解码播放的文件的格式 */
 u8 music_type _at_ 0x74;
 /** 文件信息滚动显示的计数值 */
-u16 filenameCnt _at_ 0x75;
+//u16 filenameCnt _at_ 0x75;
 
 #ifdef MP3_SELECT_SONG_WHILE_PLAY
 xd_u8 select_file_timer=0;

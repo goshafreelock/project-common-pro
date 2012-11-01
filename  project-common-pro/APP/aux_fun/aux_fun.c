@@ -30,7 +30,7 @@ extern _xdata SYS_WORK_MODE work_mode;
 extern xd_u8 IR_Type;
 extern bool IR_KEY_Detect;
 extern void set_play_flash(u8 led_status);
-extern xd_u8 my_music_vol;  
+extern u8 _idata  my_music_vol;  
 extern _idata u16 dac_cnt;
 extern u8 play_status;
 #if defined(NEW_VOLUME_KEY_FEATURE)
