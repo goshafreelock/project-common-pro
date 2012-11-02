@@ -80,6 +80,38 @@ void bt_disp_time_hdlr()
 }
 #endif
 
+#ifdef BLUE_TOOTH_LINK_IDLE_POWER_OFF
+bool link_idle_ind=0;
+xd_u16 link_idle_timer=0;
+void bt_link_idle_hdlr()
+{
+	if(link_idle_ind){
+		
+		link_idle_timer++;
+		if(link_idle_timer>=(2*60*15)){
+
+#ifdef  USE_POWER_KEY
+			flush_all_msg();
+		     	Mute_Ext_PA(MUTE);
+		     	main_vol(0);
+			EA = 0;
+#if defined(PWR_CTRL_WKUP)
+		    	wkup_pin_ctrl(0);
+#else
+		    	power_ctl(0);
+#endif
+
+#endif
+		}
+	}
+	else{
+		
+		link_idle_timer=0;
+		
+	}
+}
+#endif
+
 #ifdef BLUE_TOOTH_GPIO_STATUS
 
 #define BLUE_TOOTH_PWR_ON			10
@@ -90,10 +122,117 @@ void bt_disp_time_hdlr()
 #define BLUE_TOOTH_CONNECTED		25
 
 bool blue_tooth_detect=0,blue_tooth_status=0;
-xd_u8 gpio_H_timer=0,gpio_L_timer=0,gpio_debounc_timer=0;
+xd_u8 gpio_H_timer=0,gpio_L_timer=0,gpio_H2_timer=0,gpio_L2_timer=0,gpio_debounc_timer=0;
 xd_u16 gpio_reset_timer=0;
+xd_u8 status_port_1=0xff, status_port_2=0xff;
 void bt_disp_status_hdlr()
 {
+
+#if 1
+	BT_STATUS_DETECT_INIT();
+	BT_STATUS_DETECT_INIT_2();
+	
+	if(BT_STATUS_DETECT_PORT){
+
+		if(gpio_H_timer<36){
+			gpio_H_timer++;
+		}
+		else{
+			
+			status_port_1=1;
+			blue_tooth_status=1;
+		}
+	}
+	else{
+		gpio_H_timer=0;
+		
+		if(gpio_L_timer<6){
+
+			gpio_L_timer++;
+		}
+		else{
+
+			status_port_1=0;			
+			blue_tooth_status=1;
+		}
+
+	}
+
+
+	if(BT_STATUS_DETECT_PORT_2){
+
+		if(gpio_H2_timer<36){
+			gpio_H2_timer++;
+		}
+		else{
+
+			status_port_2=1;			
+			blue_tooth_status=1;
+		}
+	}
+	else{
+		gpio_H2_timer=0;
+		
+		if(gpio_L2_timer<6){
+			
+			gpio_L2_timer++;	
+			
+		}
+		else{
+			
+			status_port_2=0;						
+			blue_tooth_status=1;
+		}		
+	}	
+
+	if(blue_tooth_status){
+
+		//gpio_H_timer=0;
+		//gpio_H2_timer=0;
+		//gpio_L_timer=0;
+		//gpio_L2_timer=0;
+
+
+		blue_tooth_status=0;
+		if((status_port_1==0)&&(status_port_2==0)){
+
+#ifdef BLUE_TOOTH_LINK_IDLE_POWER_OFF
+				link_idle_ind=0;
+#endif
+
+			    set_play_flash(LED_FLASH_VERY_FAST);
+			    delay_10ms(2);
+		}
+
+		if((status_port_1==1)&&(status_port_2==0)){
+#ifdef BLUE_TOOTH_LINK_IDLE_POWER_OFF
+				link_idle_ind=0;
+#endif
+
+			    set_play_flash(LED_FLASH_ON);
+			    delay_10ms(2);
+		}		
+
+		if((status_port_1==0)&&(status_port_2==1)){
+
+#ifdef BLUE_TOOTH_LINK_IDLE_POWER_OFF
+				link_idle_ind=1;
+#endif
+			    set_play_flash(LED_FLASH_NOR);
+			    delay_10ms(2);
+		}	
+
+		if((status_port_1==1)&&(status_port_2==1)){
+#ifdef BLUE_TOOTH_LINK_IDLE_POWER_OFF
+				link_idle_ind=1;
+#endif
+
+			    //set_play_flash(LED_FLASH_STOP);
+			  //  delay_10ms(2);
+		}			
+
+	}
+#else
 	BT_STATUS_DETECT_INIT();
 	if(!BT_STATUS_DETECT_PORT){
 
@@ -168,6 +307,8 @@ void bt_disp_status_hdlr()
 		gpio_H_timer=0;
 		gpio_L_timer=0;
 	}
+#endif
+	
 }
 #endif
 void blue_tooth_init(void)
@@ -198,12 +339,14 @@ void blue_tooth_mute_detect(void)
 		if(!bluetooth_mute_detect){
     			my_main_vol(0);	
 			bluetooth_mute_detect=1;
+  		  	Mute_Ext_PA(MUTE);
 		}
 	}
 	else{
 
 		if(bluetooth_mute_detect){
-    			my_main_vol(my_music_vol);	
+    			my_main_vol(my_music_vol);
+	  		Mute_Ext_PA(UNMUTE);				
 			bluetooth_mute_detect=0;
 		}
 	}
@@ -453,6 +596,10 @@ void blue_tooth_main(void)
 #endif
 #ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
 	 	Disp_BL_time_out();
+#endif
+
+#ifdef BLUE_TOOTH_LINK_IDLE_POWER_OFF
+		bt_link_idle_hdlr();
 #endif
 
 	    if(bt_key_release_cnt--==0){
