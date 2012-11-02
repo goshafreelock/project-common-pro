@@ -528,6 +528,10 @@ void sys_power_down(void)
     //delay_10ms(20);
 #endif
 
+#ifdef BLUETOOTH_GPIO_CTRL
+    BT_PWR_OFF();
+#endif 
+
     delay_10ms(10);//4 wait for  all off
 
     EA = 0;

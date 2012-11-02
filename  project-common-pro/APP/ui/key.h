@@ -1648,9 +1648,9 @@ void bat_val_arg(void);
 #define ADKEY2_4		INFO_8
 #define ADKEY2_5		INFO_9
 #define ADKEY2_6		INFO_0
-#define ADKEY2_7		INFO_MINUS
-#define ADKEY2_8		INFO_PLUS
-#define ADKEY2_9		INFO_MODE
+#define ADKEY2_7		INFO_VOL_PLUS
+#define ADKEY2_8		INFO_FM_MOD
+#define ADKEY2_9		INFO_RTC_MOD
 #define ADKEY2_10		NO_KEY
 #define ADKEY2_11		NO_KEY
 #define ADKEY2_NOKEY	NO_KEY
