@@ -10088,7 +10088,8 @@
 #define TianCheng_Remote
 #define LED_REVERSE_VIEW
 //#define COMMON_CATHODE
-
+#define SEMI_AUTO_SCAN_FREQ
+#define ADKEY_NEXT_PREV_HOLD_AUTO_SCAN
 #endif
 
 #ifdef K321_Zhuoxing_321_LCD_V001
