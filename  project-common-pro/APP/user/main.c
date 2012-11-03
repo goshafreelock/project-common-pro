@@ -1049,10 +1049,10 @@ void sys_info_init(void)
 }
 void custom_gpio_setting()
 {
-#if defined(K5008_JK_5008_V001)
+#if defined(K5008_JK_5008_V001)||defined(K5058_JK_5058_V001)
 	P0DIR &= ~(BIT(7));
 	P0PU |= BIT(7);
-	P07 = 1;	   
+	P07 = 0;	   
 #endif
 #ifdef K000_JK_HY_SM001_V001
 	P0DIR &= ~(BIT(1));
