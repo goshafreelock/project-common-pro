@@ -1187,6 +1187,11 @@
 
 #define PROTECT_P17_FROM_LED_SCAN
 
+
+#define NO_DEV_SHOW_HI_STR
+#define DEFAULT_GO_TO_IDLE
+#define MP3_DISP_LOAD_STRING
+
 #define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
 
 #define DISP_OFF_STR_AT_PWR_DOWN
@@ -1240,6 +1245,8 @@
 
 #define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
 
+#define NO_DEV_SHOW_HI_STR
+#define DEFAULT_GO_TO_IDLE
 #define MP3_DISP_LOAD_STRING
 #define DISP_OFF_STR_AT_PWR_DOWN
 #define DISP_PAUS_STRING
@@ -10080,7 +10087,7 @@
 #define DEFAULT_GO_TO_AUX
 #define TianCheng_Remote
 #define LED_REVERSE_VIEW
-#define COMMON_CATHODE
+//#define COMMON_CATHODE
 
 #endif
 
