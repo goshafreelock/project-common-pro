@@ -163,6 +163,7 @@ extern bool pwr_up_flag;
 #define BAT_FULL_VOLT	62
 #define BAT_HALF_VOLT  	61
 
+#define BAT_LOW_POWER_OFF_VOLT	54
 
 #elif defined(NEW_BAT_ICON_DISP_AT_LEVEL_THREE)
 
@@ -545,9 +546,11 @@ bool charger_detect(void)
 #ifdef K0000_MY_FT18_BT_V001
 	return 0;
 #endif
+
 #if defined(DC_CHARGE_GPIO_DRV_LED_IND)|| defined(DC_CHARGE_GPIO_DRV_LED_IND_2)
 		DC_CHARGE_LED_L();		
 #endif
+
 #ifdef K0000_JK_KHT_830D_V001
 	if(play_status!=MUSIC_PLAY)
 		set_play_flash(LED_FLASH_ON);
@@ -794,6 +797,8 @@ void portable_charger_hdlr()
 
 void bmt_hdlr(void)
 {
+	static u8 low_volt_cnt=0,high_volt_cnt=0;
+
 #ifdef USB_SD_PORTABLE_BAT_CHARGER
 	portable_charger_hdlr();
 #endif
@@ -818,7 +823,6 @@ void bmt_hdlr(void)
 
 
 #if defined(BAT_LEVEL_GPIO_DRV_LED_IND)
-	static u8 low_volt_cnt=0,high_volt_cnt=0;
 
 		BAT_LEVEL_LED_INIT();
 
@@ -859,8 +863,6 @@ void bmt_hdlr(void)
 #endif
 
 #ifdef LOW_BAT_POWER_OFF_MODE
-
-	static u8 low_volt_cnt=0,high_volt_cnt=0;
 
 		if(LDO_IN_Volt<=BAT_LOW_POWER_OFF_VOLT){
 
