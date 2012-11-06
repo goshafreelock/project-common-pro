@@ -471,7 +471,7 @@ u8 KT_FMTune(u16 Frequency) //87.5MHz-->Frequency=8750; Mute the chip and Tune t
 		KT_Bus_Write(0x16, 	reg16 & 0xD0FF);       				//reference clock=32.768K;
 		KT_Bus_Write(0x03, 0x8000 | (Frequency/5) );	   		//set tune bit to 1
 	}
-	delay_10ms(1);
+	delay_10ms(5);
 
 	KT_AMFMUnMute();
 
@@ -527,7 +527,7 @@ u8 KT_MWTune(u16 Frequency) //1710KHz --> Frequency=1710; Mute the chip and Tune
 		KT_Bus_Write(0x16, 	reg16 & 0xD0FF);       				//reference clock=32.768K;
 		KT_Bus_Write(0x17, 0x8000 | Frequency);	   				//set tune bit to 1
 	}
-	delay_10ms(2);
+	delay_10ms(8);
 	KT_AMFMUnMute();
 
 #ifdef DISABLE_FAST_GAIN_UP
@@ -836,6 +836,8 @@ u8 KT_FMValidStation(u16 Frequency) //0-->False Station 1-->Good Station //check
 		//get new AFC value if the station information is not investigated in the last run
 		if (!freq[i]) {
 		    KT_FMTune(nextfreq);
+				delay_10ms(5);
+
 			afc[i]=KT_FMGetAFC();
 #ifdef SEEK_WITH_SNR
 			snr[i]=KT_FMGetSNR();
