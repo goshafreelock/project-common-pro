@@ -1780,6 +1780,10 @@ void JogDetect(void)
             {
                 if (JogBuf == 0x02)
                 {
+
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+			Disp_BL_turn_on();
+#endif
                     // Increase
 #ifdef JOY_STICK_DEBUG                    
 			printf(" Increase \r\n");
@@ -1855,7 +1859,10 @@ void JogDetect(void)
                 }
                 if (JogBuf == 0x01)
                 {
-                    // Decrease
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+			Disp_BL_turn_on();
+#endif
+                                  // Decrease
 #ifdef JOY_STICK_DEBUG                    
 			printf(" Decrease \r\n");
 #endif

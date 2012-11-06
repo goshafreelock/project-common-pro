@@ -1045,7 +1045,6 @@ void Disp_Init(void)
 #endif
  
  #endif
-
 #endif
 
 }
@@ -1054,6 +1053,10 @@ void Disp_Init_2(void)
 #if defined(USE_LCD_DRV_HT1621)
 	lcd_ht1621_init();
 #endif
+#ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
+	Disp_BL_turn_on();
+#endif
+
 }
 void Clear_Disp_Buf(void)
 {
