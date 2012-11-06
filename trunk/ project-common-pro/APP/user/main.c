@@ -330,6 +330,12 @@ void aux_check(void)
     }
 #endif	
 
+#ifdef SYS_LED_PROTECTION_UNTILL_PWR_ON
+#ifdef AUX_LED_PROTECTION_BEFORE_PWR_ON
+	 if(sys_pwr_on_led_protect_bit)return;
+#endif	 
+#endif
+
 #ifdef AUX_DETECT_HIGH_LEVEL
 	AUX_DETECT_GPIO=0;
 
