@@ -1786,6 +1786,7 @@ void decode_play(void)
     PT2313_Config(MP3_CHAN,CHAN_ADJ);
 #endif
 
+
     put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
 
     set_max_vol(MAX_ANALOG_VOL, MAX_DIGITAL_VOL);			//设置Music模式的音量上限
@@ -1802,6 +1803,17 @@ void decode_play(void)
 #ifdef BLUETOOTH_GPIO_CTRL
     BT_PWR_OFF();
 #endif 
+
+#ifdef ASSIGN_GIVEN_DEVICE_AT_PWR_ON
+	if((get_device_online_status()&0x03)==0x03){
+      		given_device = BIT(SDMMC);
+ 		last_plug_dev=BIT(USB_DISK);
+
+#ifdef DEVICE_ON_LINE_LED_IND
+		set_play_flash(LED_FLASH_NOR);
+#endif	
+	}
+#endif
 
     music_play();
 #ifdef NO_DEV_LED_IMPROVE
