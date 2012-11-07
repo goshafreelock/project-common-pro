@@ -20,6 +20,9 @@ extern void putbyte(u8);
 extern xd_u8 return_cnt;
 extern void Delay_us(u16 i );
 extern void set_play_flash(u8 led_status);
+#if defined(WKUP_PIN_USE_ENABLE)||defined(MUTE_PORT_USE_WKUP)||defined(PWR_CTRL_WKUP)
+extern void wkup_pin_ctrl(bool dir);
+#endif
 
 extern _xdata SYS_WORK_MODE work_mode;
 #ifdef _MY_IR_KEY_
@@ -158,12 +161,23 @@ extern bool pwr_up_flag;
 
 #elif defined( BAT_LEVEL_MEASURE_BY_GPIO)
 // 3v3 = 65    3V=  60   2v7 = 54	2v5 = 50
+// 2v1 = 44    1.9V=  38   1v7 = 34	1V5 = 30
+#ifdef RES_AVRG_DIV_VOLT
+
+#define BAT_LOW_VOLT   	34
+#define BAT_LOW_ALERT  	31
+#define BAT_FULL_VOLT	38
+#define BAT_HALF_VOLT  	44
+
+#define BAT_LOW_POWER_OFF_VOLT	29
+#else
 #define BAT_LOW_VOLT   	58
 #define BAT_LOW_ALERT  	54
 #define BAT_FULL_VOLT	62
 #define BAT_HALF_VOLT  	61
 
 #define BAT_LOW_POWER_OFF_VOLT	54
+#endif
 
 #elif defined(NEW_BAT_ICON_DISP_AT_LEVEL_THREE)
 
@@ -873,7 +887,22 @@ void bmt_hdlr(void)
 				low_bat_power_lock =1;							
 
 #ifdef USE_POWER_KEY
-				sys_power_down();	
+   				dac_out_select(DAC_DECODE);
+				sys_clock_pll();//(MAIN_CLK_PLL);
+				//dac_sw(1);			//不降频的用户需注掉
+				write_dsp(-6, 5, 0x10);
+				delay_10ms(50);
+				write_dsp(-6, 5, 0x10);
+				delay_10ms(50);
+
+#if defined(PWR_CTRL_WKUP)
+				wkup_pin_ctrl(0);
+					//write_rtc_reg((read_rtc_reg()&0xef));
+#else
+				power_ctl(0);
+#endif
+				 EA = 0;
+				 while (1);
 #else
 				if(work_mode == SYS_IDLE){
 					put_msg_fifo(INFO_SYS_IDLE);	
