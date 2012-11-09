@@ -372,8 +372,11 @@ void fm_rev( void )
 		}
 		else{
 			
+#if defined(ADKEY_PLAY_SHORT_SCAN_FRE_DISABLE)		
+		break;
+#endif			
 		#ifdef ADKEY_PLAY_SHORT_SCAN_FRE
-			goto __SCAN_FREQ;
+			goto __SCAN_FREQ;	
 		#else
 			#if defined( ADKEY_NEXT_ADJST_FREQ)
 			goto __CH_UP;
