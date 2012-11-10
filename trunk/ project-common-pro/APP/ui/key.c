@@ -46,6 +46,10 @@ extern bool aux_online;
 extern bool sys_led_protect_bit;
 #endif
 
+#ifdef LOW_POWER_DIDI_ALERT
+bool low_power_alert=0;
+#endif
+
 #if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 static bool radio_freq_tune_protect=0;
 bool get_radio_freq_tune_protect()
@@ -166,10 +170,10 @@ extern bool pwr_up_flag;
 
 #define BAT_LOW_VOLT   	34
 #define BAT_LOW_ALERT  	31
-#define BAT_FULL_VOLT	38
-#define BAT_HALF_VOLT  	44
+#define BAT_FULL_VOLT	42
+#define BAT_HALF_VOLT  	38
 
-#define BAT_LOW_POWER_OFF_VOLT	29
+#define BAT_LOW_POWER_OFF_VOLT	28
 #else
 #define BAT_LOW_VOLT   	58
 #define BAT_LOW_ALERT  	54
@@ -882,22 +886,31 @@ void bmt_hdlr(void)
 
 			low_volt_cnt++;			
 			if(low_volt_cnt>=LOW_BAT_POWER_CNT){
-				//low_volt_cnt=0;
+				low_volt_cnt=0;
 
 				low_bat_power_lock =1;							
 
 #ifdef USE_POWER_KEY
-   				dac_out_select(DAC_DECODE);
-				sys_clock_pll();//(MAIN_CLK_PLL);
-				//dac_sw(1);			//不降频的用户需注掉
-				write_dsp(-6, 5, 0x10);
-				delay_10ms(50);
-				write_dsp(-6, 5, 0x10);
-				delay_10ms(50);
+
+#ifdef LOW_POWER_DIDI_ALERT
+				
+				if(!low_power_alert){
+					
+					sys_clock_pll();//(MAIN_CLK_PLL);
+					dac_sw(1);			//不降频的用户需注掉
+					write_dsp(-2, 20, 25);
+					delay_10ms(60);
+					write_dsp(-2, 20, 25);
+					delay_10ms(60);
+					write_dsp(-2, 20, 25);
+					delay_10ms(60);
+					low_power_alert=1;
+					return;
+				}				
+#endif
 
 #if defined(PWR_CTRL_WKUP)
 				wkup_pin_ctrl(0);
-					//write_rtc_reg((read_rtc_reg()&0xef));
 #else
 				power_ctl(0);
 #endif
