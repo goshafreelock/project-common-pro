@@ -566,6 +566,7 @@
 //#define K2121_WXD_2121_V001
 //#define K1224_YJH_1224_V001
 //#define K1229_WXD_1229_V001
+//#define K3031_AP_668_V001
 
 
 
@@ -758,6 +759,51 @@
 #endif
 
 /*****************按 主板编号定义宏******************/
+
+
+#ifdef K3031_AP_668_V001
+
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+
+#define MUTE_PORT_USE_P03
+
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+#define USE_MODE_KEY_LONG_SCAN
+
+#define USE_POWER_KEY_FOR_FM_PLAY
+#define POWE_KEY_PLAY_KEY_IN_ONE_KEY
+#define FM_PLAY_KEY_PAUSE
+
+#define LINE_IN_PLAY_KEY_PAUSE
+#define USE_POWER_KEY_FOR_AUX_PLAY
+
+#if 1
+#define USE_POWER_KEY
+#define USE_ONLY_POWER_HOLD_CTRL
+#define PWR_CTRL_P02
+#define USE_PWR_KEY_LONG_PWR_ON
+#endif
+
+
+#define USE_RTC_FUNCTION
+#define USE_RTC_TIME_ONLY
+#define RTC_SETTING_NO_CYC
+
+#endif
+
 #ifdef K1224_YJH_1224_V001
 
 
@@ -4279,13 +4325,13 @@
 //#define PWR_CTRL_P02
 #define USE_PWR_KEY_LONG_PWR_ON
 #define PWR_ON_DELAY_1_SECOND
-//#define PWR_OFF_WAKEUP_FUNC
 
 //#define PWR_OFF_NO_RESP_WHEN_CHARGER_PLUGGED
 
 //#define USE_USB_HOTPLUG_FUNC
 #define DC_HW_POWER_UP
 #endif
+#define MP3_MODE_EQ_DOWN_DO_NOTHING
 
 //#define USE_POWER_KEY_SHORT_SCAN
 //#define POWE_KEY_PLAY_KEY_IN_ONE_KEY
