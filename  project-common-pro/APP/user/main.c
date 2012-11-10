@@ -1340,7 +1340,7 @@ void main(void)
 #if FILE_ENCRYPTION
     password_init(0xaa);  //输入加密文件的密码
 #endif   
-    custom_gpio_setting();
+    //custom_gpio_setting();
 #ifdef IR_DEBUG
 	IR_Debug_func();
 #endif
@@ -1411,6 +1411,7 @@ void main(void)
 			delay_10ms(1);
 	}
 #endif
+
     while (1)
     {
 	Set_Curr_Func(work_mode);
