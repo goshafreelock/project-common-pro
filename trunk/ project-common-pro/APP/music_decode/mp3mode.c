@@ -1769,6 +1769,7 @@ void decode_play(void)
 #endif
 
 #if defined(MP3_DISP_LOAD_STRING)
+      if((get_device_online_status()&0x03)>0)
       Disp_Con(DISP_LOAD);
 #endif
     sysclock_div2(1);

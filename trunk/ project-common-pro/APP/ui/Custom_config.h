@@ -502,7 +502,7 @@
 //#define K0000_GW_168C_V001
 //#define K1143_DCX_D953_V001
 //#define K1147_DCX_D955_V001
-#define K1147_JLH_1234_V001
+//#define K1147_JLH_1234_V001
 //#define K0000_JK_TEMP_FAN_V001
 //#define K0000_JK_PORTABLE_CHARGER_V001
 //#define K0000_JK_KHT_842_BT_V001
@@ -733,6 +733,7 @@
 //#define K2114_XFW_FW70_V001
 //#define K1222_WXD_1222_V001
 //#define K401_KM_401_V001
+//#define K2129_WXD_1234_V001
 
 
 /*****************测试验证******************/
@@ -17340,7 +17341,38 @@
 #endif
 
 
+#ifdef K2129_WXD_1234_V001
 
+#define AC209_28PIN		//28 PIN IC GPIO CONFIG
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define ADKEY_PLAY_SHORT_SCAN_FRE
+
+#define PLAY_STATUS_LED_P02
+
+#define MUTE_PORT_USE_P26
+
+#define MUTE_GPIO_FM_GPIO_COMPATIBALE
+#define USE_FM_GPIO
+#define NEW_SD_DETECT_MOD
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+
+#define USE_GPIO_DETECT_EARPHONE_PLUGGED
+#define EARPHONE_DETECT_USE_VPP
+
+//#define LINE_IN_PLAY_KEY_PAUSE
+#define USE_LONG_PLAY_MODE_KEY_TO_SWITCH_MODE
+#endif
 
 
 
