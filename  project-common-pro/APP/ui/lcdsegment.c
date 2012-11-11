@@ -49,6 +49,15 @@ void lcd_backlight_ctrl(bool on)
 	else{
 		wkup_pin_ctrl(0);
 	}
+#elif defined(K5038_JK_5038_V001)
+
+	if(on){
+		WKUPPND|=BIT(6);
+	}
+	else{
+		WKUPPND&=~(BIT(6));
+	}	
+
 #elif defined(LCD_BACKLIGHT_USE_PORT_P04)
 	if(on){
 

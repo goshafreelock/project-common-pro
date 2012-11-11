@@ -898,11 +898,11 @@ void bmt_hdlr(void)
 					
 					sys_clock_pll();//(MAIN_CLK_PLL);
 					dac_sw(1);			//不降频的用户需注掉
-					write_dsp(-2, 20, 25);
+					write_dsp(-4, 20, 25);
 					delay_10ms(60);
-					write_dsp(-2, 20, 25);
+					write_dsp(-4, 20, 25);
 					delay_10ms(60);
-					write_dsp(-2, 20, 25);
+					write_dsp(-4, 20, 25);
 					delay_10ms(60);
 					low_power_alert=1;
 					return;
@@ -1745,7 +1745,7 @@ void JogDetect(void)
 	u8 port_val=0;
 	
     touchkeyval = 0;
-#if defined(K523_DeYun_523_V001)||defined(K5008_JK_5008_V001)||defined(K5018_JK_5018_V001)||defined(K5058_JK_5058_V001)
+#if defined(K523_DeYun_523_V001)||defined(K5008_JK_5008_V001)||defined(K5018_JK_5018_V001)||defined(K5038_JK_5038_V001)||defined(K5058_JK_5058_V001)
     P0DIR &= ~(BIT(2)|(BIT(3)));    //P11, P12
     P0 |=(BIT(2)|(BIT(3)));
     P0PU	|= (BIT(2)|(BIT(3)));
