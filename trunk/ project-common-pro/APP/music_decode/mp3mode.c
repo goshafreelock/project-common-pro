@@ -1790,7 +1790,11 @@ void decode_play(void)
 
     put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
 
+#ifdef CUSTOM_OUTPUT_LIMIT
+    set_max_vol(MAX_ANALOG_VOL-CUSTOM_OUTPUT_VAL, MAX_DIGITAL_VOL);
+#else
     set_max_vol(MAX_ANALOG_VOL, MAX_DIGITAL_VOL);			//设置Music模式的音量上限
+#endif
 
 #ifdef LED_LIGHT_ON_ENABLE_IN_IDLE_MODE
     set_play_flash(LED_FLASH_ON);

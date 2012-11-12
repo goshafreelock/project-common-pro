@@ -26,6 +26,10 @@
 #include "id3.h"
 #include "dac.h"
 
+#ifdef CUSTOM_OUTPUT_LIMIT
+#define CUSTOM_OUTPUT_VAL		5
+#endif
+
 typedef enum
 {
 #if 1//defined(PLAY_MODE_REPEAT_ALL)
