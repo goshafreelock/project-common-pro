@@ -402,6 +402,16 @@ void bat_val_arg(void);
 #define RES_6				15000
 #define RES_7				24000
 #define RES_8				33000
+#elif defined(DEFAULT_INTERNAL_PULL_RES_VALUE)
+#define RES_PULL_UP			10000		/// 3.3K
+#define RES_1				100
+#define RES_2				2000
+#define RES_3				4700	
+#define RES_4				7500
+#define RES_5				22000
+#define RES_6				330000
+#define RES_7				330000
+#define RES_8				330000
 #else
 #define RES_PULL_UP			3300		/// 3.3K
 #define RES_1				0
@@ -559,6 +569,16 @@ void bat_val_arg(void);
 #define ADKEY_3		INFO_PLAY
 #define ADKEY_4		INFO_MODE
 #define ADKEY_5		NO_KEY
+#define ADKEY_6		NO_KEY
+#define ADKEY_7		NO_KEY
+#define ADKEY_8		NO_KEY
+#define ADKEY_NOKEY	NO_KEY
+#elif defined(K401_KM_401_V001)
+#define ADKEY_1		INFO_PLAY
+#define ADKEY_2		INFO_VOL_PLUS
+#define ADKEY_3		INFO_NEXT_FIL
+#define ADKEY_4		INFO_PREV_FIL
+#define ADKEY_5		INFO_VOL_MINUS
 #define ADKEY_6		NO_KEY
 #define ADKEY_7		NO_KEY
 #define ADKEY_8		NO_KEY

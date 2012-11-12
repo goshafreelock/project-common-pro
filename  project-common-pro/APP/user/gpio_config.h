@@ -1321,7 +1321,11 @@
 
 #define BT_VOLD_PORT_INIT() 		
 #define BT_VOL_DOWN_ON() 			
-#define BT_VOL_DOWN_OFF() 					
+#define BT_VOL_DOWN_OFF() 	
+
+#define BT_CONFIG_PORT_INIT() 			
+#define BT_CONFIG_ON() 					
+#define BT_CONFIG_OFF() 	
 
 #elif defined(K0000_JK_KHT_842_BT_V001)
 #define BT_PWR_PORT_INIT() 			

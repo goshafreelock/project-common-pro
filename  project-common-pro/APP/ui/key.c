@@ -50,7 +50,7 @@ extern bool sys_led_protect_bit;
 bool low_power_alert=0;
 #endif
 
-#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
+#if defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)||defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 static bool radio_freq_tune_protect=0;
 bool get_radio_freq_tune_protect()
 {
@@ -1366,7 +1366,11 @@ void adc_scan(void)
         ADCCON = ADC_KEY_IO; //
 #if defined(ADKEY_USE_P07_PORT)
         P0IE &= ~(BIT(7));
+#ifdef ADKEY_INTERNAL_RES_PULLUP
+	 P0PU |=(BIT(7));
+#else
 	 P0PU &=~(BIT(7));
+#endif
 #elif defined(ADKEY_USE_P05_PORT)
         P0IE &= ~(BIT(5));
 	 P0PU &=~(BIT(5)); 	 
@@ -1737,6 +1741,11 @@ void key_tone(void)
 xd_u8 touchkeyval;
 xd_u8 keyval_buf;
 xd_u8  JogBuf;
+
+#if defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
+extern bool radio_freq_tune_pop;
+extern xd_u8 radio_tune_timer;
+#endif			
 #if defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
 extern bool new_vol_feature;
 #endif
@@ -1848,6 +1857,17 @@ void JogDetect(void)
 		     radio_freq_tune_protect =1;
 	             put_msg_fifo(INFO_MINUS);
 		}		
+#elif defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
+		if(radio_freq_tune_pop)
+		{
+
+		     radio_tune_timer=12;
+		     radio_freq_tune_protect =1;
+	             put_msg_fifo(INFO_MINUS);
+		}
+		else{
+	             put_msg_fifo(INFO_VOL_MINUS);
+		}
 #elif defined(VOL_TUNE_FREQ_VOL)
 		if((work_mode == SYS_FMREV)
 #ifdef RADIO_AM_WM_ENABLE			
@@ -1947,6 +1967,16 @@ void JogDetect(void)
 		{
 		     radio_freq_tune_protect =1;
 	             put_msg_fifo(INFO_PLUS);
+		}
+#elif defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
+		if(radio_freq_tune_pop)
+		{
+		     radio_tune_timer=12;
+		     radio_freq_tune_protect =1;
+	             put_msg_fifo(INFO_PLUS);
+		}
+		else{
+	             put_msg_fifo(INFO_VOL_PLUS);
 		}
 #elif defined(VOL_TUNE_FREQ_VOL)
 		if((work_mode == SYS_FMREV)

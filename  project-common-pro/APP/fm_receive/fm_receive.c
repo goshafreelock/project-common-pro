@@ -41,6 +41,11 @@ extern xd_u8 last_led_play_mod;
 extern bool new_vol_feature;
 extern u8 last_disp_menu;
 #endif
+
+#if defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
+bool radio_freq_tune_pop=0,pop_spark=0;
+xd_u8 radio_tune_timer=0;
+#endif
 extern u8 play_status;
 /** FM收音当前搜索到的台总数*/
 xd_u8 all_channl = 0;
@@ -295,6 +300,18 @@ void fm_rev( void )
 
 #endif
 #endif  
+#if defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
+    	 case INFO_CUS_KEY_1 | KEY_SHORT_UP :
+
+		radio_freq_tune_pop=~radio_freq_tune_pop;
+		radio_tune_timer=12;
+		
+		if(radio_freq_tune_pop){
+
+                     Disp_Con(DISP_FREQ);
+		}
+		break;
+#endif
 
 #ifdef RADIO_MODE_HOT_KEY_ENABLE	
 
@@ -482,6 +499,28 @@ __SCAN_FREQ:
 		 }
 #endif
 
+#if defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
+		if(radio_tune_timer>0){
+			radio_tune_timer--;
+			
+			if(radio_tune_timer==0){
+				radio_freq_tune_pop=0;
+	                    Disp_Con(DISP_FREQ);
+			}
+
+			if(radio_freq_tune_pop){
+
+			      pop_spark=~pop_spark;
+
+			     if(pop_spark){
+	                    		Disp_Con(DISP_PWR_OFF);
+			     }
+			     else{				
+	                    		Disp_Con(DISP_FREQ);
+			    }
+			}
+		}
+#endif
 #ifdef VOL_ADJ_SPARK_LED
 		if(vol_adj_spark_bit){
 			vol_adj_spark_bit=0;
@@ -881,6 +920,10 @@ void fm_radio(void)
 
 #ifndef DISABLE_P05_OSC_OUTPUT
     fm_osc_output_select(TRUE);
+#endif
+
+#if defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
+	radio_freq_tune_pop=0;
 #endif
 
 #if defined(K202_WEISI_KL202_V001000000000)
