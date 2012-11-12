@@ -1025,6 +1025,54 @@ void Disp_BL_turn_on()
 	lcd_backlight_ctrl(TRUE);
 }
 #endif
+#ifdef LED_ROLLING_WITH_MIC_DETETION
+void led_rolling_with_mic_det()
+{
+	static u8 rolling_timer=0,rolling_intarvel=0;
+
+	rolling_timer++;
+
+	if(rolling_timer%50==0){
+
+		P0DIR |=(BIT(7));
+		P0PU &=~(BIT(7));
+		P0PD  |=(BIT(7));
+
+		if(P07){
+			rolling_intarvel=10;
+		}
+		else{
+			rolling_intarvel=50;
+		}
+	}
+
+	if(rolling_timer==0){
+
+		P3DIR&=BIT(4);
+		P3PU |=BIT(4);
+		P34 =1;
+		P04 =0;	
+		P02 =0;	
+	}
+	else if(rolling_timer==rolling_intarvel){
+
+		P0DIR&=BIT(2);
+		P0PU |=BIT(2);
+
+		P34 =0;	
+		P04 =0;	
+		P02 =1;
+	}
+	else if(rolling_timer==(rolling_intarvel<<1)){
+		P0DIR&=BIT(4);
+		P0PU |=BIT(4);
+
+		P34 =0;
+		P02 =0;	
+		P04 =1;	
+	}
+}
+#endif
 void Disp_Init(void)
 {
     init_disp();
@@ -1127,6 +1175,10 @@ void Update_customed_buf()
 
 #if defined(EXTENED_LED_NUM_SCAN)
 	set_extend_led_buf_icon();
+#endif
+
+#ifdef LED_ROLLING_WITH_MIC_DETETION
+	led_rolling_with_mic_det();
 #endif
 }
 void Disp_Scan(void)

@@ -606,7 +606,7 @@ _PICK_CH:
             write_info(MEM_FRE,frequency - MIN_FRE);
             break;
 
-#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)
+#if defined(VOL_TUNE_FREQ_VOL)||defined(VOL_TUNE_FREQ_ONLY)||defined(VOL_TUNE_NEW_VOLUME_KEY_FEATURE)||defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
         case INFO_PLUS:	
       	     frequency += 2;
             goto __FRE_DOWN;			

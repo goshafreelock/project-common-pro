@@ -245,6 +245,32 @@
 #define BK_CLK_LOW()      		iic_clk_l()
 
 #endif
+#elif defined(IIC_GPIO_USE_P02_P01)
+
+#define iic_data_out()    	P0DIR &= ~(BIT(1));P0PU |= BIT(1);
+#define iic_data_in()     	P0DIR |= (BIT(1));P0PU |= BIT(1);	
+#define iic_data_r()      	P01
+#define iic_data_h()      	P01 = 1
+#define iic_data_l()     	P01 = 0
+
+#define iic_clk_out()    	P0DIR &= ~(BIT(2));P0PU |= (BIT(2));P3DIR |= (BIT(4));P3PU &= ~(BIT(4));P3PD&= ~(BIT(4)) 	
+#define iic_clk_h()      	P02 = 1
+#define iic_clk_l()      		P02 = 0
+
+#if 1	//for bk1080.h
+#define BK_DATA_HIGH()   	iic_data_h()
+#define BK_DATA_LOW()    	iic_data_l()
+#define BK_DATA_READ()    	iic_data_r()
+#define SDADIROUT()       		iic_data_out()
+#define SDADIRIN()        		iic_data_in()
+
+#define SCLDIROUT()        		iic_clk_out()
+#define BK_CLK_HIGH()     		iic_clk_h()
+#define BK_CLK_LOW()      		iic_clk_l()
+
+#endif
+
+
 #elif defined(IIC_GPIO_USE_P01_P02)
 //4 IIC gpio P01 P02
 #define iic_data_out()    	P0DIR &= ~(BIT(2));P0PU |= BIT(2);P3DIR |= (BIT(4));P3PU &= ~(BIT(4));P3PD&= ~(BIT(4)) 	
@@ -396,6 +422,8 @@
 #if defined(TWO_ADKEY_ENABLE)
 #define ADC_KEY_IO_2  0x4C
 #endif
+
+#define ADKEY_USE_P07_PORT
 
 #if defined(ADC_DETECT_LINE_IN)
 #define ADC_MAX_USED 0x04
