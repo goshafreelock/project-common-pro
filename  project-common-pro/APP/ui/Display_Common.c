@@ -1026,50 +1026,74 @@ void Disp_BL_turn_on()
 }
 #endif
 #ifdef LED_ROLLING_WITH_MIC_DETETION
+void led_rolling_gpio_init()
+{
+	P0DIR |=(BIT(7));
+	P0PU &=~(BIT(7));
+	P0PD  |=(BIT(7));
+
+	P3DIR&=~(BIT(4));
+	P3PU |=BIT(4);	
+
+	P0DIR&=~(BIT(2));
+	P0PU |=BIT(2);	
+	
+	P0DIR&=~(BIT(4));
+	P0PU |=BIT(4);	
+
+
+	P34 =0;
+	P04 =0;	
+	P02 =0;		
+}
 void led_rolling_with_mic_det()
 {
-	static u8 rolling_timer=0,rolling_intarvel=0;
+	static u8 rolling_timer=0,rolling_intarvel=0,led_idx=0;
 
 	rolling_timer++;
 
-	if(rolling_timer%50==0){
+	//return;
 
-		P0DIR |=(BIT(7));
-		P0PU &=~(BIT(7));
-		P0PD  |=(BIT(7));
+	if(rolling_timer%20==0){
 
 		if(P07){
-			rolling_intarvel=10;
+			rolling_intarvel=20;
 		}
 		else{
-			rolling_intarvel=50;
+			rolling_intarvel=100;
 		}
 	}
+	
+	if(rolling_timer==rolling_intarvel){
 
-	if(rolling_timer==0){
+		rolling_timer=0;
+		led_idx++;
+		
+		if(led_idx>3)led_idx=0;
+	}
+	
+	if(led_idx==0){
 
-		P3DIR&=BIT(4);
-		P3PU |=BIT(4);
 		P34 =1;
 		P04 =0;	
 		P02 =0;	
 	}
-	else if(rolling_timer==rolling_intarvel){
-
-		P0DIR&=BIT(2);
-		P0PU |=BIT(2);
+	else if(led_idx==1){
 
 		P34 =0;	
 		P04 =0;	
 		P02 =1;
 	}
-	else if(rolling_timer==(rolling_intarvel<<1)){
-		P0DIR&=BIT(4);
-		P0PU |=BIT(4);
+	else if(led_idx==2){
 
 		P34 =0;
 		P02 =0;	
 		P04 =1;	
+	}
+	else{
+		P34 =0;
+		P04 =0;	
+		P02 =0;	
 	}
 }
 #endif
@@ -1095,6 +1119,9 @@ void Disp_Init(void)
  #endif
 #endif
 
+#ifdef LED_ROLLING_WITH_MIC_DETETION
+	led_rolling_gpio_init();
+#endif
 }
 void Disp_Init_2(void)
 {
