@@ -917,6 +917,9 @@ void Init_Func_List()
 #endif
 #ifdef USE_RTC_FUNCTION
 		Add_Func_To_List(RTC_DEV);
+#ifdef DONT_MOUNT_RTC_FUNC
+		Remov_Func_From_List(RTC_DEV);
+#endif
 #endif
 
 #ifdef BLUE_TOOTH_FUNC
@@ -2420,6 +2423,8 @@ _SYS_GO_IN_POWER_OFF:
         eq_mode++;
 #if defined(K170_ZK_170_V001)||defined(K0000_GW_238_V001)	
         if (eq_mode > USER)
+#elif defined(K535_DingChuangXin_803E_3_V001)
+        if (eq_mode > JAZZ)
 #else			
         if (eq_mode > CLASSIC)
 #endif			

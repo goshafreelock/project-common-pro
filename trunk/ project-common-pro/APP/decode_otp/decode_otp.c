@@ -66,6 +66,8 @@ void decode_opt_music_file(u8 buf_dptr)
    Mute_Ext_PA(UNMUTE);
 #ifdef  OTP_DECODE_PLAY_FOLLOW_SYS_VOL
    main_vol(my_music_vol);
+#elif defined( OTP_DECODE_PLAY_CUSTOMED_VOL)
+   main_vol(22);
 #else
    main_vol(MAX_ANALOG_VOL);
 #endif

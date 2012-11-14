@@ -897,6 +897,14 @@
 #define Pwr_Key_output()		P0DIR &= ~(BIT(1));GPIO_POWER_KEY =0;//P2PU |= (BIT(4));GPIO_POWER_KEY =1;
 #define Pwr_Key_input()		P0DIR |= (BIT(1));P0PD |= (BIT(1));
 //#define Pwr_Key_Input()		P2DIR &= ~(1<<6);
+#elif defined(K3031_AP_668_V001)
+#define GPIO_POWER_CTRL 	0
+#define power_ctl(n)  			0
+
+#define GPIO_POWER_KEY   	P04
+#define Pwr_Key_Init()		P0DIR |= (BIT(4));P0PD |= (BIT(4));
+#define Pwr_Key_output()		P0DIR &= ~(BIT(4));GPIO_POWER_KEY =0;//P2PU |= (BIT(4));GPIO_POWER_KEY =1;
+#define Pwr_Key_input()		P0DIR |= (BIT(4));P0PD |= (BIT(4));
 #elif defined(PWR_CTRL_WKUP_POWER_ONLY)
 #define GPIO_POWER_CTRL 	0
 #define power_ctl(n)  			0
