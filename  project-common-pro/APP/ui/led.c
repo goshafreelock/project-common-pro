@@ -842,6 +842,20 @@ void LED_SEG_OUT(u8 SEG_Data)
     	LED_COM &= ~0x1f;
 	LED_SEG=SEG_Data;
 }
+#elif defined(K3031_AP_668_V001)
+void LED_COM_OUT(u8 COM_Data)
+{
+    	LED_COM &= ~0x1f;
+ 	P31 =((COM_Data&0x01)>0)?1:0;
+ 	P32 =((COM_Data&0x02)>0)?1:0;
+ 	P33 =((COM_Data&0x04)>0)?1:0;
+ 	P34 =((COM_Data&0x08)>0)?1:0;
+ 	P30 =((COM_Data&0x10)>0)?1:0;
+}
+void LED_SEG_OUT(u8 SEG_Data)
+{
+	LED_SEG=SEG_Data;
+}
 #elif defined(K769_JinRui_769_V001)
 void LED_COM_OUT(u8 COM_Data)
 {

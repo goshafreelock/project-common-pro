@@ -670,13 +670,13 @@ void Disp_PwrOFF(void)
 #elif defined(K000_JR_210_V001)
        dispstring(" -- ",0);
 #elif defined(K1069_AJE_1069_V001)||defined(DISP_OFF_ANIMIATION_AT_PWR_DOWN)||defined(K1069_AJE_1069_V002)
-       dispstring("  O",0);
+       dispstring("   O",0);
 	delay_10ms(20);
 
-       dispstring(" OF",0);
+       dispstring("  OF",0);
 	delay_10ms(20);
 
-       dispstring("OFF",0);
+       dispstring(" OFF",0);
 
 	delay_10ms(20);
 
@@ -1100,11 +1100,17 @@ void Disp_RTC()
         else
             dispstring("AOFF",0);
 #else
+#ifdef RIGHT_ALIGN_DISP
+    	  if (alm_sw)
+            dispstring("  ON",0);
+        else
+            dispstring(" OFF",0);
+#else
     	  if (alm_sw)
             dispstring("ON",0);
         else
             dispstring("OFF",0);
-
+#endif
 	#ifdef ALARM_ADJ_FLASH_ON_OFF
 	    oppo_area_rtc(0);	
 	#endif		
@@ -1139,7 +1145,20 @@ void Disp_RTC()
 }
 void Disp_Alm_Up(void)
 {
+#ifdef DISP_ALM_UP_SPARK_TIME
+	static bool scr_spark=0;
+
+	scr_spark=~scr_spark;
+	
+	if(scr_spark){
+		disp_buf_clear();
+	}
+	else{
+		Disp_RTC();	
+	}
+#else
     dispstring("----",0);
+#endif
 }
 #endif
 #if 0
