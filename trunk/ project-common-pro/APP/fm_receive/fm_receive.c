@@ -1036,6 +1036,11 @@ void fm_radio(void)
     main_vol_set(0, CHANGE_VOL_NO_MEM);
 	
     fm_rev_powerdown();
+
+#if defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
+	radio_freq_tune_pop=0;
+#endif
+	
 #if SDMMC_CMD_MODE
 	sd_chk_ctl(SET_SD_H_CHK);
 #endif

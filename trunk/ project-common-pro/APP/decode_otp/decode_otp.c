@@ -62,7 +62,9 @@ void decode_opt_music_file(u8 buf_dptr)
 	printf(" decode_opt_music_file %x \r\n",(u16)music_type);
 	printf(" decode_opt_music_file %x \r\n",(u16)music_file);
 #endif
-
+#ifdef MUTE_GPIO_FM_GPIO_COMPATIBALE
+    init_fm_rev();
+#endif
    Mute_Ext_PA(UNMUTE);
 #ifdef  OTP_DECODE_PLAY_FOLLOW_SYS_VOL
    main_vol(my_music_vol);

@@ -23,6 +23,7 @@ extern _xdata SYS_WORK_MODE work_mode;
 //extern void disp_rtc(void);
 extern u8 _idata  my_music_vol;  
 //extern u8 power_down_cnt;
+extern u8 last_work_mode;
 
 extern u8 given_device;
 _xdata RTC_TIME curr_date;
@@ -1005,6 +1006,10 @@ __TIME_ADJ_POS:
                 {
                     close_alm_bell();
                     return_cnt = (RETURN_TIME);
+#ifdef RTC_ALRM_MEM_LAST_WORK_MODE
+			Set_Curr_Func(last_work_mode);
+			return;
+#endif
 		      
                 }
                 else if (alm_flag)

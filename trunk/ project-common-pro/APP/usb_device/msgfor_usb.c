@@ -85,24 +85,24 @@ u8 const _code ufi_inquiry_str[24] =	///<UFI设备信息，必须填充24个字符
 	'T', 
 	'K',
 	' ',    //需填充空字符
-    ' ',    
-    ' ',    
-    'M',    //产品标识 16个字符 -- Production Identification start	
-    'P',    
-    '3',
-    ' ',
-    'P',    
-    'L',    
-    'A',    
-    'Y',    
-    'E',
-    'R',
-    ' ',	//需填充空字符
-    ' ',
-    ' ',
-    ' ',
-    ' ',
-    ' ',    //Production Identification end	   31
+    	' ',    
+    	' ',    
+    	'M',    //产品标识 16个字符 -- Production Identification start	
+    	'P',    
+    	'3',
+    	' ',
+    	'P',    
+    	'L',    
+    	'A',    
+    	'Y',    
+    	'E',
+    	'R',
+    	' ',	//需填充空字符
+    	' ',
+    	' ',
+    	' ',
+    	' ',
+    	' ',    //Production Identification end	   31
 };
 
 /*----------------------------------------------------------------------------*/

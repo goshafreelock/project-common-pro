@@ -1345,6 +1345,9 @@ u8 ap_handle_hotkey(u8 key)
 	 }
 	 return 0;
 #endif	 	
+#ifdef RTC_ALRM_MEM_LAST_WORK_MODE
+	last_work_mode = work_mode;
+#endif
         if (work_mode != SYS_RTC)
         {
             work_mode = SYS_RTC;
