@@ -366,6 +366,8 @@ void Disp_Vol(void)
 #endif
 #if defined(DISP_VOL_V_CHAR)||defined(K015_983_1_SW005_V001)||defined(K000_HG_898_V001)||defined(K566_JLH_566_V001)||defined(K769_JinRui_769_V001)||defined(K668_YJH_815_V001)||defined(K812_DingChuangXin_D903_V001)||defined(K566_JinRui_566_V001)||defined(K568_JinRui_568_V001)
     dispchar('V',2);
+#elif defined(DISP_VOL_V_CHAR_ALIGN_LEFT)
+    dispchar('V',3);
 #endif
     dispNum((my_music_vol/10),1);
     dispNum(my_music_vol%10,0);
@@ -1102,7 +1104,7 @@ void Disp_RTC()
 #else
 #ifdef RIGHT_ALIGN_DISP
     	  if (alm_sw)
-            dispstring("  ON",0);
+            dispstring(" ON",0);
         else
             dispstring(" OFF",0);
 #else

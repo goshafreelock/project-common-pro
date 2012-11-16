@@ -854,7 +854,11 @@ void Disp_Eq(void)
 }
 void Disp_USB_Slave(void)
 {
+#ifdef DISP_PC_STR
+	dispstring("PC",0);
+#else
 	dispstring("Usb",0);
+#endif
 }
 void Disp_AUX(void)
 {

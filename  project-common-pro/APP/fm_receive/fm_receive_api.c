@@ -224,6 +224,8 @@ u16 get_fm_id()
 void init_fm_rev(void)
 {
 //	u16 rtvar;
+	get_fm_id();
+
 #ifdef USE_RDAs_FM
 	if(FM_chip_id  == RDAFM_ID)
 	{

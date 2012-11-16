@@ -1054,13 +1054,13 @@ void led_rolling_with_mic_det()
 
 	//return;
 
-	if(rolling_timer%20==0){
+	if(rolling_timer%10==0){
 
 		if(P07){
-			rolling_intarvel=20;
+			rolling_intarvel=32;
 		}
 		else{
-			rolling_intarvel=100;
+			rolling_intarvel=250;
 		}
 	}
 	
