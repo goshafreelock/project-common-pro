@@ -1053,6 +1053,9 @@ void sys_info_init(void)
 	if(work_mode ==  SYS_AUX){
 		work_mode = SYS_RTC;
 	}
+	else if(work_mode ==  SYS_RTC){
+		work_mode = SYS_MP3DECODE_USB;
+	}
 #endif
 #ifdef UART_ENABLE	
     sys_printf("sys_init phase two finish");

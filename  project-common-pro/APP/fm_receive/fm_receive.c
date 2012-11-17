@@ -226,6 +226,8 @@ void fm_rev( void )
 #if defined(FM_PAUSE_LED_INDICATOR)
     set_play_flash(LED_FLASH_NOR);
 #endif
+
+    my_main_vol(my_music_vol);	
 	
     while (1)
     {
