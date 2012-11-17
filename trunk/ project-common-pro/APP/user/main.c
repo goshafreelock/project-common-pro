@@ -1049,6 +1049,11 @@ void sys_info_init(void)
 	 mic_online=0;
 #endif
 
+#if defined(K3031_AP_668_V001)
+	if(work_mode ==  SYS_AUX){
+		work_mode = SYS_RTC;
+	}
+#endif
 #ifdef UART_ENABLE	
     sys_printf("sys_init phase two finish");
 #endif

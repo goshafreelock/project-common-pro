@@ -335,9 +335,17 @@ void bat_val_arg(void);
 #define NO_IR 0xFF
 
 #if defined(USE_ADKEY_FOR_AUX_HP_DETECTION)
+#ifdef LARGE_RES_VALUE_FOR_AD_AUX_HP_DETECTION
+#define RES_OFFSET				0x0A
+#define AD_VOLT_FOR_DET		(0xD0)
+#define AD_VOLT_FOR_AUX		(0xE0)
+#define AD_VOLT_FOR_HP			(0xEF)
+#else
+#define RES_OFFSET				0x00
 #define AD_VOLT_FOR_DET		(0xC0)
 #define AD_VOLT_FOR_AUX		(0xD0-12)
 #define AD_VOLT_FOR_HP			(0xE7-12)
+#endif
 #endif
 
 #if defined(NEW_RES_VALUE_CACULATING)

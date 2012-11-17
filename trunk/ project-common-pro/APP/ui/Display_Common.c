@@ -1056,7 +1056,7 @@ void led_rolling_with_mic_det()
 
 	if(rolling_timer%10==0){
 
-		if(P07){
+		if(!P07){
 			rolling_intarvel=32;
 		}
 		else{

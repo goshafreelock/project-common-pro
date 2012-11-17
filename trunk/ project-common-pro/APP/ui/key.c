@@ -2137,7 +2137,7 @@ u8 get_adkey_1_value(void)
 #ifdef USE_ADKEY_DETECT_AUX				
 	static xd_u8 det_timer_2=0;
 #endif
-	if(key_value<ADKEY_RES_NOKEY){
+	if(key_value<(ADKEY_RES_NOKEY+RES_OFFSET)){
 
 		if(key_value>AD_VOLT_FOR_DET){
 
@@ -2270,7 +2270,7 @@ u8 get_adkey_2_value(void)
 #ifdef USE_ADKEY_DETECT_AUX				
 	static xd_u8 det_timer_2=0;
 #endif
-	if(key_value_2<ADKEY2_RES_NOKEY){
+	if(key_value_2<(ADKEY2_RES_NOKEY+RES_OFFSET)){
 
 		if(key_value_2>AD_VOLT_FOR_DET){
 
