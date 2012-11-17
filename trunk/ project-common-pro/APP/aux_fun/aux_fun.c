@@ -319,6 +319,8 @@ void deal_aux( void )
     set_spectrum_lock(UNLOCK);
 #endif		  
 
+    my_main_vol(my_music_vol);	
+
     while (1)
     {
         key = get_msg();
