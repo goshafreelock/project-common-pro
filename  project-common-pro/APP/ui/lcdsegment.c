@@ -14,6 +14,9 @@ extern void wkup_pin_ctrl(bool dir);
 #elif defined(LCD_BACKLIGHT_USE_PORT_P04)
 #define LCD_BACKLIGHT_LOW()		P04 =0;
 #define LCD_BACKLIGHT_HIGH()		P04 =1;
+#elif defined(LCD_BACKLIGHT_USE_PORT_P05)
+#define LCD_BACKLIGHT_LOW()		P05 =0;
+#define LCD_BACKLIGHT_HIGH()		P05 =1;
 #else
 #define LCD_BACKLIGHT_LOW()		P02 =0;
 #define LCD_BACKLIGHT_HIGH()		P02 =1;
@@ -61,23 +64,34 @@ void lcd_backlight_ctrl(bool on)
 #elif defined(LCD_BACKLIGHT_USE_PORT_P04)
 	if(on){
 
-		P0DIR |= (BIT(4));P0PU|= (BIT(4)); 
+		P0DIR &=~ (BIT(4));P0PU|= (BIT(4)); 
     		LCD_BACKLIGHT_HIGH();
 	}
 	else{
 
-		P0DIR |= (BIT(4));P0PU|= (BIT(4)); 
+		P0DIR &=~ (BIT(4));P0PU|= (BIT(4)); 
     		LCD_BACKLIGHT_LOW();
 	}
+#elif defined(LCD_BACKLIGHT_USE_PORT_P05)
+	if(on){
+
+		P0DIR &=~ (BIT(5));P0PU|= (BIT(5)); 
+    		LCD_BACKLIGHT_HIGH();
+	}
+	else{
+
+		P0DIR &=~ (BIT(5));P0PU|= (BIT(5)); 
+    		LCD_BACKLIGHT_LOW();
+	}	
 #else
 	if(!on){
 
-		P0DIR |= (BIT(2));P0PU|= (BIT(2)); 
+		P0DIR &=~ (BIT(2));P0PU|= (BIT(2)); 
     		LCD_BACKLIGHT_HIGH();
 	}
 	else{
 
-		P0DIR |= (BIT(2));P0PU|= (BIT(2)); 
+		P0DIR &=~ (BIT(2));P0PU|= (BIT(2)); 
     		LCD_BACKLIGHT_LOW();
 	}
 #endif
