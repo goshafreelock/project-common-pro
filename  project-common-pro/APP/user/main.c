@@ -61,6 +61,10 @@ extern bool IR_KEY_Detect;
 extern bool blue_tooth_detect;
 #endif
 
+#ifdef USE_SYS_MODE_RECOVER
+bool sys_mode_recove=0;
+#endif
+
 #if defined(DC_HW_POWER_UP_IN_IDLE_MODE)|| defined(USB_SD_PORTABLE_BAT_CHARGER)
 extern bool dc_hw_pwer_up_sel_mode;
 #endif
@@ -1057,6 +1061,7 @@ void sys_info_init(void)
 		work_mode = SYS_MP3DECODE_USB;
 	}
 	else{
+		sys_mode_recove=1;		
 		work_mode = SYS_MP3DECODE_USB;
 	}
 #endif

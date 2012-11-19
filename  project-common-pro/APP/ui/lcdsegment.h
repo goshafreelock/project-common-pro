@@ -190,7 +190,7 @@ SEG8     P34
 #define PLAY_ICON_MASK	0x0002
 #define F_PLAY_ICON		(lcd_buff[0])	
 
-#define PAU_ICON_MASK	0x0004
+#define PAU_ICON_MASK	0x0000
 #define F_PAU_ICON		(lcd_buff[0])	
 
 #define BATTERY_MASK	0x0010
