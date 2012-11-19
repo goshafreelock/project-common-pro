@@ -1779,6 +1779,9 @@ void decode_play(void)
 #endif
 
 #if defined(MP3_DISP_LOAD_STRING)
+#ifdef USE_SYS_MODE_RECOVER
+    if(!sys_mode_recove)
+#endif		
       if((get_device_online_status()&0x03)>0)
       Disp_Con(DISP_LOAD);
 #endif
