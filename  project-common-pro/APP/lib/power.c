@@ -39,6 +39,7 @@ extern void lcd_power_down(void);
 extern void stop_decode(void);
 extern void my_main_vol(u8 my_vol);
 extern void set_play_flash(u8 led_status);
+extern void fm_rev_powerdown(void);
 
 
 #ifdef DC_HW_POWER_UP
@@ -527,6 +528,10 @@ void sys_power_down(void)
     lcd_power_down();
     //delay_10ms(20);
 #endif
+
+    main_vol_set(0, CHANGE_VOL_NO_MEM);
+
+    fm_rev_powerdown();
 
 #ifdef BLUETOOTH_GPIO_CTRL
     BT_PWR_OFF();

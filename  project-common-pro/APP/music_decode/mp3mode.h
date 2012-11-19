@@ -27,7 +27,7 @@
 #include "dac.h"
 
 #ifdef CUSTOM_OUTPUT_LIMIT
-#define CUSTOM_OUTPUT_VAL		5
+#define CUSTOM_OUTPUT_VAL		4
 #endif
 
 typedef enum
