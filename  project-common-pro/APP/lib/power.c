@@ -216,7 +216,7 @@ void timer_pwr_off()
 #endif
 #ifdef  USE_POWER_KEY
 
-#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+#if defined(DC_HW_POWER_UP_IN_IDLE_MODE)|| defined(USB_SD_PORTABLE_BAT_CHARGER)
 bool dc_hw_pwer_up_sel_mode=0;
 #endif
 void waiting_power_key()
@@ -311,7 +311,9 @@ __PWR_ON:
 #elif defined(USB_SD_PORTABLE_BAT_CHARGER)
 
 		BATT_CHARGER_PORT_INIT();
-		if(BATT_CHRG_PORT){			
+		if(BATT_CHRG_PORT){		
+
+			dc_hw_pwer_up_sel_mode=1;			
 			power_ctl(1);
 			goto __PWR_UP;
 		}

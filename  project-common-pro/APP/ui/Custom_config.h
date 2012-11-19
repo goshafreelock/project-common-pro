@@ -567,7 +567,7 @@
 //#define K2121_WXD_2121_V001
 //#define K1224_YJH_1224_V001
 //#define K1229_WXD_1229_V001
-#define K3031_AP_668_V001
+//#define K3031_AP_668_V001
 //#define K2131_AJR_1234_V001
 //#define K2136_ZX_1234_V001
 
