@@ -595,7 +595,13 @@ void music_play(void)
     u8 key;
     u8 file_end_time;
     static u8 cnt_rt=0;
-	
+#ifdef USE_SYS_MODE_RECOVER
+    if((get_device_online_status()&0x03)==0){
+
+		Set_Curr_Func(SYS_FMREV);		
+		return;
+    }
+#endif	
     while (1)
     {
         key = get_msg();

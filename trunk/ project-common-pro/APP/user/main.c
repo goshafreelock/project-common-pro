@@ -61,7 +61,7 @@ extern bool IR_KEY_Detect;
 extern bool blue_tooth_detect;
 #endif
 
-#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+#if defined(DC_HW_POWER_UP_IN_IDLE_MODE)|| defined(USB_SD_PORTABLE_BAT_CHARGER)
 extern bool dc_hw_pwer_up_sel_mode;
 #endif
 
@@ -1056,7 +1056,11 @@ void sys_info_init(void)
 	else if(work_mode ==  SYS_RTC){
 		work_mode = SYS_MP3DECODE_USB;
 	}
+	else{
+		work_mode = SYS_MP3DECODE_USB;
+	}
 #endif
+
 #ifdef UART_ENABLE	
     sys_printf("sys_init phase two finish");
 #endif
@@ -1118,7 +1122,7 @@ void Idle_hdlr()
     {
         key = get_msg();
 #ifdef  USE_POWER_KEY			
-#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+#if defined(DC_HW_POWER_UP_IN_IDLE_MODE)|| defined(USB_SD_PORTABLE_BAT_CHARGER)
 		if(dc_hw_pwer_up_sel_mode){
 
 			if(key==(INFO_POWER | KEY_HOLD)){
@@ -1397,7 +1401,7 @@ void main(void)
 
 #endif
 
-#ifdef DC_HW_POWER_UP_IN_IDLE_MODE
+#if defined(DC_HW_POWER_UP_IN_IDLE_MODE)|| defined(USB_SD_PORTABLE_BAT_CHARGER)
 	if(dc_hw_pwer_up_sel_mode){
 		Set_Curr_Func(SYS_IDLE);
 	}
