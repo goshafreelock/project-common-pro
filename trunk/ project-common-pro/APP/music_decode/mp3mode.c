@@ -46,6 +46,10 @@ extern xd_u8 time_show_return_cnt;
 extern xd_u8 last_plug_dev;
 #endif
 
+#ifdef USE_SYS_MODE_RECOVER
+extern bool sys_mode_recove;
+#endif
+
 #ifdef VOL_ADJ_SPARK_LED
 extern bool vol_adj_spark_bit;
 extern xd_u8 last_led_play_mod;
@@ -596,8 +600,8 @@ void music_play(void)
     u8 file_end_time;
     static u8 cnt_rt=0;
 #ifdef USE_SYS_MODE_RECOVER
-    if((get_device_online_status()&0x03)==0){
-
+    if(sys_mode_recove){
+		sys_mode_recove=0;
 		Set_Curr_Func(SYS_FMREV);		
 		return;
     }
