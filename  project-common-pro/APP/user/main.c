@@ -1060,7 +1060,7 @@ void sys_info_init(void)
 	else if(work_mode ==  SYS_RTC){
 		work_mode = SYS_MP3DECODE_USB;
 	}
-	else{
+	else if(work_mode ==  SYS_FMREV){
 		sys_mode_recove=1;		
 		work_mode = SYS_MP3DECODE_USB;
 	}
