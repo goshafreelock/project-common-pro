@@ -107,6 +107,7 @@ void adc_diode_temp_measure_hdlr();
 
 #ifdef USB_SD_PORTABLE_BAT_CHARGER
 void cell_output_charge_enable(bool f_g);
+void cell_level_disp_if(u8 cmd);
 #endif
 
 #ifdef USE_CUSTOMIED_GPIO_KEY

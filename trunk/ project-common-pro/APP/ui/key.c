@@ -569,7 +569,7 @@ bool charger_detect(void)
 		DC_CHARGE_LED_L();		
 #endif
 
-#ifdef K0000_JK_KHT_830D_V001
+#if defined(K0000_JK_KHT_830D_V001)||defined(K0000_JK_KHT_830E_V001)
 	if(play_status!=MUSIC_PLAY)
 		set_play_flash(LED_FLASH_ON);
 #endif
@@ -723,6 +723,7 @@ void portable_charger_hdlr()
 
 	//4 BATTARY CHARGE PHASE...BEGIN...
 	BATT_CHARGER_PORT_INIT();
+	_nop_();	_nop_();	_nop_();	_nop_();
 	
 	if(BATT_CHRG_PORT){
 		if(BATT_STBY_PORT){

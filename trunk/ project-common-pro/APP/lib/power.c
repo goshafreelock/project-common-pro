@@ -311,6 +311,10 @@ __PWR_ON:
 #elif defined(USB_SD_PORTABLE_BAT_CHARGER)
 
 		BATT_CHARGER_PORT_INIT();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
 		if(BATT_CHRG_PORT){		
 
 			dc_hw_pwer_up_sel_mode=1;			
@@ -540,6 +544,10 @@ void sys_power_down(void)
 #endif 
 
     delay_10ms(10);//4 wait for  all off
+    
+#ifdef USB_SD_PORTABLE_BAT_CHARGER
+    cell_level_disp_if(0);			
+#endif
 
     EA = 0;
 

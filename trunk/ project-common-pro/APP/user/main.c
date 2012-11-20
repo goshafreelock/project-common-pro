@@ -1135,7 +1135,7 @@ void Idle_hdlr()
 				dc_hw_pwer_up_sel_mode =0;				
 				Set_Curr_Func(SYS_MP3DECODE_USB);
 				return;
-			}
+			}			
 			else if(key!= INFO_HALF_SECOND){
 				
 				key = NO_KEY;
@@ -1203,7 +1203,26 @@ void Idle_hdlr()
 #ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
 	 	Disp_BL_time_out();
 #endif
-		
+
+#ifdef  USE_POWER_KEY			
+#if defined(USB_SD_PORTABLE_BAT_CHARGER)
+		if(dc_hw_pwer_up_sel_mode){
+
+			BATT_CHARGER_PORT_INIT();
+			_nop_();	_nop_();	_nop_();	_nop_();
+			if(!BATT_CHRG_PORT){		
+#if defined(PWR_CTRL_WKUP)
+				wkup_pin_ctrl(0);
+#else
+				power_ctl(0);
+#endif
+				 EA = 0;
+				 while (1);
+			}
+		}
+#endif
+#endif
+
 #if defined(USE_BAT_MANAGEMENT)
 
 #if defined(BAT_LEVEL_GPIO_DRV_LED_IND)||defined(BAT_LEVEL_LED_ICON_IND)
