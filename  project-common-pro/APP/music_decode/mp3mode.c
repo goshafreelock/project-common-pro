@@ -1456,7 +1456,7 @@ void music_play(void)
 
 		                if (DISP_DWORD_NUMBER == curr_menu)
 		                {
-               	              //    Disp_Con(DISP_PLAY);
+               	              Disp_Con(DISP_PLAY);
 		                    //put_msg_fifo(INFO_PICK_SONG | KEY_SHORT_UP);
 		                }
 			}

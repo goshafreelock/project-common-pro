@@ -559,7 +559,7 @@
 //#define K3025_YL_3025_V001
 //#define K1195_YJH_11830_V001
 //#define K1197_DCX_855_V001
-#define K1197_DCX_893_V001
+//#define K1197_DCX_893_V001
 //#define K1197_LS_L10A_V001
 //#define K1197_KM_855_V001
 //#define K1197_AJR_855_V001
@@ -779,7 +779,6 @@
 #define LED_USE_PLAY_MODE
 #define LED_USE_PLAY_MODE_NORMAL
 
-#undef MUTE_CTRL_LEVEL_NORMAL
 #ifdef MUTE_PORT_USE_P01
 #undef  MUTE_PORT_USE_P01
 #endif
@@ -806,6 +805,8 @@
 
 #define USE_AMP_MODE_SELECT
 #define AMP_MODE_SELECT_PORT_USE_P04
+
+#define FM_USE_AR1015
 #endif
 
 #ifdef K2131_AJR_1234_V001
