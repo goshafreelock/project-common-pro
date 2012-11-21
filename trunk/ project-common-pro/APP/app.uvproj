@@ -30,10 +30,10 @@
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
           <UseEnv>0</UseEnv>
-          <BinPath></BinPath>
+          <BinPath>C:\Keil\C51\BIN\</BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>Atmel\</RegisterFilePath>
+          <RegisterFilePath></RegisterFilePath>
           <DBRegisterFilePath>Atmel\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
@@ -42,7 +42,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\</OutputDirectory>
+          <OutputDirectory>.\user\</OutputDirectory>
           <OutputName>app</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -294,7 +294,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\decode_otp;.\fm_transmitter;.\codec;.\voice_time</IncludePath>
+              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\decode_otp;.\fm_transmitter;.\codec;.\voice_time;.\kpl_msg</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -306,7 +306,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\fm_transmitter;.\codec</IncludePath>
+              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\fm_transmitter;.\codec;.\kpl_msg</IncludePath>
             </VariousControls>
           </Ax51>
           <Lx51>
@@ -907,11 +907,6 @@
               <FilePath>.\ui\my_IR_key.c</FilePath>
             </File>
             <File>
-              <FileName>kpl_msg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\user\kpl_msg.c</FilePath>
-            </File>
-            <File>
               <FileName>Dsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ui\Dsa.c</FilePath>
@@ -1455,6 +1450,16 @@
               <FileName>voicetime_reource.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\voice_time\voicetime_reource.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>kpl_msg</GroupName>
+          <Files>
+            <File>
+              <FileName>kpl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\kpl_msg\kpl_msg.c</FilePath>
             </File>
           </Files>
         </Group>
