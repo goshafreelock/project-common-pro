@@ -294,7 +294,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\decode_otp;.\fm_transmitter;.\codec;.\voice_time;.\kpl_msg</IncludePath>
+              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\decode_otp;.\fm_transmitter;.\codec;.\voice_time</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -306,7 +306,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\fm_transmitter;.\codec;.\kpl_msg</IncludePath>
+              <IncludePath>.\lib;.\user;.\music_decode;.\ui;.\fm_receive;.\usb_device;..\link_hex;.\aux_fun;.\rtc_fun;.\fm_transmitter;.\codec</IncludePath>
             </VariousControls>
           </Ax51>
           <Lx51>
@@ -856,6 +856,11 @@
               <FileType>4</FileType>
               <FilePath>.\lib\app.LIB</FilePath>
             </File>
+            <File>
+              <FileName>app1.LIB</FileName>
+              <FileType>4</FileType>
+              <FilePath>.\app1.LIB</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -910,11 +915,6 @@
               <FileName>Dsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ui\Dsa.c</FilePath>
-            </File>
-            <File>
-              <FileName>kpl_msg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\user\kpl_msg.c</FilePath>
             </File>
           </Files>
         </Group>
