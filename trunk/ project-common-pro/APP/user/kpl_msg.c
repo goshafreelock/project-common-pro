@@ -26,10 +26,10 @@ _code u8 msg_tab[] ={1,1,2,3,5,8,13};
 //#define KPL_MSG_TYPE_2
 //#define KPL_MSG_TYPE_3
 
-#define ADDR_CHK_1			90
-#define ADDR_CHK_2			93
-#define ADDR_LOCK_TIMER	95
-#define ADDR_ENABLE		98
+#define ADDR_CHK_1			93
+#define ADDR_CHK_2			90
+#define ADDR_LOCK_TIMER	98
+#define ADDR_ENABLE		95
 #define ADDR_UNLOCK_TIMER	91
 
 #define MSG_ENABLE			0x00
@@ -39,9 +39,14 @@ _code u8 msg_tab[] ={1,1,2,3,5,8,13};
 #define MSG_CHK_A			0x66
 #define MSG_CHK_B			0xCC
 
+#ifdef KPL_MSG_DEBUG
+#define MSG_LOCK_TIMER 		10
+#define MSG_UNLOCK_TIMER 	2
+#else
+
 #if defined(KPL_MSG_TYPE_1)
-#define MSG_LOCK_TIMER 		48
-#define MSG_UNLOCK_TIMER 	12
+#define MSG_LOCK_TIMER 		44
+#define MSG_UNLOCK_TIMER 	48
 #elif defined(KPL_MSG_TYPE_2)
 #define MSG_LOCK_TIMER 		88
 #define MSG_UNLOCK_TIMER 	28
@@ -49,7 +54,7 @@ _code u8 msg_tab[] ={1,1,2,3,5,8,13};
 #define MSG_LOCK_TIMER 		12
 #define MSG_UNLOCK_TIMER 	12
 #endif
-
+#endif
 extern bool get_eeprom_status(void);
 extern u8 _idata  my_music_vol;
 extern void main_vol(u8 vol);
@@ -88,6 +93,10 @@ void kpl_msg_unlock()
 void init_kpl_msg()
 {
 	u8 msg_reg1=0,msg_reg2=0;
+#ifdef KPL_MSG_DEBUG
+	sys_printf("-----> init_kpl_msg<----");
+#endif	
+
 #ifdef SUPERIOR_CUSTOMER
 	kpl_msg_unlock_type = 0xFF;
 #endif
@@ -98,6 +107,7 @@ void init_kpl_msg()
 	kpl_msg_timer=0;
 
 	msg_tab_ptr = (my_music_vol%6);
+	
 #ifdef KPL_MSG_DEBUG
 		printf("----->init_kpl_msg %x \r\n",(u16)msg_tab_ptr);
 #endif	
