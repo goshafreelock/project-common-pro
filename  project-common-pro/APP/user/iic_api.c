@@ -127,9 +127,9 @@ void check_eeprom_status(void)
 	else{
 		eeprom_type = 0;
 	}
-
-	//printf("eeprom_type %x \r\n",(u16)eeprom_type);
-	
+#ifdef UART_ENABLE
+	printf("eeprom_type %x \r\n",(u16)eeprom_type);
+#endif	
 	iic_busy = 0;
 }
 bool get_eeprom_status(void)

@@ -42,12 +42,12 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\user\</OutputDirectory>
+          <OutputDirectory>.\</OutputDirectory>
           <OutputName>app</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
-          <DebugInformation>1</DebugInformation>
+          <DebugInformation>0</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\</ListingPath>
           <HexFormatSelection>0</HexFormatSelection>
@@ -911,6 +911,11 @@
               <FileType>1</FileType>
               <FilePath>.\ui\Dsa.c</FilePath>
             </File>
+            <File>
+              <FileName>kpl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\user\kpl_msg.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1450,16 +1455,6 @@
               <FileName>voicetime_reource.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\voice_time\voicetime_reource.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>kpl_msg</GroupName>
-          <Files>
-            <File>
-              <FileName>kpl_msg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\kpl_msg\kpl_msg.c</FilePath>
             </File>
           </Files>
         </Group>
