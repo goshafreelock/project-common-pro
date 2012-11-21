@@ -1286,7 +1286,9 @@ void Idle_hdlr()
 			return;
 		}
 #endif
-			
+#ifdef USE_POWER_KEY_TO_SWITCH_MODE
+	goto __HOT_MSG_HDL;
+#endif
 #if defined(K723_LUOMAO_723_V001)
 	goto __HOT_MSG_HDL;
 #endif
