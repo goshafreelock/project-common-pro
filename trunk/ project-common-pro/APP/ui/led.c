@@ -710,7 +710,7 @@ void LED_SEG_OUT(u8 SEG_Data)
  	P12=((SEG_Data&SEG_F)>0)?1:0;
  	P15=((SEG_Data&SEG_G)>0)?1:0;
 }
-#elif defined(K1177_HF_BJD_V3_V001)||defined(K2136_ZX_1234_V001)||defined(K2121_WXD_2121_V001)||defined(K1182_YJH_867_V001)||defined(K1182_YJH_1182_V001)||defined(K1182_ZK_1182_V001)||defined(K1182_YL_1182_V001)
+#elif defined(K1177_HF_BJD_V3_V001)||defined(K1182_ZK_985B_V002)||defined(K2136_ZX_1234_V001)||defined(K2121_WXD_2121_V001)||defined(K1182_YJH_867_V001)||defined(K1182_YJH_1182_V001)||defined(K1182_ZK_1182_V001)||defined(K1182_YL_1182_V001)
 void LED_COM_OUT(u8 COM_Data)
 {
  	P30 =((COM_Data&0x01)>0)?1:0;
