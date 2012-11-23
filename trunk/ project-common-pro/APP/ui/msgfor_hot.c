@@ -1734,6 +1734,9 @@ u8 ap_handle_hotkey(u8 key)
         if (SYS_IPH == work_mode)
         {
             work_mode = last_work_mode;
+	     if(work_mode == SYS_IDLE){
+			put_msg_lifo(INFO_NEWDEVICE);
+	     }
             return 0;
         }
         break;
