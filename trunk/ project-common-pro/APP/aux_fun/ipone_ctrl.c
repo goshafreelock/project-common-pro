@@ -26,7 +26,7 @@ void iPodCommand(u8 button,u8 len);
 #define IDENTIFY_LOGIC 			1
 #elif defined(IPHONE_DETECT_USE_P02)
 #define IPHONE_DETECT_PORT 	P02
-#define IDENTIFY_LOGIC 			1
+#define IDENTIFY_LOGIC 			0
 #else
 #define IPHONE_DETECT_PORT 	P06
 #define IDENTIFY_LOGIC 			1
