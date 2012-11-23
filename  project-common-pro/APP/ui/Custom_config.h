@@ -573,7 +573,7 @@
 //#define K3031_AP_668_V001
 //#define K2131_AJR_1234_V001
 //#define K2136_ZX_1234_V001
-//#define K1247_YHD_Y900_V001
+#define K1247_YHD_Y900_V001
 
 
 
