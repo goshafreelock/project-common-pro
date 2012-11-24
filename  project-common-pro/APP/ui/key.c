@@ -150,7 +150,11 @@ u8 ldoin_voltage(void)
     return (((u16)adc_vddio*(248+5)/10)/adc_vdd12);
 }
 #if defined(USE_BAT_MANAGEMENT)
+#ifdef LED_1651_DRV
+#include "led_1651.h"
+#else
 #include "led.h"
+#endif
 extern _xdata u8 LED_BUFF[5];
 extern bool pwr_up_flag;
 
@@ -289,6 +293,8 @@ bool get_low_bat_power_lock()
 #define CHARGER_PORT	P07
 #elif defined(K591_JiaLe_591_V001)||defined(CHARGER_DET_USE_P02)
 #define CHARGER_PORT	P02
+#elif defined(CHARGER_DET_USE_P05)
+#define CHARGER_PORT	P05
 #elif defined(K723_LUOMAO_723_V001)||defined(K000_AOKAILIN_535B_V001)||defined(CHARGER_DET_USE_P17)
 #define CHARGER_PORT	P17
 #elif defined(CHARGER_DET_USE_VPP)
@@ -339,6 +345,14 @@ bool charger_detect(void)
 #ifdef AC209_28PIN
 	P3DIR |= BIT(4);P3PU &= ~(BIT(4));P3PD&= ~(BIT(4));
 #endif
+
+#elif defined(CHARGER_DET_USE_P05)
+
+    P05 =0;
+    P0PU  &= ~(BIT(5));
+    P0PD|= (BIT(5));
+    P0DIR |= (BIT(5));
+
 #elif defined(CHARGER_DET_USE_P11)
 
     	//P11 =0;
