@@ -124,6 +124,8 @@ void disp_scan_1651(void)
 	return;
 	ET0=0;
 
+	iic_busy=1;
+	
 	Tm1651_dio = 1;
 	Ttm1651_clk = 1;
 	start();										//调用开始信号
@@ -165,7 +167,9 @@ void disp_scan_1651(void)
 	start();										//调用开始信号
 	write(0x8b);									//送开屏命令，（8BH），亮度可以根据低三位调节。
 	stop();
-	
+
+	iic_busy=0;
+
 	ET0=1;
 
 }
@@ -186,6 +190,10 @@ void updataLCD(void)
 {
 
 }
-
+void lcd_power_down(void)
+{
+    disp_buf_clear();
+    disp_scan_1651();
+}
 #endif
 

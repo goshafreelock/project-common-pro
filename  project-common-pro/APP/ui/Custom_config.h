@@ -573,7 +573,7 @@
 //#define K3031_AP_668_V001
 //#define K2131_AJR_1234_V001
 //#define K2136_ZX_1234_V001
-#define K1247_YHD_Y900_V001
+//#define K1247_YHD_Y900_V001
 
 
 
@@ -743,6 +743,7 @@
 //#define K1222_WXD_1222_V001
 //#define K401_KM_401_V001
 //#define K2129_WXD_1234_V001
+#define K1251_YHD_Y902_V001
 
 
 /*****************≤‚ ‘—È÷§******************/
@@ -17877,6 +17878,62 @@
 //#define LINE_IN_PLAY_KEY_PAUSE
 #define USE_LONG_PLAY_KEY_TO_SWITCH_MODE
 #endif
+
+
+
+#ifdef K1251_YHD_Y902_V001
+
+#define AC209_28PIN		//28 PIN IC GPIO CONFIG
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#define MUTE_PORT_USE_P26
+
+#define PLAY_STATUS_LED_P27
+#define NO_PLAY_STATUS_LED
+
+#ifdef LED_GPIO_DRV
+#undef LED_GPIO_DRV
+#endif
+#define LED_1651_DRV
+
+#define LINE_IN_PLAY_KEY_PAUSE
+
+#define MUTE_GPIO_FM_GPIO_COMPATIBALE
+#define USE_FM_GPIO
+#define NEW_SD_DETECT_MOD
+
+#define USE_GPIO_DETECT_EARPHONE_PLUGGED
+#define EARPHONE_DETECT_USE_VPP
+
+#define USE_LINE_IN_DETECT_FUNC
+#define AUX_DETECT_USE_P01
+#define AUX_DETECT_SHARE_WITH_IIC_SCL
+
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+#define ADKEY_PLAY_SHORT_SCAN_FRE
+
+#define BK_SHARE_MCU_CRY
+
+#if 1
+#define USE_POWER_KEY
+#define USE_ONLY_POWER_HOLD_CTRL
+#define PWR_CTRL_P02
+#define USE_PWR_KEY_LONG_PWR_ON
+#endif
+
+
+#define DISABLE_P05_OSC_OUTPUT
+
+#endif
+
+
+
+
+
 
 
 
