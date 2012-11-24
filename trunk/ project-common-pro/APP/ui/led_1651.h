@@ -53,13 +53,19 @@
 #ifdef USE_BAT_MANAGEMENT
 
 #ifdef EXCHANGE_LED_BAT_ICON
+
+#undef  LED_MP3	
+#undef  LED_FM	
+#define LED_FM	0
+#define LED_MP3	0
+
 #ifdef BAT_LEVEL_LED_ICON_IND
 #ifndef LED_BAT_L1
-#define LED_BAT_L1 	BIT(LED_F)
+#define LED_BAT_L1 	BIT(LED_B)
 #endif
 
 #ifndef LED_BAT_L2
-#define LED_BAT_L2 	BIT(LED_G)
+#define LED_BAT_L2 	BIT(LED_C)
 #endif
 
 #endif
@@ -67,12 +73,16 @@
 #else
 
 #ifdef BAT_LEVEL_LED_ICON_IND
+#undef  LED_MP3	
+#undef  LED_FM	
+#define LED_FM	0
+#define LED_MP3	0
 #ifndef LED_BAT_L1
-#define LED_BAT_L1 	BIT(LED_G)
+#define LED_BAT_L1 	BIT(LED_C)
 #endif
 
 #ifndef LED_BAT_L2
-#define LED_BAT_L2 	BIT(LED_F)
+#define LED_BAT_L2 	BIT(LED_B)
 #endif
 
 #endif

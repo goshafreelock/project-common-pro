@@ -116,6 +116,9 @@ void write(unsigned char wr_data)
 	 _nop_();										//ACKÓ¦´ðÐÅºÅ	
 }
  
+#if defined(USE_BAT_MANAGEMENT)
+extern void Bat_icon_chk();
+#endif
 
 void disp_scan_1651(void)
 {
@@ -123,6 +126,10 @@ void disp_scan_1651(void)
 	if(iic_busy)
 	return;
 	ET0=0;
+
+#if defined(USE_BAT_MANAGEMENT)
+	Bat_icon_chk();
+#endif
 
 	iic_busy=1;
 	
