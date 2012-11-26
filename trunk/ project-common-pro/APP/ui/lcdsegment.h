@@ -371,6 +371,17 @@ SEG8     P34
 #define S3_ICON_BUF		(lcd_buff[0])
 #define S4_ICON_MASK	0x0000
 #define S4_ICON_BUF		(lcd_buff[0])
+
+#define L_ICON_BUF		(lcd_buff[0])
+#define L1_ICON_MASK	0x0001
+#define L1_ICON_BUF		(lcd_buff[0])
+#define L2_ICON_MASK	0x0002
+#define L2_ICON_BUF		(lcd_buff[0])
+#define L3_ICON_MASK	0x0003
+#define L3_ICON_BUF		(lcd_buff[0])
+#define L4_ICON_MASK	0x0004
+#define L4_ICON_BUF		(lcd_buff[0])
+
 #elif defined(K5018_JK_5018_V001)
 
 #define USB_DEV_MASK	0x0004

@@ -744,7 +744,7 @@
 //#define K1222_WXD_1222_V001
 //#define K401_KM_401_V001
 //#define K2129_WXD_1234_V001
-#define K1251_YHD_Y902_V001
+//#define K1251_YHD_Y902_V001
 
 
 /*****************≤‚ ‘—È÷§******************/
@@ -1390,6 +1390,8 @@
 
 #define RADIO_MODE_HOT_KEY_ENABLE
 #define USE_IR_VPP_PORT_FOR_DETECTION
+
+#define USE_SPECTRUM_PARTTERN
 
 #define USE_RTC_FUNCTION
 #define USE_RTC_TIME_ONLY
@@ -3264,6 +3266,7 @@
 #define USE_BAT_MANAGEMENT
 #define BAT_MEASURE_USE_P02_PORT
 
+#define NO_DEV_LED_IMPROVE
 #define DEFAULT_GO_TO_IDLE
 #define IMPROVED_BAT_MEASURE
 #define USB_SD_PORTABLE_BAT_CHARGER
