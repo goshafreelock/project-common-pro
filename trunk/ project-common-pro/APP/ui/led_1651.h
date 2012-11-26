@@ -33,6 +33,21 @@
 #define LED_PLAY	 0//BIT(LED_G)
 #define LED_STATUS   LED_BUFF[4]
 
+#elif defined(LED_USE_PLAY_MODE_WITH_BAT_ICON)
+#define LED_AUX	 	BIT(LED_D)
+
+#define LED_USB		 BIT(LED_A)
+#define LED_FM		 BIT(LED_H)
+#define LED_MP3		 BIT(LED_C)
+#define LED_SD		 BIT(LED_F)
+#define LED_PLAY	 0//BIT(LED_F)
+#define LED_2POINT	 BIT(LED_G)
+#define LED_PAUSE	 0//BIT(LED_H)
+
+#define LED_BAT_L1 	BIT(LED_C)
+#define LED_BAT_L2 	BIT(LED_B)
+
+#define LED_STATUS   LED_BUFF[4]
 #else
 
 #define LED_AUX	 	0//BIT(LED_A)
@@ -54,13 +69,13 @@
 
 #ifdef EXCHANGE_LED_BAT_ICON
 
+
+#ifdef BAT_LEVEL_LED_ICON_IND
+#ifndef LED_BAT_L1
 #undef  LED_MP3	
 #undef  LED_FM	
 #define LED_FM	0
 #define LED_MP3	0
-
-#ifdef BAT_LEVEL_LED_ICON_IND
-#ifndef LED_BAT_L1
 #define LED_BAT_L1 	BIT(LED_B)
 #endif
 
@@ -73,11 +88,12 @@
 #else
 
 #ifdef BAT_LEVEL_LED_ICON_IND
+
+#ifndef LED_BAT_L1
 #undef  LED_MP3	
 #undef  LED_FM	
 #define LED_FM	0
 #define LED_MP3	0
-#ifndef LED_BAT_L1
 #define LED_BAT_L1 	BIT(LED_C)
 #endif
 

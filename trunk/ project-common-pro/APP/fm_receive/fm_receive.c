@@ -260,6 +260,10 @@ void fm_rev( void )
 		goto __CH_DOWN;
 		break;
 #endif
+#ifdef USE_STOP_KEY_SHORT_SCAN
+    	case INFO_STOP| KEY_SHORT_UP :
+	goto __SCAN_FREQ;
+#endif
 
 #ifdef IR_INFO_EQ_DOWN_SCAN
         case INFO_EQ_DOWN| KEY_SHORT_UP :

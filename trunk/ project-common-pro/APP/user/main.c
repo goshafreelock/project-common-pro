@@ -1240,7 +1240,10 @@ void Idle_hdlr()
 		                Disp_Con(DISP_NODEVICE);
 			}
 	     }
-#endif			
+#endif	
+
+	     Disp_Update();			
+
             break;			
 #if 0//def POWE_KEY_PLAY_KEY_IN_ONE_KEY
        case INFO_POWER| KEY_HOLD:	
