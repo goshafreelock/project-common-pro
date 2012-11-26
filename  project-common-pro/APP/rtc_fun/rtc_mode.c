@@ -575,6 +575,13 @@ void deal_rtc(void)
         	}
 #else
 
+#ifdef K3031_AP_668_V001
+		if(alm_set==0){
+			alm_set=1;
+			break;
+		}
+#endif
+
 #if defined(K820_LHD_820_V001)
 			break;
 #endif
@@ -764,6 +771,9 @@ __TIME_ADJ_POS:
             }
             else if (rtc_mode == ALM_SET_MODE)
             {
+#ifdef K3031_AP_668_V001
+		if(alm_set==0)break;
+#endif
                 alm_set++;
 #if defined(ALARM_SEL_SOURCE)
                 if (alm_set>3)

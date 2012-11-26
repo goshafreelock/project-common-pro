@@ -572,7 +572,7 @@ void Disp_AUX(void)
 {
 
 #ifndef AUX_ICON_FOR_RTC_ALM
-#if defined(LED_USE_PLAY_MODE)||defined(LED_USE_ROUND_LED)||defined(K745_SUOERSI_745_V001)||defined(LED_USE_PLAY_MODE_MIXED)
+#if defined(LED_USE_PLAY_MODE)||defined(LED_USE_ROUND_LED)||defined(LED_USE_PLAY_MODE_WITH_BAT_ICON)||defined(K745_SUOERSI_745_V001)||defined(LED_USE_PLAY_MODE_MIXED)
     LED_STATUS |= LED_AUX;
 #endif
 #endif

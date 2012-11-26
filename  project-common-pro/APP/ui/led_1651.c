@@ -159,7 +159,7 @@ void disp_scan_1651(void)
 		LED_BUFF[4]|=(BIT(LED_B));
 	if(LED_STATUS&LED_USB)
 		LED_BUFF[4]|=(BIT(LED_A));	
-#endif		
+#endif	
 	write(0xff);
 	write(LED_BUFF[1]);	
 	write(LED_BUFF[2]);	
@@ -192,6 +192,7 @@ void init_disp(void)
 {
     disp_buf_clear();
     iic_1651_init_io();
+    disp_scan_1651();	
 }
 void updataLCD(void)
 {
