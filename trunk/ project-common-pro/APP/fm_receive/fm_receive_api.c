@@ -753,6 +753,8 @@ else
 #define FM_SCAN_STOP_KEY_1 		INFO_EQ_UP
 #elif defined(K120_YJH_120_V001)||defined(IR_INFO_EQ_DOWN_SCAN)
 #define FM_SCAN_STOP_KEY_1 		INFO_EQ_DOWN
+#elif defined(USE_STOP_KEY_SHORT_SCAN)
+#define FM_SCAN_STOP_KEY_1 		INFO_STOP
 #else
 #define FM_SCAN_STOP_KEY_1 		INFO_PLAY
 #endif
