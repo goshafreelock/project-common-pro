@@ -199,7 +199,7 @@
 
 #define LED_STATUS   LED_BUFF[4]
 
-#elif defined(K728_SUOERSI_728_V001)
+#elif defined(K728_SUOERSI_728_V001)||defined(K4006_SES_4321_V001)
 
 #define LED_AUX	 		BIT(LED_D)
 #define LED_FM			BIT(LED_F)

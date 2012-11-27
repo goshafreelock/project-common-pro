@@ -602,6 +602,17 @@ void bat_val_arg(void);
 #define ADKEY_7		INFO_VOL_MINUS
 #define ADKEY_8		INFO_VOL_PLUS
 #define ADKEY_NOKEY	NO_KEY
+#elif defined(K4006_SES_4321_V001)
+/*Default adkey value */
+#define ADKEY_1		INFO_PLAY
+#define ADKEY_2		INFO_PREV_FIL
+#define ADKEY_3		INFO_NEXT_FIL
+#define ADKEY_4		INFO_MODE
+#define ADKEY_5		INFO_EQ_UP
+#define ADKEY_6		INFO_PLAY_MODE
+#define ADKEY_7		INFO_STOP
+#define ADKEY_8		INFO_VOL_PLUS
+#define ADKEY_NOKEY	NO_KEY
 #elif defined(K2083_KPL_2083_V001)||defined(K2083_SW_2083_V001)||defined(K2083_SW_2083_V002)||defined(K2083_KPL_2083_V002)||defined(K2083_KPL_2083_V003)
 #define ADKEY_1		INFO_PLAY
 #define ADKEY_2		INFO_PREV_FIL
@@ -1452,17 +1463,6 @@ void bat_val_arg(void);
 #define ADKEY_5		INFO_EQ_UP
 #define ADKEY_6		INFO_PLAY_MODE
 #define ADKEY_7		INFO_EQ_DOWN
-#define ADKEY_8		INFO_VOL_PLUS
-#define ADKEY_NOKEY	NO_KEY
-#elif defined(K4006_SES_4321_V001)
-/*Default adkey value */
-#define ADKEY_1		INFO_PLAY
-#define ADKEY_2		INFO_PREV_FIL
-#define ADKEY_3		INFO_NEXT_FIL
-#define ADKEY_4		INFO_MODE
-#define ADKEY_5		INFO_EQ_UP
-#define ADKEY_6		INFO_PLAY_MODE
-#define ADKEY_7		INFO_STOP
 #define ADKEY_8		INFO_VOL_PLUS
 #define ADKEY_NOKEY	NO_KEY
 #else
