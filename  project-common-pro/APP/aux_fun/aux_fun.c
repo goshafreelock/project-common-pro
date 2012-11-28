@@ -345,10 +345,26 @@ void deal_aux( void )
 	 
 	switch (key)
         {
+#ifdef USE_IR_LONG_POWER_KEY_TO_FAKE_POWER_OFF
+        case INFO_POWER | KEY_LONG:
+
+		if(IR_KEY_Detect){
+			goto _HOT_KEY_HDLR;	
+		}
+		break;
+#endif			
+        
 #if defined(LINE_IN_PLAY_KEY_PAUSE)
 #if 1//defined(USE_ONLY_POWER_HOLD_CTRL)
 #if defined(USE_POWER_KEY_FOR_AUX_PLAY)
-        case INFO_POWER | KEY_SHORT_UP :	
+        case INFO_POWER | KEY_SHORT_UP :
+#ifdef USE_IR_LONG_POWER_KEY_TO_FAKE_POWER_OFF
+		if(IR_KEY_Detect){
+			IR_KEY_Detect=0;		
+			break;
+		}
+        case INFO_PLAY | KEY_SHORT_UP :				
+#endif			
 #ifdef USE_IR_POWER_KEY_TO_POWER_OFF
 		if(IR_KEY_Detect){
 			goto _HOT_KEY_HDLR;	

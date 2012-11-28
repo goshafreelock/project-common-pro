@@ -55,7 +55,7 @@ void decode_opt_music_file(u8 buf_dptr)
     set_eq(0);                             //必须在每首歌曲播放前初始化EQ
     music_type = musice_format_check(buffer);
     my_memset(win_buffer, 0, 512);              //解码前，必须清除buffer
-
+    dac_out_select(DAC_DECODE);
     set_max_vol(MAX_ANALOG_VOL, MAX_DIGITAL_VOL);
 
 #if 0	

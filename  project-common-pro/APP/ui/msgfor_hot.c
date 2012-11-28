@@ -2133,6 +2133,17 @@ u8 ap_handle_hotkey(u8 key)
 #endif
 
 #ifdef  USE_POWER_KEY	
+#ifdef USE_IR_LONG_POWER_KEY_TO_FAKE_POWER_OFF
+
+    case INFO_POWER | KEY_LONG:
+
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			goto _SYS_GO_IN_POWER_OFF;	
+		}
+		break;
+#endif
+
     case INFO_POWER | KEY_HOLD:
 #if defined(CHARGER_DETECT_INDICATOR)
 #ifdef PWR_OFF_NO_RESP_WHEN_CHARGER_PLUGGED
@@ -2143,7 +2154,15 @@ u8 ap_handle_hotkey(u8 key)
 		return 0;
 	}
 #endif
-#endif		
+#endif
+
+#ifdef USE_IR_LONG_POWER_KEY_TO_FAKE_POWER_OFF
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			break;
+		}
+#endif
+
         sys_power_down();
         break;
 #endif
@@ -2153,6 +2172,14 @@ u8 ap_handle_hotkey(u8 key)
 	if(IR_Type == WITH_FM_CHIP)break;
 	
     case INFO_PLAY| KEY_LONG:
+
+#ifdef USE_IR_LONG_POWER_KEY_TO_FAKE_POWER_OFF
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			break;
+		}
+#endif
+		
 #if defined(POWER_KEY_LONG_POWER_OFF)		
     case INFO_POWER| KEY_LONG:
 #else		
@@ -2174,9 +2201,8 @@ u8 ap_handle_hotkey(u8 key)
 #endif		
 #endif	
 
-#ifdef USE_IR_POWER_KEY_TO_POWER_OFF
+
 _SYS_GO_IN_POWER_OFF:
-#endif
 
 #ifdef USE_PLAY_KEY_TO_POWER_OFF
     	case INFO_PLAY| KEY_LONG:
