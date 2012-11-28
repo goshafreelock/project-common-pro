@@ -17,7 +17,7 @@ extern u8 bP0IE;
 extern u8 _idata  my_music_vol;
 extern u8 play_status;	
 extern void putbyte(u8);
-extern xd_u8 return_cnt;
+extern xd_u8 return_cnt,curr_menu;
 extern void Delay_us(u16 i );
 extern void set_play_flash(u8 led_status);
 #if defined(WKUP_PIN_USE_ENABLE)||defined(MUTE_PORT_USE_WKUP)||defined(PWR_CTRL_WKUP)
@@ -1091,6 +1091,8 @@ void Bat_icon_chk()
 
 	if(pwr_up_flag)return;
 
+	if((work_mode==SYS_IDLE)&&(curr_menu==DISP_PWR_OFF))return;
+ 	
 #ifdef LOW_BAT_POWER_OFF_MODE
 	if(low_bat_power_lock)return;		
 #endif

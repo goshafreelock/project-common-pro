@@ -355,7 +355,13 @@ void fm_rev( void )
 			IR_KEY_Detect = 0;
 			break;
 		}
-#endif			
+#endif	
+#if defined(IR_PLAY_KEY_SCAN_FREQ_ALL)
+		if(IR_KEY_Detect){
+			IR_KEY_Detect = 0;
+			goto __SCAN_FREQ;
+		}
+#endif
             play_status = !play_status;
 
             if (play_status)

@@ -1228,6 +1228,8 @@ void Idle_hdlr()
 #if defined(BAT_LEVEL_GPIO_DRV_LED_IND)||defined(BAT_LEVEL_LED_ICON_IND)
 		if(!pwr_up_flag)
 #endif
+		if((curr_menu!=DISP_PWR_OFF))
+
 		bmt_hdlr();
 #endif		
 #ifdef K000_HG_898_V001
