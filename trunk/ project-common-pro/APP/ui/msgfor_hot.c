@@ -2496,7 +2496,9 @@ _SYS_GO_IN_POWER_OFF:
 #ifdef USB_SD_DEV_PLUG_MEM
 
 				device_active=BIT(USB_DISK);
-			 	last_plug_dev=0;
+			 	last_plug_dev=BIT(SDMMC);
+				set_play_flash(LED_FLASH_NOR);
+				
 #endif
 
 				 sys_printf("  SEL  SYS_MP3DECODE_USB");
@@ -2521,7 +2523,8 @@ _SYS_GO_IN_POWER_OFF:
 #endif	
 #ifdef USB_SD_DEV_PLUG_MEM
 				device_active=BIT(SDMMC);
-			 	last_plug_dev=0;
+			 	last_plug_dev=BIT(USB_DISK);
+				set_play_flash(LED_FLASH_NOR);				
 #endif
 				 sys_printf("  SEL  SYS_MP3DECODE_SD");
 

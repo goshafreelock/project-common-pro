@@ -2650,6 +2650,9 @@ u8 key_gpio_scan_parse(u8 K_mask,KEY_CMD k_cmd,KEY_REG_TYPE k_reg,KEY_PORT k_por
 		switch(k_port)
 		{
 			case PORT_0:
+#ifdef AC209_28PIN
+				P3DIR |= (BIT(4));P3PU &= ~(BIT(4));P3PD&= ~(BIT(4));
+#endif
 				if(k_cmd){
 					P0DIR &=~K_mask;
 				}
