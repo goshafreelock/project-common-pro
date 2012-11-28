@@ -344,7 +344,12 @@ void fm_rev( void )
 			break;
 		}
 #endif			
-		 	
+#ifdef USE_IR_POWER_KEY_TO_POWER_OFF
+		if(IR_KEY_Detect){
+			IR_KEY_Detect = 0;
+			break;
+		}
+#endif
 #elif defined(USE_MODE_LONG_FOR_FM_PLAY)
     	 case INFO_MODE| KEY_LONG:
 #endif

@@ -768,8 +768,9 @@ else
 #endif
 #elif defined(EQ_DOWN_SCAN_ALL)
 #define FM_SCAN_STOP_KEY_2 	INFO_EQ_DOWN
+#elif defined(IR_PLAY_KEY_SCAN_FREQ_ALL)
+#define FM_SCAN_STOP_KEY_2 	INFO_PLAY
 #else
-
 #define FM_SCAN_STOP_KEY_2 	0x00
 #endif
 void scan_fre(void)
