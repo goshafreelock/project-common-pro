@@ -1177,7 +1177,15 @@ void music_play(void)
 
             return;
 #ifdef POWE_KEY_PLAY_KEY_IN_ONE_KEY
-    case INFO_POWER | KEY_SHORT_UP :	
+    case INFO_POWER | KEY_SHORT_UP :
+
+#ifdef USE_IR_LONG_POWER_KEY_TO_FAKE_POWER_OFF
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			break;
+		}
+#endif
+		
 #endif
 #ifdef USE_IR_POWER_KEY_TO_POWER_OFF
 		if(IR_KEY_Detect){

@@ -338,12 +338,19 @@ void fm_rev( void )
 #endif		
 #if defined(USE_POWER_KEY_FOR_FM_PLAY)
     	 case INFO_POWER | KEY_SHORT_UP :
+#if defined(USE_IR_LONG_POWER_KEY_TO_FAKE_POWER_OFF)
+		if(IR_KEY_Detect){
+			IR_KEY_Detect = 0;
+			break;
+		}
+#endif			
+		 	
 #elif defined(USE_MODE_LONG_FOR_FM_PLAY)
     	 case INFO_MODE| KEY_LONG:
 #endif
         case INFO_PLAY | KEY_SHORT_UP :
 #if defined(FM_PLAY_KEY_PAUSE)        
-#ifdef K722_YJH_722_V001
+#if defined(K722_YJH_722_V001)
 		if(IR_KEY_Detect){
 			IR_KEY_Detect = 0;
 			break;

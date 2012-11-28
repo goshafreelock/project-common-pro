@@ -1268,7 +1268,35 @@ void Idle_hdlr()
 #endif
 	   	return;
 #ifdef  USE_POWER_KEY	
+
+#ifdef USE_IR_LONG_POWER_KEY_TO_FAKE_POWER_OFF
+    case INFO_POWER | KEY_LONG:
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+
+#ifdef NO_DEV_SHOW_HI_STR		
+			if(curr_menu==DISP_START){
+#else
+			if(curr_menu==DISP_NODEVICE){
+#endif
+				put_msg_lifo(INFO_SYS_IDLE);
+				break;
+			}
+		
+			Set_Curr_Func(SYS_MP3DECODE_USB);			
+		   	pwr_up_flag = 1;			
+		   	return;
+		}
+		break;
+#endif
+
     	case INFO_POWER | KEY_HOLD:
+#ifdef USE_IR_LONG_POWER_KEY_TO_FAKE_POWER_OFF
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			break;
+		}
+#endif			
         	sys_power_down();
         	break;
 #endif
@@ -1521,6 +1549,10 @@ void main(void)
 #endif
 	     if(pwr_up_flag){
 		 pwr_up_flag  =0;
+
+#ifdef UART_ENABLE					 	
+		sys_printf("power on from  IDLE ");
+#endif
 
 #if defined(TWO_PLAY_LED_IN_USE)
 		 led_open_enable = 1;
