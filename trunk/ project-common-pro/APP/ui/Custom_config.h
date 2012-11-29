@@ -748,6 +748,7 @@
 //#define K401_KM_401_V001
 //#define K2129_WXD_1234_V001
 //#define K1251_YHD_Y902_V001
+//#define K1254_BHT_1080_V001
 
 
 /*****************测试验证******************/
@@ -774,6 +775,42 @@
 #endif
 
 /*****************按 主板编号定义宏******************/
+
+
+#ifdef K015_SW_005B_V001
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P03
+
+#define NO_PLAY_STATUS_LED
+#define LED_USE_PLAY_MODE
+
+#define LED_GPIO_PORT_CUSTOMERIZED
+
+
+#define FM_BY_PASS
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+#define NEW_SD_DETECT_MOD
+
+
+#if 1
+#define BLUE_TOOTH_FUNC
+#define BLUETOOTH_GPIO_CTRL
+#define BT_USE_AUX_1
+#define BLUE_TOOTH_NO_SYS_MUTE_CTRL
+#define DISP_BLUE_STR
+#endif
+
+#endif
 
 #ifdef K4006_SES_4321_V001
 
@@ -981,7 +1018,7 @@
 #define USE_RTC_ALARM_FUNCTION
 #define USE_RTC_ALM_CUSTOM_INIT
 #define ADJ_TIME_USE_VOL_KEY
-
+#define RTC_SETTING_OP_TIMER_ENABLE
 #endif
 
 #ifdef K1224_YJH_1224_V001
@@ -4519,8 +4556,10 @@
 #define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
 #define DEFAULT_GO_TO_IDLE
 
-#define USE_MODE_KEY_LONG_SCAN
+//#define ADKEY_PLAY_SHORT_SCAN_FRE
 #define POWE_KEY_PLAY_KEY_IN_ONE_KEY
+#define PLAY_MODE_USE_REP_ONE_ALL
+#define DISP_EQ_STR
 
 #define DISP_OFF_STR_AT_PWR_DOWN
 #define NO_DEV_SHOW_HI_STR
@@ -4532,9 +4571,9 @@
 #define DISP_VOL_V_CHAR
 
 #define LINE_IN_PLAY_KEY_PAUSE
-#define FM_PLAY_KEY_PAUSE
+#define USE_POWER_KEY_SHORT_SCAN
 #define USE_POWER_KEY_FOR_AUX_PLAY
-#define USE_POWER_KEY_FOR_FM_PLAY
+//#define USE_POWER_KEY_FOR_FM_PLAY
 
 #define DISP_HIFI_STR_AT_POWER_ON
 #define VOLUME_CUSTOMER_DEFINE_32
@@ -18153,13 +18192,19 @@
 #endif
 #define LED_1651_DRV
 
-#define LINE_IN_PLAY_KEY_PAUSE
-#define FM_PLAY_KEY_PAUSE
+
 
 #define MUTE_GPIO_FM_GPIO_COMPATIBALE
 #define USE_FM_GPIO
 #define NEW_SD_DETECT_MOD
-#define USE_POWER_KEY_TO_SWITCH_MODE
+
+#define POWE_KEY_PLAY_KEY_IN_ONE_KEY
+
+#define USE_POWER_KEY_FOR_FM_PLAY
+#define LINE_IN_PLAY_KEY_PAUSE
+#define FM_PLAY_KEY_PAUSE
+#define USE_MODE_KEY_LONG_SCAN
+
 #define DISP_HIFI_STR_AT_POWER_ON
 #define DISP_VOL_V_CHAR
 #define DISP_PAUS_STRING
@@ -18202,6 +18247,42 @@
 
 #endif
 
+	
+#ifdef K1254_BHT_1080_V001
+
+#define AC209_28PIN
+#define LED_1651_DRV
+#ifdef LED_GPIO_DRV
+#undef LED_GPIO_DRV
+#endif
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P02
+#define PLAY_STATUS_LED_P00
+#define PLAY_STATUS_LED_SHARE_WITH_IIC_SCL
+
+#define FAST_BAND_SCAN_SPEED
+#define EXCHANGE_FM_MP3_ICON
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+#define VOLUME_DEFUALT 		25
+
+#define LINE_IN_PLAY_KEY_PAUSE
+#define DISP_PAUS_STRING
+#define DISP_VOL_V_CHAR
+//#define SEMI_AUTO_SCAN_FREQ
+#define TURN_ON_PLAY_BREAK_POINT_MEM
+
+//#define USE_GPIO_DETECT_EARPHONE_PLUGGED
+//#define EARPHONE_DETECT_USE_VPP
+#endif
 
 
 

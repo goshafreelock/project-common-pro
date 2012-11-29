@@ -519,6 +519,10 @@ void deal_rtc(void)
         case INFO_PLAY | KEY_LONG:				//4RTCÄÖÖÓÉèÖÃÄ£Ê½
 #endif
 
+#if defined(RTC_SETTING_OP_TIMER_ENABLE)
+		op_timer=0;			
+#endif
+
 #ifdef INDEPENDENT_KEY_ADJ_TIME
 
 		if (rtc_mode != ALM_UP_MODE)
@@ -576,10 +580,13 @@ void deal_rtc(void)
 #else
 
 #ifdef K3031_AP_668_V001
-		if(alm_set==0){
-			alm_set=1;
-			break;
-		}
+            	if (rtc_mode==ALM_SET_MODE){
+
+			if(alm_set==0){
+				alm_set=1;
+				break;
+			}
+        	}
 #endif
 
 #if defined(K820_LHD_820_V001)
@@ -697,6 +704,10 @@ void deal_rtc(void)
         case INFO_PLAY| KEY_SHORT_UP:
 #endif
 
+#if defined(RTC_SETTING_OP_TIMER_ENABLE)
+		op_timer=0;			
+#endif
+
 #if defined(NEW_RTC_SETTING_CTRL)
 		if ((rtc_mode != ALM_UP_MODE)&&(rtc_mode !=RTC_PLAY_MODE))
 		{
@@ -783,7 +794,11 @@ __TIME_ADJ_POS:
                 if (alm_set>2)
 #endif					
                 {
+#ifdef K3031_AP_668_V001
+                    alm_set=1;
+#else                
                     alm_set=0;
+#endif
 #ifdef RTC_SETTING_NO_CYC
 			rtc_mode = RTC_PLAY_MODE;
 #endif					
@@ -811,7 +826,7 @@ __TIME_ADJ_POS:
 		if(key==(INFO_NEXT_FIL | KEY_HOLD)) break;
 #endif
 
-#if defined(MINI_DIGIT_BOX)        
+#if defined(MINI_DIGIT_BOX)||defined(RTC_SETTING_OP_TIMER_ENABLE)
 		op_timer=0;			
 #endif
             if (rtc_mode==RTC_SET_MODE)
@@ -897,7 +912,7 @@ __TIME_ADJ_POS:
 		if(key==(INFO_PREV_FIL | KEY_HOLD)) break;
 #endif
 
-#if defined(MINI_DIGIT_BOX)        
+#if defined(MINI_DIGIT_BOX)||defined(RTC_SETTING_OP_TIMER_ENABLE)        
 		op_timer=0;			
 #endif
             if (rtc_mode==RTC_SET_MODE)
