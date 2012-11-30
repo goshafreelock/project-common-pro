@@ -2481,7 +2481,22 @@ _SYS_GO_IN_POWER_OFF:
         Disp_Con(DISP_EQ);
 
         break;
-#endif					
+#endif				
+
+#ifdef EQ_LONG_PRESS_FOR_FM_MP3_SEL
+    	case INFO_EQ_DOWN| KEY_LONG:
+		if(work_mode!= SYS_FMREV){
+
+			Set_Curr_Func(SYS_FMREV);
+			return 0;
+		}
+		else{
+			
+			Set_Curr_Func(SYS_MP3DECODE_USB);
+			return 0;
+		}
+		break;
+#endif		
 	//4 EQ DOWN for special use		
     	case INFO_EQ_DOWN| KEY_SHORT_UP :
 

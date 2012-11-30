@@ -270,6 +270,30 @@
 
 #endif
 
+#elif defined(IIC_GPIO_USE_P01_P27)
+
+#define iic_data_out()    	DACCON0|=0x80;P2DIR &= ~(BIT(7));P2PU |= BIT(7) 	
+#define iic_data_in()     	DACCON0|=0x80;P2DIR |= (BIT(7));P2PU |= BIT(7)	
+#define iic_data_r()      	P27
+#define iic_data_h()      	P27= 1
+#define iic_data_l()      	P27 = 0
+
+#define iic_clk_out()    	P0DIR &= ~(BIT(1));P0PU |= (BIT(1))	
+#define iic_clk_h()      	P01 = 1
+#define iic_clk_l()      		P01 = 0
+
+#if 1	//for bk1080.h
+#define BK_DATA_HIGH()   	iic_data_h()
+#define BK_DATA_LOW()    	iic_data_l()
+#define BK_DATA_READ()    	iic_data_r()
+#define SDADIROUT()       		iic_data_out()
+#define SDADIRIN()        		iic_data_in()
+
+#define SCLDIROUT()        		iic_clk_out()
+#define BK_CLK_HIGH()     		iic_clk_h()
+#define BK_CLK_LOW()      		iic_clk_l()
+
+#endif
 
 #elif defined(IIC_GPIO_USE_P01_P02)
 //4 IIC gpio P01 P02
