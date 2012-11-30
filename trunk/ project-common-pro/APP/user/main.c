@@ -1086,6 +1086,17 @@ void custom_gpio_setting()
 	P2PU |= BIT(7);
 	P27 = 1;	 
 #endif
+#ifdef BLUE_TOOTH_FUNC
+#ifdef BLUETOOTH_GPIO_CTRL		
+	BT_PWR_PORT_INIT();
+	BT_PP_PORT_INIT();
+	BT_RST_PORT_INIT();
+	BT_NEXT_PORT_INIT();
+	BT_PREV_PORT_INIT();
+	BT_VOLU_PORT_INIT();
+	BT_VOLD_PORT_INIT();
+#endif
+#endif
 }
 void Idle_hdlr()
 {
