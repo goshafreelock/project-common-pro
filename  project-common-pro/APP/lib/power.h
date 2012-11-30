@@ -35,6 +35,9 @@ void sys_power_up(void);
 void waiting_power_key();
 void wkup_ctl(bool dir);
  void timer_pwr_off();
+#ifdef IR_POWER_KEY_SHORT_TRUE_POWER_OFF
+void sys_pwr_off();
+#endif
 #endif
 
 #endif

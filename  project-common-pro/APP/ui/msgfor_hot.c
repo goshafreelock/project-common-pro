@@ -2168,6 +2168,7 @@ u8 ap_handle_hotkey(u8 key)
 #endif
 
 #ifdef POWE_KEY_PLAY_KEY_IN_ONE_KEY
+
     case INFO_CH_DOWN| KEY_SHORT_UP:
 	if(IR_Type == WITH_FM_CHIP)break;
 	
@@ -2182,12 +2183,21 @@ u8 ap_handle_hotkey(u8 key)
 		
 #if defined(POWER_KEY_LONG_POWER_OFF)		
     case INFO_POWER| KEY_LONG:
-#else		
+#else	
+
 #ifndef  USE_POWER_KEY	
     case INFO_POWER | KEY_SHORT_UP :	
-#endif		
-#endif		
+#endif	
+
+#if defined(IR_POWER_KEY_SHORT_TRUE_POWER_OFF)
+    case INFO_POWER | KEY_SHORT_UP :	
+#endif
+
+#endif	
+
+
 #else
+
     case INFO_CH_DOWN| KEY_SHORT_UP:
 		
 		if(IR_Type == WITH_FM_CHIP)break;
@@ -2198,7 +2208,8 @@ u8 ap_handle_hotkey(u8 key)
 #if !defined(USE_POWER_KEY_TO_SWITCH_MODE)				
     case INFO_POWER | KEY_SHORT_UP :
 #endif		
-#endif		
+#endif	
+
 #endif	
 
 
@@ -2218,6 +2229,8 @@ _SYS_GO_IN_POWER_OFF:
 #ifdef  USE_POWER_KEY
 #ifdef POWER_KEY_SHORT_PWR_DOWN
         sys_power_down();
+#elif defined(IR_POWER_KEY_SHORT_TRUE_POWER_OFF)
+	sys_pwr_off();
 #else
 	Mute_Ext_PA(MUTE);
 	work_mode =SYS_IDLE;

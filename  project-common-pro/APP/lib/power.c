@@ -464,6 +464,28 @@ void rc_pll_delay(void)
 */
 /*----------------------------------------------------------------------------*/
 #ifdef  USE_POWER_KEY
+
+#ifdef IR_POWER_KEY_SHORT_TRUE_POWER_OFF
+void sys_pwr_off()
+{
+	lcd_power_down();
+#ifdef USE_PWR_KEY_LONG_PWR_ON
+	key_pwr_up_flag =0;
+	flush_all_msg();
+     	Mute_Ext_PA(MUTE);
+     	main_vol(0);
+	EA = 0;
+#if defined(PWR_CTRL_WKUP)
+    	wkup_pin_ctrl(0);
+#else
+    	power_ctl(0);
+#endif
+
+#endif
+		
+}
+#endif
+
 void sys_power_down(void)
 {
 #if defined(USE_ONLY_POWER_HOLD_CTRL)
