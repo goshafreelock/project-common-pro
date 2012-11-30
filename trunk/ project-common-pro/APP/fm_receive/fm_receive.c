@@ -255,7 +255,7 @@ void fm_rev( void )
         switch (key)
         {
 
-#ifdef K000_HG_898_V001	   
+#if defined(K000_HG_898_V001)||defined(USE_STOP_KEY_SHORT_CH_DOWN)
 	case INFO_STOP |KEY_SHORT_UP :
 		goto __CH_DOWN;
 		break;

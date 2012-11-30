@@ -234,6 +234,8 @@
 //#define SW_V007_502K
 //#define Kxxx_931_V001
 //#define K2116_SW_017KT_V001
+//#define K015_SW_005B_V001
+
 
 //4 按 主板编号定义宏
 /***/
@@ -17384,7 +17386,7 @@
 #ifdef IIC_GPIO_USE_P02_P03
 #undef IIC_GPIO_USE_P02_P03
 #endif
-#define IIC_GPIO_USE_DUMMY
+#define IIC_GPIO_USE_P01_P27
 
 #ifdef MUTE_PORT_USE_P01
 #undef  MUTE_PORT_USE_P01
@@ -17401,7 +17403,7 @@
 #define TWO_PLAY_LED_USE_PORT_P01
 #define USB_SD_DEV_PLUG_MEM
 #define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
-
+#define EQ_LONG_PRESS_FOR_FM_MP3_SEL
 
 #define DEVICE_ON_LINE_LED_IND
 
@@ -17421,7 +17423,10 @@
 #define NO_ADKEY_FUNC
 #define MATRIX_KEY_ENABLE
 
-
+#define SEMI_AUTO_SCAN_FREQ
+#define ADKEY_NEXT_PREV_HOLD_AUTO_SCAN
+#define ADKEY_NEXT_ADJST_FREQ
+#define USE_STOP_KEY_SHORT_CH_DOWN
 //#define DISPLAY_TEST
 
 #endif

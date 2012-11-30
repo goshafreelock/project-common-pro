@@ -721,6 +721,12 @@ __LED_HANDLE:
 			}
 
 		}
+		else if(work_mode ==SYS_FMREV){
+
+		    	set_play_flash_no2(led_status);
+			led_status=LED_FLASH_STOP;
+		}
+		
 #elif defined(K583_ZX_583_V001)
 
 		if(work_mode < SYS_MP3DECODE_SD){
