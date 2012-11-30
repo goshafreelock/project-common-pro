@@ -340,7 +340,11 @@ bool charger_detect(void)
 #elif defined(CHARGER_DET_USE_P02)	
     P02 =0;
     P0PU  &= ~(BIT(2));
+	
+#ifndef K4006_SES_4321_V001
     P0PD|= (BIT(2));
+#endif
+
     P0DIR |= (BIT(2));
 #ifdef AC209_28PIN
 	P3DIR |= BIT(4);P3PU &= ~(BIT(4));P3PD&= ~(BIT(4));
