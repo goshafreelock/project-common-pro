@@ -233,7 +233,7 @@ void LED_SEG_OUT(u8 SEG_Data)
  	P30 =((SEG_Data&0x20)>0)?1:0;
  	P33 =((SEG_Data&0x40)>0)?1:0;
 }
-#elif defined(K2041_XFW_2041_V001)||defined(K2041_XFW_2041_V002)||defined(K1229_WXD_1229_V001)||defined(K4006_SES_4321_V001)
+#elif defined(K2041_XFW_2041_V001)||defined(K1258_WXD_1258_V001)||defined(K2041_XFW_2041_V002)||defined(K1229_WXD_1229_V001)||defined(K4006_SES_4321_V001)
 void LED_COM_OUT(u8 COM_Data)
 {
     	LED_COM &= ~0x1f;
@@ -710,7 +710,7 @@ void LED_SEG_OUT(u8 SEG_Data)
  	P12=((SEG_Data&SEG_F)>0)?1:0;
  	P15=((SEG_Data&SEG_G)>0)?1:0;
 }
-#elif defined(K1177_HF_BJD_V3_V001)||defined(K1182_ZK_985B_V002)||defined(K2136_ZX_1234_V001)||defined(K2121_WXD_2121_V001)||defined(K1182_YJH_867_V001)||defined(K1182_YJH_1182_V001)||defined(K1182_ZK_1182_V001)||defined(K1182_YL_1182_V001)
+#elif defined(K1177_HF_BJD_V3_V001)||defined(K2091_YJH_863_V001)||defined(K1182_ZK_985B_V002)||defined(K2136_ZX_1234_V001)||defined(K2121_WXD_2121_V001)||defined(K1182_YJH_867_V001)||defined(K1182_YJH_1182_V001)||defined(K1182_ZK_1182_V001)||defined(K1182_YL_1182_V001)
 void LED_COM_OUT(u8 COM_Data)
 {
  	P30 =((COM_Data&0x01)>0)?1:0;
@@ -722,7 +722,7 @@ void LED_COM_OUT(u8 COM_Data)
 void LED_SEG_OUT(u8 SEG_Data)
 {
     	LED_COM &= ~0x0f;
-	//LED_SEG &=~0x7F;
+	LED_SEG &=~0x7F;
  	P14=((SEG_Data&SEG_A)>0)?1:0;
  	P13=((SEG_Data&SEG_B)>0)?1:0;
  	P11=((SEG_Data&SEG_C)>0)?1:0;
