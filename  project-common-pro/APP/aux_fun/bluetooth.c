@@ -884,6 +884,9 @@ void blue_tooth_hdlr(void)
 	
 #endif
 
+#ifdef FIX_VOL_TO_MAX
+    my_main_vol(30);	
+#endif
     sysclock_div2(1);
 
     Mute_Ext_PA(UNMUTE);	
