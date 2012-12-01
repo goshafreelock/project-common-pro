@@ -1155,9 +1155,9 @@ void Disp_Update(void)
 	lcd_buf_icon_disp_update();
 #elif defined(LED_1651_DRV)
 	disp_scan_1651();
+#endif
 #if defined(USE_SPECTRUM_PARTTERN)
 	Disp_Patern();
-#endif
 #endif
 
 }

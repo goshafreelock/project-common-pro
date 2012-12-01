@@ -674,13 +674,15 @@ void Disp_Freq(void )
 #if defined(DISP_PAUS_STRING)
       if (play_status==0){
     		dispstring("PAUS",0);
-
+#ifndef DISP_FM_STR_WHEN_PAUS	
+		F_FM_DEV  &= ~FM_DEV_MASK;
+#endif
       }
 #elif defined(DISP_PAU_STRING_ONLY_IN_FM_MODE)
       if (play_status==0){
     		dispstring("PAU",0);
 #ifndef DISP_FM_STR_WHEN_PAUS			
-		LED_STATUS &=~LED_FM;
+		F_FM_DEV  &= ~FM_DEV_MASK;
       	}
 #endif	  
 #endif
