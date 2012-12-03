@@ -234,7 +234,7 @@
 //#define SW_V007_502K
 //#define Kxxx_931_V001
 //#define K2116_SW_017KT_V001
-//efine K015_SW_005B_V001
+//#define K015_SW_005B_V001
 
 
 //4 按 主板编号定义宏
