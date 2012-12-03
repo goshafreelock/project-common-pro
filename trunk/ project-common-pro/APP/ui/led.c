@@ -762,7 +762,7 @@ void LED_SEG_OUT(u8 SEG_Data)
        LED_SEG |=(SEG_Data&0x7F);
 #endif	   
 }
-#elif defined(K2116_SW_017KT_V001)||defined(K015_SW_005B_V001)
+#elif defined(K2116_SW_017KT_V001)||defined(K015_SW_005B_V001)||defined(K4009_MY_1258_V001)
 void LED_COM_OUT(u8 COM_Data)
 {
 #if defined(COMMON_CATHODE)	
