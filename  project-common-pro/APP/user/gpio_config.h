@@ -1217,7 +1217,7 @@
 #define BT_CONFIG_ON() 					
 #define BT_CONFIG_OFF() 				
 #elif defined(K015_SW_005B_V001)
-#define BT_PWR_PORT_INIT() 			P0DIR &= ~(BIT(7));P0PU |= (BIT(7));P07 =1
+#define BT_PWR_PORT_INIT() 			P0DIR &= ~(BIT(7));P0PU &= ~(BIT(7));P07 =1
 #define BT_PWR_ON() 				P07 =0
 #define BT_PWR_OFF() 				P07 =1
 
@@ -1225,15 +1225,15 @@
 #define BT_RST_ON() 				
 #define BT_RST_OFF() 			
 
-#define BT_PP_PORT_INIT() 			P0DIR &= ~(BIT(4));P0PU |=BIT(4);P04 =1
+#define BT_PP_PORT_INIT() 			P0DIR &= ~(BIT(4));P0PU |=BIT(4);P04 =0
 #define BT_PP_ON() 					P04 =1
 #define BT_PP_OFF() 					P04 =0
 
-#define BT_NEXT_PORT_INIT() 		P0DIR &= ~(BIT(2));P0PU |=BIT(2);P02 =1
+#define BT_NEXT_PORT_INIT() 		P0DIR &= ~(BIT(2));P0PU |=BIT(2);P02 =0
 #define BT_NEXT_ON() 				P02 =1
 #define BT_NEXT_OFF() 				P02 =0
 
-#define BT_PREV_PORT_INIT() 		P3DIR &= ~(BIT(4));P3PU |=BIT(4);P34 =1
+#define BT_PREV_PORT_INIT() 		P3DIR &= ~(BIT(4));P3PU |=BIT(4);P34 =0
 #define BT_PREV_ON() 				P34=1
 #define BT_PREV_OFF() 				P34 =0
 
