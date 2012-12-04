@@ -1474,6 +1474,14 @@ void main(void)
 	}
 #endif
 
+#elif defined(SYS_POWER_ON_NODEV_SEL_MODE)
+
+#ifdef SYS_POWER_ON_NODEV_SEL_MODE_AT_TIME_MODE
+      if((get_device_online_status()&0x03)==0){
+		Set_Curr_Func(SYS_RTC);
+      }
+#endif
+
 #endif
 
 #if defined(DC_HW_POWER_UP_IN_IDLE_MODE)|| defined(USB_SD_PORTABLE_BAT_CHARGER)

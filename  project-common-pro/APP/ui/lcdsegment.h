@@ -47,7 +47,7 @@ SEG8     P34
 #define   seg9_port(n)	P02 = n
 #define   bklt_init()	  	P0DIR &= ~(BIT(7));P0PU|= (BIT(7))
 
-#elif defined(K000_XingChuang_x821_V001)|| defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
+#elif defined(K000_XingChuang_x821_V001)|| defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)||defined(K4010_MY_1258_V001)
 
 #define   com_init()      	P3PU |= (0x1F);P3PD |= (0x1F)
 #define   close_com(n)    com_init();P3DIR |= (0x1F);P3DIR &= ~(1<<(n))
@@ -219,7 +219,7 @@ SEG8     P34
 #define L4_ICON_MASK	0x0020
 #define L4_ICON_BUF		(lcd_buff[0])
 
-#elif defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
+#elif defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)||defined(K4010_MY_1258_V001)
 
 #define USB_DEV_MASK	0x0004
 #define F_USB_DEV  		(lcd_buff[4])	
