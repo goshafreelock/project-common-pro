@@ -674,7 +674,10 @@
 #define hp_detect_in_off()		
 #define INDEPENDENT_EARPHONE_DETECT_GPIO
 #define USE_IR_VPP_PORT_FOR_DETECTION
-
+#elif defined(EARPHONE_DETECT_USE_P01)
+#define  EARPHONE_DETECT_GPIO  		P01
+#define  hp_detect_begin()   				P0DIR &=~(BIT(1));P01=1; P0DIR |= BIT(1);P0PU |= BIT(1)
+#define  hp_detect_in_off()				P0DIR &=~(BIT(1));
 #elif defined(EARPHONE_DETECT_USE_P02)
 #define  EARPHONE_DETECT_GPIO  	P02
 #define  hp_detect_begin()   			P0DIR |= (BIT(2))//P0PU |= (BIT(2)); 
