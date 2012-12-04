@@ -218,8 +218,83 @@ SEG8     P34
 #define L3_ICON_BUF		(lcd_buff[0])
 #define L4_ICON_MASK	0x0020
 #define L4_ICON_BUF		(lcd_buff[0])
+#elif defined(K4010_MY_1258_V001)
+#define USB_DEV_MASK	0x0020
+#define F_USB_DEV  		(lcd_buff[4])	
 
-#elif defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)||defined(K4010_MY_1258_V001)
+#define AUX_DEV_MASK	0x0080
+#define F_AUX_DEV  		(lcd_buff[4])
+
+#define SD_DEV_MASK	0x0008
+#define F_SD_DEV		(lcd_buff[4])	
+
+#define FM_DEV_MASK	0x0040
+#define F_FM_DEV		(lcd_buff[3])	
+
+#define POINTS_MASK		0x0008
+#define F_POINTS		(lcd_buff[3])	
+
+#define FM_MHZ_MASK	0x0040
+#define F_MHZ_DEV		(lcd_buff[3])	
+
+#define AM_KHZ_MASK	0x0020
+#define F_KHZ_DEV		(lcd_buff[3])	
+
+#define FM_P1_MASK		0x0000
+#define F_P1_DEV		(lcd_buff[0])	
+
+
+#define RTC_ICON_MASK	0x0000
+#define F_RTC_ICON		(lcd_buff[3])
+
+#define RTC_ALM_MASK	0x0001
+#define F_RTC_ALM		(lcd_buff[3])	
+
+#define RTC_PM_MASK	0x0000
+#define F_RTC_PM		(lcd_buff[2])
+
+#define RTC_AM_MASK	0x0000
+#define F_RTC_AM		(lcd_buff[3])
+
+#define MP3_FAT_MASK		0x0000
+#define F_MP3_FAT		(lcd_buff[4])	
+
+#define SPK_MUTE_MASK	0x0000
+#define SPK_ICON		(lcd_buff[1])	
+
+#define PLAY_ICON_MASK	0x0000
+#define F_PLAY_ICON		(lcd_buff[0])	
+
+#define PAU_ICON_MASK	0x0000
+#define F_PAU_ICON		(lcd_buff[0])	
+
+#define BATTERY_MASK	0x0001
+#define BAT_ICON		(lcd_buff[2])	
+
+#define TRADEMARK_MASK	0x0000
+#define TRADEMARK_ICON		(lcd_buff[0])	
+
+#define NUM_1BC_MASK	0x0000
+#define F_NUM_1BC		(lcd_buff[2])	
+
+#define REP_ALL_MASK	0x0000
+#define REP_ONE_MASK	0x0000
+#define REP_RND_MASK	0x0000
+#define F_REP_ALL		(lcd_buff[2])
+#define F_REP_ONE 		(lcd_buff[3])
+#define F_REP_RND 		(lcd_buff[1])
+
+//#define L_ICON_BUF		(lcd_buff[4])
+#define L1_ICON_MASK	0x0001
+#define L1_ICON_BUF		(lcd_buff[4])
+#define L2_ICON_MASK	0x0001
+#define L2_ICON_BUF		(lcd_buff[0])
+#define L3_ICON_MASK	0x0001
+#define L3_ICON_BUF		(lcd_buff[1])
+#define L4_ICON_MASK	0x0001
+#define L4_ICON_BUF		(lcd_buff[1])
+
+#elif defined(K2083_KPL_2083_V003)||defined(K2083_SW_2083_V002)
 
 #define USB_DEV_MASK	0x0004
 #define F_USB_DEV  		(lcd_buff[4])	
