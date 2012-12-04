@@ -1007,7 +1007,7 @@ void bat_val_arg(void);
 #define ADKEY_10	INFO_0
 #define ADKEY_11	NO_KEY
 #define ADKEY_NOKEY	NO_KEY
-#elif defined(K4009_MY_1258_V001)
+#elif defined(K4009_MY_1258_V001)||defined(K4010_MY_1258_V001)
 #define ADKEY_1		INFO_3
 #define ADKEY_2		INFO_4
 #define ADKEY_3		INFO_5
@@ -1715,7 +1715,7 @@ void bat_val_arg(void);
 #define ADKEY2_10		INFO_REP_ALL
 #define ADKEY2_11		NO_KEY
 #define ADKEY2_NOKEY	NO_KEY
-#elif defined(K4009_MY_1258_V001)
+#elif defined(K4009_MY_1258_V001)||defined(K4010_MY_1258_V001)
 #define ADKEY2_1		NO_KEY
 #define ADKEY2_2		INFO_MODE
 #define ADKEY2_3		INFO_NEXT_FIL

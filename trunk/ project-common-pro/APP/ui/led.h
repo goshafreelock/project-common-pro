@@ -372,6 +372,16 @@
 #define LED_FM		 BIT(LED_G)
 #define LED_MP3		 0//BIT(LED_G)
 #define LED_STATUS   LED_BUFF[4]
+#elif defined(K4009_MY_1258_V001)
+#define LED_PLAY	 BIT(LED_A)
+#define LED_PAUSE	 BIT(LED_B)
+#define LED_USB		 BIT(LED_C)
+#define LED_SD		 BIT(LED_D)
+#define LED_2POINT	 BIT(LED_E)
+#define LED_AUX		 BIT(LED_G)
+#define LED_MP3		 BIT(LED_H)
+#define LED_FM		 BIT(LED_F)
+#define LED_STATUS   LED_BUFF[4]
 #else
 #define LED_PLAY	 BIT(LED_A)
 #define LED_PAUSE	 BIT(LED_B)
