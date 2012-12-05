@@ -405,6 +405,12 @@ __PWR_ON:
 	BT_CONFIG_PORT_INIT();
 	BT_CONFIG_OFF();
 #endif
+
+#if defined(PWR_CTRL_WKUP)
+	wkup_pin_ctrl(1);
+#else
+	power_ctl(1);
+#endif
 	
 	set_play_flash(LED_FLASH_ON);
     	Disp_Con(DISP_START);

@@ -17,8 +17,12 @@
 #ifdef  FM_USE_AR1015
 
 extern bool iic_busy;
+#ifdef AR_SHARE_MCU_CRYSTAL
 
+#else
 #define INTERNAL_XO   // mark this line if you're using external reference clock
+#endif
+
 #ifdef INTERNAL_XO
 //∂¿¡¢æß’Ò
 code unsigned int AR1000reg[18]={ //using  AR1000 XO function

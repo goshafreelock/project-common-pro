@@ -276,7 +276,9 @@ void iphone_func(void)
     sysclock_div2(1);
 	
 #ifdef BLUETOOTH_GPIO_CTRL
+#ifndef SYS_BT_TURN_OFF_PWR_CHECK
     BT_PWR_OFF();
+#endif 
 #endif 
 
     open_uart_ctrl();

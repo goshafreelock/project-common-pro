@@ -1827,7 +1827,9 @@ void decode_play(void)
 
 
 #ifdef BLUETOOTH_GPIO_CTRL
+#ifndef SYS_BT_TURN_OFF_PWR_CHECK
     BT_PWR_OFF();
+#endif 
 #endif 
 
 #ifdef ASSIGN_GIVEN_DEVICE_AT_PWR_ON
@@ -1847,6 +1849,9 @@ void decode_play(void)
 #else
     set_play_flash(LED_FLASH_STOP);
 #endif
+
+    Mute_Ext_PA(MUTE);		
+
     stop_decode();
 #if(MEMORY_STYLE != USE_DEVICE)
     usb_suspend();			//Entered Suspend mode	

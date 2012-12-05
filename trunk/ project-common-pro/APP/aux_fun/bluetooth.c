@@ -892,11 +892,11 @@ void blue_tooth_hdlr(void)
     Mute_Ext_PA(UNMUTE);	
 
     blue_tooth_main();
-    Mute_Ext_PA(MUTE);		
 	
     main_vol_set(0, CHANGE_VOL_NO_MEM);
 
     sys_clock_pll();
+    Mute_Ext_PA(MUTE);		
 
 #ifdef BLUETOOTH_GPIO_CTRL
     BT_PWR_OFF();

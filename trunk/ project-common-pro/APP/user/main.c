@@ -1066,6 +1066,12 @@ void sys_info_init(void)
 	}
 #endif
 
+#ifdef BLUE_TOOTH_FUNC
+#ifdef BLUETOOTH_GPIO_CTRL		
+     	BT_PWR_OFF();	
+#endif
+#endif
+
 #ifdef UART_ENABLE	
     sys_printf("sys_init phase two finish");
 #endif
@@ -1085,6 +1091,11 @@ void custom_gpio_setting()
 	P2DIR &= ~(BIT(7));
 	P2PU |= BIT(7);
 	P27 = 1;	 
+#endif
+#ifdef K000_XC_BC_BT_V001
+	P0DIR &= ~(BIT(4));
+	P0PU   |= BIT(4);
+	P04     = 0;	   
 #endif
 #ifdef BLUE_TOOTH_FUNC
 #ifdef BLUETOOTH_GPIO_CTRL		
