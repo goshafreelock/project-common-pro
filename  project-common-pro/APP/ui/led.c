@@ -781,6 +781,9 @@ void LED_COM_OUT(u8 COM_Data)
 }
 void LED_SEG_OUT(u8 SEG_Data)
 {
+	P17=0;
+    	LED_COM &= ~0x0f;
+
  	P16=((SEG_Data&SEG_A)>0)?1:0;
  	P15=((SEG_Data&SEG_B)>0)?1:0;
  	P14=((SEG_Data&SEG_C)>0)?1:0;
