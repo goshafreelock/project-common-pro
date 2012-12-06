@@ -835,6 +835,11 @@ void Add_Func_To_List(DEV_ON_LIST Dev)
 }
 void Remov_Func_From_List(DEV_ON_LIST Dev)
 {
+#ifdef FORCE_MOUNT_SD_CARD_DEV
+	if(Dev==SD_DEV){
+		return;
+	}
+#endif
 	Sys_Func_List &=~(BIT(Dev));
 	//printf(" --->Remov_Func_From_List %x \r\n",(u16)Sys_Func_List);
 	
@@ -856,6 +861,10 @@ void Init_Func_List()
 		Add_Func_To_List(USB_DEV);
 
 	if((get_device_online_status()&0x01))
+		Add_Func_To_List(SD_DEV);
+#endif
+
+#ifdef FORCE_MOUNT_SD_CARD_DEV
 		Add_Func_To_List(SD_DEV);
 #endif
 
@@ -1776,7 +1785,19 @@ u8 ap_handle_hotkey(u8 key)
 #ifdef DEVICE_SEL_MANUAL_ONLY
 	 if((device_selected== BIT(SDMMC))&&(work_mode == SYS_MP3DECODE_SD))
 #endif
-	 {					
+	 {	
+
+#ifdef DEVICE_AUTO_PLAY_IN_CURR_MODE_ONLY
+        if ((work_mode == SYS_MP3DECODE_SD) )
+        {
+       	given_device = BIT(SDMMC);
+	        given_file_number = 1;	
+	        put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
+		 break;
+        }
+#endif
+
+	 
 #ifndef DISABLE_DEVICE_HOT_PLUG_AND_PLAY	 
         given_device = BIT(SDMMC);
         given_file_number = 1;
@@ -1832,6 +1853,16 @@ u8 ap_handle_hotkey(u8 key)
 	 if((device_selected== BIT(USB_DISK))&&(work_mode == SYS_MP3DECODE_USB))
 #endif
 	 {
+#ifdef DEVICE_AUTO_PLAY_IN_CURR_MODE_ONLY
+        if ((work_mode == SYS_MP3DECODE_USB) )
+        {
+	        given_device = BIT(USB_DISK);
+	        given_file_number = 1;	
+	        put_msg_lifo(SEL_GIVEN_DEVICE_GIVEN_FILE);
+		 break;
+        }
+#endif
+
 #ifndef DISABLE_DEVICE_HOT_PLUG_AND_PLAY
         given_device = BIT(USB_DISK);
         given_file_number = 1;	

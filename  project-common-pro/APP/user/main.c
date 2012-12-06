@@ -920,6 +920,7 @@ void sys_init(void)
     kpl_msg_preinit_setting(MSG_TYPE_1,0xF0);
 #endif
 #ifdef UART_ENABLE	
+    delay_10ms(220);
     sys_printf("sys_init phase one finish");
 #endif
 }
