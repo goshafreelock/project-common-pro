@@ -329,9 +329,9 @@ void blue_tooth_init(void)
 #endif
 }
 #ifdef BLUE_TOOTH_MUTE_DETECT_FUNC
+bool bluetooth_mute_detect=0;
 void blue_tooth_mute_detect(void)
 {
-	static bool bluetooth_mute_detect=0;
 	BT_MUTE_DETECT_INIT();
 	
 	if(BT_MUTE_DETECT_PORT){
@@ -833,6 +833,10 @@ void blue_tooth_hdlr(void)
 {
 #if 1//defined(LINE_IN_PLAY_KEY_PAUSE)
          play_status =MUSIC_PLAY;
+#endif
+
+#ifdef BLUE_TOOTH_MUTE_DETECT_FUNC
+	bluetooth_mute_detect=0;
 #endif
 
 #ifdef BT_DISP_CONNECT_TIME
