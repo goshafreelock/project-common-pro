@@ -1267,6 +1267,8 @@ void Idle_hdlr()
 	     }
 #endif	
 
+	if((curr_menu!=DISP_PWR_OFF))
+
 	     Disp_Update();			
 
             break;			
