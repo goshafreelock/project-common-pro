@@ -133,6 +133,9 @@
 #elif defined(PLAY_STATUS_LED_P00)
 #define play_led_seg_out() 		P0DIR &= ~(BIT(0));P0PU |= BIT(0)
 #define PLAY_STATUS_PORT 		P00
+#ifdef IIC_GPIO_USE_P00_P01
+#define PLAY_STATUS_LED_SHARE_WITH_IIC_SCL
+#endif
 #else
 #define play_led_seg_out() 		DACCON0|=0x80;P0DIR &= ~(1<<2);P0PU |= (1<<2); P3DIR |= (1<<4);P3PU &= ~(1<<4);P3PD&= ~(1<<4)
 #define PLAY_STATUS_PORT 		P02
