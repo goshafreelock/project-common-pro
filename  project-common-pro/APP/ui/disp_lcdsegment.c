@@ -1431,7 +1431,7 @@ extern bool get_lcd_flash_lock(void);
 void Disp_Patern()
 {
 #ifdef USE_RTC_FUNCTION
-	if(work_mode > SYS_RTC)return;
+	if(work_mode >= SYS_RTC)return;
 #endif	
 	if(patern_idx++>4)patern_idx =0;
 	if(get_lcd_flash_lock())patern_idx = 4;
