@@ -1423,6 +1423,16 @@ void bat_val_arg(void);
 #define ADKEY_7		INFO_NEXT_FIL
 #define ADKEY_8		INFO_POWER
 #define ADKEY_NOKEY	NO_KEY
+#elif defined(K2150_HF_1234_V001)
+#define ADKEY_1		INFO_PLAY
+#define ADKEY_2		INFO_NEXT_FIL
+#define ADKEY_3		INFO_PREV_FIL
+#define ADKEY_4		INFO_MODE
+#define ADKEY_5		INFO_EQ_UP
+#define ADKEY_6		INFO_PLAY_MODE
+#define ADKEY_7		INFO_FM_MOD
+#define ADKEY_8		INFO_POWER
+#define ADKEY_NOKEY	NO_KEY
 #elif defined(K728_SUOERSI_728_V001)||defined(K583_ZX_583_V001)||defined(USE_ONLY_POWER_HOLD_CTRL)
 /*Default adkey value */
 #define ADKEY_1		INFO_PLAY
