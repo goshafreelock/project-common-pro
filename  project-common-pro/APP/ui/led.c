@@ -888,6 +888,51 @@ void LED_scan(void)
 
 #elif defined(EXTENED_LED_NUM_SCAN)
 
+#ifdef K4005_AJR_105_V001
+#define EXTENED_NUM 	7
+
+xd_u8 LED_BUFF_2[2]={0};
+void LED_COM_OUT(u8 COM_Data)
+{
+	
+ 	P33 =((COM_Data&0x01)>0)?0:1;
+ 	P32 =((COM_Data&0x02)>0)?0:1;
+ 	P31 =((COM_Data&0x04)>0)?0:1;
+ 	P30 =((COM_Data&0x08)>0)?0:1;
+	P17 =((COM_Data&0x10)>0)?0:1;
+ 	P34 =((COM_Data&0x20)>0)?0:1;
+ 	P02 =((COM_Data&0x40)>0)?0:1;
+}
+void LED_SEG_OUT(u8 SEG_Data)
+{
+
+    	LED_COM &= ~0x1f;
+	P17=0;
+	P02=0;
+	
+ 	P13=((SEG_Data&SEG_A)>0)?1:0;
+ 	P14=((SEG_Data&SEG_B)>0)?1:0;
+ 	P15=((SEG_Data&SEG_C)>0)?1:0;
+ 	P10=((SEG_Data&SEG_D)>0)?1:0;
+ 	P11=((SEG_Data&SEG_E)>0)?1:0;
+ 	P12=((SEG_Data&SEG_F)>0)?1:0;
+ 	P16=((SEG_Data&SEG_G)>0)?1:0;
+}
+void LED_scan(void)
+{
+#ifndef NO_LED_DISPLAY
+    static _xdata  u8 cnt = 0;
+    if(cnt >4){	
+    	LED_SEG_OUT(LED_BUFF_2[cnt-5]);
+    }
+    else{
+    	LED_SEG_OUT(LED_BUFF[cnt]);
+    }
+    LED_COM_OUT(BIT(cnt));
+    cnt = (cnt >= (EXTENED_NUM-1))?( 0 ): (cnt+1);
+#endif
+}
+#else
 #define EXTENED_NUM 	8
 
 xd_u8 LED_BUFF_2[3]={0};
@@ -925,6 +970,7 @@ void LED_SEG_OUT(u8 SEG_Data)
 #endif 	
 	LED_SEG =SEG_Data;
 }
+
 void LED_scan(void)
 {
 #ifndef NO_LED_DISPLAY
@@ -939,6 +985,8 @@ void LED_scan(void)
     cnt = (cnt >= (EXTENED_NUM-1))?( 0 ): (cnt+1);
 #endif
 }
+#endif 	
+
 #else
 void LED_scan(void)
 {

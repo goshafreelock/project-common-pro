@@ -586,6 +586,7 @@
 //#define K4009_MY_1258_V001
 //#define K4010_MY_1258_V001
 //#define K2150_HF_1234_V001
+#define K4005_AJR_105_V001
 
 
 
@@ -785,6 +786,26 @@
 #endif
 
 /*****************按 主板编号定义宏******************/
+
+#ifdef K4005_AJR_105_V001
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P03
+
+#define EXTENED_LED_NUM_SCAN
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+
+#endif
 
 #ifdef K2150_HF_1234_V001
 
@@ -1657,7 +1678,6 @@
 
 #define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
 
-#define ADKEY_PLAY_SHORT_SCAN_FRE
 #define DISP_VOL_V_CHAR
 #define NO_PLAY_STATUS_LED
 #define SEMI_AUTO_SCAN_FREQ

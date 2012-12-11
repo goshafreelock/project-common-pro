@@ -143,6 +143,24 @@
 #define LED_STATUS   LED_BUFF[4]
 #endif
 
+#elif defined(EXTENED_LED_NUM_SCAN)
+
+#ifdef K4005_AJR_105_V001
+
+#define LED_USE_PLAY_MODE_MIXED
+
+#define LED_AUX	 	 BIT(LED_E)
+#define LED_USB		 BIT(LED_D)
+#define LED_MP3		 0//BIT(LED_E)
+#define LED_SD		 BIT(LED_F)
+#define LED_PAUSE	 BIT(LED_C)
+#define LED_2POINT	 BIT(LED_B)
+#define LED_PLAY	 BIT(LED_G)
+#define LED_FM		BIT(LED_A)
+
+#define LED_STATUS   LED_BUFF[4]
+
+#endif
 
 #elif defined(LED_DRVER_USE_SM1628)
 
