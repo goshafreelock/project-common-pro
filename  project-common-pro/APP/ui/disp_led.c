@@ -59,24 +59,25 @@ extern xd_u8 new_rtc_setting;
 #define EXTENED_NUM 	8
 #endif
 extern xd_u8 LED_BUFF_2[EXTENED_NUM-5];
+extern xd_u8 return_cnt,curr_menu;
 
 void set_extend_led_buf_icon()
 {
-	static u8 flick_timer=0;
 
-	if(flick_timer++<200)return;
-	flick_timer=0;
 #ifdef K4005_AJR_105_V001
 	LED_BUFF_2[0] =0x00;
 	LED_BUFF_2[1] =0x00;
 
 	if(work_mode<SYS_FMREV){
 
-		if(play_status==MUSIC_PLAY){
-			LED_BUFF_2[1] |=BIT(LED_F);
-		}
-		else if(play_status==MUSIC_PAUSE){
-			LED_BUFF_2[1] |=BIT(LED_A);
+		if((curr_menu == DISP_PLAY)||(curr_menu == DISP_PAUSE)){
+			
+			if(play_status==MUSIC_PLAY){
+				LED_BUFF_2[1] |=BIT(LED_F);
+			}
+			else if(play_status==MUSIC_PAUSE){
+				LED_BUFF_2[1] |=BIT(LED_A);
+			}
 		}
 	}	
 #else
