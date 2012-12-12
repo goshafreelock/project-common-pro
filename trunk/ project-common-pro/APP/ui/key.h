@@ -1042,6 +1042,19 @@ void bat_val_arg(void);
 #define ADKEY_10	NO_KEY
 #define ADKEY_11	NO_KEY
 #define ADKEY_NOKEY	NO_KEY
+#elif defined(K4005_AJR_105_V001)
+#define ADKEY_1		INFO_PLAY
+#define ADKEY_2		INFO_PREV_FIL
+#define ADKEY_3		INFO_NEXT_FIL
+#define ADKEY_4		INFO_MODE
+#define ADKEY_5		INFO_EQ_UP
+#define ADKEY_6		INFO_PLAY_MODE
+#define ADKEY_7		INFO_VOL_MINUS
+#define ADKEY_8		INFO_VOL_PLUS
+#define ADKEY_9		INFO_POWER
+#define ADKEY_10	NO_KEY
+#define ADKEY_11	NO_KEY
+#define ADKEY_NOKEY	NO_KEY
 #elif defined(K5038_JK_5038_V001)
 #define ADKEY_1		INFO_PLAY
 #define ADKEY_2		INFO_PREV_FIL
