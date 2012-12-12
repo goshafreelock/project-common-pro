@@ -52,10 +52,34 @@ extern xd_u8 new_rtc_setting;
 #endif
 
 #if defined(EXTENED_LED_NUM_SCAN)
+#ifdef K4005_AJR_105_V001
+#define EXTENED_NUM 	7
+
+#else
 #define EXTENED_NUM 	8
+#endif
 extern xd_u8 LED_BUFF_2[EXTENED_NUM-5];
+
 void set_extend_led_buf_icon()
 {
+	static u8 flick_timer=0;
+
+	if(flick_timer++<200)return;
+	flick_timer=0;
+#ifdef K4005_AJR_105_V001
+	LED_BUFF_2[0] =0x00;
+	LED_BUFF_2[1] =0x00;
+
+	if(work_mode<SYS_FMREV){
+
+		if(play_status==MUSIC_PLAY){
+			LED_BUFF_2[1] |=BIT(LED_F);
+		}
+		else if(play_status==MUSIC_PAUSE){
+			LED_BUFF_2[1] |=BIT(LED_A);
+		}
+	}	
+#else
 	LED_BUFF_2[2] =0x00;
 
 	if(work_mode<SYS_FMREV){
@@ -73,6 +97,7 @@ void set_extend_led_buf_icon()
 	else if(work_mode == SYS_RTC){
 		LED_BUFF_2[2] |=0x08;
 	}	
+#endif	
 #endif	
 }
 #endif

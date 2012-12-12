@@ -1914,6 +1914,10 @@ u8 ap_handle_hotkey(u8 key)
 		break;
 	}
 	else{
+
+#if 1//defined(LINE_IN_PLAY_KEY_PAUSE)
+	        play_status =MUSIC_STOP;
+#endif		
 		work_mode = mode_reg;
 		 clear_super_mute_lock();
 #if defined(USE_SPECTRUM_PARTTERN)		 

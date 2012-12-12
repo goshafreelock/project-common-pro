@@ -41,9 +41,15 @@ void init_disp(void)
     led_com_out();
     led_seg_out();
 #if defined(EXTENED_LED_NUM_SCAN)
+
+#ifdef K4005_AJR_105_V001
+    P0DIR &= ~((BIT(2)));
+    P0PU |= ((BIT(2)));	
+#else
     DACCON0|=0x80;
     P2DIR &= ~((BIT(6))|(BIT(7)));
     P2PU |= ((BIT(6))|(BIT(7)));	
+#endif	
 #endif	
 }
 
