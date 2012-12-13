@@ -1225,7 +1225,39 @@
 
 #define BT_CONFIG_PORT_INIT() 			
 #define BT_CONFIG_ON() 					
-#define BT_CONFIG_OFF() 				
+#define BT_CONFIG_OFF() 	
+#elif defined(K4005_AJR_105_V001)
+#define BT_PWR_PORT_INIT() 			//P0DIR |= (BIT(7));P0PU &= ~(BIT(7));P07 =1
+#define BT_PWR_ON() 				//P0DIR &= ~(BIT(7));	P07 =0
+#define BT_PWR_OFF() 				//P0DIR |= (BIT(7));	P07 =1
+
+#define BT_RST_PORT_INIT() 		
+#define BT_RST_ON() 				
+#define BT_RST_OFF() 			
+
+#define BT_PP_PORT_INIT() 			P0DIR &= ~(BIT(5));P0PU |=BIT(5);P05 =0
+#define BT_PP_ON() 					P05 =1
+#define BT_PP_OFF() 					P05 =0
+
+#define BT_NEXT_PORT_INIT() 		P0DIR &= ~(BIT(7));P0PU |=BIT(7);P07 =0
+#define BT_NEXT_ON() 				P07=1
+#define BT_NEXT_OFF() 				P07 =0
+
+#define BT_PREV_PORT_INIT() 		P0DIR &= ~(BIT(4));P0PU |=BIT(4);P04 =0
+#define BT_PREV_ON() 				P04=1
+#define BT_PREV_OFF() 				P04 =0
+
+#define BT_VOLU_PORT_INIT() 		
+#define BT_VOL_UP_ON() 				
+#define BT_VOL_UP_OFF() 			
+
+#define BT_VOLD_PORT_INIT() 		
+#define BT_VOL_DOWN_ON() 			
+#define BT_VOL_DOWN_OFF() 	
+
+#define BT_CONFIG_PORT_INIT() 			
+#define BT_CONFIG_ON() 					
+#define BT_CONFIG_OFF() 
 #elif defined(K015_SW_005B_V001)
 #define BT_PWR_PORT_INIT() 			P0DIR |= (BIT(7));P0PU &= ~(BIT(7));P07 =1
 #define BT_PWR_ON() 				P0DIR &= ~(BIT(7));	P07 =0
