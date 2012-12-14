@@ -1750,7 +1750,10 @@
 #define USE_IR_VPP_PORT_FOR_DETECTION
 
 #define USE_SPECTRUM_PARTTERN
-
+#if 0
+#define NO_DEV_SHOW_HI_STR
+#define DEFAULT_GO_TO_IDLE
+#endif
 #if 0
 #define USE_RTC_FUNCTION
 #define USE_RTC_TIME_ONLY
