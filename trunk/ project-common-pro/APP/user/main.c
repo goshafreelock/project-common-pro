@@ -1576,6 +1576,9 @@ void main(void)
 
 #if RTC_ENABLE
         case SYS_RTC:
+#ifdef UART_ENABLE					 	
+	    sys_printf("main work go in RTC ");
+#endif			
             rtc_function();
             break;		
 #endif
