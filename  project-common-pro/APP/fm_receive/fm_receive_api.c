@@ -775,7 +775,8 @@ else
 #endif
 void scan_fre(void)
 {
-    u16 i,key=0;
+    u16 i;
+    u8 key=0;
 #ifdef RADIO_AM_WM_ENABLE
     xd_u16 freq_max_range=0;
     xd_u8 max_channel=0;
@@ -922,7 +923,7 @@ void scan_fre(void)
 		break;
 	 }
 #endif	 
-	 #if defined(USE_LCD_DRV_HT1621)
+	 #if defined(USE_LCD_DRV_HT1621)||defined(LED_GPIO_DRV)
         	Disp_Con(DISP_FREQ);	 
 	 #else
         	Disp_Con(DISP_FREQ|CLS_BUF_MAGIC_NUM);
