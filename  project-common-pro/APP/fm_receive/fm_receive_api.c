@@ -923,7 +923,7 @@ void scan_fre(void)
 		break;
 	 }
 #endif	 
-	 #if defined(USE_LCD_DRV_HT1621)||defined(LED_GPIO_DRV)
+	 #if defined(USE_LCD_DRV_HT1621)||defined(LCD_GPIO_DRV)
         	Disp_Con(DISP_FREQ);	 
 	 #else
         	Disp_Con(DISP_FREQ|CLS_BUF_MAGIC_NUM);
