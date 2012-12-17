@@ -575,6 +575,7 @@
 //#define K0000_HF_6001_V001
 //#define K2121_WXD_2121_V001
 //#define K1224_YJH_1224_V001
+//#define K1224_ALK_510_V001
 //#define K1229_WXD_1229_V001
 //#define K3031_AP_668_V001
 //#define K2131_AJR_1234_V001
@@ -1328,6 +1329,61 @@
 #define USE_RTC_ALM_CUSTOM_INIT
 #define ADJ_TIME_USE_VOL_KEY
 #define RTC_SETTING_OP_TIMER_ENABLE
+#endif
+
+
+#ifdef K1224_ALK_510_V001
+
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+#define IIC_GPIO_USE_P00_P01
+
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+
+#define MUTE_PORT_USE_P03
+
+#define DISP_OFF_STR_AT_PWR_DOWN
+#define DISP_VOL_V_CHAR
+
+#define EXCHANGE_LINE_IN_CHANNEL	//½»»»LINE IN Í¨µÀ
+
+
+#define CUSTOMER_DEFINED_ADKEY_RESISTOR
+#define USE_MODE_KEY_LONG_SCAN
+#define DEFAULT_GO_TO_IDLE
+#define NO_DEV_SHOW_HI_STR
+#define USE_POWER_KEY_FOR_FM_PLAY
+#define POWE_KEY_PLAY_KEY_IN_ONE_KEY
+#define FM_PLAY_KEY_PAUSE
+
+#define LINE_IN_PLAY_KEY_PAUSE
+#define USE_POWER_KEY_FOR_AUX_PLAY
+
+#if 1
+#define USE_POWER_KEY
+#define USE_ONLY_POWER_HOLD_CTRL
+#define PWR_CTRL_P02
+#define USE_PWR_KEY_LONG_PWR_ON
+#endif
+
+
+#define USE_RTC_FUNCTION
+#define USE_RTC_TIME_ONLY
+#define RTC_SETTING_NO_CYC
+
+#undef USE_RDAs_FM
+#undef USE_QN8035_FM
+#define Lamborghini_voice
+#define OTP_MUSIC_FUNC_ENABLE
+
+
+#define USE_LINE_IN_DETECT_FUNC
+#define AUX_DETECT_USE_P17
 #endif
 
 #ifdef K1224_YJH_1224_V001
