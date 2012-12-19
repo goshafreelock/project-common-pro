@@ -392,6 +392,9 @@ u16 AR1000_Get_ID(void)
 		// this is not AR1019
 		//return 0;
 	//}
+
+	printf(" AR1000_Get_ID %x \r\n",ChipID);
+	
 	return ChipID;
 
 }
