@@ -1051,7 +1051,9 @@ void fm_radio(void)
 
     set_max_vol(MAX_ANALOG_VOL, MAX_DIGITAL_VOL);			//设置FM模式的音量上限
 
-    delay_10ms(2);	
+    dac_out_select(aux_ch_reg);
+
+    delay_10ms(20);	
     Mute_Ext_PA(UNMUTE);
     fm_rev();
     Mute_Ext_PA(MUTE);
