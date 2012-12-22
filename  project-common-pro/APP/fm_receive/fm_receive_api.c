@@ -773,6 +773,12 @@ else
 #else
 #define FM_SCAN_STOP_KEY_2 	0x00
 #endif
+
+#ifdef K1166_JM_YT_V001
+#undef FM_SCAN_STOP_KEY_1
+#define FM_SCAN_STOP_KEY_1 		0
+#define FM_SCAN_STOP_KEY_2 	INFO_PLAY
+#endif
 void scan_fre(void)
 {
     u16 i;

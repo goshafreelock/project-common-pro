@@ -106,6 +106,35 @@ _code MY_IR_KEY_STRUCT My_IRTab[]=       /*user code is 0xFF*/
 	{My_IR_KEY_CHN_UP,		INFO_CH_UP},
 	{My_IR_KEY_CHN_DN,		INFO_CH_DOWN},
 };
+#elif defined(K2158_YJH_2158_V001)
+_code MY_IR_KEY_STRUCT My_IRTab[]=       /*user code is 0xFF*/
+{
+	//{My_IR_KEY_TATOL,		My_IR_KEY_TATOL},	//4 总共键个数
+	{My_IR_KEY_NONE,	NO_KEY},
+	{My_IR_KEY_0,			INFO_0},
+	{My_IR_KEY_1,			INFO_1},
+	{My_IR_KEY_2,			INFO_2},
+	{My_IR_KEY_3,			INFO_3},
+	{My_IR_KEY_4,			INFO_4},
+	{My_IR_KEY_5,			INFO_5},
+	{My_IR_KEY_6,			INFO_6},
+	{My_IR_KEY_7,			INFO_7},
+	{My_IR_KEY_8,			INFO_8},
+	{My_IR_KEY_9,			INFO_9},
+	{My_IR_KEY_100,			INFO_PLAY_MODE},
+	
+	{My_IR_KEY_MODE,		INFO_MODE},
+	{My_IR_KEY_PLAY,			INFO_NEXT_FIL},
+	{My_IR_KEY_PLAY_M,		INFO_EQ_DOWN},
+	{My_IR_KEY_VOL_UP,		INFO_VOL_MINUS},
+	{My_IR_KEY_VOL_DN,		INFO_EQ_UP},
+	{My_IR_KEY_PREV,		INFO_PLAY},
+	{My_IR_KEY_NEXT,		INFO_PREV_FIL},
+	{My_IR_KEY_EQ_UP,		INFO_VOL_PLUS},
+	{My_IR_KEY_EQ_DN,		INFO_EQ_DOWN},
+	{My_IR_KEY_CHN_UP,		INFO_MUTE},
+	{My_IR_KEY_CHN_DN,		INFO_POWER},
+};
 #elif defined(K000_ZG_HA8918_NOR_V001)||defined(K000_ZG_HA8919_BT_V001)
 _code MY_IR_KEY_STRUCT My_IRTab[]=       /*user code is 0xFF*/
 {
