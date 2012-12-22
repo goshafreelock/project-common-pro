@@ -335,7 +335,9 @@ bool charger_detect(void)
 
     P17 =0;
     P1PU  &= ~(BIT(7));
-    //P1PDA |= (BIT(7));	
+#ifdef ENABLE_GPIO_PORT_CHARGER_DETECT_PULL_UP	
+    P1PDA |= (BIT(7));	
+#endif    
     P1DIR |= (BIT(7));
 #elif defined(CHARGER_DET_USE_P02)	
     P02 =0;
