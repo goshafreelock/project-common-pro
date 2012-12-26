@@ -17,6 +17,8 @@
 #include "lcd_ht1621_drv.h"
 #elif defined(USE_LCD_DRV_TM1721)
 #include "lcd_tm1721_drv.h"
+#elif defined(LED_DRV_USE_SM1628)
+#include "led_drv.h"
 #elif defined(LED_1651_DRV)
 #include "led_1651.h"
 extern void disp_scan_1651(void);
@@ -1145,8 +1147,10 @@ void Clear_Disp_Buf(void)
 }
 void Disp_Update(void)
 {
-#if defined( LED_GPIO_DRV)||defined( LED_DRVER_USE_SM1628)
+#if defined( LED_GPIO_DRV)
 	updateLED();
+#elif defined(LED_DRV_USE_SM1628)
+	update_led_buf();
 #elif defined(USE_LCD_DRV_HT1621)
 	UpdateLcd_HT_1621_Buf();
 #elif defined(USE_LCD_DRV_TM1721)
@@ -1225,8 +1229,10 @@ void Disp_Scan(void)
 	//return;
 #else
 
-#if defined( LED_GPIO_DRV)||defined( LED_DRVER_USE_SM1628)
+#if defined( LED_GPIO_DRV)
 	LED_scan();
+#elif defined( LED_DRV_USE_SM1628)
+
 #elif defined(LCD_GPIO_DRV)
 	lcd_gpio_scan();
 #endif

@@ -1341,6 +1341,11 @@
               <FileType>1</FileType>
               <FilePath>.\ui\led_1651.c</FilePath>
             </File>
+            <File>
+              <FileName>disp_drv_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ui\disp_drv_led.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

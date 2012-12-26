@@ -162,18 +162,6 @@
 
 #endif
 
-#elif defined(LED_DRVER_USE_SM1628)
-
-#define LED_AUX	 	//BIT(LED_A)
-#define LED_USB		 BIT(LED_A)
-#define LED_MP3		 BIT(LED_E)
-#define LED_SD		 BIT(LED_D)
-#define LED_PAUSE	 BIT(LED_C)
-#define LED_2POINT	 BIT(LED_B)
-#define LED_PLAY	 BIT(LED_G)
-#define LED_FM		BIT(LED_F)
-
-#define LED_STATUS   LED_BUFF[4]
 #elif defined(LED_USE_COMMON_4X8)
 
 #define LED_PLAY	 0//BIT(LED_A)
@@ -518,9 +506,6 @@ enum {
 
 void LED_scan(void);
 void updateLED(void);
-#ifdef LED_DRVER_USE_SM1628
-extern void TM1628_display(u8 dat1,u8 dat2,u8 dat3,u8 dat4,u8 dat5);
-#endif
 void lcd_power_down(void);
 
 #endif
