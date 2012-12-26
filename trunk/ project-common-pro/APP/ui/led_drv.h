@@ -1,0 +1,114 @@
+#ifndef _LED_DRV_H_
+#define	_LED_DRV_H_
+
+#include "Custom_config.h"
+
+#ifdef __C51__
+
+ 
+#endif
+
+
+#include "gpio_config.h"
+
+
+#define LED_A   	0
+#define LED_B	1
+#define LED_C	2
+#define LED_D	3
+#define LED_E	4
+#define LED_F	5
+#define LED_G	6
+#define LED_H	7
+
+#if 0
+#if defined(LED_USE_PLAY_MODE)
+
+#define LED_AUX	 	BIT(LED_A)
+#define LED_FM		BIT(LED_C)
+#define LED_USB		 BIT(LED_E)
+#define LED_SD		 BIT(LED_D)
+#define LED_2POINT	 BIT(LED_G)
+#define LED_MP3		 BIT(LED_E)
+#define LED_PAUSE	 0//BIT(LED_C)
+#define LED_PLAY	 0//BIT(LED_G)
+#define LED_STATUS   drv_led_buf[4]
+
+#elif defined(LED_USE_PLAY_MODE_WITH_BAT_ICON)
+#define LED_AUX	 	BIT(LED_D)
+
+#define LED_USB		 BIT(LED_A)
+#define LED_FM		 BIT(LED_H)
+#define LED_MP3		 BIT(LED_C)
+#define LED_SD		 BIT(LED_F)
+#define LED_PLAY	 0//BIT(LED_F)
+#define LED_2POINT	 BIT(LED_G)
+#define LED_PAUSE	 0//BIT(LED_H)
+
+#define LED_BAT_L1 	BIT(LED_C)
+#define LED_BAT_L2 	BIT(LED_B)
+
+#define LED_STATUS   drv_led_buf[4]
+#else
+
+#define LED_AUX	 	0//BIT(LED_A)
+
+#define LED_USB		 BIT(LED_A)
+#define LED_FM		 BIT(LED_B)|BIT(LED_E)
+#define LED_MP3		 BIT(LED_C)
+#define LED_SD		 BIT(LED_D)
+#define LED_PLAY	 BIT(LED_F)
+#define LED_2POINT	 BIT(LED_G)
+#define LED_PAUSE	 BIT(LED_H)
+#define LED_STATUS   drv_led_buf[4]
+
+#endif
+
+
+
+#ifdef USE_BAT_MANAGEMENT
+
+#ifdef EXCHANGE_LED_BAT_ICON
+
+
+#ifdef BAT_LEVEL_LED_ICON_IND
+#ifndef LED_BAT_L1
+#undef  LED_MP3	
+#undef  LED_FM	
+#define LED_FM	0
+#define LED_MP3	0
+#define LED_BAT_L1 	BIT(LED_B)
+#endif
+
+#ifndef LED_BAT_L2
+#define LED_BAT_L2 	BIT(LED_C)
+#endif
+
+#endif
+
+#else
+
+#ifdef BAT_LEVEL_LED_ICON_IND
+
+#ifndef LED_BAT_L1
+#undef  LED_MP3	
+#undef  LED_FM	
+#define LED_FM	0
+#define LED_MP3	0
+#define LED_BAT_L1 	BIT(LED_C)
+#endif
+
+#ifndef LED_BAT_L2
+#define LED_BAT_L2 	BIT(LED_B)
+#endif
+
+#endif
+#endif
+#endif
+#endif
+#define MAX_LED_BUF		14
+
+void update_led_buf(void);
+ void lcd_power_down(void);
+
+#endif

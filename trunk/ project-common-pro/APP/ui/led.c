@@ -13,7 +13,7 @@
 #include "disp.h"
 #include "led.h"
 
-#if defined( LED_GPIO_DRV)||defined( LED_DRVER_USE_SM1628)
+#if defined( LED_GPIO_DRV)
 _xdata u8 LED_BUFF[5];   ///<LEDÏÔ´æ
 #if defined(K619_FXK_619_V001)
 bool config_led_by_gpio=0;
@@ -1083,9 +1083,6 @@ void updateLED(void)
 	}
 #endif	
 
-#ifdef LED_DRVER_USE_SM1628
-TM1628_display(LED_BUFF[4],LED_BUFF[0],LED_BUFF[1],LED_BUFF[2],LED_BUFF[3]);
-#endif
 }
 void lcd_power_down(void)
 {

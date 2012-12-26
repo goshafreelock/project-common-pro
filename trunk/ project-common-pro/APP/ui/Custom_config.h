@@ -180,7 +180,7 @@
 //#define DISPLAY_NO_DEV_WHEN_NO_SD_USB
 
 #define LED_GPIO_DRV				//GPIO直接驱动LED
-//#define LED_DRVER_USE_SM1628		// SM 1628 驱动IC
+#define LED_DRV_USE_SM1628		// SM 1628 驱动IC
 //#define LCD_GPIO_DRV				//GPIO直接驱动LCD
 //#define USE_LCD_DRV_HT1621
 //#define USE_LCD_DRV_TM1721

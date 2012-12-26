@@ -1,7 +1,7 @@
 #include "Custom_config.h"
 #include "config.h"
 
-#if !defined(LED_GPIO_DRV)&&!defined(LED_DRVER_USE_SM1628)&&!defined(LCD_GPIO_DRV)&&!defined(USE_LCD_DRV_HT1621)&&!defined(USE_LCD_DRV_TM1721)
+#if !defined(LED_GPIO_DRV)&&!defined(LED_DRV_USE_SM1628)&&!defined(LCD_GPIO_DRV)&&!defined(USE_LCD_DRV_HT1621)&&!defined(USE_LCD_DRV_TM1721)
 void disp_buf_clear(void)
 {
 }

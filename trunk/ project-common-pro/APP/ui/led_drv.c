@@ -9,15 +9,18 @@
 /*----------------------------------------------------------------------------*/
 #include "Custom_config.h"
 #include "config.h"
-#include "led.h"
+#include "led_drv.h"
 #include "key.h"
 
-#ifdef LED_DRVER_USE_SM1628
+#ifdef LED_DRV_USE_SM1628
 
+xd_u8 drv_led_buf[MAX_LED_BUF];
 
-sbit TM_dio=P1^0;
-sbit TM_stb=P1^2;
-sbit TM_clk=P1^1;
+#define SPI_GPIO_Init() P3DIR &= ~0x07;P3PU |= 0x07; 
+
+sbit TM_dio=P3^0;
+sbit TM_stb=P3^2;
+sbit TM_clk=P3^1;
 
 volatile u8 _xdata TAB_keynum[5]={0};    //这5个数据来保存键值
 #define knum1 TAB_keynum[0] 
@@ -144,222 +147,45 @@ void Read_keynumber()//读TM1628的key值并入5个数组里面
 		return NO_KEY;
 	}
 }
-void TM1628_display(u8 dat1,u8 dat2,u8 dat3,u8 dat4,u8 dat5)
+void wirte_tm1628_disp_buf(void)
 {
-
-u8 _xdata dat_a1=0,dat_a2=0,dat_a3=0,dat_a4=0,dat_a5=0;
-u8 _xdata dat_temp1=0,dat_temp2=0,dat_temp3=0,dat_temp4=0,dat_temp5=0;
-    Wr_TM_CMD(0x03);//显示模式
-    Wr_TM_CMD(0x40);//地址自动加一
-//dat1=0x7e;
-
-if(dat1&0x01)
-	dat_a1|=0x01;
-else
-	dat_a1&=0xfe;
-
-if(dat1&0x02)
-	dat_temp1|=0x02;
-else
-	dat_temp2&=0xfd;
-
-if(dat1&0x04)
-	dat_a1|=0x80;
-else
-	dat_a1&=0x7f;
-
-if(dat1&0x08)
-	dat_a1|=0x08;
-else
-	dat_a1&=0xf7;
-
-if(dat1&0x10)
-	dat_a1|=0x04;
-else
-	dat_a1&=0xfb;
-
-if(dat1&0x20)
-	dat_a1|=0x02;
-else
-	dat_a1&=0xfd;
-
-if(dat1&0x40)
-	dat_temp1|=0x01;
-else
-	dat_temp1&=0xfe;
-
-
-
-if(dat2&0x01)
-	dat_a2|=0x01;
-else
-	dat_a2&=0xfe;
-
-if(dat2&0x02)
-	dat_temp2|=0x02;
-else
-	dat_temp2&=0xfd;
-
-if(dat2&0x04)
-	dat_a2|=0x80;
-else
-	dat_a2&=0x7f;
-
-if(dat2&0x08)
-	dat_a2|=0x08;
-else
-	dat_a2&=0xf7;
-
-if(dat2&0x10)
-	dat_a2|=0x04;
-else
-	dat_a2&=0xfb;
-
-if(dat2&0x20)
-	dat_a2|=0x02;
-else
-	dat_a2&=0xfd;
-
-if(dat2&0x40)
-	dat_temp2|=0x01;
-else
-	dat_temp2&=0xfe;
-
-if(dat3&0x01)
-	dat_a3|=0x01;
-else
-	dat_a3&=0xfe;
-
-if(dat3&0x02)
-	dat_temp3|=0x02;
-else
-	dat_temp3&=0xfd;
-
-if(dat3&0x04)
-	dat_a3|=0x80;
-else
-	dat_a3&=0x7f;
-
-if(dat3&0x08)
-	dat_a3|=0x08;
-else
-	dat_a3&=0xf7;
-
-if(dat3&0x10)
-	dat_a3|=0x04;
-else
-	dat_a3&=0xfb;
-
-if(dat3&0x20)
-	dat_a3|=0x02;
-else
-	dat_a3&=0xfd;
-
-if(dat3&0x40)
-	dat_temp3|=0x01;
-else
-	dat_temp3&=0xfe;
-
-if(dat4&0x01)
-	dat_a4|=0x01;
-else
-	dat_a4&=0xfe;
-
-if(dat4&0x02)
-	dat_temp4|=0x02;
-else
-	dat_temp4&=0xfd;
-
-if(dat4&0x04)
-	dat_a4|=0x80;
-else
-	dat_a4&=0x7f;
-
-if(dat4&0x08)
-	dat_a4|=0x08;
-else
-	dat_a4&=0xf7;
-
-if(dat4&0x10)
-	dat_a4|=0x04;
-else
-	dat_a4&=0xfb;
-
-if(dat4&0x20)
-	dat_a4|=0x02;
-else
-	dat_a4&=0xfd;
-
-if(dat4&0x40)
-	dat_temp4|=0x01;
-else
-	dat_temp4&=0xfe;
-
-if(dat5&0x01)
-	dat_a5|=0x01;
-else
-	dat_a5&=0xfe;
-
-if(dat5&0x02)
-	dat_temp5|=0x02;
-else
-	dat_temp5&=0xfd;
-
-if(dat5&0x04)
-	dat_a5|=0x80;
-else
-	dat_a5&=0x7f;
-
-if(dat5&0x08)
-	dat_a5|=0x08;
-else
-	dat_a5&=0xf7;
-
-if(dat5&0x10)
-	dat_a5|=0x04;
-else
-	dat_a5&=0xfb;
-
-if(dat5&0x20)
-	dat_a5|=0x02;
-else
-	dat_a5&=0xfd;
-
-if(dat5&0x40)
-	dat_temp5|=0x01;
-else
-	dat_temp5&=0xfe;
-
-TM_stb=0;//片选，0有效
-WR_TM1628_Byte(0xC4);//地址0开始
-
- WR_TM1628_Byte(dat_a1);
-WR_TM1628_Byte(dat_temp1);
+	u8 idx=0;
 	
-WR_TM1628_Byte(dat_a2);
-WR_TM1628_Byte(dat_temp2);
+    	Wr_TM_CMD(0x03);//显示模式
+    	Wr_TM_CMD(0x40);//地址自动加一
 
-WR_TM1628_Byte(dat_a3);
- WR_TM1628_Byte(dat_temp3);
+	TM_stb=0;//片选，0有效	
+	WR_TM1628_Byte(0xC0);//地址0开始
+	for( idx=0;idx<MAX_LED_BUF;idx++)
+	WR_TM1628_Byte(drv_led_buf[idx]);
 
- WR_TM1628_Byte(dat_a4);
- WR_TM1628_Byte(dat_temp4);
-		   
- WR_TM1628_Byte(dat_a5);
-WR_TM1628_Byte(dat_temp5);
+    	TM_stb=1;//片选，0有效
 
-
-    TM_stb=1;//片选，0有效
-
-    Wr_TM_CMD(0x8f);//送亮度指令
+    	Wr_TM_CMD(0x8F);//送亮度指令
 }
-#define SPI_GPIO_Init() P1DIR &= ~0x07;//P1PU |= 0x07; 
-void TM1628_init()
+void disp_buf_clear(void)
 {
-   SPI_GPIO_Init();
-    TM_dio=1;
-    TM_stb=1;
-    TM_clk=1;
+    my_memset(&drv_led_buf, 0x0,MAX_LED_BUF);
+}
+void init_disp()
+{
+   	SPI_GPIO_Init();
+    	TM_dio=1;
+   	TM_stb=1;
+    	TM_clk=1;
+
+	disp_buf_clear();
+	//wirte_tm1628_disp_buf();	
+}
+
+void update_led_buf(void)
+{
+
+	EA= 0;
+	wirte_tm1628_disp_buf();	
+	EA =1;
+   sys_printf("update_led_buf ...........  ");
+
 }
 #endif
 
