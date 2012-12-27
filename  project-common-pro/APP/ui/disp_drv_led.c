@@ -51,26 +51,25 @@ extern xd_u8 new_rtc_setting;
 
 #define ICON_RIGHT_BAR(n,m,v)	if(n==1){drv_led_buf[m]|=v;}else{drv_led_buf[6]&=~(0x20);}
 
+#define ICON_PLAY(n)			if(n==1){drv_led_buf[12]|=0x20;}else{drv_led_buf[12]&=~(0x20);}
+#define ICON_PAUSE(n)		if(n==1){drv_led_buf[10]|=0x20;}else{drv_led_buf[10]&=~(0x20);}
 
-#define ICON_DVD(n)			if(n==1){drv_led_buf[10]|=0x20;}else{drv_led_buf[10]&=~(0x20);}
-#define ICON_CD(n)			if(n==1){drv_led_buf[12]|=0x20;}else{drv_led_buf[12]&=~(0x20);}
+#define ICON_DVD(n)			if(n==1){drv_led_buf[0]|=0x20;}else{drv_led_buf[0]&=~(0x20);}
 #define ICON_USB(n)			if(n==1){drv_led_buf[6]|=0x40;}else{drv_led_buf[6]&=~(0x40);}
-#define ICON_SD(n)			if(n==1){drv_led_buf[12]|=0x40;}else{drv_led_buf[12]&=~(0x40);}
+#define ICON_SD(n)			if(n==1){drv_led_buf[8]|=0x40;}else{drv_led_buf[8]&=~(0x40);}
 #define ICON_FM(n)			if(n==1){drv_led_buf[12]|=0x40;}else{drv_led_buf[12]&=~(0x40);}
-#define ICON_AM(n)			if(n==1){drv_led_buf[8]|=0x40;}else{drv_led_buf[8]&=~(0x40);}
 
 #define ICON_MAIN_VOL(n)	if(n==1){drv_led_buf[8]|=0x20;}else{drv_led_buf[8]&=~(0x20);}
-#define ICON_FRONT_VOL(n)	if(n==1){drv_led_buf[6]|=0x20;}else{drv_led_buf[6]&=~(0x20);}
-#define ICON_SURR_VOL(n)	if(n==1){drv_led_buf[4]|=0x20;}else{drv_led_buf[4]&=~(0x20);}
-#define ICON_CEN_VOL(n)		if(n==1){drv_led_buf[2]|=0x20;}else{drv_led_buf[2]&=~(0x20);}
-#define ICON_SW_VOL(n)		if(n==1){drv_led_buf[0]|=0x20;}else{drv_led_buf[0]&=~(0x20);}
+#define ICON_TREBLE(n)		if(n==1){drv_led_buf[6]|=0x20;}else{drv_led_buf[6]&=~(0x20);}
+#define ICON_SW_VOL(n)		if(n==1){drv_led_buf[4]|=0x20;}else{drv_led_buf[4]&=~(0x20);}
+#define ICON_BASS_VOL(n)	if(n==1){drv_led_buf[2]|=0x20;}else{drv_led_buf[2]&=~(0x20);}
 #define ICON_MIC_VOL(n)		if(n==1){drv_led_buf[12]|=0x40;}else{drv_led_buf[12]&=~(0x40);}
 #define ICON_ECHO(n)		if(n==1){drv_led_buf[10]|=0x40;}else{drv_led_buf[10]&=~(0x40);}
 
 
-#define ICON_RIGHT_BAR_1(n)		if(n==1){drv_led_buf[0]|=0x10;}else{drv_led_buf[6]&=~(0x10);}
-#define ICON_RIGHT_BAR_2(n)		if(n==1){drv_led_buf[8]|=0x10;}else{drv_led_buf[6]&=~(0x10);}
-#define ICON_RIGHT_BAR_3(n)		if(n==1){drv_led_buf[12]|=0x10;}else{drv_led_buf[6]&=~(0x10);}
+#define ICON_RIGHT_BAR_1(n)		if(n==1){drv_led_buf[0]|=0x10;}else{drv_led_buf[0]&=~(0x10);}
+#define ICON_RIGHT_BAR_2(n)		if(n==1){drv_led_buf[8]|=0x10;}else{drv_led_buf[8]&=~(0x10);}
+#define ICON_RIGHT_BAR_3(n)		if(n==1){drv_led_buf[12]|=0x10;}else{drv_led_buf[12]&=~(0x10);}
 #define ICON_RIGHT_BAR_4(n)		if(n==1){drv_led_buf[2]|=0x08;}else{drv_led_buf[2]&=~(0x08);}
 #define ICON_RIGHT_BAR_5(n)		if(n==1){drv_led_buf[6]|=0x08;}else{drv_led_buf[6]&=~(0x08);}
 #define ICON_RIGHT_BAR_6(n)		if(n==1){drv_led_buf[10]|=0x08;}else{drv_led_buf[10]&=~(0x08);}
@@ -81,6 +80,7 @@ extern xd_u8 new_rtc_setting;
 #define ICON_LEFT_BAR_3(n)		if(n==1){drv_led_buf[0]|=0x08;}else{drv_led_buf[0]&=~(0x08);}
 #define ICON_LEFT_BAR_4(n)		if(n==1){drv_led_buf[4]|=0x08;}else{drv_led_buf[4]&=~(0x08);}
 #define ICON_LEFT_BAR_5(n)		if(n==1){drv_led_buf[8]|=0x08;}else{drv_led_buf[8]&=~(0x08);}
+#define ICON_LEFT_BAR_6(n)		if(n==1){drv_led_buf[12]|=0x08;}else{drv_led_buf[12]&=~(0x08);}
 
 
 
@@ -96,6 +96,15 @@ extern xd_u8 new_rtc_setting;
 									drv_led_buf[6]&=~0x01;\
 							}
 
+
+#define ICON_VOL_IND_LED(n)		if(n==1){\
+									drv_led_buf[0]|=0x01;\
+									drv_led_buf[4]|=0x02;\
+							}\
+							else{\
+									drv_led_buf[0]&=~0x01;\
+									drv_led_buf[4]&=~0x02;\
+							}
 u8 _code playmodestr[4][7] =
 {
 #if defined(LED_USE_1X888)
@@ -138,13 +147,13 @@ void Disp_Null(void)
 void aligh_disp_buf(u8 chardat,u8 idx)
 {
 
-#if 1
-
-	//ICON_RIGHT_BAR(1,  9   ,0x01);
+#if 0
+	//ICON_RIGHT_BAR(1,  12   ,0x08);
 	return ;
-	chardat=1;
-	idx =3;
+	//chardat=1;
+	//idx =3;
 #endif
+
 	if(idx==0){
 
 		if((chardat&BIT(LED_A))>0){drv_led_buf[12] |=0x80;}else{drv_led_buf[12] &=~(0x80);}
@@ -209,12 +218,15 @@ void dispchar(u8 chardata,u8 offset)
     }
     else if ( chardata =='-')
    {
-        drv_led_buf[0]|=0x80;
-        drv_led_buf[1]|=0x03;
+   	 if(offset==0)
+	        drv_led_buf[0]|=0x80;
+	 else if(offset ==1)
+	        drv_led_buf[1]|=0x02;
+	 else if(offset ==2)
+	        drv_led_buf[1]|=0x01;
     }	
     else
     {
-        //drv_led_buf[3-offset]	= BIT(LED_G);
 
     }
 
@@ -260,19 +272,14 @@ void disp_active(void)
 	 dispstring(" USB",0);
 #endif
 
-        //LED_STATUS |= LED_USB;
-    }
+		ICON_USB(1);
+	}
     else if (device_active == BIT(SDMMC))
     {
 #if defined(DISP_DEV_AT_PLAY)
 	 dispstring(" SD",0);
 #endif    
-
-#if defined(KPL_BIG_LED_MODULE)
-        //LED_STATUS_SD|= LED_SD;
-#else
-        //LED_STATUS |= LED_SD;
-#endif
+		ICON_SD(1);
     }
 
 }
@@ -410,6 +417,17 @@ void Disp_Nodevice(void)
 /*----------------------------------------------------------------------------*/
 void Disp_Vol(void)
 {
+	static bool led_spark=0;
+
+	led_spark=~led_spark;
+	
+	if(led_spark){
+		ICON_VOL_IND_LED(0);
+	}
+	else{
+		ICON_VOL_IND_LED(1);
+	}
+	
 #if defined(K000_HG_898_V001)
 	if(get_super_mute_lock()){
     		dispchar('V',2);
@@ -428,6 +446,7 @@ void Disp_Vol(void)
 #ifdef VOL_DISP_COL_ICON
     //LED_STATUS |= LED_2POINT;
 #endif
+
 
 }
 
@@ -482,100 +501,39 @@ void disp_file_time(void)
     u16 sec;
     u16 min;
     u32 file_play_time;
-    //mad_decode_dsc.total_time;
 
     file_play_time = get_music_play_time();
 
     sec = file_play_time % 60;
     min = (file_play_time/60) % 60;
-#if defined(LED_USE_1X888)
-    //LED_STATUS |= LED_2POINT;
-#else
-    //LED_STATUS |= LED_2POINT;
-#endif
 
-#if defined(COMMON_CATHODE)	
-	drv_led_buf[2] |= BIT(LED_H);
-#endif
     dispNum((u8)((min/10)%10),3);
     dispNum(min%10,2);
     dispNum((u8)((sec/10)%10),1);
     dispNum(sec%10,0);
 
-#if defined(LED_USE_COMMON_4X8)	
-    //LED_STATUS |= LED_2POINT;
-#elif defined(KPL_BIG_LED_MODULE)
-    //LED_STATUS &=~LED_2POINT;
-    //LED_STATUS_COL|=LED_2POINT;
-#endif
 
     disp_active();
 
-    /*
-    sec = mad_decode_dsc.total_time % 60;
-    min = (mad_decode_dsc.total_time/60) % 60;
-    dispNum((u8)((min/10)%10));
-    dispNum(min%10);
-    dispNum((u8)((sec/10)%10));
-    dispNum(sec%10);
-    */
 }
 
 void Disp_Pause(void)
 {
-    #if defined(LED_USE_PLAY_MODE)
-
-    #else
-	//LED_STATUS |= LED_PAUSE;
-    #endif
+    ICON_PAUSE(1);
     disp_file_time();
     disp_active();
-#if defined(K189_JM_201_V001)||defined(K000_HG_898_V001)
-    //LED_STATUS |= LED_MP3;
-#endif
-#if defined(DISP_PAUS_STRING)||defined(K745_SUOERSI_745_V001)
-    	dispstring("PAUS",0);
-    	//LED_STATUS &= ~LED_2POINT;
-#elif defined(DISP_PAU_STRING)||defined(K000_AOKAILIN_G01_V001)||defined(K000_AOKAILIN_537B_V001)||defined(K000_AOKAILIN_535B_V001)||defined(K000_JLH_2402_V001)
-    	dispstring(" PAU",0);
-    	//LED_STATUS &=~LED_2POINT;
-#endif
-
-#ifdef K619_FXK_619_V001
-	if(config_led_by_gpio==0){
-    		dispstring("   P",0);
-	}
-	else{
-    		//LED_STATUS |=BIT(LED_F);
-    		//LED_STATUS |=BIT(LED_E);
-	}
-#endif
 }
 void Disp_Stop()
 {
     dispstring("StOp",0);
-
+    ICON_PLAY(0);
+    ICON_PAUSE(0);
 }
 void Disp_Play(void)
 {
-#if defined(LED_USE_PLAY_MODE)
-#if defined(K223_BTL_CP153_V001)||defined(K2041_XFW_2041_V001)||defined(K2041_XFW_2041_V002)||defined(K000_XinLei_LC2092_V004)||defined(K1051_JIAMEI_1051_V001)||defined(K1051_JIAMEI_1051C_V001)||defined(K000_XinLei_LC2092_V001)||defined(K000_XinLei_LC2092_V002)||defined(K000_AOKAILIN_535B_V001)||defined(K1025_AIPU_1025_V001)||defined(K000_AOKAILIN_537B_V001)||defined(K1007_JinYiHeLi_1007_V001)||defined(K591_JiaLe_591_V001)||defined(K795_JinYeHeLi_795_V001)||defined(K796_JinYeHeLi_796_V001)||defined(K1025_JinYeHeLi_1025_V001)||defined(K762_JinYiHeLi_762_V001)||defined(K763_JinYiHeLi_763_V001)||defined(K585_YJH_585_V001)||defined(K737_JinYiHeLi_737_V001)||defined(K756_JinYiHeLi_756_V001)||defined(K000_AOKAILIN_G01_V001)||defined(K000_AOKAILIN_508_V001)
-
-#else	
-    //LED_STATUS |= LED_MP3;
-#endif
-#else
-    //LED_STATUS |= LED_PLAY;
-    //LED_STATUS |= LED_MP3;
-#endif
     disp_file_time();
     disp_active();
-
-#ifdef K619_FXK_619_V001
-	if(config_led_by_gpio){
-    		//LED_STATUS |=BIT(LED_F);
-	}
-#endif
+    ICON_PLAY(1);
 }
 
 void Disp_File_Name(void)
@@ -629,6 +587,7 @@ void Disp_BT(void)
 
 void Disp_AUX(void)
 {
+	ICON_DVD(1);
 
 #ifndef AUX_ICON_FOR_RTC_ALM
 #if defined(LED_USE_PLAY_MODE)||defined(LED_USE_ROUND_LED)||defined(LED_USE_PLAY_MODE_WITH_BAT_ICON)||defined(K745_SUOERSI_745_V001)||defined(LED_USE_PLAY_MODE_MIXED)
@@ -643,15 +602,7 @@ void Disp_AUX(void)
     dispstring("LINE",0);
 #endif
 
-#ifdef K619_FXK_619_V001
-	if(config_led_by_gpio){
-    		//LED_STATUS &=~LED_AUX;
-	}
-#endif
 
-#ifdef NO_AUX_ICON_DISP
-	//LED_STATUS &=~LED_AUX;
-#endif
 #if defined(LINE_IN_PLAY_KEY_PAUSE)
 
 #if defined(DISP_PAUS_STRING)
@@ -894,6 +845,115 @@ void Disp_Dev_Change(u8 flag)
     }
 
 }
+#if defined(USE_SPECTRUM_PARTTERN)
+xd_u8 patern_idx=0;
+extern bool get_lcd_flash_lock(void);
+void Disp_Patern()
+{
+
+	ICON_RIGHT_BAR_1(0);
+	ICON_RIGHT_BAR_2(0);
+	ICON_RIGHT_BAR_3(0);
+	ICON_RIGHT_BAR_4(0);
+	ICON_RIGHT_BAR_5(0);
+	ICON_RIGHT_BAR_6(0);
+			
+	ICON_LEFT_BAR_1(0);
+	ICON_LEFT_BAR_2(0);
+	ICON_LEFT_BAR_3(0);
+	ICON_LEFT_BAR_4(0);
+	ICON_LEFT_BAR_5(0);
+	ICON_LEFT_BAR_6(0);
+#ifdef USE_RTC_FUNCTION
+	if(work_mode >= SYS_RTC)return;
+#endif	
+	if(patern_idx++>7)patern_idx =0;
+	if(get_lcd_flash_lock())patern_idx = 7;
+	switch(patern_idx)
+	{
+		case 0:
+			ICON_RIGHT_BAR_1(1);
+			
+			ICON_LEFT_BAR_1(1);
+			
+			break;
+		case 1:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			break;
+		case 2:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);
+
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			ICON_LEFT_BAR_3(1);
+
+			break;
+		case 3:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);
+			
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			ICON_LEFT_BAR_3(1);
+			ICON_LEFT_BAR_4(1);
+			break;
+		case 4:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);
+			
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			ICON_LEFT_BAR_3(1);
+			ICON_LEFT_BAR_4(1);
+			ICON_LEFT_BAR_5(1);
+			break;	
+
+		case 5:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);
+			ICON_RIGHT_BAR_6(1);
+			
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			ICON_LEFT_BAR_3(1);
+			ICON_LEFT_BAR_4(1);
+			ICON_LEFT_BAR_5(1);
+			ICON_LEFT_BAR_6(1);
+			break;	
+
+		case 6:
+			ICON_RIGHT_BAR_1(0);
+			ICON_RIGHT_BAR_2(0);
+			ICON_RIGHT_BAR_3(0);
+			ICON_RIGHT_BAR_4(0);
+			ICON_RIGHT_BAR_5(0);
+			ICON_RIGHT_BAR_6(0);
+			
+			ICON_LEFT_BAR_1(0);
+			ICON_LEFT_BAR_2(0);
+			ICON_LEFT_BAR_3(0);
+			ICON_LEFT_BAR_4(0);
+			ICON_LEFT_BAR_5(0);
+			ICON_LEFT_BAR_6(0);
+			break;				
+	}	
+}
+#endif
+
 #ifdef SUPPORT_PT2313
 void Disp_Treble(void)
 {

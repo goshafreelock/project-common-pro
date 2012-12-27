@@ -3,12 +3,26 @@
 
 #include "Custom_config.h"
 
+#if defined(FM_STEP_50K)
+
+#define MAX_FRE    10800
+#define MIN_FRE	   8700
+
+#if defined(FM_MINI_FRE_875)
+#undef MIN_FRE 	
+#define MIN_FRE	   8750
+#endif
+
+#else
+
 #define MAX_FRE    1080
 #define MIN_FRE	   870
 
 #if defined(K731_YJH_820_V001)||defined(FM_MINI_FRE_875)
 #undef MIN_FRE 	
 #define MIN_FRE	   875
+#endif
+
 #endif
 
 #define FM_FREQ_STEP_100K	1

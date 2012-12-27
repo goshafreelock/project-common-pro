@@ -110,7 +110,7 @@
 //#define          _SHARE_CRYSTAL_24MHz_   	//共用24MHz晶振，请打开此宏
 //#define       _SHARE_CRYSTAL_12MHz_   	//共用12MHz晶振，请打开此宏
 //#define       _SHARE_CRYSTAL_32KHz_   	//4共用32KHz晶振，请打开此宏
-//#define       _FM_STEP_50K_           		//50K步进，请打开此宏
+//#define       FM_STEP_50K           		//50K步进，请打开此宏
 
 //#define RADIO_AM_WM_ENABLE
 //#define KEEP_SILENT_WHEN_SCAN_CHANNEL
@@ -180,7 +180,7 @@
 //#define DISPLAY_NO_DEV_WHEN_NO_SD_USB
 
 #define LED_GPIO_DRV				//GPIO直接驱动LED
-#define LED_DRV_USE_SM1628		// SM 1628 驱动IC
+//#define LED_DRV_USE_SM1628		// SM 1628 驱动IC
 //#define LCD_GPIO_DRV				//GPIO直接驱动LCD
 //#define USE_LCD_DRV_HT1621
 //#define USE_LCD_DRV_TM1721
@@ -589,6 +589,7 @@
 //#define K4010_MY_1258_V001
 //#define K2150_HF_1234_V001
 //#define K4005_AJR_105_V001
+//#define K2081_DM_007_V001
 
 
 
@@ -789,6 +790,41 @@
 #endif
 
 /*****************按 主板编号定义宏******************/
+
+#ifdef K2081_DM_007_V001
+
+#ifdef IIC_GPIO_USE_P02_P03
+#undef IIC_GPIO_USE_P02_P03
+#endif
+
+#define IIC_GPIO_USE_P00_P01
+
+
+#ifdef MUTE_PORT_USE_P01
+#undef  MUTE_PORT_USE_P01
+#endif
+#define MUTE_PORT_USE_P03
+
+#ifdef LED_GPIO_DRV
+#undef LED_GPIO_DRV
+#endif
+#define LED_DRV_USE_SM1628
+#define USE_SPECTRUM_PARTTERN
+#define CUSTOMER_DEFINED_FUNC_CYCLE
+
+#define EXCHANGE_LINE_IN_CHANNEL	//交换LINE IN 通道
+#define NEW_SD_DETECT_MOD
+#define ADKEY_PLAY_SHORT_SCAN_FRE
+
+#define DISP_AUX_STRING
+
+#define JOG_STICK_FUNC
+#define SUPPORT_PT2313
+
+#define NO_ADKEY_FUNC
+#define INDEPENDENT_VOLUME_KEY
+#define MUTE_ON_FLASH_WHOLE_SCREEN
+#endif
 
 #ifdef K4005_AJR_105_V001
 
@@ -18055,6 +18091,9 @@
 #define ADKEY_NEXT_PREV_HOLD_AUTO_SCAN
 #define ADKEY_NEXT_ADJST_FREQ
 #define USE_STOP_KEY_SHORT_CH_DOWN
+
+#define FM_MINI_FRE_875
+//#define FM_STEP_50K 
 //#define DISPLAY_TEST
 
 #endif

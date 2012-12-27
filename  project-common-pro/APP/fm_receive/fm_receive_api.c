@@ -921,12 +921,23 @@ void scan_fre(void)
 			break;
 		 }
 	 }
-#else		
+#else
+
+#if defined(FM_STEP_50K)	
+	 frequency=frequency+5;
+	 if(frequency >MAX_FRE){
+	 	frequency = MAX_FRE;
+          	Disp_Con(DISP_FREQ);
+		break;
+	 }
+#else
 	 if(frequency++ >MAX_FRE){
 	 	frequency = MAX_FRE;
           	Disp_Con(DISP_FREQ);
 		break;
 	 }
+#endif
+
 #endif	 
 	 #if defined(USE_LCD_DRV_HT1621)||defined(LCD_GPIO_DRV)
         	Disp_Con(DISP_FREQ);	 

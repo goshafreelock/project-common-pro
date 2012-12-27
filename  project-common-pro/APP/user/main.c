@@ -1454,6 +1454,13 @@ void main(void)
 	AD_Debug_func();
 #endif
 
+#if 0
+	while(1){
+		SM1628_Key_Scan();
+		delay_10ms(5);
+	}
+#endif
+
 #ifdef GPIO_SWITCH_SELECT_MODE
 	gpio_select_mode();
 #endif
