@@ -21,7 +21,19 @@
 #include "dac.h"
 #include "clock.h"
 
+#ifdef CUSTOMER_DEFINED_FUNC_CYCLE
+typedef enum
+{
 
+    SYS_AUX,
+    SYS_MP3DECODE_SD,
+    SYS_MP3DECODE_USB,
+    SYS_FMREV,
+    SYS_IDLE,
+    SYS_USBDEVICE,
+}SYS_WORK_MODE;
+
+#else
 typedef enum
 {
     SYS_MP3DECODE_USB,
@@ -54,6 +66,9 @@ typedef enum
     SYS_IDLE,
     SYS_USBDEVICE,
 }SYS_WORK_MODE;
+
+#endif
+
 
 #endif
 

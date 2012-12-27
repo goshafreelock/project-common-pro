@@ -35,7 +35,7 @@ _code u8 RDA5807P_initialization_reg[]={
     0xC0, 0x01,
 #endif
 
-#if defined(_FM_STEP_50K_)
+#if defined(FM_STEP_50K)
     0x00, 0x12,        
 #else
     0x00, 0x10,
@@ -82,7 +82,7 @@ _code u8 RDA5807PE_initialization_reg[]={	//4 RDA5807SP   RDA5807PE
     0xC0, 0x01,
 #endif
 
-#if defined(_FM_STEP_50K_)
+#if defined(FM_STEP_50K)
     0x1b, 0x92,
     0x0C, 0x00,
 #else       //Step 100K
@@ -120,7 +120,7 @@ _code u8 RDA5807PE_initialization_reg[]={	//4 RDA5807SP   RDA5807PE
     0x81, 0x10, //20H: 
     0x45, 0xa0,// 21H
 
-#if defined(_FM_STEP_50K_)
+#if defined(FM_STEP_50K)
     0x55, 0x3F, //22H
 #else
     0x19, 0x3F, //22H
@@ -223,9 +223,14 @@ _code  u8 RDA5807N_initialization_reg[]={	// MP  FP
 #else
     0xC0, 0x01,
 #endif
+
+#if defined(FM_STEP_50K)
+    0x00, 0x12,        
+#else    
     0x00, 0x10,
+#endif    
     0x04, 0x00,
-    0xc3, 0xad, //05h
+    0xc5, 0xad, //05h
     0x60, 0x00,
     0x42, 0x16,
     0x00, 0x00,
@@ -354,12 +359,21 @@ u16 RDA5807P_FreqToChan(u16 frequency)
 		bottomOfBand = 760;
 	else if ((RDA5807P_REG[3] & 0x0c) == 0x08)	
 		bottomOfBand = 760;	
+	
 	if ((RDA5807P_REG[3] & 0x03) == 0x00) 
 		channelSpacing = 1;
 	else if ((RDA5807P_REG[3] & 0x03) == 0x01) 
 		channelSpacing = 2;
+#if defined(FM_STEP_50K)	
+	else if ((RDA5807P_REG[3] & 0x03) == 0x02) 
+		channelSpacing = 5;
 
+	channel = (frequency - bottomOfBand*10) / channelSpacing;
+
+#else
 	channel = (frequency - bottomOfBand) / channelSpacing;
+#endif
+
 	return (channel);
 }
 
@@ -666,7 +680,7 @@ u16 RDA5807P_Get_ID()
     	ChipID = RDA5807P_REGR[8];
     	ChipID = ((ChipID<<8) | RDA5807P_REGR[9]);
 	printf(" ChipID %x \r\n",ChipID);
-	 return ChipID;
+	return ChipID;
 
 }
 #endif

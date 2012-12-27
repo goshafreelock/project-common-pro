@@ -55,10 +55,26 @@ void Led_flash_screen_hdlr();
 void set_led_flash_tpye(u8 type_reg);
 #endif
 #endif
+
 enum{
 	UNLOCK,
 	LOCK,
 };
+
+#ifdef CUSTOMER_DEFINED_FUNC_CYCLE
+
+typedef enum{
+
+	AUX_DEV,
+	SD_DEV,
+	USB_DEV,
+	FM_DEV,
+	IDLE,
+	
+}DEV_ON_LIST;
+
+#else
+
 typedef enum{
 
 	USB_DEV,
@@ -90,7 +106,7 @@ typedef enum{
 #endif	
 	IDLE,
 }DEV_ON_LIST;
-
+#endif
 void Init_Func_List();
 void Set_Curr_Func(u8 curr_mod);
 void Remov_Func_From_List(DEV_ON_LIST Dev);

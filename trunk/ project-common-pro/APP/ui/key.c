@@ -1765,6 +1765,7 @@ xd_u8 touchkeyval;
 xd_u8 keyval_buf;
 xd_u8  JogBuf;
 
+
 #if defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
 extern bool radio_freq_tune_pop;
 extern xd_u8 radio_tune_timer;
@@ -1798,6 +1799,19 @@ void JogDetect(void)
 	port_val|=0x02;
     }
     touchkeyval = port_val;	
+
+#elif defined(K2081_DM_007_V001)
+    P0DIR &= ~(BIT(2));    
+    P3DIR &= ~(BIT(4));    
+    P0 |=(BIT(2));
+    P3 |=(BIT(4));
+    P0PU	|= (BIT(2));
+    P3PU	|= (BIT(4));
+    P0DIR |= (BIT(2));    //P11, P12
+    P3DIR |= (BIT(4));    //P11, P12
+    Delay_us(1);
+    port_val =(P0&(BIT(2)));
+    touchkeyval = ((port_val & (BIT(2)))>>1)|((P3&(BIT(4)))>>4);		
 #elif defined(K1123_WXD_1123_V001)
     P0DIR &= ~(BIT(4));    
     P3DIR &= ~(BIT(4));    
