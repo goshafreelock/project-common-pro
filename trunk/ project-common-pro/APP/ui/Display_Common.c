@@ -48,6 +48,9 @@ extern void Disp_Treble();
 extern void Disp_Bass();
 extern void Disp_Balence();
 extern void Disp_Fade(void);
+extern void Disp_Sw_Vol(void);
+extern void Disp_Mic_Vol(void);
+extern void Disp_Echo(void);
 #endif
 extern void Disp_Power_up();
 extern void Disp_Playmode(void);
@@ -1210,6 +1213,10 @@ void Update_customed_buf()
  	led_screen_flash();
  #endif
 
+#ifdef LED_DRV_MUTE_ON_FLASH_WHOLE_SCREEN
+	led_drv_spark_all();
+#endif
+
 #if defined(EXTENED_LED_NUM_SCAN)
 	set_extend_led_buf_icon();
 #endif
@@ -1315,6 +1322,15 @@ void Disp_Con(u8 LCDinterf)
 	    	break;
 	case DISP_FADE:
 	    	Disp_Fade();
+	    	break;		
+	case DISP_SW_VOL:
+	    	Disp_Sw_Vol();
+	    	break;				
+	case DISP_MIC_VOL:
+	    	Disp_Mic_Vol();
+	    	break;	
+	case DISP_ECHO:
+	    	Disp_Echo();
 	    	break;				
 #endif						
 	case DISP_POWER_UP:

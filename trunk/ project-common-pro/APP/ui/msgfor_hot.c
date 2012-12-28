@@ -1323,7 +1323,29 @@ void audio_effect_hdlr(u8 hdlr_cmd)
 #endif		
 	 	Disp_Con(DISP_FADE);
 
+	}
+	else if(audio_effect_state ==CONFIG_SW){
+		
+#ifdef SUPPORT_PT2313	
+	 	PT2313_Config(hdlr_cmd,SW_ADJ);
+#endif		
+	 	Disp_Con(DISP_SW_VOL);
+	}		
+	else if(audio_effect_state ==CONFIG_MIC){
+		
+#ifdef SUPPORT_PT2313	
+	 	PT2313_Config(hdlr_cmd,MIC_ADJ);
+#endif		
+	 	Disp_Con(DISP_MIC_VOL);
 	}	
+	else if(audio_effect_state ==CONFIG_ECHO){
+		
+#ifdef SUPPORT_PT2313	
+	 	PT2313_Config(hdlr_cmd,ECHO_ADJ);
+#endif		
+	 	Disp_Con(DISP_ECHO);
+
+	}		
 }
 #endif		
 
@@ -1482,7 +1504,7 @@ u8 ap_handle_hotkey(u8 key)
 		return 0;
 #endif
 
-#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
+#if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)||defined(LED_DRV_MUTE_ON_FLASH_WHOLE_SCREEN)
     case INFO_RESTORE_SCREEN:
 		Disp_Con(curr_menu);
 	break;
@@ -2485,8 +2507,8 @@ _SYS_GO_IN_POWER_OFF:
 	audio_effect_hdlr(0x2);
 	break;
 #else
-	if(audio_effect_state++>=CONFIG_VOL)
-		audio_effect_state=0x01;
+	if(audio_effect_state++>=CONFIG_END)
+		audio_effect_state=CONFIG_INIT;
 	
 	audio_effect_hdlr(0xFF);
 	flush_low_msg();	

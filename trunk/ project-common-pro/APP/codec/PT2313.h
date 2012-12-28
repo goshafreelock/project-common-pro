@@ -56,7 +56,33 @@ typedef enum
     TRELBE_ADJ,
     EQ_ADJ,
     LOUD_ADJ,
+    SW_ADJ,
+    MIC_ADJ,
+    ECHO_ADJ,
 }PT2313_CTRL;
+
+#ifdef CUSTOM_DEFINED_PT_2313_CONFIG
+
+typedef enum
+{
+    CONFIG_VOL=1,    
+    CONFIG_TRE,
+    CONFIG_BAS,    
+    CONFIG_SW,
+    CONFIG_MIC,        
+    CONFIG_ECHO,     
+    CONFIG_BAL,
+    CONFIG_FAD,
+    CONFIG_EQ,
+    CONFIG_LUD,       
+
+	
+    CONFIG_INIT=CONFIG_VOL,       
+    CONFIG_END=CONFIG_ECHO, 
+    
+}PT2313_CONFIG;
+
+#else
 
 typedef enum
 {
@@ -66,8 +92,17 @@ typedef enum
     CONFIG_FAD,
     CONFIG_VOL,    
     CONFIG_EQ,
-    CONFIG_LUD,        
+    CONFIG_LUD,
+    CONFIG_SW,
+    CONFIG_MIC,        
+    CONFIG_ECHO,     
+
+    CONFIG_INIT=CONFIG_VOL,     
+    CONFIG_END=CONFIG_EQ,       
+    
 }PT2313_CONFIG;
+
+#endif
 
 typedef enum
 {
@@ -78,6 +113,7 @@ typedef enum
 
 void PT2313_Config(u8 PT_PARA,PT2313_CTRL PT_CMD);
 void PT2313_Init(void);
+
 //bool get_pt_2313_londness_flag();
 
 #endif
