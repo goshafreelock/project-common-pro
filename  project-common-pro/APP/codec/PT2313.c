@@ -377,6 +377,15 @@ void PT2313_Config(u8 PT_PARA,PT2313_CTRL PT_CMD)
 			break;	
 		case LOUD_ADJ:			
 			PT_2313_Loudness_config();
+			break;	
+		case SW_ADJ:
+			PT_2313_Treble_config(PT_PARA);
+			break;	
+		case MIC_ADJ:
+			PT_2313_Treble_config(PT_PARA);
+			break;	
+		case ECHO_ADJ:
+			PT_2313_Treble_config(PT_PARA);
 			break;				
 		default:
 			break;			

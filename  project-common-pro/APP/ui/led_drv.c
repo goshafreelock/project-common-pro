@@ -218,7 +218,7 @@ void update_led_buf(void)
 	EA= 0;
 	wirte_tm1628_disp_buf();	
 	EA =1;
-   sys_printf("update_led_buf ...........  ");
+   //sys_printf("update_led_buf ...........  ");
 
 }
 #endif
