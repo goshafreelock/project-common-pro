@@ -4,8 +4,8 @@
 #define _PT2313_H_
 
 
-///#define SOUND_EFFECT_USE_EPPROM
-//#define USE_FRONT_CHANNEL
+#define SOUND_EFFECT_USE_EPPROM
+#define USE_FRONT_CHANNEL
 #define USE_REAR_CHANNEL
 //*************************************************AUDIO
 #define	PT_2313_ADDR			0X88
@@ -43,6 +43,9 @@ enum
 #define	PT_BAL_R_ADDR			PT_SPK_R_ADDR
 #define	PT_BAL_L_ADDR			PT_SPK_L_ADDR
 
+
+//#define 	PT_MAX_VOL				28
+#define 	PT_MAX_VOL				14
 #define	PT_TABLE_MAX			14		
 
 typedef enum
@@ -61,7 +64,7 @@ typedef enum
     ECHO_ADJ,
 }PT2313_CTRL;
 
-#ifdef CUSTOM_DEFINED_PT_2313_CONFIG
+#ifdef CUSTOM_DEFINED_PT_2313_CONFIG_CYCLE
 
 typedef enum
 {
