@@ -150,5 +150,8 @@ u8 RDAFM_read_data(u8 regaddr, u16 *Rdata, u8 datalen);
 #define MEM_TREB 			101
 #define MEM_BAL 			102
 #define MEM_FADE 			103
+#define MEM_SUBW 			104
+#define MEM_MIC 			105
+#define MEM_ECHO 			106
 
 #endif

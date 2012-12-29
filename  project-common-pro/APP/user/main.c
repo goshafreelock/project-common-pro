@@ -963,7 +963,7 @@ void sys_info_init(void)
 	if(my_music_vol <=10){
 		my_music_vol =20;
 	}
-#elif defined(K015_983_SW005_ZhuoXin_V002)
+#elif defined(K015_983_SW005_ZhuoXin_V002)||defined(K568_ZX_568_V002)
 	if(my_music_vol <10){
 		my_music_vol =10;
 	}	
