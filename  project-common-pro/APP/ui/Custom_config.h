@@ -10942,6 +10942,8 @@
 
 #define TURN_ON_PLAY_BREAK_POINT_MEM
 
+#define USE_TWO_IR_REMOTE
+
 #endif
 
 #ifdef K568_ZX_568_V001

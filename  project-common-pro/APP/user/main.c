@@ -962,6 +962,10 @@ void sys_info_init(void)
 #elif defined(K1226_AP_750_V001)||defined(K2125_AP_751C_V001)
 	if(my_music_vol <=10){
 		my_music_vol =20;
+	}
+#elif defined(K015_983_SW005_ZhuoXin_V002)
+	if(my_music_vol <10){
+		my_music_vol =10;
 	}	
 #endif
 
