@@ -74,19 +74,19 @@
 #define  My_IR_KEY_7			0x09
 #define  My_IR_KEY_8			0x0A
 #define  My_IR_KEY_9			0x0B
-#define  My_IR_KEY_100			0x14
+#define  My_IR_KEY_100			0x0D
 
 #define  My_IR_KEY_MODE		0x02
 #define  My_IR_KEY_PLAY			0x01
-#define  My_IR_KEY_PLAY_M		0x13
+#define  My_IR_KEY_PLAY_M		0x14
 #define  My_IR_KEY_VOL_UP		0x0E
 #define  My_IR_KEY_VOL_DN		0x11	
 #define  My_IR_KEY_PREV			0x0F
 #define  My_IR_KEY_NEXT			0x10
 #define  My_IR_KEY_EQ_UP		0x12
-#define  My_IR_KEY_EQ_DN		0x00
-#define  My_IR_KEY_CHN_UP		0x15
-#define  My_IR_KEY_CHN_DN		0x16
+#define  My_IR_KEY_EQ_DN		0xff
+#define  My_IR_KEY_CHN_UP		0x13
+#define  My_IR_KEY_CHN_DN		0x00
 #elif defined(IR_USER_CODE_0xFE01)
 #define  My_IR_KEY_0			0x09
 #define  My_IR_KEY_1			0x01
