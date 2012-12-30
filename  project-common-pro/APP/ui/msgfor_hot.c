@@ -454,6 +454,7 @@ void my_main_vol(u8 my_vol)
 #elif defined(SUPPORT_PT2313)
 
 	if(my_vol==0){
+		
 		main_vol(0);
 		PT2313_Config(my_vol,VOL_ADJ);
 
@@ -1228,6 +1229,11 @@ void clr_aud_effect_state()
 void audio_effect_hdlr(u8 hdlr_cmd)
 {
 	//printf(" audio_effect_hdlr %x \r\n",(u16)audio_effect_state);
+
+#if defined(USE_SPECTRUM_PARTTERN)		  		
+    set_lcd_flash_lock(LOCK);
+#endif
+	
 	if(audio_effect_state ==CONFIG_VOL){
 
 	#if  1
@@ -1346,6 +1352,11 @@ void audio_effect_hdlr(u8 hdlr_cmd)
 	 	Disp_Con(DISP_ECHO);
 
 	}		
+
+#if defined(USE_SPECTRUM_PARTTERN)		  		
+    	set_lcd_flash_lock(UNLOCK);
+#endif
+
 }
 #endif		
 
@@ -2509,7 +2520,24 @@ _SYS_GO_IN_POWER_OFF:
 #else
 	if(audio_effect_state++>=CONFIG_END)
 		audio_effect_state=CONFIG_INIT;
-	
+
+
+	MIC_DET_PORT_INIT();
+
+	_nop_();
+	_nop_();
+	if(MIC_DET_PORT){
+		
+	}
+	else{
+
+		if(audio_effect_state>=CONFIG_MIC){
+
+			audio_effect_state=CONFIG_INIT;
+		}
+		MIC_DET_PORT_RELEASE();
+	}
+
 	audio_effect_hdlr(0xFF);
 	flush_low_msg();	
 	break;

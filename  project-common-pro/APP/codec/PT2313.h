@@ -25,6 +25,10 @@ enum
     AUX_CHAN=0,
     MP3_CHAN,
     FM_CHAN,
+#elif defined(K2081_DM_007_V0010)
+    FM_CHAN=0,
+    MP3_CHAN,
+    AUX_CHAN,
 #else
     MP3_CHAN =0,
     FM_CHAN,
@@ -44,9 +48,11 @@ enum
 #define	PT_BAL_L_ADDR			PT_SPK_L_ADDR
 
 
-//#define 	PT_MAX_VOL				28
-#define 	PT_MAX_VOL				14
-#define	PT_TABLE_MAX			14		
+#define 	PT_MAX_VOL				28
+#define 	PT_MIN_VOL				14
+
+//#define 	PT_MAX_VOL				14
+#define	PT_TABLE_MAX			PT_MAX_VOL		
 
 typedef enum
 {

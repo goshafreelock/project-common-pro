@@ -791,6 +791,9 @@ void scan_fre(void)
 #ifdef FM_BY_PASS
     FM_Chip_SetMute(TRUE);
 #endif
+#if defined(USE_SPECTRUM_PARTTERN)		  		
+    set_lcd_flash_lock(LOCK);
+#endif
 
 #ifdef USE_QN8035_FM
 	if(FM_chip_id  == QN8035_ID){
@@ -1010,6 +1013,11 @@ void scan_fre(void)
     FM_Chip_SetMute(FALSE);
     my_main_vol(my_music_vol);		
     set_play_flash(LED_FLASH_ON);
+
+#if defined(USE_SPECTRUM_PARTTERN)		  		
+    set_lcd_flash_lock(UNLOCK);
+#endif
+	
 }
 
 /*----------------------------------------------------------------------------*/
@@ -1052,6 +1060,10 @@ void auto_scan(AUTO_DIR Dir)
 		freq_min = AM_MIN_FRE;		
 	}
 #endif	
+
+#if defined(USE_SPECTRUM_PARTTERN)		  		
+	set_lcd_flash_lock(LOCK);
+#endif
 	
     //key_voice_disable = 1;
     fre_old = frequency;
@@ -1185,7 +1197,11 @@ void auto_scan(AUTO_DIR Dir)
      DACCON2 |= (1<<5);	//AMUX enable		
      my_main_vol(my_music_vol);		
      Mute_Ext_PA(UNMUTE);
-     
+
+#if defined(USE_SPECTRUM_PARTTERN)		  		
+	set_lcd_flash_lock(UNLOCK);
+#endif
+	 
     //key_voice_disable = 0;
     set_play_flash(LED_FLASH_ON);
 }

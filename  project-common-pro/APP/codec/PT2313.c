@@ -28,8 +28,6 @@ xd_u8  PT_Treble_Val=PT_MAX_VOL/2;
 xd_u8  PT_Balence_Val=PT_MAX_VOL/2;
 xd_u8  PT_Fade_Val=PT_MAX_VOL/2;
 xd_u8  PT_Subw_Val=PT_MAX_VOL/2;
-xd_u8  PT_Mic_vol_Val=PT_MAX_VOL/2;
-xd_u8  PT_Echo_Val=PT_MAX_VOL/2;
 
 
 _code u8 VOL_Table[36] = {63,63,63,63,63,63,50,44,38,34,30,28,26,24,22,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0};
@@ -93,6 +91,9 @@ void PT_2313_Loudness_config()
 }
 void PT_2313_Treble_config(PT_CTRL_CMD PT_CMD)
 {
+
+	u8 temp_var =0;
+
 	if(PT_CMD ==PT_UP){
 		if((PT_Treble_Val++)>=PT_TABLE_MAX)PT_Treble_Val =PT_TABLE_MAX;
 	}
@@ -100,10 +101,15 @@ void PT_2313_Treble_config(PT_CTRL_CMD PT_CMD)
 		
 		if((PT_Treble_Val--)==0)PT_Treble_Val =0;
 	}
-		
-	PT2313WriteByte(PT_2313_ADDR,EQTable1[PT_Treble_Val]|PT_TRABLE_ADDR);
 
-	write_info(MEM_TREB,PT_Treble_Val);
+	if(PT_TABLE_MAX>14){
+
+		temp_var=PT_Treble_Val/2;
+	}
+	
+	PT2313WriteByte(PT_2313_ADDR,EQTable1[temp_var]|PT_TRABLE_ADDR);
+
+	//write_info(MEM_TREB,PT_Treble_Val);
 
 #ifdef PT_DBG
 	printf(" PT_2313_Treble_config   -->PT_Treble_Val  %d \r\n",(u16)PT_Treble_Val);
@@ -111,6 +117,7 @@ void PT_2313_Treble_config(PT_CTRL_CMD PT_CMD)
 }
 void PT_2313_Bass_config(PT_CTRL_CMD PT_CMD)
 {
+	u8 temp_var =0;
 	if(PT_CMD ==PT_UP){
 		if((PT_Bass_Val++)>=PT_TABLE_MAX)PT_Bass_Val =PT_TABLE_MAX;
 	}
@@ -118,10 +125,15 @@ void PT_2313_Bass_config(PT_CTRL_CMD PT_CMD)
 		
 		if((PT_Bass_Val--)==0)PT_Bass_Val =0;
 	}
-	
-	PT2313WriteByte(PT_2313_ADDR,EQTable1[PT_Bass_Val]|PT_BASS_ADDR);
 
-	write_info(MEM_BASE,PT_Bass_Val);
+	if(PT_TABLE_MAX>14){
+
+		temp_var=PT_Bass_Val/2;
+	}
+	
+	PT2313WriteByte(PT_2313_ADDR,EQTable1[temp_var]|PT_BASS_ADDR);
+
+	//write_info(MEM_BASE,PT_Bass_Val);
 
 #ifdef PT_DBG
 	printf(" PT_2313_Bass_config   -->PT_Bass_Val  %d \r\n",(u16)PT_Bass_Val);
@@ -282,24 +294,39 @@ void PT_2313_Vol_config(u8 PT_PARA)
 #endif	
 	}
 #endif	
+
+#if defined(VOLUME_CUSTOMER_DEFINE_63)
+	PT2313WriteByte(PT_2313_ADDR, PT_MAIN_VOL_ADDR|PT_PARA);
+#else
 	PT2313WriteByte(PT_2313_ADDR, PT_MAIN_VOL_ADDR|VOL_Table[PT_PARA]);
+#endif
 }
-void PT_2313_sw_config(u8 PT_PARA)
+void PT_2313_sw_config(PT_CTRL_CMD PT_CMD)
 {
 #ifdef PT_DBG		
 	printf(" PT2313_Config PT_PARA =%d----> VOL_ADJ =%d DB \r\n",(u16)PT_PARA,(u16)VOL_Table[PT_PARA]);
 #endif
 #if 1
-	if((PT_Mute_flag == PT_UNMUTE)&&(PT_PARA>0)){
+	if((PT_Mute_flag == PT_UNMUTE)){
+
+
+	if(PT_CMD ==PT_UP){
+		if((PT_Subw_Val++)>=63)PT_Subw_Val =63;
+	}
+	else if(PT_CMD ==PT_DW){
+		
+		if((PT_Subw_Val--)==0)PT_Subw_Val =0;
+	}
+
 
 #ifdef USE_REAR_CHANNEL
-		PT2313WriteByte(PT_2313_ADDR, PT_REAR_L_ADDR);						
-		PT2313WriteByte(PT_2313_ADDR, PT_REAR_R_ADDR);	
+		PT2313WriteByte(PT_2313_ADDR, PT_REAR_L_ADDR|PT_Subw_Val);						
+		PT2313WriteByte(PT_2313_ADDR, PT_REAR_R_ADDR|PT_Subw_Val);	
 #endif	
 
 	}
 #endif	
-	PT2313WriteByte(PT_2313_ADDR, PT_MAIN_VOL_ADDR|VOL_Table[PT_PARA]);
+
 }
 
 void PT_2313_mic_config(PT_CTRL_CMD PT_CMD)
@@ -387,16 +414,12 @@ void PT2313_Init(void)
 	PT_Treble_Val = read_info(MEM_TREB);
 	PT_Fade_Val = read_info(MEM_FADE);
 	PT_Subw_Val = read_info(MEM_SUBW);
-	PT_Mic_vol_Val = read_info(MEM_MIC);
-	PT_Echo_Val= read_info(MEM_ECHO);
 #endif
-	if(PT_Bass_Val>14){PT_Bass_Val=7;}
-	if(PT_Balence_Val>14){PT_Balence_Val=7;}
-	if(PT_Treble_Val>14){PT_Treble_Val=7;}
-	if(PT_Fade_Val>14){PT_Fade_Val=7;}
-	if(PT_Subw_Val>14){PT_Subw_Val=7;}
-	if(PT_Mic_vol_Val>14){PT_Mic_vol_Val=7;}
-	if(PT_Echo_Val>14){PT_Echo_Val=7;}
+	if(PT_Bass_Val>PT_MAX_VOL){PT_Bass_Val=PT_MIN_VOL;}
+	if(PT_Balence_Val>PT_MAX_VOL){PT_Balence_Val=PT_MIN_VOL;}
+	if(PT_Treble_Val>PT_MAX_VOL){PT_Treble_Val=PT_MIN_VOL;}
+	if(PT_Fade_Val>14){PT_Fade_Val=PT_MIN_VOL;}
+	if(PT_Subw_Val>63){PT_Subw_Val=52;}
 	
 #endif
 	PT2313_Config(0xFF,MUTE_ADJ);

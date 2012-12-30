@@ -8,6 +8,7 @@
 
 
 #include "led_drv.h"
+#include "PT2313.h"
 
 #if defined(LED_DRV_USE_SM1628)
 extern _xdata u8 drv_led_buf[MAX_LED_BUF];
@@ -40,6 +41,10 @@ extern xd_u8  PT_Bass_Val;
 extern xd_u8  PT_Treble_Val;
 extern xd_u8  PT_Balence_Val;
 extern xd_u8  PT_Fade_Val;
+extern xd_u8  PT_Subw_Val;
+extern xd_u8  M62429_ch1_vol;
+extern xd_u8  M62429_ch2_vol;
+
 #endif
 extern _xdata u8 filename_buff[100];
 extern void disp_buf_clear(void);
@@ -57,7 +62,7 @@ extern xd_u8 new_rtc_setting;
 #define ICON_DVD(n)			if(n==1){drv_led_buf[0]|=0x20;}else{drv_led_buf[0]&=~(0x20);}
 #define ICON_USB(n)			if(n==1){drv_led_buf[6]|=0x40;}else{drv_led_buf[6]&=~(0x40);}
 #define ICON_SD(n)			if(n==1){drv_led_buf[8]|=0x40;}else{drv_led_buf[8]&=~(0x40);}
-#define ICON_FM(n)			if(n==1){drv_led_buf[12]|=0x40;}else{drv_led_buf[12]&=~(0x40);}
+#define ICON_FM(n)			if(n==1){drv_led_buf[4]|=0x40;}else{drv_led_buf[4]&=~(0x40);}
 #define ICON_FM_POINT(n)	if(n==1){drv_led_buf[8]|=0x04;}else{drv_led_buf[8]&=~(0x04);}
 
 #define ICON_MAIN_VOL(n)	if(n==1){drv_led_buf[8]|=0x20;}else{drv_led_buf[8]&=~(0x20);}
@@ -149,11 +154,12 @@ void aligh_disp_buf(u8 chardat,u8 idx)
 {
 
 #if 0
-	ICON_RIGHT_BAR(1,  8   ,0x04);
-	return ;
+	//ICON_RIGHT_BAR(1,  4   ,0x40);
+	//return ;
 	//chardat=1;
 	//idx =3;
 #endif
+	ICON_5_LED(1);
 	
 	if(idx==0){
 
@@ -189,11 +195,25 @@ void aligh_disp_buf(u8 chardat,u8 idx)
 	}
 	else if(idx==3){
 
-		if(chardat==1)
-		drv_led_buf[12]|=0x04;
+		if(chardat==LED_NUMBER[1])
+			drv_led_buf[12]|=0x04;
 		else
 			drv_led_buf[12]&=~(0x04);
 			
+	}
+}
+
+void disp_led_flash()
+{
+	static bool led_spark=0;
+
+	led_spark=~led_spark;
+	
+	if(led_spark){
+		ICON_VOL_IND_LED(0);
+	}
+	else{
+		ICON_VOL_IND_LED(1);
 	}
 }
 /*----------------------------------------------------------------------------*/
@@ -418,19 +438,8 @@ void Disp_Nodevice(void)
 /*----------------------------------------------------------------------------*/
 void Disp_Vol(void)
 {
-	static bool led_spark=0;
-
-	led_spark=~led_spark;
-	
-	if(led_spark){
-		ICON_VOL_IND_LED(0);
-	}
-	else{
-		ICON_VOL_IND_LED(1);
-	}
-
 	ICON_MAIN_VOL(1);	
-	
+	disp_led_flash();
 #if defined(K000_HG_898_V001)
 	if(get_super_mute_lock()){
     		dispchar('V',2);
@@ -498,6 +507,7 @@ void disp_play_icon_flash()
 	}
 }
 #endif
+
 void disp_file_time(void)
 {
 
@@ -951,47 +961,65 @@ void Disp_Patern()
 #ifdef SUPPORT_PT2313
 void Disp_Treble(void)
 {
+	u8 disp_temp=0;
 #ifndef NO_PT_STR_DISPLAY
 	dispstring("TA",0);
 #endif
 
 	ICON_TREBLE(1);
 
-	if(PT_Treble_Val<7){
-		dispchar('Z',1);
-		dispNum(7-PT_Treble_Val,0);
+	disp_led_flash();
+
+	if(PT_Treble_Val<PT_MIN_VOL){
+		dispchar('-',1);
+		//dispNum(PT_MIN_VOL-PT_Treble_Val,0);
+		disp_temp = PT_MIN_VOL-PT_Treble_Val;
 	}
 	else{
-		dispNum(PT_Treble_Val-7,0);
+		disp_temp = PT_Treble_Val -PT_MIN_VOL;
 	}
+
+    	dispNum((disp_temp/10),1);
+	dispNum(disp_temp%10,0);	
 }
 void Disp_Bass(void)
 {
+
+	u8 disp_temp=0;
+
 #ifndef NO_PT_STR_DISPLAY
 	dispstring("BA",0);
 #endif
 
 	ICON_BASS_VOL(1);
 
-	if(PT_Bass_Val<7){
-		dispchar('Z',1);
-		dispNum(7-PT_Bass_Val,0);
+	disp_led_flash();
+
+	if(PT_Bass_Val<PT_MIN_VOL){
+		dispchar('-',1);
+		//dispNum(PT_MIN_VOL-PT_Bass_Val,0);
+		disp_temp = PT_MIN_VOL-PT_Bass_Val;
 	}
 	else{
-		dispNum(PT_Bass_Val-7,0);
+
+		disp_temp = PT_Bass_Val -PT_MIN_VOL;	
+		//dispNum(PT_Bass_Val-PT_MIN_VOL,0);
 	}
+
+    	dispNum((disp_temp/10),1);
+	dispNum(disp_temp%10,0);		
 }
 void Disp_Balence(void)
 {
 #ifndef NO_PT_STR_DISPLAY
 	dispstring("BA",0);
 #endif
-	if(PT_Balence_Val<7){
-		dispchar('Z',1);
-		dispNum(7-PT_Balence_Val,0);
+	if(PT_Balence_Val<PT_MIN_VOL){
+		dispchar('-',1);
+		dispNum(PT_MIN_VOL-PT_Balence_Val,0);
 	}
 	else{
-		dispNum(PT_Balence_Val-7,0);
+		dispNum(PT_Balence_Val-PT_MIN_VOL,0);
 	}	
 }
 void Disp_Fade(void)
@@ -999,12 +1027,12 @@ void Disp_Fade(void)
 #ifndef NO_PT_STR_DISPLAY
 	dispstring("Fd",0);
 #endif
-	if(PT_Fade_Val<7){
+	if(PT_Fade_Val<PT_MIN_VOL){
 		dispchar('W',1);
-		dispNum(7-PT_Fade_Val,0);
+		dispNum(PT_MIN_VOL-PT_Fade_Val,0);
 	}
 	else{
-		dispNum(PT_Fade_Val-7,0);
+		dispNum(PT_Fade_Val-PT_MIN_VOL,0);
 	}	
 }
 void Disp_Sw_Vol(void)
@@ -1014,13 +1042,10 @@ void Disp_Sw_Vol(void)
 #endif
 
 	ICON_SW_VOL(1);
-	if(PT_Fade_Val<7){
-		dispchar('W',1);
-		dispNum(7-PT_Fade_Val,0);
-	}
-	else{
-		dispNum(PT_Fade_Val-7,0);
-	}	
+	disp_led_flash();
+
+    	dispNum((PT_Subw_Val/10),1);
+	dispNum(PT_Subw_Val%10,0);			
 }
 void Disp_Mic_Vol(void)
 {
@@ -1029,13 +1054,10 @@ void Disp_Mic_Vol(void)
 #endif
 
 	ICON_MIC_VOL(1);
-	if(PT_Fade_Val<7){
-		dispchar('W',1);
-		dispNum(7-PT_Fade_Val,0);
-	}
-	else{
-		dispNum(PT_Fade_Val-7,0);
-	}	
+	disp_led_flash();
+
+   	dispNum((M62429_ch1_vol/10),1);
+	dispNum(M62429_ch1_vol%10,0);			
 }
 void Disp_Echo(void)
 {
@@ -1044,14 +1066,10 @@ void Disp_Echo(void)
 #endif
 
 	ICON_ECHO(1);
+	disp_led_flash();
 
-	if(PT_Fade_Val<7){
-		dispchar('W',1);
-		dispNum(7-PT_Fade_Val,0);
-	}
-	else{
-		dispNum(PT_Fade_Val-7,0);
-	}	
+    	dispNum((M62429_ch2_vol/10),1);
+	dispNum(M62429_ch2_vol%10,0);		
 }
 
 #endif
