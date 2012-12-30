@@ -1446,6 +1446,11 @@
               <FileType>1</FileType>
               <FilePath>.\codec\PT2313.c</FilePath>
             </File>
+            <File>
+              <FileName>M62429.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\codec\M62429.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
