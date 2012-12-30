@@ -20,7 +20,7 @@ okvolbak=0x0600;
 
 
 
-#define CHAN_A_VOL_MAX		30
+#define CHAN_A_VOL_MAX		32
 #define CHAN_B_VOL_MAX		18
 
 #define CHAN_A_VOL_DEF		22

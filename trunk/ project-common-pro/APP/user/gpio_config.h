@@ -1663,6 +1663,12 @@
 
 #endif
 
+
+#define MIC_DET_PORT				P10
+#define MIC_DET_PORT_INIT()			P1DIR |=0x01;P1PU|=0x01;P10=1
+#define MIC_DET_PORT_RELEASE()		P1DIR &=~(0x01)
+
+
 #endif
 
 

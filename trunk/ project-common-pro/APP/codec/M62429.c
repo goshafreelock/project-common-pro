@@ -7,7 +7,7 @@
 
 _xdata M62429_DATA_TYPE M62429; 
 
-static xd_u8 M62429_ch1_vol=0,M62429_ch2_vol=0;
+xd_u8 M62429_ch1_vol=0,M62429_ch2_vol=0;
 	
 void M62429_Write_reg(u16 updata)
 {

@@ -88,6 +88,8 @@ void init_intro_play_mode(void);
 #define VOL_POINT_A		15
 #define VOL_POINT_B		20
 #endif
+#elif defined(VOLUME_CUSTOMER_DEFINE_63)
+#define MAX_VOL_SHOW 	63
 #elif defined(VOLUME_CUSTOMER_DEFINE_16)
 #define MAX_VOL_SHOW 	16
 #elif defined(VOLUME_CUSTOMER_DEFINE_28)
@@ -149,6 +151,10 @@ void init_intro_play_mode(void);
 #define MAX_VOL MAX_VOL_SHOW
 #define VOL_LIMIT 28
 #elif defined(VOLUME_CUSTOMER_DEFINE_16)
+#undef MAX_VOL
+#define MAX_VOL MAX_VOL_SHOW
+#define VOL_LIMIT 28
+#elif defined(VOLUME_CUSTOMER_DEFINE_63)
 #undef MAX_VOL
 #define MAX_VOL MAX_VOL_SHOW
 #define VOL_LIMIT 28
