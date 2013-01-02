@@ -41,7 +41,7 @@ void M62429_Write_reg(u16 updata)
 
 void M62429_config_Data(u8 adj_dir,u8 adj_channel,u16 reg_data)
 {
-	u16 reg_temp=0;
+	u16 reg_temp=0,REG=0;
 	if (adj_dir==ADJ_UP)
 	{
 		if(adj_channel == CHAN_SEL_A){
@@ -77,32 +77,20 @@ void M62429_config_Data(u8 adj_dir,u8 adj_channel,u16 reg_data)
 	if(adj_channel == CHAN_SEL_A){
 
 		reg_temp=CHAN_A_VOL_MAX-M62429_ch1_vol;
-
-		reg_temp =0;
 #ifdef UART_ENABLE_M62429		
-		printf(" M62429_config_Data ----> CHAN_SEL_A =%d DB \r\n",(u16)reg_temp);
+		printf(" M62429_config_Data ----> CHAN_SEL_A =%x DB \r\n",(u16)reg_temp);
 #endif
-		M62429.reg_data =0;
-		M62429.reg_bit.ch_no = CHAN_SEL_A;
-		M62429.reg_bit.ch_sel=CHAN_W_SINGLE;	
-		M62429.reg_bit.vol_4db=(21-(reg_temp/4));	
-		M62429.reg_bit.vol_1db=(3-(reg_temp%4));	
+		REG =(((3-(reg_temp%4))<<7)|((21-(reg_temp/4))<<2))|(CHAN_W_SINGLE)|(CHAN_SEL_A);
 
 	}
 	else if(adj_channel == CHAN_SEL_B){
 
 		reg_temp=CHAN_B_VOL_MAX-M62429_ch2_vol;
-		reg_temp =0;
 		
 #ifdef UART_ENABLE_M62429		
 		printf(" M62429_config_Data ----> CHAN_SEL_B  =%d DB \r\n",(u16)reg_temp);
 #endif
-		M62429.reg_data =0;
-		M62429.reg_bit.ch_no = CHAN_SEL_B;
-		//M62429.reg_bit.ch_sel=CHAN_W_SINGLE;	
-		//M62429.reg_bit.vol_4db=(21-(reg_temp/4));
-		//M62429.reg_bit.vol_1db=(3-(reg_temp%4));	
-
+		REG =(((3-(reg_temp%4))<<7)|((21-(reg_temp/4))<<2)|(CHAN_W_SINGLE)|(CHAN_SEL_B));
 	}
 	else{
 
@@ -110,19 +98,16 @@ void M62429_config_Data(u8 adj_dir,u8 adj_channel,u16 reg_data)
 #ifdef UART_ENABLE_M62429		
 		printf(" M62429_config_Data ----> CHAN_SEL_A AND B =%d DB \r\n",(u16)reg_temp);
 #endif
-		M62429.reg_data =0;
-		M62429.reg_bit.ch_no = CHAN_SEL_B;
-		M62429.reg_bit.ch_sel=CHAN_W_ALL;	
-		M62429.reg_bit.vol_4db=(21-(M62429_ch1_vol/4));		
-		M62429.reg_bit.vol_1db=(3-(M62429_ch1_vol%4));	
+		//M62429.reg_data =0;
+		REG =(((3-(reg_temp%4))<<7)|((21-(reg_temp/4))<<2)|(CHAN_W_SINGLE)|(CHAN_SEL_A));
 
 	}
 
 #ifdef UART_ENABLE_M62429		
-		printf(" M62429_config_Data ----> M62429.reg_data =  %x   \r\n",(u16)M62429.reg_data);
+		printf(" M62429_config_Data ----> M62429.reg_data =  %x   \r\n",(u16)REG);
 #endif
 	
-	M62429_Write_reg(M62429.reg_data);
+	M62429_Write_reg(REG|0x0600);
 }
 
 
