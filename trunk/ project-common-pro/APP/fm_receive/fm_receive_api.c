@@ -367,7 +367,7 @@ bool set_fre(u16 fre, u8 mode)
 	bool rtvar;
 	mode=mode;
 
-#ifdef UART_ENABLE
+#ifdef UART_ENABLE_FM
 	printf("----->set_fre  %4u \r\n ",(u16)fre);
 #endif
 	

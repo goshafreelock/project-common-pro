@@ -43,8 +43,16 @@
 *	GPIO CTRL  OPTIONS
 *************************************************************/
 /*UART PORT ENABLE DEFINE*/
-//#define   UART_ENABLE
+#define   UART_ENABLE
 #ifdef UART_ENABLE
+#define UART_ENABLE_MAIN_FLOW
+
+//#define UART_ENABLE_FM
+//#define UART_ENABLE_RTC
+//#define UART_ENABLE_EEPROM
+//#define UART_ENABLE_PT2313
+#define UART_ENABLE_M62429
+
 #define 	_USE_UART_P2_
 //#define _USE_UART_P0_
 #endif
@@ -589,7 +597,7 @@
 //#define K4010_MY_1258_V001
 //#define K2150_HF_1234_V001
 //#define K4005_AJR_105_V001
-//#define K2081_DM_007_V001
+#define K2081_DM_007_V001
 
 
 
@@ -811,6 +819,7 @@
 #define LED_DRV_USE_SM1628
 #define USE_SPECTRUM_PARTTERN
 #define CUSTOMER_DEFINED_FUNC_CYCLE
+#undef MUTE_CTRL_LEVEL_NORMAL
 
 #define EXCHANGE_LINE_IN_CHANNEL	//½»»»LINE IN Í¨µÀ
 #define NEW_SD_DETECT_MOD
@@ -830,6 +839,8 @@
 #define CUSTOM_DEFINED_PT_2313_CONFIG_CYCLE
 
 #define VOLUME_CUSTOMER_DEFINE_63
+#define PT_2313_OUT_GAIN_11DB
+
 #define SEMI_AUTO_SCAN_FREQ
 #define ADKEY_NEXT_PREV_HOLD_AUTO_SCAN
 #define FM_PATH_SHARE_SAME_MP3_PT_CHAN

@@ -17,7 +17,7 @@
 extern void M62429_config_Data(u8 adj_dir,u8 adj_channel,u16 reg_data);
 extern void M62429_Init(void);
 #endif
-//#define  PT_DBG
+//#define  UART_ENABLE_PT2313
 
 #ifdef SUPPORT_PT2313
 bool PT_Mute_flag = 0;
@@ -109,9 +109,9 @@ void PT_2313_Treble_config(PT_CTRL_CMD PT_CMD)
 	
 	PT2313WriteByte(PT_2313_ADDR,EQTable1[temp_var]|PT_TRABLE_ADDR);
 
-	//write_info(MEM_TREB,PT_Treble_Val);
+	write_info(MEM_TREB,PT_Treble_Val);
 
-#ifdef PT_DBG
+#ifdef UART_ENABLE_PT2313
 	printf(" PT_2313_Treble_config   -->PT_Treble_Val  %d \r\n",(u16)PT_Treble_Val);
 #endif
 }
@@ -133,9 +133,9 @@ void PT_2313_Bass_config(PT_CTRL_CMD PT_CMD)
 	
 	PT2313WriteByte(PT_2313_ADDR,EQTable1[temp_var]|PT_BASS_ADDR);
 
-	//write_info(MEM_BASE,PT_Bass_Val);
+	write_info(MEM_BASE,PT_Bass_Val);
 
-#ifdef PT_DBG
+#ifdef UART_ENABLE_PT2313
 	printf(" PT_2313_Bass_config   -->PT_Bass_Val  %d \r\n",(u16)PT_Bass_Val);
 #endif
 	
@@ -229,7 +229,7 @@ void PT_2313_Balance_config(PT_CTRL_CMD PT_CMD)
 #endif
 
 	write_info(MEM_BAL,PT_Balence_Val);
-#ifdef PT_DBG
+#ifdef UART_ENABLE_PT2313
 	printf(" PT_2313_Balance_config   -->PT_Balence_Val  %x \r\n",(u16)PT_Balence_Val);
 #endif
 
@@ -257,8 +257,8 @@ void PT_2313_Fade_config(PT_CTRL_CMD PT_CMD)
 #endif
 	write_info(MEM_FADE,PT_Fade_Val);
 	
-#ifdef PT_DBG
-	printf(" PT_2313_Balance_config   -->PT_Balence_Val  %x \r\n",(u16)PT_Balence_Val);
+#ifdef UART_ENABLE_PT2313
+	printf(" PT_2313_Fade_config   -->PT_Fade_Val  %x \r\n",(u16)PT_Fade_Val);
 #endif
 
 }
@@ -274,14 +274,19 @@ void PT_2313_EQ_config(void)
 		PT2313WriteByte(PT_2313_ADDR,PT_EQ_Table[eq_mode][0]);
 		PT2313WriteByte(PT_2313_ADDR,PT_EQ_Table[eq_mode][1]);
 	} 
-#ifdef PT_DBG
+#ifdef UART_ENABLE_PT2313
 	printf(" PT_2313_EQ_config   -->eq_mode  %x \r\n",(u16)eq_mode);
 #endif
 }
 void PT_2313_Vol_config(u8 PT_PARA)
 {
-#ifdef PT_DBG		
+#ifdef UART_ENABLE_PT2313		
+#if defined(VOLUME_CUSTOMER_DEFINE_63)
+	printf(" PT2313_Config -------> VOL_ADJ =%d DB \r\n",(u16)PT_PARA);
+
+#else
 	printf(" PT2313_Config PT_PARA =%d----> VOL_ADJ =%d DB \r\n",(u16)PT_PARA,(u16)VOL_Table[PT_PARA]);
+#endif
 #endif
 #if 0
 	if((PT_Mute_flag == PT_MUTE)&&(PT_PARA>0)){
@@ -296,16 +301,14 @@ void PT_2313_Vol_config(u8 PT_PARA)
 #endif	
 
 #if defined(VOLUME_CUSTOMER_DEFINE_63)
-	PT2313WriteByte(PT_2313_ADDR, PT_MAIN_VOL_ADDR|PT_PARA);
+	PT2313WriteByte(PT_2313_ADDR, PT_MAIN_VOL_ADDR|(63-PT_PARA));
 #else
 	PT2313WriteByte(PT_2313_ADDR, PT_MAIN_VOL_ADDR|VOL_Table[PT_PARA]);
 #endif
 }
 void PT_2313_sw_config(PT_CTRL_CMD PT_CMD)
 {
-#ifdef PT_DBG		
-	printf(" PT2313_Config PT_PARA =%d----> VOL_ADJ =%d DB \r\n",(u16)PT_PARA,(u16)VOL_Table[PT_PARA]);
-#endif
+	u8 reg_vol=0;
 #if 1
 	if((PT_Mute_flag == PT_UNMUTE)){
 
@@ -317,11 +320,20 @@ void PT_2313_sw_config(PT_CTRL_CMD PT_CMD)
 		
 		if((PT_Subw_Val--)==0)PT_Subw_Val =0;
 	}
+	
+#if defined(VOLUME_CUSTOMER_DEFINE_63)
+	reg_vol=63-PT_Subw_Val;
+#else
+	reg_vol=PT_Subw_Val;
+#endif
 
+#ifdef UART_ENABLE_PT2313		
+	printf(" PT_2313_sw_config ----> PT_Subw_Val =%d DB \r\n",(u16)reg_vol);
+#endif
 
-#ifdef USE_REAR_CHANNEL
-		PT2313WriteByte(PT_2313_ADDR, PT_REAR_L_ADDR|PT_Subw_Val);						
-		PT2313WriteByte(PT_2313_ADDR, PT_REAR_R_ADDR|PT_Subw_Val);	
+#ifdef USE_REAR_CHANNEL_FOR_SUBWOOFER
+		PT2313WriteByte(PT_2313_ADDR, PT_REAR_L_ADDR|reg_vol);						
+		PT2313WriteByte(PT_2313_ADDR, PT_REAR_R_ADDR|reg_vol);	
 #endif	
 
 	}
@@ -331,8 +343,8 @@ void PT_2313_sw_config(PT_CTRL_CMD PT_CMD)
 
 void PT_2313_mic_config(PT_CTRL_CMD PT_CMD)
 {
-#ifdef PT_DBG		
-	printf(" PT2313_Config PT_PARA =%d----> VOL_ADJ =%d DB \r\n",(u16)PT_PARA,(u16)VOL_Table[PT_PARA]);
+#ifdef UART_ENABLE_PT2313		
+	//printf(" PT2313_Config PT_PARA =%d----> VOL_ADJ =%d DB \r\n",(u16)PT_PARA,(u16)VOL_Table[PT_PARA]);
 #endif
 
 #ifdef SUPPORT_M62429
@@ -383,7 +395,7 @@ void PT_2313_Mute_config(u8 PT_PARA)
 void PT_2313_Chan_config(u8 PT_PARA)
 {
 	u8 reg_temp=0;
-#ifdef PT_DBG
+#ifdef UART_ENABLE_PT2313
 	printf(" PT2313_Config   -->CHAN_ADJ  %x \r\n",(u16)PT_PARA);
 #endif
 #ifdef PT_2313_OUT_GAIN_11DB
@@ -398,6 +410,10 @@ void PT_2313_Chan_config(u8 PT_PARA)
 }
 void PT2313_Init(void)
 {	
+#ifdef UART_ENABLE_PT2313
+    	sys_printf("PT2313_Init .....");
+#endif
+
  	PT2313WriteByte(PT_2313_ADDR,PT_SPK_L_ADDR);
 	PT2313WriteByte(PT_2313_ADDR,PT_SPK_R_ADDR);
 
@@ -427,9 +443,13 @@ void PT2313_Init(void)
 	PT2313_Config(0xFF,BASS_ADJ);
 	PT2313_Config(0xFF,BAL_ADJ);
 	PT2313_Config(0xFF,EQ_ADJ);
-
-	M62429_Init();
 	
+#ifdef USE_REAR_CHANNEL_FOR_SUBWOOFER
+	PT2313_Config(0xFF,SW_ADJ);
+#endif
+#ifdef SUPPORT_M62429
+	M62429_Init();
+#endif	
 }
 void PT2313_Config(u8 PT_PARA,PT2313_CTRL PT_CMD)
 {
