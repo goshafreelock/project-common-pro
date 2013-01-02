@@ -39,7 +39,7 @@ enum {
 };
 enum {
 	CHAN_W_ALL=0,
-	CHAN_W_SINGLE,
+	CHAN_W_SINGLE=0x02,
 };
 
 
