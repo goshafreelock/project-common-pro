@@ -42,9 +42,10 @@ extern xd_u8  PT_Treble_Val;
 extern xd_u8  PT_Balence_Val;
 extern xd_u8  PT_Fade_Val;
 extern xd_u8  PT_Subw_Val;
+#ifdef SUPPORT_M62429
 extern xd_u8  M62429_ch1_vol;
 extern xd_u8  M62429_ch2_vol;
-
+#endif
 #endif
 extern _xdata u8 filename_buff[100];
 extern void disp_buf_clear(void);

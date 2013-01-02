@@ -6,7 +6,8 @@
 
 #define SOUND_EFFECT_USE_EPPROM
 #define USE_FRONT_CHANNEL
-#define USE_REAR_CHANNEL
+//#define USE_REAR_CHANNEL
+#define USE_REAR_CHANNEL_FOR_SUBWOOFER
 //*************************************************AUDIO
 #define	PT_2313_ADDR			0X88
 #define	PT_MAIN_VOL_ADDR		0X00
@@ -25,10 +26,10 @@ enum
     AUX_CHAN=0,
     MP3_CHAN,
     FM_CHAN,
-#elif defined(K2081_DM_007_V0010)
+#elif defined(K2081_DM_007_V001)
     FM_CHAN=0,
-    MP3_CHAN,
     AUX_CHAN,
+    MP3_CHAN,
 #else
     MP3_CHAN =0,
     FM_CHAN,
@@ -49,7 +50,7 @@ enum
 
 
 #define 	PT_MAX_VOL				28
-#define 	PT_MIN_VOL				14
+#define 	PT_MIN_VOL				(PT_MAX_VOL/2)
 
 //#define 	PT_MAX_VOL				14
 #define	PT_TABLE_MAX			PT_MAX_VOL		
@@ -74,20 +75,20 @@ typedef enum
 
 typedef enum
 {
-    CONFIG_VOL=1,    
+    CONFIG_MIC=1,        
+    CONFIG_ECHO,     
+    CONFIG_VOL,    
     CONFIG_TRE,
     CONFIG_BAS,    
     CONFIG_SW,
-    CONFIG_MIC,        
-    CONFIG_ECHO,     
     CONFIG_BAL,
     CONFIG_FAD,
     CONFIG_EQ,
     CONFIG_LUD,       
 
 	
-    CONFIG_INIT=CONFIG_VOL,       
-    CONFIG_END=CONFIG_ECHO, 
+    CONFIG_INIT=CONFIG_MIC,       
+    CONFIG_END=CONFIG_SW, 
     
 }PT2313_CONFIG;
 

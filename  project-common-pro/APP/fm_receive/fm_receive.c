@@ -102,7 +102,7 @@ void enter_fm_rev(void)
        {
             fre_point[i] = read_info(MEM_CHANNL+i);
 
-#ifdef UART_ENABLE		
+#ifdef UART_ENABLE_FM		
 	     printf(" ----FM read  station from ROM  %4u \r\n",(u16)(fre_point[i]+MIN_FRE));
 #endif			
        }

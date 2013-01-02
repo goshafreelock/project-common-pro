@@ -1323,6 +1323,7 @@ void Disp_Con(u8 LCDinterf)
 	case DISP_FADE:
 	    	Disp_Fade();
 	    	break;		
+#ifdef SUPPORT_M62429			
 	case DISP_SW_VOL:
 	    	Disp_Sw_Vol();
 	    	break;				
@@ -1332,6 +1333,7 @@ void Disp_Con(u8 LCDinterf)
 	case DISP_ECHO:
 	    	Disp_Echo();
 	    	break;				
+#endif						
 #endif						
 	case DISP_POWER_UP:
 	    	Disp_Power_up();

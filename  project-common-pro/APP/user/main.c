@@ -919,7 +919,7 @@ void sys_init(void)
 #if defined(KPL_MSG_COMPATIBLE)	
     kpl_msg_preinit_setting(MSG_TYPE_1,0xF0);
 #endif
-#ifdef UART_ENABLE	
+#ifdef UART_ENABLE_MAIN_FLOW	
     delay_10ms(220);
     sys_printf("sys_init phase one finish");
 #endif
@@ -1077,7 +1077,7 @@ void sys_info_init(void)
 #endif
 #endif
 
-#ifdef UART_ENABLE	
+#ifdef UART_ENABLE_MAIN_FLOW	
     sys_printf("sys_init phase two finish");
 #endif
 }
@@ -1540,7 +1540,7 @@ void main(void)
         {
         case SYS_MP3DECODE_USB :
 	 case SYS_MP3DECODE_SD:
-#ifdef UART_ENABLE	
+#ifdef UART_ENABLE_MAIN_FLOW	
 	     sys_printf("main work go in decode play");
 #endif
             decode_play();
@@ -1550,7 +1550,7 @@ void main(void)
 #ifdef RADIO_AM_WM_ENABLE
 	 case SYS_AMREV:
 #endif    		
-#ifdef UART_ENABLE	
+#ifdef UART_ENABLE_MAIN_FLOW	
 	     sys_printf("main work go in  FM  ");
 #endif
             fm_radio();
@@ -1561,7 +1561,7 @@ void main(void)
 #ifdef USE_AUX_2
         case SYS_AUX_2:
 #endif			
-#ifdef UART_ENABLE				
+#ifdef UART_ENABLE_MAIN_FLOW				
 	     sys_printf("main work go in AUX ");
 #endif
             aux_function();
@@ -1570,7 +1570,7 @@ void main(void)
 
 #if defined(IPONE_INDEPENDENT_MODE)
         case SYS_IPH:
-#ifdef UART_ENABLE					 	
+#ifdef UART_ENABLE_MAIN_FLOW					 	
 	     sys_printf("main work go in IPH ");
 #endif
             iphone_func();
@@ -1578,7 +1578,7 @@ void main(void)
 #endif
 #if defined(BLUE_TOOTH_FUNC)	
         case SYS_BT:
-#ifdef UART_ENABLE					 	
+#ifdef UART_ENABLE_MAIN_FLOW					 	
 	     sys_printf("main work go in BT ");
 #endif
             blue_tooth_hdlr();
@@ -1587,14 +1587,14 @@ void main(void)
 
 #if RTC_ENABLE
         case SYS_RTC:
-#ifdef UART_ENABLE					 	
+#ifdef UART_ENABLE_MAIN_FLOW					 	
 	    sys_printf("main work go in RTC ");
 #endif			
             rtc_function();
             break;		
 #endif
 	 case SYS_IDLE:
-#ifdef UART_ENABLE					 	
+#ifdef UART_ENABLE_MAIN_FLOW					 	
 		sys_printf("main work go in IDLE ");
 #endif
 	     Idle_hdlr();
@@ -1604,7 +1604,7 @@ void main(void)
 	     if(pwr_up_flag){
 		 pwr_up_flag  =0;
 
-#ifdef UART_ENABLE					 	
+#ifdef UART_ENABLE_MAIN_FLOW					 	
 		sys_printf("power on from  IDLE ");
 #endif
 

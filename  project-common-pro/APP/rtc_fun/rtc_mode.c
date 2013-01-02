@@ -209,7 +209,7 @@ bool init_rtc(void)
     //printf("%u\n",(u16)rtc_con);
     if (rtc_con & BIT(6))   ///<RTC是否完全掉电
     {
-#ifdef UART_ENABLE
+#ifdef UART_ENABLE_RTC
     	sys_printf("sys_init from completely power off");
 #endif
     
@@ -218,7 +218,7 @@ bool init_rtc(void)
     else
     {
 
-#ifdef UART_ENABLE	
+#ifdef UART_ENABLE_RTC	
     	sys_printf("sys_init from NOT completely power off");
 #endif
     
@@ -1180,7 +1180,7 @@ void rtc_function(void)
     set_max_vol(MAX_ANALOG_VOL, MAX_DIGITAL_VOL);			//设置RTC模式的音量上限
     dac_out_select(DAC_DECODE);
     sysclock_div2(1);
-#ifdef UART_ENABLE
+#ifdef UART_ENABLE_RTC
 		//printf(" -----> RTC MODE %x rtc_set   %x\r\n",(u16)rtc_mode,(u16)rtc_set);
 			
 		//printf(" --0000-->RTC MODE ==%d \r\n",(u16)curr_date.year);

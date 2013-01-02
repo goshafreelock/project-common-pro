@@ -127,7 +127,7 @@ void check_eeprom_status(void)
 	else{
 		eeprom_type = 0;
 	}
-#ifdef UART_ENABLE
+#ifdef UART_ENABLE_EEPROM
 	printf("eeprom_type %x \r\n",(u16)eeprom_type);
 #endif	
 	iic_busy = 0;
@@ -147,7 +147,7 @@ bool get_eeprom_status(void)
 u8 read_info(u8 addr)
 {
 
-#ifdef UART_ENABLE
+#ifdef UART_ENABLE_EEPROM
 	printf("---->read_info  %d \r\n",(u16)addr);
 #endif
 
@@ -178,7 +178,7 @@ u8 read_info(u8 addr)
 void write_info(u8 addr,u8 dat)
 {
 
-#ifdef UART_ENABLE
+#ifdef UART_ENABLE_EEPROM
 	printf("---->write_info  %d ,write-data %x   \r\n",(u16)addr,(u16)dat);
 #endif
 
