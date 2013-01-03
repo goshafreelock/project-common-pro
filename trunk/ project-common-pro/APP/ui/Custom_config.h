@@ -43,7 +43,7 @@
 *	GPIO CTRL  OPTIONS
 *************************************************************/
 /*UART PORT ENABLE DEFINE*/
-#define   UART_ENABLE
+//#define   UART_ENABLE
 #ifdef UART_ENABLE
 #define UART_ENABLE_MAIN_FLOW
 
@@ -807,6 +807,7 @@
 
 #define IIC_GPIO_USE_P00_P01
 
+#define IR_USER_CODE_0x7F80
 
 #ifdef MUTE_PORT_USE_P01
 #undef  MUTE_PORT_USE_P01
@@ -817,7 +818,7 @@
 #undef LED_GPIO_DRV
 #endif
 #define LED_DRV_USE_SM1628
-#define USE_SPECTRUM_PARTTERN
+#define LED_DRV_USE_SM1628_KEY_FUNC
 #define CUSTOMER_DEFINED_FUNC_CYCLE
 #undef MUTE_CTRL_LEVEL_NORMAL
 
@@ -840,10 +841,18 @@
 
 #define VOLUME_CUSTOMER_DEFINE_63
 #define PT_2313_OUT_GAIN_11DB
+#define SPECTRUM_FUNC_ENABLE
+#define USE_2CH_FUNC
+/////////#define USE_SPECTRUM_PARTTERN
+#define IR_INFO_EQ_DOWN_SCAN
+#define IR_PLAY_KEY_SCAN_FREQ_DISABLE
 
 #define SEMI_AUTO_SCAN_FREQ
 #define ADKEY_NEXT_PREV_HOLD_AUTO_SCAN
 #define FM_PATH_SHARE_SAME_MP3_PT_CHAN
+
+#undef USE_QN8035_FM
+#undef USE_BK1080_FM
 #endif
 
 #ifdef K4005_AJR_105_V001

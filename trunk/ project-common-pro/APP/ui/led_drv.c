@@ -15,6 +15,7 @@
 #ifdef LED_DRV_USE_SM1628
 
 xd_u8 drv_led_buf[MAX_LED_BUF];
+bool drv_led_ea=0;
 
 #define SPI_GPIO_Init() P3DIR &= ~0x07;P3PU |= 0x07; 
 
@@ -51,7 +52,7 @@ _code u8 tm_Key_Tab[MAX_TM_KEY][3]=
 
 void delayus()//延时4us
 {
-	u8 i=20;
+	u8 i=5;
 	while(i-->0);
 }
 
@@ -94,9 +95,13 @@ void Wr_TM_CMD(u8 TMcmd)
     	SPI_STB_PIN=1;//片选，0有效
     	SPI_DATA_PIN=1;
 }
+#ifdef LED_DRV_USE_SM1628_KEY_FUNC
 void Read_key()//读TM1628的key值并入5个数组里面
 {
 	u8 ii=0;
+
+	if(drv_led_ea)return;
+	
     	SPI_STB_PIN=0;//片选，0有效
     	tm_write_byte(0x42);//读键值命令0x42
     	SPI_DATA_PIN=1;//****************这一句很关键/在读数据时，一定要释放DIO=1
@@ -112,12 +117,13 @@ void Read_key()//读TM1628的key值并入5个数组里面
 {
 	u8 ii=0;
 	
-	Read_key();
+	//Read_key();
     //printf("Read_keynumber 000  %x \r\n",(u16)TAB_keynum[0]);
     //printf("Read_keynumber 111  %x \r\n",(u16)TAB_keynum[1]);
     //printf("Read_keynumber 222  %x \r\n",(u16)TAB_keynum[2]);
     //printf("Read_keynumber 333  %x \r\n",(u16)TAB_keynum[3]);
     //printf("Read_keynumber 444  %x \r\n",(u16)TAB_keynum[4]);
+	//return NO_KEY;
 
 #if 1
 	if((TAB_keynum[tm_Key_Tab[0][0]] >0)||(TAB_keynum[tm_Key_Tab[2][0]]>0))
@@ -181,11 +187,14 @@ void Read_key()//读TM1628的key值并入5个数组里面
 	}
 #endif	
 }
+#endif	
 void wirte_tm1628_disp_buf(void)
 {
 	u8 idx=0;
-	
-    	Wr_TM_CMD(0x03);//显示模式
+
+	drv_led_ea = 1;		
+
+	Wr_TM_CMD(0x03);//显示模式
     	Wr_TM_CMD(0x40);//地址自动加一
 
 	SPI_STB_PIN=0;//片选，0有效	
@@ -196,6 +205,8 @@ void wirte_tm1628_disp_buf(void)
     	SPI_STB_PIN=1;//片选，0有效
 
     	Wr_TM_CMD(0x8F);//送亮度指令
+
+	drv_led_ea = 0;		
 }
 void disp_buf_clear(void)
 {

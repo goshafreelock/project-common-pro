@@ -82,6 +82,13 @@ typedef enum {
 	
 }LED_FLASH_TYPE;
 
+
+enum {
+	DISP_STOP_SPECT,
+	DISP_RUN_SPECT,
+	DISP_SPECT_ROLLING,
+};
+
 void Disp_Init(void);
 void Disp_Init_2(void);
 void Disp_Update(void);

@@ -53,7 +53,7 @@
     extrn data (otp_music_addr)
 #endif
 	
-#if defined( LED_DRV_USE_SM1628	)
+#if defined( LED_DRV_USE_SM1628_KEY_FUNC)
     extrn code (SM1628_Key_Scan)
 #endif
 
@@ -485,7 +485,7 @@ keyScan:
 	JNZ  	?C0008
 #endif	
 
-#if defined( LED_DRV_USE_SM1628	)
+#if defined( LED_DRV_USE_SM1628_KEY_FUNC)
     CALL    SM1628_Key_Scan
 	MOV  	A,R7
 	CPL  	A

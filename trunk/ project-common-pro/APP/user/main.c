@@ -57,6 +57,10 @@ extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 #endif
 extern bool IR_KEY_Detect;
 
+#ifdef LED_DRV_USE_SM1628_KEY_FUNC
+extern void Read_key();
+#endif
+
 #ifdef BLUE_TOOTH_GPIO_STATUS
 extern bool blue_tooth_detect;
 #endif
@@ -64,7 +68,9 @@ extern bool blue_tooth_detect;
 #ifdef USE_SYS_MODE_RECOVER
 bool sys_mode_recove=0;
 #endif
-
+#ifdef SPECTRUM_FUNC_ENABLE
+extern bool spectrum_reflesh_en;
+#endif
 #if defined(DC_HW_POWER_UP_IN_IDLE_MODE)|| defined(USB_SD_PORTABLE_BAT_CHARGER)
 extern bool dc_hw_pwer_up_sel_mode;
 #endif
@@ -443,6 +449,7 @@ void sdmmc_detect(void)
 void timer0isr(void) interrupt 0 using 1
 {
     static u8 isr0_ms_cnt=0;
+    static u8 isr0_ms_cnt2=0;
 
     _push_(DPCON);
     _push_(DP0L);
@@ -451,10 +458,21 @@ void timer0isr(void) interrupt 0 using 1
     T0CON &= ~(BIT(7));
     dac_cnt++;
     isr0_ms_cnt++;
-	
+#ifdef SPECTRUM_FUNC_ENABLE
+    	isr0_ms_cnt2++;	
+	if(isr0_ms_cnt2==20){
+		isr0_ms_cnt2=0;
+		spectrum_reflesh_en=1;
+	}
+#endif
+
    if(isr0_ms_cnt==10)
    {
    	isr0_ms_cnt =0;
+#ifdef LED_DRV_USE_SM1628_KEY_FUNC
+	Read_key();
+#endif
+
 	
 #ifdef USE_MICPHONE_GPIO_DETECTION
 	 mic_check();
@@ -1383,11 +1401,19 @@ extern u8 _idata irStep;      ///<IR当前状态
 extern u16 _idata irBuffer;   ///<IR读取读取出的数据
 void IR_Debug_func()
 {
+	u8 key=0;
 	while(1){
 		if(irStep == 32){
 			  printf("IR_Debug_func user_code %x \r\n",(user_code));
 			  printf("IR_Debug_func irBuffer  %x \r\n",(irBuffer & 0xff));
+			  
 		}
+#if 1
+		        key = get_msg();
+			if((key!=0xff)&&(key!=0x1f))
+			printf(" music_play get_msg %x \r\n",(u16)key);
+#endif
+
 	}
 		
 }
