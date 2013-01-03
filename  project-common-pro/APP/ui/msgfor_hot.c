@@ -1457,7 +1457,7 @@ u8 ap_handle_hotkey(u8 key)
 	}
 #endif
 
-#if 0
+#if 1
 	if(key!=0xff)
 	printf( "---->ap_handle_hotkey %x \r\n",(u16)key);
 #endif
@@ -2695,6 +2695,52 @@ _SYS_GO_IN_POWER_OFF:
 		break;
 #endif
 
+#ifdef USE_2CH_FUNC
+#ifdef SUPPORT_PT2313
+	case INFO_RESET|KEY_SHORT_UP:
+		break;
+	case INFO_BASS_UP|KEY_SHORT_UP:
+	case INFO_BASS_UP|KEY_HOLD:
+		audio_effect_state =CONFIG_BAS;
+		audio_effect_hdlr(0x01);
+		break;	
+	case INFO_BASS_DN|KEY_SHORT_UP:
+	case INFO_BASS_DN|KEY_HOLD:
+		audio_effect_state =CONFIG_BAS;
+		audio_effect_hdlr(0x02);		
+		break;	
+	case INFO_TREB_UP|KEY_SHORT_UP:
+	case INFO_TREB_UP|KEY_HOLD:
+		audio_effect_state =CONFIG_TRE;
+		audio_effect_hdlr(0x01);			
+		break;
+	case INFO_TREB_DN|KEY_SHORT_UP:
+	case INFO_TREB_DN|KEY_HOLD:
+		audio_effect_state =CONFIG_TRE;
+		audio_effect_hdlr(0x02);		
+		break;
+	case INFO_OKVOL_UP|KEY_SHORT_UP:
+	case INFO_OKVOL_UP|KEY_HOLD:
+		audio_effect_state =CONFIG_MIC;
+		audio_effect_hdlr(0x01);			
+		break;
+	case INFO_OKVOL_DN|KEY_SHORT_UP:
+	case INFO_OKVOL_DN|KEY_HOLD:
+		audio_effect_state =CONFIG_MIC;
+		audio_effect_hdlr(0x02);			
+		break;
+	case INFO_SWVOL_UP|KEY_SHORT_UP:
+	case INFO_SWVOL_UP|KEY_HOLD:
+		audio_effect_state =CONFIG_SW;
+		audio_effect_hdlr(0x01);	
+		break;
+	case INFO_SWVOL_DN|KEY_SHORT_UP:
+	case INFO_SWVOL_DN|KEY_HOLD:
+		audio_effect_state =CONFIG_SW;
+		audio_effect_hdlr(0x02);	
+		break;
+#endif
+#endif
 #if defined(CUSTOMIZED_KEY_FUNC_ENABLE)
 	case INFO_CUS_KEY_1|KEY_SHORT_UP:
 #if defined(K820_LHD_820_V001)

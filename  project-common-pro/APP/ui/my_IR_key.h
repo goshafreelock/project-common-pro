@@ -38,6 +38,42 @@
 #define  My_IR_KEY_EQ_DN		0x09
 #define  My_IR_KEY_CHN_UP		0x1E
 #define  My_IR_KEY_CHN_DN		0x12
+#elif defined(K2081_DM_007_V001)
+#define  My_IR_KEY_0				0x11
+#define  My_IR_KEY_1				0x07
+#define  My_IR_KEY_2				0x05
+#define  My_IR_KEY_3				0x06
+#define  My_IR_KEY_4				0x0b
+#define  My_IR_KEY_5				0x09
+#define  My_IR_KEY_6				0x0a
+#define  My_IR_KEY_7				0x0f
+#define  My_IR_KEY_8				0x0d
+#define  My_IR_KEY_9				0x0e
+#define  My_IR_KEY_100				0x12
+
+#define  My_IR_KEY_MODE			0x0C
+#define  My_IR_KEY_PLAY				0x1e
+#define  My_IR_KEY_PLAY_M			0xFF
+#define  My_IR_KEY_VOL_UP			0x00
+#define  My_IR_KEY_VOL_DN			0x1c	
+#define  My_IR_KEY_PREV				0x1f
+#define  My_IR_KEY_NEXT				0x1d
+#define  My_IR_KEY_EQ_UP			0x13
+#define  My_IR_KEY_EQ_DN			0x1B
+#define  My_IR_KEY_CHN_UP			0x1A
+#define  My_IR_KEY_CHN_DN			0x19
+#define  My_IR_KEY_POWER			0x03
+#define  My_IR_KEY_MUTE				0x02
+#define  My_IR_KEY_RESET			0x03
+
+#define  My_IR_KEY_BASS_UP			0x17
+#define  My_IR_KEY_BASS_DN			0x18
+#define  My_IR_KEY_TREB_UP			0x15
+#define  My_IR_KEY_TREB_DW			0x14
+#define  My_IR_KEY_OK_VOL_UP		0x16
+#define  My_IR_KEY_OK_VOL_DW		0x04
+#define  My_IR_KEY_SW_VOL_UP		0x08
+#define  My_IR_KEY_SW_VOL_DW		0x10
 #else
 #define  My_IR_KEY_0			0x07
 #define  My_IR_KEY_1			0x0A

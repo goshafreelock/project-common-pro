@@ -428,7 +428,7 @@ void fm_rev( void )
 		#endif
 		}
             break;
-#if defined(IR_USER_CODE_0x7F80)||defined(K120_YJH_120_V001)||defined(K000_HG_898_V001)||defined(EQ_DOWN_SCAN_ALL)
+#if defined(K120_YJH_120_V001)||defined(K000_HG_898_V001)||defined(EQ_DOWN_SCAN_ALL)
         case INFO_EQ_DOWN| KEY_SHORT_UP :
 #if 1//defined(EQ_DOWN_SCAN_ALL)	
 		goto __SCAN_FREQ;

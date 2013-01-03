@@ -75,20 +75,21 @@ typedef enum
 
 typedef enum
 {
-    CONFIG_MIC=1,        
-    CONFIG_ECHO,     
-    CONFIG_VOL,    
+ 
+    CONFIG_VOL=1,    
     CONFIG_TRE,
     CONFIG_BAS,    
     CONFIG_SW,
+    CONFIG_MIC,        
+    CONFIG_ECHO,    
     CONFIG_BAL,
     CONFIG_FAD,
     CONFIG_EQ,
     CONFIG_LUD,       
 
 	
-    CONFIG_INIT=CONFIG_MIC,       
-    CONFIG_END=CONFIG_SW, 
+    CONFIG_INIT=CONFIG_VOL,       
+    CONFIG_END=CONFIG_ECHO, 
     
 }PT2313_CONFIG;
 

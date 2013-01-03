@@ -349,10 +349,10 @@ void PT_2313_mic_config(PT_CTRL_CMD PT_CMD)
 
 #ifdef SUPPORT_M62429
 	if(PT_CMD ==PT_UP){		
-		M62429_config_Data(ADJ_UP,CHAN_SEL_A,0xFF);
+		M62429_config_Data(ADJ_UP,CHAN_SEL_B,0xFF);
 	}
 	else{
-		M62429_config_Data(ADJ_DOWN,CHAN_SEL_A,0xFF);		
+		M62429_config_Data(ADJ_DOWN,CHAN_SEL_B,0xFF);		
 	}
 #endif
 }
@@ -360,10 +360,10 @@ void PT_2313_echo_config(PT_CTRL_CMD PT_CMD)
 {
 #ifdef SUPPORT_M62429
 	if(PT_CMD ==PT_UP){		
-		M62429_config_Data(ADJ_UP,CHAN_SEL_B,0xFF);
+		M62429_config_Data(ADJ_UP,CHAN_SEL_A,0xFF);
 	}
 	else{
-		M62429_config_Data(ADJ_DOWN,CHAN_SEL_B,0xFF);		
+		M62429_config_Data(ADJ_DOWN,CHAN_SEL_A,0xFF);		
 	}
 #endif
 }

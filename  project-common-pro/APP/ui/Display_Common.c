@@ -936,10 +936,40 @@ u8 get_spect_power(void)
 {
 	return spec_power;
 }
+u8 _code spect_level_tab[6] ={0};
+u8 i=0,spect_buf[2]={0};
 u8 get_spect_limit(u8 spect_energy)
 {
      	//printf("---->get_spect_limit  %d, \r\n",(u16)spect_energy);
+	if(i==0){
+		i=1;
+	}
+	else{
+		i=0;
+	}
+	spect_buf[i]=spect_energy;
 
+	if(spect_buf[0]>spect_buf[1]){
+
+		return ((spect_buf[0]-spect_buf[1])%6);
+	}
+	else{
+		return ((spect_buf[1]-spect_buf[0])%6);
+
+	}
+	
+#if 1
+#if 0
+	u8 idx=0;
+	for(idx=0;idx<sizeof(spect_level_tab);idx++){
+
+		if(spect_energy <=spect_level_tab[idx]){
+
+			return idx;
+		}
+	}
+#endif	
+#else
 	if(spect_energy>30){
 		return 5;
 	}
@@ -955,6 +985,7 @@ u8 get_spect_limit(u8 spect_energy)
 	else{
 		return 1;
 	}
+#endif
 }
 void update_spect_buffer(u8 spect_limit)
 {
@@ -970,7 +1001,7 @@ void get_random_spect_data()
 {
 	u8 i=0;
 	for(i=0;i<10;i++){
-		spect_buffer[i] =(u16)(ReadLFSR()/10);
+		spect_buffer[i] =(u16)((ReadLFSR()/10));
 	}
 }
 void Disp_Spect_Update(u16 *spect_buf)
@@ -986,17 +1017,16 @@ void Disp_Spect_Update(u16 *spect_buf)
 	//printf("__----spectrum_pattern  %d, \r\n",spect_line);
 	//spec_powerupdate_spect_buffer(get_spect_limit(spect_line));
 	spec_power = get_spect_limit(spect_line);
-	spect_pattern_disp_reflesh(LED_RUN_SPECT);
+	spect_pattern_disp_reflesh(DISP_RUN_SPECT);
+
 	//printf("__----spectrum_pattern  %d, \r\n",(u16)spec_power);
 		
 }
 void get_spectrum_data(void)
 {
-	if(spectrum_lock){
+	if(spectrum_lock||get_super_mute_lock()){
 		clear_spectrum_buf();
-#ifdef LED_ROLLING_FUNC			
-		spect_pattern_disp_reflesh(LED_RUN_ROLLING);
-#endif
+		spect_pattern_disp_reflesh(DISP_SPECT_ROLLING);
 		return;
 	}
 #ifdef USE_RTC_FUNCTION	
@@ -1004,7 +1034,7 @@ void get_spectrum_data(void)
 		return;
 	}
 #endif	
-	if(work_mode <SYS_FMREV){
+	if((work_mode==SYS_MP3DECODE_SD)||(work_mode==SYS_MP3DECODE_USB)){
 		
 		freqavg(spect_buffer);
 	}

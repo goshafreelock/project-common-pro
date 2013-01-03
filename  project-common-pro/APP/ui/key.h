@@ -198,6 +198,17 @@ void bat_val_arg(void);
 #define  INFO_MINUS         0x1a
 #endif
 
+#ifdef USE_2CH_FUNC
+#define INFO_RESET			29
+#define INFO_BASS_UP		21
+#define INFO_BASS_DN		22
+#define INFO_TREB_UP		30
+#define INFO_TREB_DN		24
+#define INFO_OKVOL_UP		25
+#define INFO_OKVOL_DN		26
+#define INFO_SWVOL_UP		32
+#define INFO_SWVOL_DN 		28
+#endif
 
 #define INFO_CUS_KEY_1		0x35
 #define INFO_CUS_KEY_2		0x36

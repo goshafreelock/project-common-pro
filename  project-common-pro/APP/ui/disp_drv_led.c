@@ -850,6 +850,113 @@ void Disp_Dev_Change(u8 flag)
     }
 
 }
+
+#if defined(SPECTRUM_FUNC_ENABLE)
+xd_u8 disp_spect_level=0;
+void spect_pattern_disp()
+{
+	switch(disp_spect_level)
+	{
+		case 0:
+			ICON_RIGHT_BAR_1(1);
+			
+			ICON_LEFT_BAR_1(1);
+			
+			break;
+		case 1:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			break;
+		case 2:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);
+
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			ICON_LEFT_BAR_3(1);
+
+			break;
+		case 3:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);
+			
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			ICON_LEFT_BAR_3(1);
+			ICON_LEFT_BAR_4(1);
+			break;
+		case 4:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);
+			
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			ICON_LEFT_BAR_3(1);
+			ICON_LEFT_BAR_4(1);
+			ICON_LEFT_BAR_5(1);
+			break;	
+
+		case 5:
+			ICON_RIGHT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);
+			ICON_RIGHT_BAR_6(1);
+			
+			ICON_LEFT_BAR_1(1);
+			ICON_LEFT_BAR_2(1);
+			ICON_LEFT_BAR_3(1);
+			ICON_LEFT_BAR_4(1);
+			ICON_LEFT_BAR_5(1);
+			ICON_LEFT_BAR_6(1);
+			break;	
+	}
+
+	update_led_buf();
+}
+void spect_pattern_disp_reflesh(u8  spec_fresh)
+{	
+
+	ICON_RIGHT_BAR_1(0);
+	ICON_RIGHT_BAR_2(0);
+	ICON_RIGHT_BAR_3(0);
+	ICON_RIGHT_BAR_4(0);
+	ICON_RIGHT_BAR_5(0);
+	ICON_RIGHT_BAR_6(0);
+			
+	ICON_LEFT_BAR_1(0);
+	ICON_LEFT_BAR_2(0);
+	ICON_LEFT_BAR_3(0);
+	ICON_LEFT_BAR_4(0);
+	ICON_LEFT_BAR_5(0);
+	ICON_LEFT_BAR_6(0);
+
+	if(spec_fresh==DISP_STOP_SPECT){
+		
+		return;
+	}
+	else if(spec_fresh ==DISP_RUN_SPECT){
+
+		disp_spect_level = get_spect_power();
+		//printf("__----spect_pattern_disp_reflesh  %d, \r\n",(u16)disp_spect_level);
+		spect_pattern_disp();
+
+	}
+	else if(spec_fresh ==DISP_SPECT_ROLLING){
+
+	}
+}
+#endif
 #if defined(USE_SPECTRUM_PARTTERN)
 xd_u8 patern_idx=0;
 extern bool get_lcd_flash_lock(void);
@@ -1057,8 +1164,8 @@ void Disp_Mic_Vol(void)
 	ICON_MIC_VOL(1);
 	disp_led_flash();
 
-   	dispNum((M62429_ch1_vol/10),1);
-	dispNum(M62429_ch1_vol%10,0);			
+   	dispNum((M62429_ch2_vol/10),1);
+	dispNum(M62429_ch2_vol%10,0);			
 }
 void Disp_Echo(void)
 {
@@ -1069,8 +1176,8 @@ void Disp_Echo(void)
 	ICON_ECHO(1);
 	disp_led_flash();
 
-    	dispNum((M62429_ch2_vol/10),1);
-	dispNum(M62429_ch2_vol%10,0);		
+    	dispNum((M62429_ch1_vol/10),1);
+	dispNum(M62429_ch1_vol%10,0);		
 }
 
 #endif
