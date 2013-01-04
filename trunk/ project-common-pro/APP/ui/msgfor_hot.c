@@ -47,7 +47,9 @@ extern void DSA_init(void);
 extern void DSA_if_hdlr(void);
 extern bool DSA_GETHERING_DATA_ENABLE_BIT;
 #endif
-
+#ifdef GPIO_SEL_M62429_FUNC
+bool select_m62429=0;
+#endif 
 #ifdef VOL_ADJ_SPARK_LED
 bool vol_adj_spark_bit=0;
 #endif
@@ -1338,13 +1340,21 @@ void audio_effect_hdlr(u8 hdlr_cmd)
 	 	Disp_Con(DISP_SW_VOL);
 	}		
 	else if(audio_effect_state ==CONFIG_MIC){
-		
+
+
+#ifdef GPIO_SEL_M62429_FUNC
+		if(!select_m62429)return;
+#endif		
 #ifdef SUPPORT_PT2313	
 	 	PT2313_Config(hdlr_cmd,MIC_ADJ);
 #endif		
 	 	Disp_Con(DISP_MIC_VOL);
 	}	
 	else if(audio_effect_state ==CONFIG_ECHO){
+
+#ifdef GPIO_SEL_M62429_FUNC
+		if(!select_m62429)return;
+#endif		
 		
 #ifdef SUPPORT_PT2313	
 	 	PT2313_Config(hdlr_cmd,ECHO_ADJ);
@@ -1450,10 +1460,10 @@ u8 ap_handle_hotkey(u8 key)
 
 #if defined(SPECTRUM_FUNC_ENABLE)    
 	if(spectrum_reflesh_en){
-		EA =0;
+		//EA =0;
 		spectrum_reflesh_en =0;
 		get_spectrum_data();
-		EA =1;
+		//EA =1;
 	}
 #endif
 
@@ -2521,22 +2531,15 @@ _SYS_GO_IN_POWER_OFF:
 	if(audio_effect_state++>=CONFIG_END)
 		audio_effect_state=CONFIG_INIT;
 
-
-	MIC_DET_PORT_INIT();
-
-	_nop_();
-	_nop_();
-	if(MIC_DET_PORT){
-		
-	}
-	else{
+#ifdef GPIO_SEL_M62429_FUNC
+	if(!select_m62429){
 
 		if(audio_effect_state>=CONFIG_MIC){
 
 			audio_effect_state=CONFIG_INIT;
 		}
-		MIC_DET_PORT_RELEASE();
 	}
+#endif
 
 	audio_effect_hdlr(0xFF);
 	flush_low_msg();	
@@ -2698,7 +2701,13 @@ _SYS_GO_IN_POWER_OFF:
 #ifdef USE_2CH_FUNC
 #ifdef SUPPORT_PT2313
 	case INFO_RESET|KEY_SHORT_UP:
+		PT2312_reset();
+	       Disp_Con(DISP_VOL);		
 		break;
+	case INFO_DSP|KEY_SHORT_UP:
+		audio_effect_state =CONFIG_EQ;
+		audio_effect_hdlr(0x01);
+		break;		
 	case INFO_BASS_UP|KEY_SHORT_UP:
 	case INFO_BASS_UP|KEY_HOLD:
 		audio_effect_state =CONFIG_BAS;
@@ -2720,14 +2729,14 @@ _SYS_GO_IN_POWER_OFF:
 		audio_effect_hdlr(0x02);		
 		break;
 	case INFO_OKVOL_UP|KEY_SHORT_UP:
-	case INFO_OKVOL_UP|KEY_HOLD:
+	//case INFO_OKVOL_UP|KEY_HOLD:
 		audio_effect_state =CONFIG_MIC;
-		audio_effect_hdlr(0x01);			
+		audio_effect_hdlr(0xFF);			
 		break;
 	case INFO_OKVOL_DN|KEY_SHORT_UP:
-	case INFO_OKVOL_DN|KEY_HOLD:
-		audio_effect_state =CONFIG_MIC;
-		audio_effect_hdlr(0x02);			
+	//case INFO_OKVOL_DN|KEY_HOLD:
+		audio_effect_state =CONFIG_ECHO;
+		audio_effect_hdlr(0xFF);			
 		break;
 	case INFO_SWVOL_UP|KEY_SHORT_UP:
 	case INFO_SWVOL_UP|KEY_HOLD:

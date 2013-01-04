@@ -200,6 +200,7 @@ void bat_val_arg(void);
 
 #ifdef USE_2CH_FUNC
 #define INFO_RESET			29
+#define INFO_DSP			33
 #define INFO_BASS_UP		21
 #define INFO_BASS_DN		22
 #define INFO_TREB_UP		30

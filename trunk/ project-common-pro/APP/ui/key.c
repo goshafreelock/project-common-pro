@@ -24,6 +24,10 @@ extern void set_play_flash(u8 led_status);
 extern void wkup_pin_ctrl(bool dir);
 #endif
 
+#if defined(LED_DRV_USE_SM1628)
+extern xd_u8 led_spark_protect;
+#endif
+
 extern _xdata SYS_WORK_MODE work_mode;
 #ifdef _MY_IR_KEY_
 #include "my_IR_key.h"
@@ -1869,6 +1873,10 @@ void JogDetect(void)
                 if (JogBuf == 0x02)
                 {
 
+#if defined(LED_DRV_USE_SM1628)
+		led_spark_protect=30;
+#endif
+
 #ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
 			Disp_BL_turn_on();
 #endif
@@ -1958,6 +1966,11 @@ void JogDetect(void)
                 }
                 if (JogBuf == 0x01)
                 {
+
+#if defined(LED_DRV_USE_SM1628)
+		led_spark_protect=30;
+#endif
+                
 #ifdef DISP_BACKLIGHT_AUTO_SAVE_POWER
 			Disp_BL_turn_on();
 #endif

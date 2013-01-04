@@ -25,6 +25,10 @@
 #ifdef FM_USE_BK1086
 #undef USE_BK1080_FM
 #endif
+#ifdef LED_DRV_USE_SM1628
+extern void  disp_led_flash();
+extern xd_u8 led_spark_protect;
+#endif
 
 extern void set_play_flash(u8 led_status);
 extern xd_u8 fre_point[];
@@ -845,6 +849,11 @@ void scan_fre(void)
     for (i = 0;i <= (1080-MIN_FRE);i++)
 #endif		
     {
+
+#ifdef LED_DRV_USE_SM1628
+	   led_spark_protect=30;
+	  disp_led_flash();
+#endif
 //        printf("----------- fre %4u -----------------\n",(u16)(fre));
         //if (set_fre(frequency, 0))
         if(FM_Chip_ValidStop(frequency))

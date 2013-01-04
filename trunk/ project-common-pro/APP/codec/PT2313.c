@@ -22,6 +22,7 @@ extern void M62429_Init(void);
 #ifdef SUPPORT_PT2313
 bool PT_Mute_flag = 0;
 extern u8 eq_mode;
+extern u8 _idata my_music_vol;
 xd_u8 PT_Channel_Val = 0;
 xd_u8  PT_Bass_Val=PT_MAX_VOL/2;
 xd_u8  PT_Treble_Val=PT_MAX_VOL/2;
@@ -140,44 +141,44 @@ void PT_2313_Bass_config(PT_CTRL_CMD PT_CMD)
 #endif
 	
 }
-u8 SPK_FR=7,SPK_FL=7,SPK_BR=7,SPK_BL=7;
+u8 SPK_FR=PT_MIN_VOL,SPK_FL=PT_MIN_VOL,SPK_BR=PT_MIN_VOL,SPK_BL=PT_MIN_VOL;
 void get_audio_effect_para()
 {
 	u8 Fad_factor =0,Bal_factor=0,Fad_factor_temp=0;
 	u8 cord_location =0;
 	
-	if((PT_Balence_Val>=7)&&(PT_Fade_Val>=7)){
+	if((PT_Balence_Val>=PT_MIN_VOL)&&(PT_Fade_Val>=PT_MIN_VOL)){
 		
 		cord_location  = 0x01;
 		
-		Fad_factor = PT_Fade_Val-7;
-		Bal_factor = PT_Balence_Val-7;
+		Fad_factor = PT_Fade_Val-PT_MIN_VOL;
+		Bal_factor = PT_Balence_Val-PT_MIN_VOL;
 	}
-	else if((PT_Balence_Val<=7)&&(PT_Fade_Val>=7)){
+	else if((PT_Balence_Val<=PT_MIN_VOL)&&(PT_Fade_Val>=PT_MIN_VOL)){
 
 		cord_location  = 0x02;
 		
-		Fad_factor = PT_Fade_Val-7;
-		Bal_factor = 7-PT_Balence_Val;
+		Fad_factor = PT_Fade_Val-PT_MIN_VOL;
+		Bal_factor = PT_MIN_VOL-PT_Balence_Val;
 	}
-	else if((PT_Balence_Val<=7)&&(PT_Fade_Val<=7)){
+	else if((PT_Balence_Val<=7)&&(PT_Fade_Val<=PT_MIN_VOL)){
 
 		cord_location  = 0x03;
 		
-		Fad_factor = 7-PT_Fade_Val;
-		Bal_factor = 7-PT_Balence_Val;
+		Fad_factor = PT_MIN_VOL-PT_Fade_Val;
+		Bal_factor = PT_MIN_VOL-PT_Balence_Val;
 	}
-	else if((PT_Balence_Val>=7)&&(PT_Fade_Val<=7)){
+	else if((PT_Balence_Val>=PT_MIN_VOL)&&(PT_Fade_Val<=PT_MIN_VOL)){
 
 		cord_location  = 0x04;
 		
-		Fad_factor = 7- PT_Fade_Val;
-		Bal_factor = PT_Balence_Val - 7;
+		Fad_factor = PT_MIN_VOL- PT_Fade_Val;
+		Bal_factor = PT_Balence_Val - PT_MIN_VOL;
 	}
 
-	if((Fad_factor == 7)||(Bal_factor==7)){
+	if((Fad_factor == PT_MIN_VOL)||(Bal_factor==PT_MIN_VOL)){
 
-		Fad_factor_temp = 7;
+		Fad_factor_temp = PT_MIN_VOL;
 	}
 	else if(Fad_factor>Bal_factor){
 		
@@ -191,26 +192,26 @@ void get_audio_effect_para()
 	switch(cord_location)
 	{
 		case 0x01:
-			SPK_FR=7;SPK_FL=7-Bal_factor;SPK_BR=7-Fad_factor;
-			SPK_BL=7-Fad_factor_temp;//((Bal_factor+Fad_factor)>>1);
+			SPK_FR=PT_MIN_VOL;SPK_FL=PT_MIN_VOL-Bal_factor;SPK_BR=PT_MIN_VOL-Fad_factor;
+			SPK_BL=PT_MIN_VOL-Fad_factor_temp;//((Bal_factor+Fad_factor)>>1);
 			break;
 		case 0x02:
-			SPK_FR=7-Bal_factor;SPK_FL=7;SPK_BL=7-Fad_factor;
-			SPK_BR=7-Fad_factor_temp;//((Bal_factor+Fad_factor)>>1);
+			SPK_FR=PT_MIN_VOL-Bal_factor;SPK_FL=PT_MIN_VOL;SPK_BL=PT_MIN_VOL-Fad_factor;
+			SPK_BR=PT_MIN_VOL-Fad_factor_temp;//((Bal_factor+Fad_factor)>>1);
 			break;		
 		case 0x03:
-			SPK_FL=7-Fad_factor;SPK_BR=7-Bal_factor;SPK_BL=7;
-			SPK_FR=7-Fad_factor_temp;//((Bal_factor+Fad_factor)>>1);
+			SPK_FL=PT_MIN_VOL-Fad_factor;SPK_BR=PT_MIN_VOL-Bal_factor;SPK_BL=PT_MIN_VOL;
+			SPK_FR=PT_MIN_VOL-Fad_factor_temp;//((Bal_factor+Fad_factor)>>1);
 			break;
 		case 0x04:
-			SPK_FR=7-Fad_factor;SPK_BR=7;SPK_BL=7-Bal_factor;
-			SPK_FL=7-Fad_factor_temp;//((Bal_factor+Fad_factor)>>1);
+			SPK_FR=PT_MIN_VOL-Fad_factor;SPK_BR=PT_MIN_VOL;SPK_BL=PT_MIN_VOL-Bal_factor;
+			SPK_FL=PT_MIN_VOL-Fad_factor_temp;//((Bal_factor+Fad_factor)>>1);
 			break;
 	}
 }
 void PT_2313_Balance_config(PT_CTRL_CMD PT_CMD)
 {
-	u8 BAL_R =0,BAL_L =0;
+	u8 SPK_FR_REG =0,SPK_FL_REG =0,SPK_RR_REG =0,SPK_RL_REG =0;
 	if(PT_CMD ==PT_UP){
 		if((PT_Balence_Val++)>=PT_TABLE_MAX)PT_Balence_Val =PT_TABLE_MAX;
 	}
@@ -220,12 +221,20 @@ void PT_2313_Balance_config(PT_CTRL_CMD PT_CMD)
 	}
 	
 	get_audio_effect_para();
-		
-	PT2313WriteByte(PT_2313_ADDR, BalanceTable[SPK_FR]|PT_SPK_R_ADDR);
-	PT2313WriteByte(PT_2313_ADDR, BalanceTable[SPK_FL]|PT_SPK_L_ADDR);
+
+	if(PT_TABLE_MAX>14){
+
+		SPK_FR_REG=SPK_FR/2;
+		SPK_FL_REG=SPK_FL/2;
+		SPK_RR_REG=SPK_BR/2;
+		SPK_RL_REG=SPK_BL/2;
+	}
+	
+	PT2313WriteByte(PT_2313_ADDR, BalanceTable[SPK_FR_REG]|PT_SPK_R_ADDR);
+	PT2313WriteByte(PT_2313_ADDR, BalanceTable[SPK_FL_REG]|PT_SPK_L_ADDR);
 #ifdef USE_REAR_CHANNEL
-	PT2313WriteByte(PT_2313_ADDR, BalanceTable[SPK_BR]|PT_REAR_R_ADDR);
-	PT2313WriteByte(PT_2313_ADDR, BalanceTable[SPK_BL]|PT_REAR_L_ADDR);	
+	PT2313WriteByte(PT_2313_ADDR, BalanceTable[SPK_RR_REG]|PT_REAR_R_ADDR);
+	PT2313WriteByte(PT_2313_ADDR, BalanceTable[SPK_RL_REG]|PT_REAR_L_ADDR);	
 #endif
 
 	write_info(MEM_BAL,PT_Balence_Val);
@@ -407,6 +416,25 @@ void PT_2313_Chan_config(u8 PT_PARA)
 	PT_Channel_Val = reg_temp;
 			
 	PT2313WriteByte(PT_2313_ADDR, PT_Channel_Val);
+}
+void PT2312_reset(void)
+{
+
+	PT_Treble_Val = PT_MIN_VOL;
+	PT_Bass_Val = PT_MIN_VOL;
+	my_music_vol= 25;
+	PT_Subw_Val = 52;
+	PT_Bass_Val = PT_MIN_VOL;
+	
+	PT2313_Config(0xFF,MUTE_ADJ);
+	PT2313_Config(0xFF,TRELBE_ADJ);
+	PT2313_Config(0xFF,BASS_ADJ);
+	PT2313_Config(my_music_vol,VOL_ADJ);	
+	
+#ifdef SUPPORT_M62429
+	M62429_Init();
+#endif	
+
 }
 void PT2313_Init(void)
 {	
