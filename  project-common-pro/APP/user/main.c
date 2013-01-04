@@ -134,6 +134,9 @@ void gpio_ctrl_if(bool ctrl_f);
 extern bool custom_func_tick;
 #endif
 
+#ifdef GPIO_SEL_M62429_FUNC
+extern bool select_m62429;
+#endif 
 
 u8 _idata bP0IE;
 /*----------------------------------------------------------------------------*/
@@ -1106,6 +1109,21 @@ void custom_gpio_setting()
 	P0PU |= BIT(7);
 	P07 = 0;	   
 #endif
+
+#ifdef GPIO_SEL_M62429_FUNC
+	MIC_DET_PORT_INIT();
+	_nop_();
+	_nop_();
+	if(MIC_DET_PORT){
+		select_m62429=1;		
+	}
+	else{
+
+		select_m62429=0;
+		MIC_DET_PORT_RELEASE();
+	}
+#endif
+
 #ifdef K000_JK_HY_SM001_V001
 	P0DIR &= ~(BIT(1));
 	P0PU |= BIT(1);

@@ -36,6 +36,8 @@ extern xd_u8 alm_source;
 #endif
 extern _xdata SYS_WORK_MODE work_mode;
 
+xd_u8 led_spark_protect=0;
+
 #ifdef SUPPORT_PT2313
 extern xd_u8  PT_Bass_Val;
 extern xd_u8  PT_Treble_Val;
@@ -161,7 +163,7 @@ void aligh_disp_buf(u8 chardat,u8 idx)
 	//idx =3;
 #endif
 	ICON_5_LED(1);
-	
+
 	if(idx==0){
 
 		if((chardat&BIT(LED_A))>0){drv_led_buf[12] |=0x80;}else{drv_led_buf[12] &=~(0x80);}
@@ -574,8 +576,15 @@ void Disp_Eq(void)
     dispchar('Q',2);
     dispNum(eq_mode,0);
 #else
-    dispchar('E',2);
-    dispNum(eq_mode,1);
+    if(eq_mode==0){
+
+	dispstring(" OFF",0);
+
+    }
+    else{
+	dispchar('E',2);
+    	dispNum(eq_mode,1);
+    }
 #endif
 }
 void Disp_USB_Slave(void)
@@ -715,6 +724,9 @@ void Disp_PwrOFF(void)
 #endif
 
 	disp_buf_clear();
+
+	ICON_VOL_IND_LED(1);
+
 }
 #ifdef USE_TIMER_POWER_OFF_FUNC
 extern u8 timer_disp;
@@ -1200,6 +1212,15 @@ void led_drv_spark_all()
 {
 	static bool led_buf_update = 0,disp_restore=0;
 	static u8 spark_timer=0;
+
+	if(led_spark_protect>0){
+		led_spark_protect--;
+		if(led_spark_protect%10==0)
+			led_spart_automatic();
+	}
+	else{
+		ICON_VOL_IND_LED(1);
+	}
 	
 	if(get_super_mute_lock()){
 

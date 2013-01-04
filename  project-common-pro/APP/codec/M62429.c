@@ -4,6 +4,9 @@
 #ifdef SUPPORT_M62429
 
 #include "m62429.h"
+#ifdef GPIO_SEL_M62429_FUNC
+extern bool select_m62429;
+#endif 
 
 _xdata M62429_DATA_TYPE M62429; 
 
@@ -113,6 +116,9 @@ void M62429_config_Data(u8 adj_dir,u8 adj_channel,u16 reg_data)
 
 void M62429_Init(void)
 {
+#ifdef GPIO_SEL_M62429_FUNC
+	if(!select_m62429)return;
+#endif
 	M62429_gpio_Init();
 	
 	 M62429_clk_pin=0;

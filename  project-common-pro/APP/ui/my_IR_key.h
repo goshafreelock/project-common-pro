@@ -64,7 +64,8 @@
 #define  My_IR_KEY_CHN_DN			0x19
 #define  My_IR_KEY_POWER			0x03
 #define  My_IR_KEY_MUTE				0x02
-#define  My_IR_KEY_RESET			0x03
+#define  My_IR_KEY_RESET			0x01
+#define  My_IR_KEY_DSP				0x12
 
 #define  My_IR_KEY_BASS_UP			0x17
 #define  My_IR_KEY_BASS_DN			0x18
