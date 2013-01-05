@@ -851,8 +851,7 @@ void scan_fre(void)
     {
 
 #ifdef LED_DRV_USE_SM1628
-	   led_spark_protect=30;
-	  disp_led_flash();
+	  led_spark_protect=0xFF;
 #endif
 //        printf("----------- fre %4u -----------------\n",(u16)(fre));
         //if (set_fre(frequency, 0))

@@ -134,9 +134,9 @@ void bat_val_arg(void);
 
 
 
-#define KEY_BASE_CNT  6
-#define KEY_LONG_CNT  (150/2)
-#define KEY_HOLD_CNT  15//15
+#define KEY_BASE_CNT  	6
+#define KEY_LONG_CNT  	(150/2)
+#define KEY_HOLD_CNT  	15//15
 
 
 #define  NO_KEY              0xff
@@ -148,13 +148,11 @@ void bat_val_arg(void);
 #define  INFO_TRE_PLUS                0x02
 #define  INFO_TRE_MINUS		      0x03
 #define  INFO_SW_PLUS          	      0x04
-#define  INFO_SW_MINUS             0x05
-#define  INFO_EQ_CLASS             0x06
-#define  INFO_EQ_JAZZ             0x07
-#define  INFO_EQ_ROCK             0x08
-#define  INFO_EQ_NORMAL            0x09
-
-
+#define  INFO_SW_MINUS             	0x05
+#define  INFO_EQ_CLASS             	0x06
+#define  INFO_EQ_JAZZ             	0x07
+#define  INFO_EQ_ROCK             	0x08
+#define  INFO_EQ_NORMAL            	0x09
 #else
 #define  INFO_0             0x00
 #define  INFO_1             0x01
@@ -167,48 +165,49 @@ void bat_val_arg(void);
 #define  INFO_8             0x08
 #define  INFO_9             0x09
 #endif
+
 #if defined(KEY_100_ENABLE)||defined(KEY_10_ENABLE)
 #define  INFO_100         0x1d
-
 #else 
 #define  INFO_100         0xFF
 #endif
-#define  INFO_PLAY          0x0a
-#define  INFO_CH_UP         0x0b
-#define  INFO_CH_DOWN       0x0c
-#define  INFO_VOL_PLUS      0x0d
-#define  INFO_VOL_MINUS     0x0e
+
+#define  INFO_PLAY          		0x0a
+#define  INFO_CH_UP         	0x0b
+#define  INFO_CH_DOWN       	0x0c
+#define  INFO_VOL_PLUS      	0x0d
+#define  INFO_VOL_MINUS     	0x0e
 #define  INFO_MUTE        		0x0f
 #define  INFO_FRE_UP        	0xFF
 #define  INFO_STOP      		0x10
-#define  INFO_FRE_DOWN      0xFF
-#define  INFO_NEXT_FIL      0x11
-#define  INFO_PREV_FIL      0x12
-#define  INFO_EQ_UP		    0x13
+#define  INFO_FRE_DOWN      	0xFF
+#define  INFO_NEXT_FIL      	0x11
+#define  INFO_PREV_FIL      	0x12
+#define  INFO_EQ_UP		    	0x13
 #define  INFO_EQ_DOWN		0x14
-#define  INFO_PICK_SONG	    0x15
+#define  INFO_PICK_SONG	    	0x15
 #define  INFO_PICK_FRE		0x16
 #define  INFO_MODE			0x17
-#define  INFO_PLAY_MODE		0x18
+#define  INFO_PLAY_MODE	0x18
 #ifdef KEY_200_ENABLE
-#define  INFO_200         0x19
+#define  INFO_200         	0x19
 #define  INFO_10_PLUS	0x1a
 #else
-#define  INFO_PLUS          0x19
+#define  INFO_PLUS          	0x19
 #define  INFO_MINUS         0x1a
 #endif
 
 #ifdef USE_2CH_FUNC
-#define INFO_RESET			29
-#define INFO_DSP			33
-#define INFO_BASS_UP		21
-#define INFO_BASS_DN		22
-#define INFO_TREB_UP		30
-#define INFO_TREB_DN		24
-#define INFO_OKVOL_UP		25
-#define INFO_OKVOL_DN		26
-#define INFO_SWVOL_UP		32
-#define INFO_SWVOL_DN 		28
+#define INFO_RESET			0x29
+#define INFO_DSP			0x30
+#define INFO_BASS_UP		0x31
+#define INFO_BASS_DN		0x32
+#define INFO_TREB_UP		0x33
+#define INFO_TREB_DN		0x34
+#define INFO_OKVOL_UP		0x35
+#define INFO_OKVOL_DN		0x36
+#define INFO_SWVOL_UP		0x37
+#define INFO_SWVOL_DN 		0x38
 #endif
 
 #define INFO_CUS_KEY_1		0x35
