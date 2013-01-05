@@ -977,7 +977,7 @@ SYS_WORK_MODE Next_Func()
 	//printf(" -111-->Sys_Func_List %x \r\n",(u16)Sys_Func_List);
 	//printf(" -222-->CURR FUNC %x \r\n",(u16)((Sys_Func_List&0xFF00)));
 
-	if((Sys_Func_List&0x0FF)>0)
+	if((Sys_Func_List&0x00FF)>0)
 	{
 		for(i=(((Sys_Func_List&0xFF00)>>8)+1);i<MAX_FUNC_LIST;i++){
 			//printf(" --%x->Next_Func --->BIT  %x \r\n",(u16)i,(u16)(BIT(i)));
@@ -985,7 +985,7 @@ SYS_WORK_MODE Next_Func()
 				return i;
 			}
 		}				
-		for(i=0;i<=((Sys_Func_List&0xFF0)>>8);i++)
+		for(i=0;i<=((Sys_Func_List&0xFF00)>>8);i++)
 			if((Sys_Func_List&(BIT(i)))>0){
 				return i;
 		}
