@@ -94,13 +94,11 @@ extern xd_u8 new_rtc_setting;
 
 
 #define ICON_5_LED(n)		if(n==1){drv_led_buf[0]|=0x02;\
-									drv_led_buf[2]|=0x03;\
 									drv_led_buf[4]|=0x01;\
 									drv_led_buf[6]|=0x01;\
 							}\
 							else{\
 									drv_led_buf[0]&=~0x02;\
-									drv_led_buf[2]&=~0x03;\
 									drv_led_buf[4]&=~0x01;\
 									drv_led_buf[6]&=~0x01;\
 							}
@@ -114,6 +112,15 @@ extern xd_u8 new_rtc_setting;
 									drv_led_buf[0]&=~0x01;\
 									drv_led_buf[4]&=~0x02;\
 								}
+
+
+#define ICON_FM_IND_LED(n)		if(n==1){\
+									drv_led_buf[2]|=0x03;\
+								}\
+								else{\
+									drv_led_buf[2]&=~0x03;\
+								}
+								
 u8 _code playmodestr[4][7] =
 {
 #if defined(LED_USE_1X888)
@@ -157,8 +164,8 @@ void aligh_disp_buf(u8 chardat,u8 idx)
 {
 
 #if 0
-	//ICON_RIGHT_BAR(1,  4   ,0x40);
-	//return ;
+	ICON_RIGHT_BAR(1,  2   ,0x01);
+	return ;
 	//chardat=1;
 	//idx =3;
 #endif
@@ -217,6 +224,20 @@ void disp_led_flash()
 	}
 	else{
 		ICON_VOL_IND_LED(1);
+	}
+}
+
+void disp_FM_led_flash()
+{
+	static bool led_spark=0;
+
+	led_spark=~led_spark;
+	
+	if(led_spark){
+		ICON_FM_IND_LED(0);
+	}
+	else{
+		ICON_FM_IND_LED(1);
 	}
 }
 /*----------------------------------------------------------------------------*/
@@ -541,7 +562,7 @@ void disp_file_time(void)
 
 void Disp_Pause(void)
 {
-    ICON_PAUSE(1);
+    //ICON_PAUSE(1);
     disp_file_time();
     disp_active();
 }
@@ -555,7 +576,7 @@ void Disp_Play(void)
 {
     disp_file_time();
     disp_active();
-    ICON_PLAY(1);
+    //ICON_PLAY(1);
 }
 
 void Disp_File_Name(void)
@@ -790,7 +811,12 @@ void Disp_Freq(void )
 
 	ICON_FM_POINT(1);
 	ICON_FM(1);
-	
+
+	if(led_spark_protect>0){
+
+		disp_FM_led_flash();
+
+	}	
 #if defined(FM_PLAY_KEY_PAUSE)    
 #if defined(DISP_PAU_STRING_ONLY_IN_FM_MODE)
       if (play_status==0){
@@ -1208,19 +1234,53 @@ void led_spart_automatic()
 		ICON_VOL_IND_LED(0);
 	}	
 }
+
+void play_status_led_spark_automatic()
+{
+	static bool led_update0=0;
+	static u8 spark_timer0=0;
+
+	if((work_mode == SYS_MP3DECODE_USB)||(work_mode == SYS_MP3DECODE_SD)){
+
+		spark_timer0++;
+		if(spark_timer0==250){
+
+		spark_timer0=0;
+		led_update0=~led_update0;
+		
+		if(play_status==MUSIC_PLAY){
+
+				ICON_PAUSE(0);
+				
+				if(led_update0){
+					
+					ICON_PLAY(1);
+				}
+				else{
+					ICON_PLAY(0);
+				}	
+			}	
+			else if(play_status==MUSIC_PAUSE){
+
+				ICON_PLAY(0);
+
+				if(led_update0){
+					
+					ICON_PAUSE(1);
+				}
+				else{
+					ICON_PAUSE(0);
+				}
+			}
+		}
+	}	
+}
 void led_drv_spark_all()
 {
 	static bool led_buf_update = 0,disp_restore=0;
 	static u8 spark_timer=0;
 
-	if(led_spark_protect>0){
-		led_spark_protect--;
-		if(led_spark_protect%10==0)
-			led_spart_automatic();
-	}
-	else{
-		ICON_VOL_IND_LED(1);
-	}
+	play_status_led_spark_automatic();
 	
 	if(get_super_mute_lock()){
 
@@ -1236,15 +1296,33 @@ void led_drv_spark_all()
 
 			disp_buf_clear();
 			ICON_5_LED(0);
+			ICON_VOL_IND_LED(0);
+			ICON_FM_IND_LED(0);
 		}
 		else{
 
 			disp_buf_clear();
 			ICON_5_LED(1);
+			ICON_VOL_IND_LED(1);
+			ICON_FM_IND_LED(1);			
 			dispstring(" ---",0);
 		}		
 	}
 	else{
+		
+		if(led_spark_protect>0){
+			led_spark_protect--;
+
+			if(work_mode != SYS_FMREV){			
+				if(led_spark_protect%10==0)
+					led_spart_automatic();
+			}
+		}
+		else{
+			ICON_VOL_IND_LED(1);
+			ICON_FM_IND_LED(1);
+		}
+	
 		spark_timer =0;
 		if(disp_restore){
 			disp_restore=0;
