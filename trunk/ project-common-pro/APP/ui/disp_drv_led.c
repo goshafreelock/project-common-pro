@@ -868,7 +868,8 @@ void Disp_Scan_NO(void )
     dispNum((u8)((all_channl/10)%10),1);
     dispNum(all_channl%10,0);
     ////LED_STATUS |= LED_FM;
-
+    ICON_VOL_IND_LED(1);
+    ICON_FM_IND_LED(1);
 }
 #ifdef DISP_SCH_AT_FM_SCAN		
 void Disp_Sch(void)
