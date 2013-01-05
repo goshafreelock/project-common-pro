@@ -26,7 +26,6 @@
 #undef USE_BK1080_FM
 #endif
 #ifdef LED_DRV_USE_SM1628
-extern void  disp_led_flash();
 extern xd_u8 led_spark_protect;
 #endif
 
