@@ -34,6 +34,25 @@ void disp_buf_clear(void)
     LED_BUFF[3] = 0;	  /* ��λ */
     LED_BUFF[4] = 0;	  /* ״̬λ */
 }
+#if defined(K000_XingChuang_x821_V002)
+#define LCD_BL_INIT()				P3DIR &= ~(BIT(4));P3PU |=BIT(4);
+#define LCD_BACKLIGHT_LOW()		P34 =0;
+#define LCD_BACKLIGHT_HIGH()		P34 =1;
+#else
+#define LCD_BL_INIT()				P0DIR &= ~(BIT(3));P0PU |=BIT(3);
+#define LCD_BACKLIGHT_LOW()		P03 =0;
+#define LCD_BACKLIGHT_HIGH()		P03 =1;
+#endif
+void lcd_backlight_ctrl(bool on)
+{
+	LCD_BL_INIT();
+	if(on){
+    		LCD_BACKLIGHT_HIGH();
+	}
+	else{
+    		LCD_BACKLIGHT_LOW();
+	}
+}
 
 void init_disp(void)
 {
