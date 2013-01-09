@@ -1109,7 +1109,11 @@ void custom_gpio_setting()
 	P0PU |= BIT(7);
 	P07 = 0;	   
 #endif
-
+#ifdef K5068_JK_5068_V001
+	P0DIR &= ~(BIT(3));
+	P0PU |= BIT(3);
+	P03 = 0;	   
+#endif
 #ifdef GPIO_SEL_M62429_FUNC
 	MIC_DET_PORT_INIT();
 	_nop_();

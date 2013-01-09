@@ -507,5 +507,6 @@ enum {
 void LED_scan(void);
 void updateLED(void);
 void lcd_power_down(void);
+void lcd_backlight_ctrl(bool on);
 
 #endif
