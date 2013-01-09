@@ -694,6 +694,7 @@ void Disp_Start(void)
 #else
        dispstring(" HI",0);
 #endif
+	lcd_backlight_ctrl(1);
 }
 void Disp_PwrOFF(void)
 {
@@ -714,6 +715,7 @@ void Disp_PwrOFF(void)
 	delay_10ms(20);
 
 #endif
+	lcd_backlight_ctrl(0);
 
 	disp_buf_clear();
 }
