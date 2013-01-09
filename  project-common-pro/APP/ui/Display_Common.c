@@ -919,6 +919,20 @@ void play_led_flash()
 #endif		
 }
 #endif
+
+#ifdef DEVICE_ONLINE_LED_INDICATOR
+void device_online_led_ind(void)
+{
+	P0DIR &= ~(BIT(2));P0PU |= BIT(2);
+	
+	if((get_device_online_status()&0x03)>0){
+
+		P02  = 1;
+	}
+	else{
+		P02  = 0;
+	}
+}
 #if defined(SPECTRUM_FUNC_ENABLE)
 xd_u16 spect_buffer[10]={0};
 bool spectrum_lock=0;
@@ -1197,6 +1211,9 @@ void Disp_Update(void)
 	Disp_Patern();
 #endif
 
+#ifdef DEVICE_ONLINE_LED_INDICATOR
+	device_online_led_ind();
+#endif
 }
 #if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)
 xd_u8 led_flash_tpye_poll=0;

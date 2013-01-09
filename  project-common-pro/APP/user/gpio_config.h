@@ -591,6 +591,11 @@
 #define SET_MUTE_PORT_PU() 				P1PU |= (BIT(7))
 #define MUTE_PORT_HIGH()				P17  =MUTE_LEVEL
 #define MUTE_PORT_LOW()				P17  =UNMUTE_LEVEL
+#elif defined(MUTE_PORT_USE_P11)
+#define SET_MUTE_PORT_DIR()			P1DIR &= ~(BIT(1))
+#define SET_MUTE_PORT_PU() 				P1PU |= (BIT(1))
+#define MUTE_PORT_HIGH()				P11  =MUTE_LEVEL
+#define MUTE_PORT_LOW()				P11  =UNMUTE_LEVEL
 #endif
 
 
