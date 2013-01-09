@@ -29,7 +29,7 @@ xd_u8  PT_Treble_Val=PT_MAX_VOL/2;
 xd_u8  PT_Balence_Val=PT_MAX_VOL/2;
 xd_u8  PT_Fade_Val=PT_MAX_VOL/2;
 xd_u8  PT_Subw_Val=PT_MAX_VOL/2;
-
+xd_u8 PT_max_eq=0;
 
 _code u8 VOL_Table[36] = {63,63,63,63,63,63,50,44,38,34,30,28,26,24,22,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0};
 _code u8   IMPACT_TABLE[5][3]=
@@ -50,6 +50,21 @@ _code u8 EQTable1[]=
 	0x0f,0x0e,0x0d,0x0c,0x0b,0x0a,0x09,0x08
     //  0      2      4      6       8     10     12     14		
 };
+
+#ifdef K2081_DM_007_V001
+_code u8 PT_EQ_Table[9][2]={
+
+		{7,7},
+		{8,14},
+		{5,12},
+		{3,8},
+		{7,12},
+		{13,10},
+		{13,14},
+		{2,12},
+		{5,8},
+};
+#else
 //const u8 EQDataTable[5][2]={
 _code u8 PT_EQ_Table[6][2]={	
 	{0x6f,0x7f},
@@ -59,6 +74,7 @@ _code u8 PT_EQ_Table[6][2]={
 	{0x6b,0x7d},
 	{0x68,0x78},	
 };
+#endif
 void PT2313WriteByte(u8 cDevAddr,u8 cData)
 {
     /* start condition */
@@ -83,10 +99,15 @@ void PT_2313_Loudness_config()
 	if(PT_Londness_Flag){
 
 		PT_Channel_Val &=~PT_LOUDNESS_ADDR;
+		PT_Channel_Val &=~(0x18);
 	}
 	else{
 		PT_Channel_Val |=PT_LOUDNESS_ADDR;
+		PT_Channel_Val |=(0x18);
 	}
+#if 1//def UART_ENABLE_PT2313
+	printf(" PT_2313_Loudness_config   -->PT_Londness_Flag  %d \r\n",(u16)PT_Londness_Flag);
+#endif
 
 	PT2313WriteByte(PT_2313_ADDR, PT_Channel_Val);
 }
@@ -360,7 +381,7 @@ void PT_2313_mic_config(PT_CTRL_CMD PT_CMD)
 	if(PT_CMD ==PT_UP){		
 		M62429_config_Data(ADJ_UP,CHAN_SEL_B,0xFF);
 	}
-	else{
+	else if(PT_CMD ==PT_DW){	
 		M62429_config_Data(ADJ_DOWN,CHAN_SEL_B,0xFF);		
 	}
 #endif
@@ -371,7 +392,7 @@ void PT_2313_echo_config(PT_CTRL_CMD PT_CMD)
 	if(PT_CMD ==PT_UP){		
 		M62429_config_Data(ADJ_UP,CHAN_SEL_A,0xFF);
 	}
-	else{
+	else if(PT_CMD ==PT_DW){	
 		M62429_config_Data(ADJ_DOWN,CHAN_SEL_A,0xFF);		
 	}
 #endif
@@ -412,7 +433,11 @@ void PT_2313_Chan_config(u8 PT_PARA)
 #else
 	reg_temp = (PT_PATH_ADDR|0x18|PT_PARA);
 #endif
-	if(!PT_Londness_Flag)reg_temp|=PT_LOUDNESS_ADDR;
+	if(!PT_Londness_Flag){
+
+		reg_temp|=(PT_LOUDNESS_ADDR);
+	}
+	
 	PT_Channel_Val = reg_temp;
 			
 	PT2313WriteByte(PT_2313_ADDR, PT_Channel_Val);
@@ -466,6 +491,14 @@ void PT2313_Init(void)
 	if(PT_Subw_Val>63){PT_Subw_Val=52;}
 	
 #endif
+
+	//eq_mode =0;
+	PT_max_eq =((u8)((sizeof(PT_EQ_Table))/2)-1);
+
+#if 1//def UART_ENABLE_PT2313
+	printf(" PT2313_Config   -->PT_max_eq  %x \r\n",(u16)PT_max_eq);
+#endif
+
 
 #ifdef K2081_DM_007_V001
 	PT2312_reset();

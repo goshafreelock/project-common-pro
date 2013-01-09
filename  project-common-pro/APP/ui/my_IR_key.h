@@ -53,14 +53,14 @@
 
 #define  My_IR_KEY_MODE			0x0C
 #define  My_IR_KEY_PLAY				0x1e
-#define  My_IR_KEY_PLAY_M			0xFF
+#define  My_IR_KEY_PLAY_M			0x1A
 #define  My_IR_KEY_VOL_UP			0x00
 #define  My_IR_KEY_VOL_DN			0x1c	
 #define  My_IR_KEY_PREV				0x1f
 #define  My_IR_KEY_NEXT				0x1d
 #define  My_IR_KEY_EQ_UP			0x13
 #define  My_IR_KEY_EQ_DN			0x1B
-#define  My_IR_KEY_CHN_UP			0x1A
+#define  My_IR_KEY_CHN_UP			0xFF
 #define  My_IR_KEY_CHN_DN			0x19
 #define  My_IR_KEY_POWER			0x03
 #define  My_IR_KEY_MUTE				0x02

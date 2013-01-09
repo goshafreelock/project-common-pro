@@ -1224,6 +1224,7 @@ void custom_func_polling()
 
 
 #ifdef SUPPORT_PT2313
+extern xd_u8 PT_max_eq;
 void clr_aud_effect_state()
 {
 	audio_effect_state=0;
@@ -1294,17 +1295,17 @@ void audio_effect_hdlr(u8 hdlr_cmd)
 		if(hdlr_cmd ==0x02){
 			eq_mode++;
 
-			if (eq_mode > USER)
+			if (eq_mode > PT_max_eq)
 	        	{
-	            		eq_mode = NORMAL;
+	            		eq_mode = 0;
 	        	}
 		}
 		else if(hdlr_cmd ==0x01){
 			eq_mode--;
 
-			if ((eq_mode > USER))
+			if ((eq_mode > PT_max_eq))
 	        	{
-	            		eq_mode = USER;
+	            		eq_mode = PT_max_eq;
 	        	}			
 		}
 	//printf(" eq_mode %x \r\n",(u16)eq_mode);
@@ -1467,7 +1468,7 @@ u8 ap_handle_hotkey(u8 key)
 	}
 #endif
 
-#if 1
+#if 0
 	if(key!=0xff)
 	printf( "---->ap_handle_hotkey %x \r\n",(u16)key);
 #endif
@@ -2706,7 +2707,7 @@ _SYS_GO_IN_POWER_OFF:
 		break;
 	case INFO_DSP|KEY_SHORT_UP:
 		audio_effect_state =CONFIG_EQ;
-		audio_effect_hdlr(0x01);
+		audio_effect_hdlr(0x02);
 		break;		
 	case INFO_BASS_UP|KEY_SHORT_UP:
 	case INFO_BASS_UP|KEY_HOLD:
@@ -2748,6 +2749,10 @@ _SYS_GO_IN_POWER_OFF:
 		audio_effect_state =CONFIG_SW;
 		audio_effect_hdlr(0x02);	
 		break;
+	case INFO_LOUDNESS|KEY_SHORT_UP:
+		audio_effect_state =CONFIG_LUD;
+		audio_effect_hdlr(0xFF);
+		break;				
 #endif
 #endif
 #if defined(CUSTOMIZED_KEY_FUNC_ENABLE)

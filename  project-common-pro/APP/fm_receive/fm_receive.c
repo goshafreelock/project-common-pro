@@ -42,6 +42,10 @@ extern bool new_vol_feature;
 extern u8 last_disp_menu;
 #endif
 
+#if defined(LED_DRV_USE_SM1628)
+extern xd_u8 led_spark_protect;
+#endif
+
 #if defined(VOL_TUNE_VOL_DEFAULT_TUNE_FREQ_POP)
 bool radio_freq_tune_pop=0,pop_spark=0;
 xd_u8 radio_tune_timer=0;
@@ -581,6 +585,10 @@ __SCAN_FREQ:
 #ifdef SUPPORT_PT2313
 		  clr_aud_effect_state();
 #endif			
+#if defined(LED_DRV_USE_SM1628)
+		led_spark_protect=0;
+#endif
+
                 if (DISP_DWORD_NUMBER == curr_menu)
                 {
                     goto _PICK_CH;
