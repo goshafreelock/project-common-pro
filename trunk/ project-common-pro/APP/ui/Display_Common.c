@@ -933,6 +933,7 @@ void device_online_led_ind(void)
 		P02  = 0;
 	}
 }
+#endif
 #if defined(SPECTRUM_FUNC_ENABLE)
 xd_u16 spect_buffer[10]={0};
 bool spectrum_lock=0;

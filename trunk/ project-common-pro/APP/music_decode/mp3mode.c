@@ -46,6 +46,10 @@ extern xd_u8 time_show_return_cnt;
 extern xd_u8 last_plug_dev;
 #endif
 
+#if defined(LED_DRV_USE_SM1628)
+extern xd_u8 led_spark_protect;
+#endif
+
 #ifdef USE_SYS_MODE_RECOVER
 extern bool sys_mode_recove;
 #endif
@@ -1530,6 +1534,10 @@ void music_play(void)
 #ifdef SUPPORT_PT2313
 		  clr_aud_effect_state();
 #endif            
+
+#if defined(LED_DRV_USE_SM1628)
+		led_spark_protect=0;
+#endif
 
                 if (DISP_DWORD_NUMBER == curr_menu)
                 {

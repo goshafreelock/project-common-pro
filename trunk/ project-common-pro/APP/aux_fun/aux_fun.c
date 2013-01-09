@@ -52,6 +52,10 @@ extern bool vol_adj_spark_bit;
 #endif
 extern xd_u8 last_led_play_mod;
 
+#if defined(LED_DRV_USE_SM1628)
+extern xd_u8 led_spark_protect;
+#endif
+
 #if defined(ADC_DETECT_LINE_IN)
 extern bool Line_In_Detect;
 extern volatile u8 line_in_level;
@@ -558,6 +562,9 @@ void deal_aux( void )
             
 #ifdef SUPPORT_PT2313
 		  clr_aud_effect_state();
+#endif
+#if defined(LED_DRV_USE_SM1628)
+		led_spark_protect=0;
 #endif
 
                 if (DISP_DWORD_NUMBER == curr_menu)

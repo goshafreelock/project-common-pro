@@ -73,7 +73,11 @@ typedef enum
 #define  LCD_DISP  0
 
 /*延时显示时间*/
+#ifdef K2081_DM_007_V001
+#define RETURN_TIME 8
+#else
 #define RETURN_TIME 5
+#endif
 #if defined(TIME_FORCE_SHOW_ON_SCREEN)
 #define RETURN_TIME_SHOW_TIME   12
 #endif

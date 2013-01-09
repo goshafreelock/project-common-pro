@@ -208,6 +208,7 @@ void bat_val_arg(void);
 #define INFO_OKVOL_DN		0x36
 #define INFO_SWVOL_UP		0x37
 #define INFO_SWVOL_DN 		0x38
+#define INFO_LOUDNESS 		0x39
 #endif
 
 #define INFO_CUS_KEY_1		0x35

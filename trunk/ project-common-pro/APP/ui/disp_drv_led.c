@@ -120,7 +120,24 @@ extern xd_u8 new_rtc_setting;
 								else{\
 									drv_led_buf[2]&=~0x03;\
 								}
-								
+
+#define ICON_BAR_IND_LED(n)		if(n==1){\
+									drv_led_buf[0]|=0x04;\
+									drv_led_buf[2]|=0x04;\
+								}\
+								else{\
+									drv_led_buf[0]&=~0x04;\
+									drv_led_buf[2]&=~0x04;\
+								}								
+
+#define ICON_MEDIA_IND_LED(n)		if(n==1){\
+									drv_led_buf[4]|=0x04;\
+									drv_led_buf[6]|=0x04;\
+								}\
+								else{\
+									drv_led_buf[4]&=~0x04;\
+									drv_led_buf[6]&=~0x04;\
+								}									
 u8 _code playmodestr[4][7] =
 {
 #if defined(LED_USE_1X888)
@@ -164,12 +181,19 @@ void aligh_disp_buf(u8 chardat,u8 idx)
 {
 
 #if 0
-	ICON_RIGHT_BAR(1,  2   ,0x01);
+	//ICON_RIGHT_BAR(1,  0   ,0x04);
+	ICON_RIGHT_BAR(1,  4   ,0x04);
+	//ICON_RIGHT_BAR(1,  5   ,0x01);
+	ICON_RIGHT_BAR(1,  6   ,0x04);
 	return ;
 	//chardat=1;
 	//idx =3;
 #endif
+
+	ICON_MEDIA_IND_LED(1);
+	ICON_BAR_IND_LED(1);
 	ICON_5_LED(1);
+	ICON_FM_IND_LED(1);
 
 	if(idx==0){
 
@@ -221,9 +245,11 @@ void disp_led_flash()
 	
 	if(led_spark){
 		ICON_VOL_IND_LED(0);
+		
+
 	}
 	else{
-		ICON_VOL_IND_LED(1);
+		ICON_VOL_IND_LED(1);		
 	}
 }
 
@@ -235,9 +261,13 @@ void disp_FM_led_flash()
 	
 	if(led_spark){
 		ICON_FM_IND_LED(0);
+		ICON_VOL_IND_LED(0);
+		ICON_5_LED(0);	
 	}
 	else{
 		ICON_FM_IND_LED(1);
+		ICON_VOL_IND_LED(1);
+		ICON_5_LED(1);
 	}
 }
 /*----------------------------------------------------------------------------*/
@@ -463,7 +493,7 @@ void Disp_Nodevice(void)
 void Disp_Vol(void)
 {
 	ICON_MAIN_VOL(1);	
-	disp_led_flash();
+	//disp_led_flash();
 #if defined(K000_HG_898_V001)
 	if(get_super_mute_lock()){
     		dispchar('V',2);
@@ -1115,7 +1145,7 @@ void Disp_Treble(void)
 
 	ICON_TREBLE(1);
 
-	disp_led_flash();
+	//disp_led_flash();
 
 	if(PT_Treble_Val<PT_MIN_VOL){
 		dispchar('-',1);
@@ -1140,7 +1170,7 @@ void Disp_Bass(void)
 
 	ICON_BASS_VOL(1);
 
-	disp_led_flash();
+	//disp_led_flash();
 
 	if(PT_Bass_Val<PT_MIN_VOL){
 		dispchar('-',1);
@@ -1189,7 +1219,7 @@ void Disp_Sw_Vol(void)
 #endif
 
 	ICON_SW_VOL(1);
-	disp_led_flash();
+	//disp_led_flash();
 
     	dispNum((PT_Subw_Val/10),1);
 	dispNum(PT_Subw_Val%10,0);			
@@ -1201,7 +1231,7 @@ void Disp_Mic_Vol(void)
 #endif
 
 	ICON_MIC_VOL(1);
-	disp_led_flash();
+	//disp_led_flash();
 
    	dispNum((M62429_ch2_vol/10),1);
 	dispNum(M62429_ch2_vol%10,0);			
@@ -1213,7 +1243,7 @@ void Disp_Echo(void)
 #endif
 
 	ICON_ECHO(1);
-	disp_led_flash();
+	//disp_led_flash();
 
     	dispNum((M62429_ch1_vol/10),1);
 	dispNum(M62429_ch1_vol%10,0);		
@@ -1282,7 +1312,8 @@ void led_drv_spark_all()
 	static u8 spark_timer=0;
 
 	play_status_led_spark_automatic();
-	
+
+
 	if(get_super_mute_lock()){
 
 		spark_timer++;
@@ -1296,6 +1327,7 @@ void led_drv_spark_all()
 		if(led_buf_update){
 
 			disp_buf_clear();
+			//ICON_BAR_IND_LED(0);						
 			ICON_5_LED(0);
 			ICON_VOL_IND_LED(0);
 			ICON_FM_IND_LED(0);
@@ -1303,26 +1335,27 @@ void led_drv_spark_all()
 		else{
 
 			disp_buf_clear();
+			//ICON_BAR_IND_LED(1);			
 			ICON_5_LED(1);
 			ICON_VOL_IND_LED(1);
 			ICON_FM_IND_LED(1);			
 			dispstring(" ---",0);
 		}		
 	}
+	else if(led_spark_protect>0){
+		
+		spark_timer++;
+		if(spark_timer==100){
+			spark_timer=0;			
+			led_spart_automatic();
+		}	
+
+	}
 	else{
 		
-		if(led_spark_protect>0){
-			led_spark_protect--;
 
-			if(work_mode != SYS_FMREV){			
-				if(led_spark_protect%10==0)
-					led_spart_automatic();
-			}
-		}
-		else{
-			ICON_VOL_IND_LED(1);
-			ICON_FM_IND_LED(1);
-		}
+		ICON_VOL_IND_LED(1);
+		ICON_FM_IND_LED(1);
 	
 		spark_timer =0;
 		if(disp_restore){
