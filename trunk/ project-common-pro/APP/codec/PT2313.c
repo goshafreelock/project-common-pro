@@ -466,6 +466,10 @@ void PT2313_Init(void)
 	if(PT_Subw_Val>63){PT_Subw_Val=52;}
 	
 #endif
+
+#ifdef K2081_DM_007_V001
+	PT2312_reset();
+#endif
 	PT2313_Config(0xFF,MUTE_ADJ);
 	PT2313_Config(0xFF,TRELBE_ADJ);
 	PT2313_Config(0xFF,BASS_ADJ);
