@@ -140,7 +140,7 @@ extern xd_u8 new_rtc_setting;
 								}									
 u8 _code playmodestr[4][7] =
 {
-#if defined(LED_USE_1X888)
+#if 1//defined(LED_USE_1X888)
     {" ALL"},
     {" FoL"},
     {" ONE"},
@@ -921,73 +921,103 @@ void Disp_Dev_Change(u8 flag)
 }
 
 #if defined(SPECTRUM_FUNC_ENABLE)
+xd_u8 disp_rolling_mode=0,disp_div_timer=0,disp_rolling_bar=0;
+void spect_rolling_pattern_disp()
+{
+	disp_div_timer++;
+	if(disp_div_timer<200)return;
+
+	disp_div_timer =0;
+
+	disp_rolling_bar++;
+	
+	if(disp_rolling_mode==0){
+
+		if(disp_rolling_bar==0){
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+
+		}
+		else if(disp_rolling_bar==1){
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+		}
+		else if(disp_rolling_bar==2){
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+		}
+		else if(disp_rolling_bar==3){
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+		}		
+		else if(disp_rolling_bar==4){
+			
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);	
+			
+		}			
+	}
+	else if(disp_rolling_mode==1){
+
+	}
+	else if(disp_rolling_mode==2){
+
+	}
+	else if(disp_rolling_mode==3){
+
+	}
+	else if(disp_rolling_mode==4){
+
+	}	
+}
 xd_u8 disp_spect_level=0;
 void spect_pattern_disp()
 {
 	switch(disp_spect_level)
 	{
 		case 0:
-			ICON_RIGHT_BAR_1(1);
-			
-			ICON_LEFT_BAR_1(1);
-			
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			break;
 		case 1:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
 			break;
 		case 2:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);
-
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
-			ICON_LEFT_BAR_3(1);
-
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
 			break;
 		case 3:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);
-			ICON_RIGHT_BAR_4(1);
-			
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
-			ICON_LEFT_BAR_3(1);
-			ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
 			break;
 		case 4:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);
-			ICON_RIGHT_BAR_4(1);
-			ICON_RIGHT_BAR_5(1);
-			
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
-			ICON_LEFT_BAR_3(1);
-			ICON_LEFT_BAR_4(1);
-			ICON_LEFT_BAR_5(1);
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
 			break;	
 
 		case 5:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);
-			ICON_RIGHT_BAR_4(1);
-			ICON_RIGHT_BAR_5(1);
-			ICON_RIGHT_BAR_6(1);
-			
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
-			ICON_LEFT_BAR_3(1);
-			ICON_LEFT_BAR_4(1);
-			ICON_LEFT_BAR_5(1);
-			ICON_LEFT_BAR_6(1);
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);
 			break;	
 	}
 
@@ -996,19 +1026,12 @@ void spect_pattern_disp()
 void spect_pattern_disp_reflesh(u8  spec_fresh)
 {	
 
-	ICON_RIGHT_BAR_1(0);
-	ICON_RIGHT_BAR_2(0);
-	ICON_RIGHT_BAR_3(0);
-	ICON_RIGHT_BAR_4(0);
-	ICON_RIGHT_BAR_5(0);
-	ICON_RIGHT_BAR_6(0);
-			
-	ICON_LEFT_BAR_1(0);
-	ICON_LEFT_BAR_2(0);
-	ICON_LEFT_BAR_3(0);
-	ICON_LEFT_BAR_4(0);
-	ICON_LEFT_BAR_5(0);
-	ICON_LEFT_BAR_6(0);
+	ICON_RIGHT_BAR_1(0);ICON_LEFT_BAR_1(0);
+	ICON_RIGHT_BAR_2(0);ICON_LEFT_BAR_2(0);
+	ICON_RIGHT_BAR_3(0);ICON_LEFT_BAR_3(0);
+	ICON_RIGHT_BAR_4(0);ICON_LEFT_BAR_4(0);
+	ICON_RIGHT_BAR_5(0);ICON_LEFT_BAR_5(0);
+	ICON_RIGHT_BAR_6(0);ICON_LEFT_BAR_6(0);
 
 	if(spec_fresh==DISP_STOP_SPECT){
 		
@@ -1023,6 +1046,7 @@ void spect_pattern_disp_reflesh(u8  spec_fresh)
 	}
 	else if(spec_fresh ==DISP_SPECT_ROLLING){
 
+		spect_rolling_pattern_disp();
 	}
 }
 #endif
@@ -1032,19 +1056,13 @@ extern bool get_lcd_flash_lock(void);
 void Disp_Patern()
 {
 
-	ICON_RIGHT_BAR_1(0);
-	ICON_RIGHT_BAR_2(0);
-	ICON_RIGHT_BAR_3(0);
-	ICON_RIGHT_BAR_4(0);
-	ICON_RIGHT_BAR_5(0);
-	ICON_RIGHT_BAR_6(0);
-			
-	ICON_LEFT_BAR_1(0);
-	ICON_LEFT_BAR_2(0);
-	ICON_LEFT_BAR_3(0);
-	ICON_LEFT_BAR_4(0);
-	ICON_LEFT_BAR_5(0);
-	ICON_LEFT_BAR_6(0);
+	ICON_RIGHT_BAR_1(0);ICON_LEFT_BAR_1(0);
+	ICON_RIGHT_BAR_2(0);ICON_LEFT_BAR_2(0);
+	ICON_RIGHT_BAR_3(0);ICON_LEFT_BAR_3(0);
+	ICON_RIGHT_BAR_4(0);ICON_LEFT_BAR_4(0);
+	ICON_RIGHT_BAR_5(0);ICON_LEFT_BAR_5(0);
+	ICON_RIGHT_BAR_6(0);ICON_LEFT_BAR_6(0);
+
 #ifdef USE_RTC_FUNCTION
 	if(work_mode >= SYS_RTC)return;
 #endif	
@@ -1053,83 +1071,51 @@ void Disp_Patern()
 	switch(patern_idx)
 	{
 		case 0:
-			ICON_RIGHT_BAR_1(1);
-			
-			ICON_LEFT_BAR_1(1);
-			
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			break;
 		case 1:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
 			break;
 		case 2:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);
-
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
-			ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
 
 			break;
 		case 3:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);
-			ICON_RIGHT_BAR_4(1);
-			
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
-			ICON_LEFT_BAR_3(1);
-			ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+		
 			break;
 		case 4:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);
-			ICON_RIGHT_BAR_4(1);
-			ICON_RIGHT_BAR_5(1);
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
 			
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
-			ICON_LEFT_BAR_3(1);
-			ICON_LEFT_BAR_4(1);
-			ICON_LEFT_BAR_5(1);
 			break;	
 
 		case 5:
-			ICON_RIGHT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);
-			ICON_RIGHT_BAR_4(1);
-			ICON_RIGHT_BAR_5(1);
-			ICON_RIGHT_BAR_6(1);
-			
-			ICON_LEFT_BAR_1(1);
-			ICON_LEFT_BAR_2(1);
-			ICON_LEFT_BAR_3(1);
-			ICON_LEFT_BAR_4(1);
-			ICON_LEFT_BAR_5(1);
-			ICON_LEFT_BAR_6(1);
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);
+
 			break;	
 
 		case 6:
-			ICON_RIGHT_BAR_1(0);
-			ICON_RIGHT_BAR_2(0);
-			ICON_RIGHT_BAR_3(0);
-			ICON_RIGHT_BAR_4(0);
-			ICON_RIGHT_BAR_5(0);
-			ICON_RIGHT_BAR_6(0);
-			
-			ICON_LEFT_BAR_1(0);
-			ICON_LEFT_BAR_2(0);
-			ICON_LEFT_BAR_3(0);
-			ICON_LEFT_BAR_4(0);
-			ICON_LEFT_BAR_5(0);
-			ICON_LEFT_BAR_6(0);
+			ICON_RIGHT_BAR_1(0);ICON_LEFT_BAR_1(0);
+			ICON_RIGHT_BAR_2(0);ICON_LEFT_BAR_2(0);
+			ICON_RIGHT_BAR_3(0);ICON_LEFT_BAR_3(0);
+			ICON_RIGHT_BAR_4(0);ICON_LEFT_BAR_4(0);
+			ICON_RIGHT_BAR_5(0);ICON_LEFT_BAR_5(0);
+			ICON_RIGHT_BAR_6(0);ICON_LEFT_BAR_6(0);
 			break;				
 	}	
 }

@@ -54,15 +54,15 @@ _code u8 EQTable1[]=
 #ifdef K2081_DM_007_V001
 _code u8 PT_EQ_Table[9][2]={
 
-		{7,7},
-		{8,14},
-		{5,12},
-		{3,8},
-		{7,12},
-		{13,10},
-		{13,14},
-		{2,12},
-		{5,8},
+	{0x6f,0x7f},
+	{0x6e,0x7c},
+	{0x6f,0x7f},
+	{0x6d,0x7b},
+	{0x6b,0x7d},
+	{0x68,0x78},	
+	{0x60,0x78},	
+	{0x68,0x70},	
+	{0x6a,0x7a},	
 };
 #else
 //const u8 EQDataTable[5][2]={
@@ -105,7 +105,7 @@ void PT_2313_Loudness_config()
 		PT_Channel_Val |=PT_LOUDNESS_ADDR;
 		PT_Channel_Val |=(0x18);
 	}
-#if 1//def UART_ENABLE_PT2313
+#ifdef UART_ENABLE_PT2313
 	printf(" PT_2313_Loudness_config   -->PT_Londness_Flag  %d \r\n",(u16)PT_Londness_Flag);
 #endif
 
@@ -353,6 +353,7 @@ void PT_2313_sw_config(PT_CTRL_CMD PT_CMD)
 	
 #if defined(VOLUME_CUSTOMER_DEFINE_63)
 	reg_vol=63-PT_Subw_Val;
+	reg_vol =reg_vol/2;
 #else
 	reg_vol=PT_Subw_Val;
 #endif
@@ -495,7 +496,7 @@ void PT2313_Init(void)
 	//eq_mode =0;
 	PT_max_eq =((u8)((sizeof(PT_EQ_Table))/2)-1);
 
-#if 1//def UART_ENABLE_PT2313
+#ifdef UART_ENABLE_PT2313
 	printf(" PT2313_Config   -->PT_max_eq  %x \r\n",(u16)PT_max_eq);
 #endif
 

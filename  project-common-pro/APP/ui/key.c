@@ -141,6 +141,21 @@ volatile u8 line_in_level,level_last_time= 0,temp_level=0;
 u8 line_level_cnt_1=0,line_level_cnt_2=0;
 bool Line_In_Detect =0;
 #endif
+
+#if defined(AD_DETECT_OUTSIDE_SOURCE)
+u8 signal_volt=0,last_signal_volt=0;
+xd_u8 signal_online_timer=0,signal_ready=0,delta_signal_volt=0;
+
+#ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
+extern bool adc_spectrum_enable;
+extern xd_u16 spect_buffer[10];
+u8 spect_buf_idx=0;
+#endif
+bool adc_signal_online_judge()
+{
+	return (signal_ready);
+}
+#endif
 /*------------
 ----------------------------------------------------------------*/
 /**@brief  LDO IN µçÁ¿¼ì²â
@@ -1416,7 +1431,11 @@ void adc_scan(void)
     }
     else if (cnt == 2)
     {
+#ifdef NO_ADKEY_FUNC		   
+	key_value= 0xFF;
+#else
         key_value = ADCDATH;//READ VDDIO
+#endif        
 #ifdef CUSTOM_DEFINE_ADPORT_FUNC
 	use_adkey_port_for_voice_det(key_value);
 #endif
@@ -1437,6 +1456,12 @@ void adc_scan(void)
         P0IE &= ~(BIT(4));
 #endif
 
+#elif defined(AD_DETECT_OUTSIDE_SOURCE)
+	
+        ADCCON = ADC_OUTSIDE_CH;
+	 P0PU &=~(BIT(4)); 
+        P0IE &= ~(BIT(4));
+		
 #elif defined(CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ)
 
         ADCCON = ADC_KEY_IO_2;
@@ -1463,6 +1488,58 @@ void adc_scan(void)
         key_value_2 = ADCDATH;//READ VDDIO
         ADCCON = ADC_VDD_12;
     }
+#elif defined(AD_DETECT_OUTSIDE_SOURCE)
+    else if (cnt == 3)
+    {
+	 signal_volt=ADCDATH;
+	 ADCCON = ADC_VDD_12;
+
+	 if(signal_volt!= last_signal_volt){
+
+		
+		if(signal_volt>last_signal_volt){
+			delta_signal_volt = signal_volt-last_signal_volt;
+		}
+		else{
+			key_value = last_signal_volt-signal_volt;
+		}
+
+		last_signal_volt = signal_volt;
+		
+		if(delta_signal_volt>2){
+			
+			if(signal_online_timer>60){
+				
+				signal_ready = 0xFF;
+			}
+			else{
+				signal_online_timer++;
+			}
+		}
+	 }
+	 else{
+
+		if(signal_online_timer>0)	{
+
+			signal_online_timer--;
+		}
+		else{
+				signal_ready = 0x00;
+		}
+
+	 }	 
+	 
+#ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
+
+	 if(adc_spectrum_enable)       
+	 {
+		spect_buffer[spect_buf_idx] = delta_signal_volt;
+		spect_buf_idx++;		
+		if(spect_buf_idx>10)spect_buf_idx=0;
+			
+	 }
+#endif
+    }	
 #elif defined(AD_MEASURE_TEMP_FUNC)
     else if (cnt == 3)
     {

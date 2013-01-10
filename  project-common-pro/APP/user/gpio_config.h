@@ -897,6 +897,11 @@
 
 #define ADC_LINE_IN    0x4A	//p02
 
+#ifdef AD_DETECT_OUTSIDE_SOURCE
+#define ADC_OUTSIDE_CH    0x4C	//p04
+#endif
+
+
 #if defined(ADC_DETECT_LINE_IN)
 #define ADC_MAX_USED 0x04
 #elif defined(AD_MEASURE_TEMP_FUNC)
@@ -905,9 +910,12 @@
 #define ADC_MAX_USED 0x04
 #elif defined(CUSTOM_DEFINE_ADPORT_FOR_VOLUME_ADJ)
 #define ADC_MAX_USED 0x04
+#elif defined(AD_DETECT_OUTSIDE_SOURCE)
+#define ADC_MAX_USED 0x04
 #else
 #define ADC_MAX_USED 0x03
 #endif
+
 //1 ac209 48pin
 
 #ifdef USE_POWER_KEY
