@@ -1322,8 +1322,9 @@ void audio_effect_hdlr(u8 hdlr_cmd)
 #ifdef SUPPORT_PT2313	
 	 	PT2313_Config(0xFF,LOUD_ADJ);
 #endif		
+#ifndef K2081_DM_007_V001
 	 	Disp_Con(DISP_LONDESS);
-
+#endif
 	}
 	else if(audio_effect_state ==CONFIG_FAD){
 		

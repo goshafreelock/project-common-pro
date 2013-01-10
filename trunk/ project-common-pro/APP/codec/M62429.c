@@ -124,7 +124,7 @@ void M62429_config_Data(u8 adj_dir,u8 adj_channel,u16 reg_data)
 	}
 	
 
-	if((M62429_ch2_vol==CHAN_B_VOL_MAX)&&(adj_channel == CHAN_SEL_B)){		//4 MIC VOL  EQU   ZERO
+	if((M62429_ch2_vol==0)&&(adj_channel == CHAN_SEL_B)){		//4 MIC VOL  EQU   ZERO
 
 		vol_lock=1;
 		REG =0x0600;

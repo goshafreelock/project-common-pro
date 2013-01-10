@@ -104,6 +104,9 @@ void JogDetect_c(void);
 void adc_diode_temp_measure_hdlr();
 #endif
 
+#if defined(AD_DETECT_OUTSIDE_SOURCE)
+bool adc_signal_online_judge();
+#endif
 
 #ifdef USB_SD_PORTABLE_BAT_CHARGER
 void cell_output_charge_enable(bool f_g);

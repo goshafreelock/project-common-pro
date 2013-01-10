@@ -942,7 +942,9 @@ extern u8 ReadLFSR();
 extern void clear_spectrum_buf(void);
 extern void spectrum_pattern(u16 *spect_buf);
 extern void spect_pattern_disp_reflesh(u8  spec_fresh);
-
+#ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
+bool adc_spectrum_enable=0;
+#endif
 void clear_spectrum_buf(void)
 {
 
@@ -1050,11 +1052,24 @@ void get_spectrum_data(void)
 	}
 #endif	
 	if((work_mode==SYS_MP3DECODE_SD)||(work_mode==SYS_MP3DECODE_USB)){
-		
+
+#ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
+		 adc_spectrum_enable=0;    
+#endif
+
 		freqavg(spect_buffer);
+
 	}
 	else{
+
+#ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
+
+		 adc_spectrum_enable=1;    
+
+#else
 		get_random_spect_data();
+#endif
+
 	}
 
 	Disp_Spect_Update(spect_buffer);		

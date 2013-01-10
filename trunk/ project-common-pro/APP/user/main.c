@@ -513,6 +513,15 @@ void timer1isr(void)
     counter++;
 
     Disp_Scan();
+	
+#ifndef JOY_STICK_DEBUG    
+#ifdef JOG_STICK_FUNC
+    JogDetect();
+#ifdef K523_DeYun_523_V001
+    JogDetect_c();
+#endif
+#endif
+#endif
 
 #ifdef BLUE_TOOTH_GPIO_STATUS
 	blue_tooth_detect=1;
@@ -523,22 +532,13 @@ void timer1isr(void)
 #endif	
     if (counter == 5)
     {
-#ifndef JOY_STICK_DEBUG    
-#ifdef JOG_STICK_FUNC
-    JogDetect();
-#ifdef K523_DeYun_523_V001
-    JogDetect_c();
-#endif
-#endif
-#endif
 
 #ifdef AC_SLAVE_ENABLE
 	DSA_GETHERING_DATA_ENABLE_BIT=1;
 #endif
         counter = 0;
-#ifndef NO_ADKEY_FUNC		
+
         adc_scan();
-#endif
 
 #if USB_DEVICE_OTG       
    usb_otg_polling();
@@ -1555,7 +1555,13 @@ void main(void)
 		Set_Curr_Func(SYS_RTC);
       }
 #endif
+#elif defined(AD_DETECT_SELECT_OUTSIDE_SOURCE)
 
+	delay_10ms(160);
+	if(adc_signal_online_judge()){
+		Set_Curr_Func(SYS_AUX);
+	}
+	
 #endif
 
 #if defined(DC_HW_POWER_UP_IN_IDLE_MODE)|| defined(USB_SD_PORTABLE_BAT_CHARGER)
