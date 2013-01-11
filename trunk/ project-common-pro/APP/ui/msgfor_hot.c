@@ -2754,6 +2754,9 @@ _SYS_GO_IN_POWER_OFF:
 		audio_effect_state =CONFIG_LUD;
 		audio_effect_hdlr(0xFF);
 		break;				
+	case INFO_SPECT_MODE|KEY_SHORT_UP:
+		select_spectrum_mode();
+		break;	
 #endif
 #endif
 #if defined(CUSTOMIZED_KEY_FUNC_ENABLE)
