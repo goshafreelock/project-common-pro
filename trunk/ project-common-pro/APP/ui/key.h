@@ -437,6 +437,16 @@ void bat_val_arg(void);
 #define RES_6				330000
 #define RES_7				330000
 #define RES_8				330000
+#elif defined(DEFAULT_RES_VALUE_10_RES)
+#define RES_PULL_UP			22000		/// 22K
+#define RES_1				0
+#define RES_2				3000
+#define RES_3				6200	
+#define RES_4				9100
+#define RES_5				15000
+#define RES_6				24000
+#define RES_7				33000
+#define RES_8				51000
 #else
 #define RES_PULL_UP			3300		/// 3.3K
 #define RES_1				0
