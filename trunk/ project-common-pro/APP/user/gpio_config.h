@@ -148,6 +148,9 @@
 #elif defined(TWO_PLAY_LED_USE_PORT_P01)
 #define play_led_seg_out_NO2() 		P0DIR &= ~(BIT(1));P0PU |= (BIT(1))
 #define PLAY_STATUS_PORT_NO2 		P01
+#elif defined(TWO_PLAY_LED_USE_PORT_P02)
+#define play_led_seg_out_NO2() 		P0DIR &= ~(BIT(2));P0PU |= (BIT(2));P3DIR |= (1<<4);P3PU &= ~(1<<4);P3PD&= ~(1<<4)
+#define PLAY_STATUS_PORT_NO2 		P02
 #elif defined(TWO_PLAY_LED_USE_PORT_P26)
 #define play_led_seg_out_NO2() 		P2DIR &= ~(BIT(6));P2PU |= (BIT(6))
 #define PLAY_STATUS_PORT_NO2 		P26
