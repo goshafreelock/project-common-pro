@@ -1813,6 +1813,7 @@ void decode_play(void)
     dac_out_select(DAC_DECODE);
 
 #ifdef SUPPORT_PT2313
+    delay_10ms(20);
     PT2313_Config(MP3_CHAN,CHAN_ADJ);
 #endif
 

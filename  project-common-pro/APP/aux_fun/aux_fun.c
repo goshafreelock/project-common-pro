@@ -756,6 +756,8 @@ void aux_function(void)
     aux_channel_crosstalk_improve(DAC_AMUX1);//4P26,P27 FM_IN
 #endif
 
+    delay_10ms(60);
+
 #ifdef INDEPENDENT_AUX_PATH_TO_PT
     PT2313_Config(AUX_CHAN,CHAN_ADJ);
 

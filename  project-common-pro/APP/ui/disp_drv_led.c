@@ -921,42 +921,102 @@ void Disp_Dev_Change(u8 flag)
 }
 
 #if defined(SPECTRUM_FUNC_ENABLE)
-xd_u8 disp_rolling_mode=0,disp_div_timer=0,disp_rolling_bar=0;
+void clear_spect_disp_buf(void)
+{
+	ICON_RIGHT_BAR_1(0);ICON_LEFT_BAR_1(0);
+	ICON_RIGHT_BAR_2(0);ICON_LEFT_BAR_2(0);
+	ICON_RIGHT_BAR_3(0);ICON_LEFT_BAR_3(0);
+	ICON_RIGHT_BAR_4(0);ICON_LEFT_BAR_4(0);
+	ICON_RIGHT_BAR_5(0);ICON_LEFT_BAR_5(0);
+	ICON_RIGHT_BAR_6(0);ICON_LEFT_BAR_6(0);
+}
+xd_u8 disp_rolling_mode=0,disp_rolling_bar=0,disp_div_timer=0,spilt_timer=10,loop_timer=1;
+#ifdef PARTTERN_ROLLING_ACTIVATOR_FUNC
+void parttern_rolling_activator(void)
+{
+	static u8 activator_timer=0;
+	
+	if((work_mode== SYS_AUX)){
+
+		if(!adc_signal_online_judge()){
+
+			if(activator_timer<60){
+				activator_timer++;
+			}
+			else{
+				set_spectrum_lock(LOCK);
+			     	//printf("---->parttern_rolling_activator  %d, \r\n",(u16)disp_rolling_mode);
+			}
+		}
+		else{
+
+			if(activator_timer>0)activator_timer--;
+			else{
+				set_spectrum_lock(UNLOCK);
+
+			}
+		}
+		
+	}
+	else if(((work_mode== SYS_MP3DECODE_SD)||(work_mode== SYS_MP3DECODE_USB))){
+
+		if(play_status == MUSIC_PAUSE){
+			set_spectrum_lock(LOCK);
+		}
+		else{
+			set_spectrum_lock(UNLOCK);
+		}
+	}	
+}
+#endif
 void spect_rolling_pattern_disp()
 {
 	disp_div_timer++;
-	if(disp_div_timer<200)return;
+
+     	//printf("---->spect_rolling_pattern_disp  %d, \r\n",(u16)disp_div_timer);
+	
+	if(disp_div_timer<spilt_timer)return;
 
 	disp_div_timer =0;
 
 	disp_rolling_bar++;
-	
+
+     	//printf("---->spect_rolling_pattern_disp  %d,    %d   \r\n",(u16)disp_rolling_mode,(u16)disp_rolling_bar);
+
+	clear_spect_disp_buf();
+
 	if(disp_rolling_mode==0){
 
 		if(disp_rolling_bar==0){
+
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			
+		}	
+		else if(disp_rolling_bar==1){
+			
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
 
-		}
-		else if(disp_rolling_bar==1){
-			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
 		}
 		else if(disp_rolling_bar==2){
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
 			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
-			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
 		}
 		else if(disp_rolling_bar==3){
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
 			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
 			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+		}
+		else if(disp_rolling_bar==4){
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
 			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
 		}		
-		else if(disp_rolling_bar==4){
+		else if(disp_rolling_bar==5){
 			
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
@@ -964,25 +1024,233 @@ void spect_rolling_pattern_disp()
 			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
 			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
 			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);	
+		}		
+		else if(disp_rolling_bar==6){
+
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);				
+		}		
+		else if(disp_rolling_bar==7){
+
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);				
+		}
+		else if(disp_rolling_bar==8){
+
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);					
+		}	
+		else if(disp_rolling_bar==9){
+
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);					
+		}	
+		else if(disp_rolling_bar==10){
+
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);					
 			
+		}	
+		else if(disp_rolling_bar==11){
+
+			loop_timer--;
+			disp_rolling_bar = 0;
+			spilt_timer=2;
+
+			if(loop_timer==0){
+				disp_rolling_mode = 1;
+				loop_timer=3;
+			}
 		}			
 	}
 	else if(disp_rolling_mode==1){
+		
+		if(disp_rolling_bar==1){
+			ICON_RIGHT_BAR_1(1);				
+		}	
+		else if(disp_rolling_bar==2){
+			ICON_RIGHT_BAR_2(1);				
+		}
+		else if(disp_rolling_bar==3){
+			ICON_RIGHT_BAR_3(1);				
+		}
+		else if(disp_rolling_bar==4){
+			ICON_RIGHT_BAR_4(1);				
+		}		
+		else if(disp_rolling_bar==5){
+			ICON_RIGHT_BAR_5(1);				
+		}
+		else if(disp_rolling_bar==6){
+			ICON_RIGHT_BAR_6(1);				
+		}	
+		else if(disp_rolling_bar==7){
+			ICON_LEFT_BAR_1(1);				
+		}	
+		else if(disp_rolling_bar==8){
+			ICON_LEFT_BAR_2(1);				
+		}	
+		else if(disp_rolling_bar==9){
+			ICON_LEFT_BAR_3(1);				
+		}			
+		else if(disp_rolling_bar==10){
+			ICON_LEFT_BAR_4(1);				
+		}	
+		else if(disp_rolling_bar==11){
+			ICON_LEFT_BAR_5(1);				
+		}	
+		else if(disp_rolling_bar==12){
+			ICON_LEFT_BAR_6(1);			
+		}
+		else if(disp_rolling_bar==13){
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+		}
+		else if(disp_rolling_bar==14){
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+		}
+		else if(disp_rolling_bar==15){
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+		}
+		else if(disp_rolling_bar==16){
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+		}
+		else if(disp_rolling_bar==17){
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+		}
+		else if(disp_rolling_bar==18){
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);
+		}
+		else if(disp_rolling_bar==19){
 
+			disp_rolling_bar = 0;
+			spilt_timer=2;
+
+			loop_timer--;
+			if(loop_timer==0){
+				disp_rolling_mode = 2;
+				loop_timer=2;				
+			}			
+		}		
 	}
 	else if(disp_rolling_mode==2){
+		
+		if(disp_rolling_bar==1){
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+		}
+		else if(disp_rolling_bar==2){
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_2(1);
+		}
+		else if(disp_rolling_bar==3){
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+		}
+		else if(disp_rolling_bar==4){
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_3(1);
+		}
+		else if(disp_rolling_bar==5){
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+		}
+		else if(disp_rolling_bar==6){
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_3(1);
+		}		
+		else if(disp_rolling_bar==7){
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+		}
+		else if(disp_rolling_bar==8){
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_4(1);
+		}
+		else if(disp_rolling_bar==9){
+			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
+		}
+		else if(disp_rolling_bar==10){
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_5(1);
+		}		
+		else if(disp_rolling_bar==10){
+			ICON_RIGHT_BAR_6(1);ICON_LEFT_BAR_6(1);
+		}			
+		else if(disp_rolling_bar==11){
+			ICON_RIGHT_BAR_6(1);
+		}
+		else if(disp_rolling_bar==12){
 
+		}
+		else if(disp_rolling_bar==13){
+			
+			disp_rolling_bar = 0;
+			spilt_timer=2;
+
+			loop_timer--;
+			if(loop_timer==0){
+				disp_rolling_mode = 3;
+				loop_timer=3;	
+			}				
+		}		
 	}
 	else if(disp_rolling_mode==3){
 
+		if(disp_rolling_bar==1){
+			ICON_RIGHT_BAR_1(1);				
+		}	
+		else if(disp_rolling_bar==2){
+			ICON_RIGHT_BAR_2(1);				
+		}
+		else if(disp_rolling_bar==3){
+			ICON_RIGHT_BAR_3(1);				
+		}
+		else if(disp_rolling_bar==4){
+			ICON_RIGHT_BAR_4(1);				
+		}		
+		else if(disp_rolling_bar==5){
+			ICON_RIGHT_BAR_5(1);				
+		}
+		else if(disp_rolling_bar==6){
+			ICON_RIGHT_BAR_6(1);				
+		}	
+		else if(disp_rolling_bar==7){
+			ICON_LEFT_BAR_6(1);				
+		}	
+		else if(disp_rolling_bar==8){
+			ICON_LEFT_BAR_5(1);				
+		}	
+		else if(disp_rolling_bar==9){
+			ICON_LEFT_BAR_4(1);				
+		}			
+		else if(disp_rolling_bar==10){
+			ICON_LEFT_BAR_3(1);				
+		}	
+		else if(disp_rolling_bar==11){
+			ICON_LEFT_BAR_2(1);				
+		}	
+		else if(disp_rolling_bar==12){
+			ICON_LEFT_BAR_1(1);			
+		}
+		else if(disp_rolling_bar==13){
+			
+			disp_rolling_bar = 0;
+			spilt_timer=2;
+
+			loop_timer--;
+			if(loop_timer==0){
+				disp_rolling_mode = 0;
+				loop_timer=3;
+				spilt_timer=5;				
+			}				
+		}			
 	}
 	else if(disp_rolling_mode==4){
 
-	}	
+	}
+	
+	update_led_buf();
+
 }
 xd_u8 disp_spect_level=0;
 void spect_pattern_disp()
 {
+	clear_spect_disp_buf();
 	switch(disp_spect_level)
 	{
 		case 0:
@@ -1026,15 +1294,9 @@ void spect_pattern_disp()
 void spect_pattern_disp_reflesh(u8  spec_fresh)
 {	
 
-	ICON_RIGHT_BAR_1(0);ICON_LEFT_BAR_1(0);
-	ICON_RIGHT_BAR_2(0);ICON_LEFT_BAR_2(0);
-	ICON_RIGHT_BAR_3(0);ICON_LEFT_BAR_3(0);
-	ICON_RIGHT_BAR_4(0);ICON_LEFT_BAR_4(0);
-	ICON_RIGHT_BAR_5(0);ICON_LEFT_BAR_5(0);
-	ICON_RIGHT_BAR_6(0);ICON_LEFT_BAR_6(0);
-
 	if(spec_fresh==DISP_STOP_SPECT){
-		
+
+		clear_spect_disp_buf();
 		return;
 	}
 	else if(spec_fresh ==DISP_RUN_SPECT){

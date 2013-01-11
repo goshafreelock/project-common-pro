@@ -945,6 +945,30 @@ extern void spect_pattern_disp_reflesh(u8  spec_fresh);
 #ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
 bool adc_spectrum_enable=0;
 #endif
+
+#ifdef USE_MULTI_SPECTRUM_MODE
+xd_u8 spectrum_mode=0;
+u8 _code spect_mode_tab[5][4]=
+{
+    {2, 4, 6 , 8,},
+    {0, 1, 2 , 3,},
+    {5, 6, 7 , 8,},
+    {2, 5, 2 , 5,},
+    {6, 8, 6 , 8,},
+};
+void select_spectrum_mode(void)
+{
+
+	spectrum_mode++;
+	if(spectrum_mode>((u8)((sizeof(spect_mode_tab))/4)-1)){
+
+		spectrum_mode=0;
+		
+	}
+     	//printf("---->select_spectrum_mode  %d, \r\n",(u16)spectrum_mode);
+		
+}
+#endif
 void clear_spectrum_buf(void)
 {
 
@@ -1027,8 +1051,13 @@ void Disp_Spect_Update(u16 *spect_buf)
        u16 spect_line=0;
 
 	clear_spectrum_buf();
-	
+
+#ifdef USE_MULTI_SPECTRUM_MODE
+	spect_line = (spect_buf[spect_mode_tab[spectrum_mode][0]]+spect_buf[spect_mode_tab[spectrum_mode][1]]+spect_buf[spect_mode_tab[spectrum_mode][2]]+spect_buf[spect_mode_tab[spectrum_mode][3]])/4;
+#else
 	spect_line = (spect_buf[4]+spect_buf[8]+spect_buf[6]+spect_buf[2])/4;
+#endif	
+
 	spect_line =(spect_line*my_music_vol)/MAX_VOL;
 		
 	//printf("__----spectrum_pattern  %d, \r\n",spect_line);
@@ -1041,7 +1070,12 @@ void Disp_Spect_Update(u16 *spect_buf)
 }
 void get_spectrum_data(void)
 {
-	if(spectrum_lock||get_super_mute_lock()){
+
+#ifdef PARTTERN_ROLLING_ACTIVATOR_FUNC	
+	parttern_rolling_activator();
+#endif
+
+	if(spectrum_lock/*||get_super_mute_lock()*/){
 		clear_spectrum_buf();
 		spect_pattern_disp_reflesh(DISP_SPECT_ROLLING);
 		return;

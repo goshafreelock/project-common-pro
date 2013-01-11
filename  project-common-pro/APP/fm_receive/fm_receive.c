@@ -1008,6 +1008,8 @@ void fm_radio(void)
     aux_channel_crosstalk_improve(DAC_AMUX0);//4P24,P25 FM_IN	
 #endif
 
+    delay_10ms(20);
+	
     PT2313_Config(MP3_CHAN,CHAN_ADJ);
 #else
     PT2313_Config(FM_CHAN,CHAN_ADJ);

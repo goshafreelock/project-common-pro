@@ -114,4 +114,6 @@ void Disp_BL_time_out();
 void Disp_BL_turn_on();
 #endif
 
+void select_spectrum_mode(void);
+
 #endif
