@@ -1080,6 +1080,10 @@ void get_spectrum_data(void)
 		spect_pattern_disp_reflesh(DISP_SPECT_ROLLING);
 		return;
 	}
+	else if(get_super_mute_lock()){
+		clear_spectrum_buf();
+		return;
+	}
 #ifdef USE_RTC_FUNCTION	
 	if(work_mode>=SYS_RTC){
 		return;
