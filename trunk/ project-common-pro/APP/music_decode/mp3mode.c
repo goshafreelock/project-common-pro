@@ -54,6 +54,10 @@ extern xd_u8 led_spark_protect;
 extern bool sys_mode_recove;
 #endif
 
+#if defined(NEXT_PREV_LONG_UP_SEL_FILE)	
+xd_u8  next_prev_longup_sel_file=0;
+#endif
+
 #ifdef VOL_ADJ_SPARK_LED
 extern bool vol_adj_spark_bit;
 extern xd_u8 last_led_play_mod;
@@ -951,6 +955,9 @@ void music_play(void)
 
 #if defined(NEXT_PREV_HOLD_SEL_FILE)	
             get_music_file1(GET_NEXT_FILE);
+	    	break;
+#elif defined(NEXT_PREV_LONG_UP_SEL_FILE)
+		next_prev_longup_sel_file=0x82;
 		break;
 #elif defined(NEXT_PREV_HOLD_DO_NOTHING)		  
 		break;
@@ -969,7 +976,9 @@ void music_play(void)
 #elif defined(NEXT_PREV_HOLD_SEL_FILE)	
             get_music_file1(GET_NEXT_FILE);
 		break;
-		
+#elif defined(NEXT_PREV_LONG_UP_SEL_FILE)	
+		next_prev_longup_sel_file=0x82;
+		break;		
 #elif defined(NEXT_PREV_HOLD_USE_VOL_TUNE)
 
 			IR_KEY_Detect =0;
@@ -1032,6 +1041,9 @@ void music_play(void)
 #endif
             get_music_file1(GET_PREV_FILE);
 		break;
+#elif defined(NEXT_PREV_LONG_UP_SEL_FILE)	
+		next_prev_longup_sel_file=0x42;
+		break;		
 #elif defined(NEXT_PREV_HOLD_DO_NOTHING)		  
 		break;		
 #endif		
@@ -1057,6 +1069,9 @@ void music_play(void)
 #endif
 
             get_music_file1(GET_PREV_FILE);
+		break;
+#elif defined(NEXT_PREV_LONG_UP_SEL_FILE)	
+		next_prev_longup_sel_file=0x42;
 		break;
 #elif defined(NEXT_PREV_HOLD_USE_VOL_TUNE)
 			IR_KEY_Detect =0;
@@ -1401,7 +1416,37 @@ void music_play(void)
 #if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))      
             updata_fat_memory();
 #endif
+
+#if defined(NEXT_PREV_LONG_UP_SEL_FILE)
+		if(next_prev_longup_sel_file>0){
+
+			if((next_prev_longup_sel_file&0x0F)>0)
+				next_prev_longup_sel_file =(next_prev_longup_sel_file)-1 ;
+
+		            //printf(" next_prev_longup_sel_file : %x \n" ,(u16)next_prev_longup_sel_file);
 			
+			if(((next_prev_longup_sel_file&0x80)>0)&&(((next_prev_longup_sel_file&0x0F)==0))){
+
+            			get_music_file1(GET_NEXT_FILE);
+				next_prev_longup_sel_file=0;
+
+			}
+			else if(((next_prev_longup_sel_file&0x40)>0)&&(((next_prev_longup_sel_file&0x0F)==0))){
+
+#ifdef PREV_KEY_SKIP_SONG_DELAY
+				if(prev_skip_timer){
+					put_msg_lifo(INIT_PLAY);			
+					prev_skip_timer=0;
+				}
+				else{
+            				get_music_file1(GET_PREV_FILE);
+				}
+#endif
+				next_prev_longup_sel_file=0;
+			}
+		}
+#endif
+
 #if defined(TURN_ON_PLAY_BREAK_POINT_MEM)			
 		update_playpoint(&playpoint_time);		//半秒更新断点进度，不写入存储器
 #endif
