@@ -1508,12 +1508,12 @@ void adc_scan(void)
 		
 		if(delta_signal_volt>2){
 			
-			if(signal_online_timer>60){
+			if(signal_online_timer>180){
 				
 				signal_ready = 0xFF;
 			}
 			else{
-				signal_online_timer++;
+				signal_online_timer=signal_online_timer+6;
 			}
 		}
 	 }

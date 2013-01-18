@@ -1671,8 +1671,28 @@ void music_play(void)
 		}
 #endif			
         case INFO_PLAY_MODE :
+#if defined(PLAY_MODE_USE_REP_ONE_ALL_OFF)
 
-#if defined(PLAY_MODE_USE_REP_ONE_ALL)
+            if(play_mode == 0){
+				
+	    	 	play_mode =REPEAT_OFF;
+				
+	     }
+	     else  if(play_mode == REPEAT_ONE){
+		 	
+#if defined(PLAY_MODE_REPEAT_ALL)
+                play_mode = REPEAT_ALL;
+#else    
+	    	 play_mode =REPEAT_DEV_ALL;
+#endif    
+
+	     }
+	     else  if(play_mode == REPEAT_OFF){
+
+	    	 	play_mode =REPEAT_ONE;
+				
+	    }		 
+#elif defined(PLAY_MODE_USE_REP_ONE_ALL)
             if(play_mode == 0){
 	    	 	play_mode =REPEAT_ONE;
 	     }
