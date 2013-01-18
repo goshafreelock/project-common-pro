@@ -144,7 +144,8 @@ u8 _code playmodestr[4][7] =
     {" ALL"},
     {" FoL"},
     {" ONE"},
-    {" RAN"}
+    {" RAN"},
+    {" OFF"},
 #else
     {"ALL"},
     {"FoLdER"},

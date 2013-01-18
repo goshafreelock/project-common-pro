@@ -195,6 +195,7 @@ bool fs_get_filenum(PLAY_MODE playmode, u8 searchMode)
 
         given_file_number = given_file_number % fs_msg.fileTotal + 1;
         break;
+    case REPEAT_OFF:
 #if defined(PLAY_MODE_REPEAT_ALL)
     case REPEAT_ALL:
         if (searchMode == 1)					//prev file
@@ -260,6 +261,13 @@ bool fs_get_filenum(PLAY_MODE playmode, u8 searchMode)
 		intro_play_stop();
 #endif            
                 given_file_number = 1;
+
+		  if(playmode == REPEAT_OFF){
+		  	
+	       	set_play_flash(LED_FLASH_ON);
+			stop_decode();
+	    		Disp_Con(DISP_FILENUM);
+		  }
 #ifdef PLAY_MODE_USE_REP_ALL_PLAY_IN_SEQUENCE
        	set_play_flash(LED_FLASH_ON);
 		stop_decode();
