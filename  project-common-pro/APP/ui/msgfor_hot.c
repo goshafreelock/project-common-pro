@@ -1322,9 +1322,7 @@ void audio_effect_hdlr(u8 hdlr_cmd)
 #ifdef SUPPORT_PT2313	
 	 	PT2313_Config(0xFF,LOUD_ADJ);
 #endif		
-#ifndef K2081_DM_007_V001
 	 	Disp_Con(DISP_LONDESS);
-#endif
 	}
 	else if(audio_effect_state ==CONFIG_FAD){
 		
@@ -2108,6 +2106,10 @@ u8 ap_handle_hotkey(u8 key)
 
 #ifdef SUPPORT_PT2313
 	if((audio_effect_state>0)){
+
+		if(audio_effect_state==CONFIG_LUD){
+			audio_effect_state = CONFIG_INIT;
+		}		
 		audio_effect_hdlr(0x01);
 		flush_low_msg();	
 		break;
@@ -2142,6 +2144,10 @@ u8 ap_handle_hotkey(u8 key)
 
 #ifdef SUPPORT_PT2313	
 	if((audio_effect_state>0)){
+		
+		if(audio_effect_state==CONFIG_LUD){
+			audio_effect_state = CONFIG_INIT;
+		}
 		audio_effect_hdlr(0x02);
 		flush_low_msg();
 		break;
@@ -2176,7 +2182,9 @@ u8 ap_handle_hotkey(u8 key)
         {
             my_music_vol = MAX_VOL;
         }
+#ifndef VOL_AT_MIN_NOT_MUTE		
 	 if(my_music_vol == MIN_VOL){
+
 	 	
 		Mute_Ext_PA(MUTE);
 	 }
@@ -2198,6 +2206,7 @@ u8 ap_handle_hotkey(u8 key)
 		Mute_Ext_PA(UNMUTE);
 		#endif
 	 }
+#endif
 
         write_info(MEM_VOL,my_music_vol);
 		

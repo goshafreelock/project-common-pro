@@ -16,7 +16,7 @@
 #include "voice_time.h"
 extern u16 cfilenum;
 extern xd_u8 curr_menu;
-extern xd_u8  return_cnt;
+extern u8  return_cnt;
 extern bit aux_online;
 extern _xdata SYS_WORK_MODE work_mode;
 //extern bit key_voice_disable;

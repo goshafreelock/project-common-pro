@@ -138,7 +138,7 @@ extern xd_u8 new_rtc_setting;
 									drv_led_buf[4]&=~0x04;\
 									drv_led_buf[6]&=~0x04;\
 								}									
-u8 _code playmodestr[4][7] =
+u8 _code playmodestr[5][7] =
 {
 #if 1//defined(LED_USE_1X888)
     {" ALL"},
@@ -931,7 +931,7 @@ void clear_spect_disp_buf(void)
 	ICON_RIGHT_BAR_5(0);ICON_LEFT_BAR_5(0);
 	ICON_RIGHT_BAR_6(0);ICON_LEFT_BAR_6(0);
 }
-xd_u8 disp_rolling_mode=0,disp_rolling_bar=0,disp_div_timer=0,spilt_timer=10,loop_timer=1;
+u8 disp_rolling_mode=0,disp_rolling_bar=0,disp_div_timer=0,spilt_timer=10,loop_timer=1;
 #ifdef PARTTERN_ROLLING_ACTIVATOR_FUNC
 void parttern_rolling_activator(void)
 {
@@ -970,6 +970,9 @@ void parttern_rolling_activator(void)
 	}	
 }
 #endif
+
+extern u8 select_disp_rolling_mode;
+
 void spect_rolling_pattern_disp()
 {
 	disp_div_timer++;
@@ -986,7 +989,7 @@ void spect_rolling_pattern_disp()
 
 	clear_spect_disp_buf();
 
-	if(disp_rolling_mode==0){
+	if(disp_rolling_mode==1){
 
 		if(disp_rolling_bar==0){
 
@@ -1063,13 +1066,13 @@ void spect_rolling_pattern_disp()
 			disp_rolling_bar = 0;
 			spilt_timer=2;
 
-			if(loop_timer==0){
-				disp_rolling_mode = 1;
+			if((loop_timer==0)&&(select_disp_rolling_mode==0)){
+				disp_rolling_mode = 2;
 				loop_timer=3;
 			}
 		}			
 	}
-	else if(disp_rolling_mode==1){
+	else if(disp_rolling_mode==2){
 		
 		if(disp_rolling_bar==1){
 			ICON_RIGHT_BAR_1(1);				
@@ -1131,13 +1134,13 @@ void spect_rolling_pattern_disp()
 			spilt_timer=2;
 
 			loop_timer--;
-			if(loop_timer==0){
-				disp_rolling_mode = 2;
+			if((loop_timer==0)&&(select_disp_rolling_mode==0)){
+				disp_rolling_mode = 3;
 				loop_timer=2;				
 			}			
 		}		
 	}
-	else if(disp_rolling_mode==2){
+	else if(disp_rolling_mode==3){
 		
 		if(disp_rolling_bar==1){
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
@@ -1184,13 +1187,13 @@ void spect_rolling_pattern_disp()
 			spilt_timer=2;
 
 			loop_timer--;
-			if(loop_timer==0){
-				disp_rolling_mode = 3;
+			if((loop_timer==0)&&(select_disp_rolling_mode==0)){
+				disp_rolling_mode = 4;
 				loop_timer=3;	
 			}				
 		}		
 	}
-	else if(disp_rolling_mode==3){
+	else if(disp_rolling_mode==4){
 
 		if(disp_rolling_bar==1){
 			ICON_RIGHT_BAR_1(1);				
@@ -1234,14 +1237,14 @@ void spect_rolling_pattern_disp()
 			spilt_timer=2;
 
 			loop_timer--;
-			if(loop_timer==0){
-				disp_rolling_mode = 0;
+			if((loop_timer==0)&&(select_disp_rolling_mode==0)){
+				disp_rolling_mode = 1;
 				loop_timer=3;
 				spilt_timer=5;				
 			}				
 		}			
 	}
-	else if(disp_rolling_mode==4){
+	else if(disp_rolling_mode==5){
 
 	}
 	
@@ -1448,6 +1451,18 @@ void Disp_Balence(void)
 		dispNum(PT_Balence_Val-PT_MIN_VOL,0);
 	}	
 }
+extern bool get_pt_2313_londness_flag();
+void Disp_loudness(void)
+{
+
+	if(get_pt_2313_londness_flag()){
+		dispstring(" ON",0);
+	}
+	else{
+		dispstring(" OFF",0);
+	}	
+}
+
 void Disp_Fade(void)
 {
 #ifndef NO_PT_STR_DISPLAY

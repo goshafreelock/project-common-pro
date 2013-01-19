@@ -25,7 +25,7 @@ extern FSAPIMSG _pdata fs_msg;              //<带有文件文件系统信息的结构体变量
 extern _xdata u8 filename_buff[];
 extern bool get_filename( u8 _xdata *p );
 extern MAD_DECODE_INFO _pdata mad_decode_dsc;
-extern xd_u8 return_cnt;
+extern u8 return_cnt;
 extern u16 cfilenum;
 extern xd_u8 curr_menu;
 extern u8 device_active;

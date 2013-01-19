@@ -59,7 +59,7 @@ extern xd_u8 new_rtc_setting;
 #define EXTENED_NUM 	8
 #endif
 extern xd_u8 LED_BUFF_2[EXTENED_NUM-5];
-extern xd_u8 return_cnt,curr_menu;
+extern u8 return_cnt,curr_menu;
 
 void set_extend_led_buf_icon()
 {

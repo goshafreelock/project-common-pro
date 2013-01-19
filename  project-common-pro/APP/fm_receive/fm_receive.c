@@ -21,7 +21,7 @@
 
 extern u16 cfilenum;
 extern xd_u8 curr_menu;
-extern xd_u8  return_cnt;
+extern u8  return_cnt;
 #if defined(TIME_FORCE_SHOW_ON_SCREEN)
 extern xd_u8 time_show_return_cnt; 
 #endif
