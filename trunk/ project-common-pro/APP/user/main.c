@@ -50,7 +50,7 @@ extern xd_u8 IR_Type;
 extern bool pwr_up_flag;
 extern u8 play_status;
 extern xd_u8 dac_cnt;
-extern xd_u8  return_cnt;
+extern u8  return_cnt;
 #ifdef AC_SLAVE_ENABLE
 extern void DSA_init(void);
 extern bool DSA_GETHERING_DATA_ENABLE_BIT;

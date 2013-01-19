@@ -24,7 +24,7 @@ extern xd_u8 time_show_return_cnt;
 #endif
 extern u16 cfilenum;
 extern xd_u8 curr_menu;
-extern xd_u8  return_cnt;
+extern u8  return_cnt;
 extern bit aux_online;
 extern _xdata SYS_WORK_MODE work_mode;
 extern xd_u8 IR_Type;

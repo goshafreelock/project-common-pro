@@ -27,7 +27,7 @@ extern void disp_scan_1651(void);
 #if defined(TIME_FORCE_SHOW_ON_SCREEN)
 volatile xd_u8 time_show_return_cnt; 
 #endif
-volatile xd_u8 return_cnt;         ///<显示界面返回计数，当在非主界面的时候会置零，当计数到RETURN_TIME时会返回当前模式的主界面
+volatile u8 return_cnt;         ///<显示界面返回计数，当在非主界面的时候会置零，当计数到RETURN_TIME时会返回当前模式的主界面
 xd_u8 curr_menu;          ///<当前界面
 
 extern void disp_buf_clear();
@@ -47,6 +47,7 @@ extern void Disp_Eq();
 extern void Disp_Treble();
 extern void Disp_Bass();
 extern void Disp_Balence();
+extern void Disp_loudness();
 extern void Disp_Fade(void);
 extern void Disp_Sw_Vol(void);
 extern void Disp_Mic_Vol(void);
@@ -969,6 +970,26 @@ void select_spectrum_mode(void)
 		
 }
 #endif
+u8 select_disp_rolling_mode=0;
+extern u8 disp_rolling_mode,disp_rolling_bar;
+void select_spectrum_mode(void)
+{
+	select_disp_rolling_mode++;
+	
+	if(select_disp_rolling_mode>4){
+		
+		set_spectrum_lock(0);
+		select_disp_rolling_mode=0;
+	}
+
+	disp_rolling_mode = select_disp_rolling_mode;
+	disp_rolling_bar =0;
+	//if(select_disp_rolling_mode>0){
+
+	//	set_spectrum_lock(1);
+	//}
+     	//printf("---->select_disp_rolling_mode  %d, \r\n",(u16)select_disp_rolling_mode);
+}
 void clear_spectrum_buf(void)
 {
 
@@ -977,7 +998,6 @@ u8 get_spect_power(void)
 {
 	return spec_power;
 }
-u8 _code spect_level_tab[6] ={0};
 u8 i=0,spect_buf[2]={0};
 u8 get_spect_limit(u8 spect_energy)
 {
@@ -1084,6 +1104,11 @@ void get_spectrum_data(void)
 		clear_spectrum_buf();
 		return;
 	}
+	else if(select_disp_rolling_mode>0){
+		clear_spectrum_buf();
+		spect_pattern_disp_reflesh(DISP_SPECT_ROLLING);
+		return;
+	}	
 #ifdef USE_RTC_FUNCTION	
 	if(work_mode>=SYS_RTC){
 		return;
@@ -1371,7 +1396,9 @@ void Disp_Con(u8 LCDinterf)
 		Clear_Disp_Buf();
 	}
 
-	//printf("----->Disp ON %x \r\n",(u16)LCDinterf);
+	printf("-----> return_cnt %x \r\n",(u16)return_cnt);
+
+	printf("----->Disp ON %x \r\n",(u16)LCDinterf);
 
 	switch(LCDinterf)
 	{
@@ -1418,6 +1445,9 @@ void Disp_Con(u8 LCDinterf)
 	case DISP_BASS:
 	    	Disp_Bass();
 	    	break;
+	case DISP_LONDESS:
+	    	Disp_loudness();
+	    	break;		
 	case DISP_BALENCE:
 	    	Disp_Balence();
 	    	break;

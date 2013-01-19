@@ -99,11 +99,11 @@ void PT_2313_Loudness_config()
 	if(PT_Londness_Flag){
 
 		PT_Channel_Val &=~PT_LOUDNESS_ADDR;
-		PT_Channel_Val &=~(0x18);
+		//PT_Channel_Val &=~(0x18);
 	}
 	else{
 		PT_Channel_Val |=PT_LOUDNESS_ADDR;
-		PT_Channel_Val |=(0x18);
+		//PT_Channel_Val |=(0x18);
 	}
 #ifdef UART_ENABLE_PT2313
 	printf(" PT_2313_Loudness_config   -->PT_Londness_Flag  %d \r\n",(u16)PT_Londness_Flag);
