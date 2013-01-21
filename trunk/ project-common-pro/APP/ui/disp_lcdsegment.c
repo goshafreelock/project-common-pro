@@ -1568,7 +1568,7 @@ void spectrum_pattern(u16 *spect_buf)
 	u8 i;
        u16 spect_line=0;
 
-	clear_spectrum_buf();
+	//clear_spectrum_buf();
 	
 	spect_line = (spect_buf[7]+spect_buf[5]+spect_buf[2])/3;
 		//printf("__----spectrum_pattern  %d, \r\n",spect_line);

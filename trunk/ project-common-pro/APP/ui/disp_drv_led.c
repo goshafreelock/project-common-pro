@@ -183,9 +183,9 @@ void aligh_disp_buf(u8 chardat,u8 idx)
 
 #if 0
 	//ICON_RIGHT_BAR(1,  0   ,0x04);
-	ICON_RIGHT_BAR(1,  4   ,0x04);
+	//ICON_RIGHT_BAR(1,  2   ,0x02);
 	//ICON_RIGHT_BAR(1,  5   ,0x01);
-	ICON_RIGHT_BAR(1,  6   ,0x04);
+	//ICON_RIGHT_BAR(1,  6   ,0x04);
 	return ;
 	//chardat=1;
 	//idx =3;
@@ -754,6 +754,9 @@ void Disp_Start(void)
 #else
        dispstring(" HI",0);
 #endif
+
+	ICON_VOL_IND_LED(1);
+
 }
 void Disp_PwrOFF(void)
 {
@@ -1619,7 +1622,7 @@ void led_drv_spark_all()
 		
 
 		ICON_VOL_IND_LED(1);
-		ICON_FM_IND_LED(1);
+		//ICON_FM_IND_LED(1);
 	
 		spark_timer =0;
 		if(disp_restore){
