@@ -1158,6 +1158,7 @@ void custom_gpio_setting()
 void Idle_hdlr()
 {
     u8 key;	
+	clear_super_mute_lock();	
 #ifndef USE_MANUAL_IDLE_FUNC
     set_play_flash(LED_FLASH_STOP);
     Mute_Ext_PA(MUTE);

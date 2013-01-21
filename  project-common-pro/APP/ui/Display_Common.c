@@ -940,11 +940,15 @@ xd_u16 spect_buffer[10]={0};
 bool spectrum_lock=0;
 xd_u8 spec_power=0;
 extern u8 ReadLFSR();
-extern void clear_spectrum_buf(void);
+//extern void clear_spectrum_buf(void);
 extern void spectrum_pattern(u16 *spect_buf);
 extern void spect_pattern_disp_reflesh(u8  spec_fresh);
 #ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
 bool adc_spectrum_enable=0;
+#endif
+
+#ifdef PARTTERN_ROLLING_ACTIVATOR_FUNC
+void parttern_rolling_activator(void);
 #endif
 
 #ifdef USE_MULTI_SPECTRUM_MODE
@@ -990,10 +994,12 @@ void select_spectrum_mode(void)
 	//}
      	//printf("---->select_disp_rolling_mode  %d, \r\n",(u16)select_disp_rolling_mode);
 }
+#if 0
 void clear_spectrum_buf(void)
 {
 
 }
+#endif
 u8 get_spect_power(void)
 {
 	return spec_power;
@@ -1048,12 +1054,13 @@ u8 get_spect_limit(u8 spect_energy)
 	}
 #endif
 }
+#if 0
 void update_spect_buffer(u8 spect_limit)
 {
 	//printf("__----update_spect_buffer  %d, \r\n",(u16)spect_limit);
 	//spect_pattern_disp_reflesh(spect_limit);
 }
-
+#endif
 void set_spectrum_lock(bool lock)
 {
 	spectrum_lock = lock;
@@ -1067,10 +1074,10 @@ void get_random_spect_data()
 }
 void Disp_Spect_Update(u16 *spect_buf)
 {
-	u8 i;
+	//u8 i;
        u16 spect_line=0;
 
-	clear_spectrum_buf();
+	//clear_spectrum_buf();
 
 #ifdef USE_MULTI_SPECTRUM_MODE
 	spect_line = (spect_buf[spect_mode_tab[spectrum_mode][0]]+spect_buf[spect_mode_tab[spectrum_mode][1]]+spect_buf[spect_mode_tab[spectrum_mode][2]]+spect_buf[spect_mode_tab[spectrum_mode][3]])/4;
@@ -1096,16 +1103,16 @@ void get_spectrum_data(void)
 #endif
 
 	if(spectrum_lock/*||get_super_mute_lock()*/){
-		clear_spectrum_buf();
+		//clear_spectrum_buf();
 		spect_pattern_disp_reflesh(DISP_SPECT_ROLLING);
 		return;
 	}
 	else if(get_super_mute_lock()){
-		clear_spectrum_buf();
+		//clear_spectrum_buf();
 		return;
 	}
 	else if(select_disp_rolling_mode>0){
-		clear_spectrum_buf();
+		//clear_spectrum_buf();
 		spect_pattern_disp_reflesh(DISP_SPECT_ROLLING);
 		return;
 	}	

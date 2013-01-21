@@ -26,7 +26,7 @@ bool drv_led_ea=0;
 #define SPI_STB_PIN		P32
 #define SPI_CLK_PIN		P31
 
-volatile u8 _xdata TAB_keynum[5]={0};    //这5个数据来保存键值
+volatile u8 _idata TAB_keynum[5]={0};    //这5个数据来保存键值
 #define knum1 TAB_keynum[0] 
 #define knum2 TAB_keynum[1] 
 #define knum3 TAB_keynum[2] 
