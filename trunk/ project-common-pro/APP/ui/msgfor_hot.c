@@ -2680,6 +2680,19 @@ _SYS_GO_IN_POWER_OFF:
 		Mute_Ext_PA(SUPERMUTE);
 
 #endif
+
+#ifdef LED_DRV_MUTE_ON_FLASH_WHOLE_SCREEN
+
+	if(get_super_mute_lock()==0){
+
+		if(work_mode == SYS_AUX)
+			Disp_Con(DISP_AUX);
+		else if(work_mode == SYS_FMREV){
+			Disp_Con(DISP_FREQ);
+
+		}
+	}
+#endif
 #if defined(MUTE_ON_FLASH_WHOLE_SCREEN)
 #if defined(MP3_PUASE_FLASH_FIGURE)
 		set_led_flash_tpye(1);
