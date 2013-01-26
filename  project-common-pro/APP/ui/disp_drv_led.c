@@ -1594,7 +1594,8 @@ void led_drv_spark_all()
 		if(led_buf_update){
 
 			disp_buf_clear();
-			//ICON_BAR_IND_LED(0);						
+			ICON_BAR_IND_LED(0);						
+			ICON_MEDIA_IND_LED(0);
 			ICON_5_LED(0);
 			ICON_VOL_IND_LED(0);
 			ICON_FM_IND_LED(0);
@@ -1602,7 +1603,8 @@ void led_drv_spark_all()
 		else{
 
 			disp_buf_clear();
-			//ICON_BAR_IND_LED(1);			
+			ICON_BAR_IND_LED(1);			
+			ICON_MEDIA_IND_LED(1);
 			ICON_5_LED(1);
 			ICON_VOL_IND_LED(1);
 			ICON_FM_IND_LED(1);			
