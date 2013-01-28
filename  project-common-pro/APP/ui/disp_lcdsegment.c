@@ -11,7 +11,7 @@ u8 dispchar(u8 chardata,u8 offset);
 void dispstring(u8 *,u8);
 
 extern u8 _idata  my_music_vol;  
-extern _xdata u8 filename_buff[100];
+extern _xdata u8 filename_buff[];
 
 extern FSAPIMSG _pdata fs_msg;
 extern u8 play_status;

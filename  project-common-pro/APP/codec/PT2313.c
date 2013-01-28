@@ -455,6 +455,7 @@ void PT2312_reset(void)
 	PT2313_Config(0xFF,MUTE_ADJ);
 	PT2313_Config(0xFF,TRELBE_ADJ);
 	PT2313_Config(0xFF,BASS_ADJ);
+	PT2313_Config(0xFF,SW_ADJ);	
 	PT2313_Config(my_music_vol,VOL_ADJ);	
 	
 #ifdef SUPPORT_M62429

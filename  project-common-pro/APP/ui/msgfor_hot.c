@@ -1369,6 +1369,7 @@ void audio_effect_hdlr(u8 hdlr_cmd)
 
 }
 #endif		
+bool drv_key_scan_bit=0;
 
 /*----------------------------------------------------------------------------*/
 /**@brief   几个任务都会用到的消息集中处理的函数
@@ -1428,6 +1429,15 @@ u8 ap_handle_hotkey(u8 key)
 	if(gpio_key_scan_bit){
 		gpio_key_scan_bit=0;
 		gpio_key_scan_one_or_two();
+	}
+#endif
+
+#ifdef LED_DRV_USE_SM1628_KEY_FUNC
+	if(drv_key_scan_bit){
+
+		drv_key_scan_bit =0;
+		Read_key();
+
 	}
 #endif
 
@@ -2778,6 +2788,7 @@ _SYS_GO_IN_POWER_OFF:
 		break;				
 	case INFO_SPECT_MODE|KEY_SHORT_UP:
 		select_spectrum_mode();
+		Disp_Con(DISP_ROLLING_MODE|CLS_BUF_MAGIC_NUM);
 		break;	
 #endif
 #endif

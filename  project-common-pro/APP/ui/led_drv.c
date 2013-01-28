@@ -26,33 +26,33 @@ bool drv_led_ea=0;
 #define SPI_STB_PIN		P32
 #define SPI_CLK_PIN		P31
 
-volatile u8 _idata TAB_keynum[5]={0};    //这5个数据来保存键值
-#define knum1 TAB_keynum[0] 
-#define knum2 TAB_keynum[1] 
-#define knum3 TAB_keynum[2] 
-#define knum4 TAB_keynum[3] 
-#define knum5 TAB_keynum[4] 
+u8 _idata TAB_keynum[2]={0};    //这5个数据来保存键值
+//#define knum1 TAB_keynum[0] 
+//#define knum2 TAB_keynum[1] 
+//#define knum3 TAB_keynum[2] 
+//#define knum4 TAB_keynum[3] 
+//#define knum5 TAB_keynum[4] 
 
 //共阴的数码管表格0-f
-u8 code TAB_duan[]=  {0x8f,0x80,0x0d,0x89,0x82,0x8b,0x8f,0x81,0x8f,0x8b,   0x87,0x8f,0x0f,0x8f,0x0f,0x07};
-u8 code TAB_duan1[]={0x02,0x01,0x03,0x03,0x03,0x02,0x01,0x02,0x03,0x03,    0x03,0x03,0x00,0x02,0x01,0x01};
+//u8 code TAB_duan[]=  {0x8f,0x80,0x0d,0x89,0x82,0x8b,0x8f,0x81,0x8f,0x8b,   0x87,0x8f,0x0f,0x8f,0x0f,0x07};
+//u8 code TAB_duan1[]={0x02,0x01,0x03,0x03,0x03,0x02,0x01,0x02,0x03,0x03,    0x03,0x03,0x00,0x02,0x01,0x01};
 
 
 #define MAX_TM_KEY		6
 _code u8 tm_Key_Tab[MAX_TM_KEY][3]=
 {
-	{3,0x02,INFO_PREV_FIL},			
-	{3,0x01,INFO_MUTE},
-	{2,0x10,INFO_NEXT_FIL},			
-	{2,0x02,INFO_PLAY},	
-	{2,0x01,INFO_MODE},
-	{2,0x08,INFO_EQ_UP},
+	{1,0x02,INFO_PREV_FIL},			
+	{1,0x01,INFO_MUTE},
+	{0,0x10,INFO_NEXT_FIL},			
+	{0,0x02,INFO_PLAY},	
+	{0,0x01,INFO_MODE},
+	{0,0x08,INFO_EQ_UP},
 };
 
 
 void delayus()//延时4us
 {
-	u8 i=5;
+	u8 i=6;
 	while(i-->0);
 }
 
@@ -98,7 +98,7 @@ void Wr_TM_CMD(u8 TMcmd)
 #ifdef LED_DRV_USE_SM1628_KEY_FUNC
 void Read_key()//读TM1628的key值并入5个数组里面
 {
-	u8 ii=0;
+	u8 ii=0,read_reg=0;
 
 	if(drv_led_ea)return;
 	
@@ -108,11 +108,15 @@ void Read_key()//读TM1628的key值并入5个数组里面
     	delayus();//必要的delay
     	for(ii=0;ii<5;ii++)
     	{
-        	TAB_keynum[ii]=tm_read_byte();//读key值
+    		read_reg =tm_read_byte();
+    		if((ii==2)||(ii==3)){
+        		TAB_keynum[ii-2]=read_reg;//读key值
+		}
     	}
 
     	SPI_STB_PIN=1;//片选，0有效
 }
+extern bool get_super_mute_lock();
  u8 SM1628_Key_Scan(void)
 {
 	u8 ii=0;
@@ -126,15 +130,28 @@ void Read_key()//读TM1628的key值并入5个数组里面
 	//return NO_KEY;
 
 #if 1
-	if((TAB_keynum[tm_Key_Tab[0][0]] >0)||(TAB_keynum[tm_Key_Tab[2][0]]>0))
+	if((TAB_keynum[0] >0)||(TAB_keynum[1]>0))
 	{
 		for(ii=0;ii<MAX_TM_KEY;ii++){
 
 			if(TAB_keynum[tm_Key_Tab[ii][0]]==tm_Key_Tab[ii][1]){
 
 			    	//printf("Read_key index  %x \r\n",(u16)ii);
+				if(get_super_mute_lock()){
+					if((tm_Key_Tab[ii][2] != INFO_MUTE)&&(tm_Key_Tab[ii][2] != INFO_MODE)){
+						return NO_KEY;
+					}
+					else{
 
-				return (tm_Key_Tab[ii][2]);
+						return (tm_Key_Tab[ii][2]);
+
+					}
+				}
+				else{
+
+					return (tm_Key_Tab[ii][2]);
+
+				}
 			}
 		}
 			
@@ -192,6 +209,7 @@ void wirte_tm1628_disp_buf(void)
 {
 	u8 idx=0;
 
+	ET1 =0;
 	drv_led_ea = 1;		
 
 	Wr_TM_CMD(0x03);//显示模式
@@ -205,6 +223,7 @@ void wirte_tm1628_disp_buf(void)
     	SPI_STB_PIN=1;//片选，0有效
 
     	Wr_TM_CMD(0x8F);//送亮度指令
+	ET1 =1;
 
 	drv_led_ea = 0;		
 }
@@ -218,6 +237,8 @@ void init_disp()
     	SPI_DATA_PIN=1;
    	SPI_STB_PIN=1;
     	SPI_CLK_PIN=1;
+		
+	Wr_TM_CMD(0x03);//显示模式
 
 	disp_buf_clear();
 	//wirte_tm1628_disp_buf();	

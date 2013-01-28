@@ -68,6 +68,7 @@ typedef enum
     DISP_RTC_PWD,
     DISP_ALM_UP,
     DISP_ALM_SET,
+    DISP_ROLLING_MODE,
 };
 
 #define CLS_BUF_MAGIC_NUM	0x80

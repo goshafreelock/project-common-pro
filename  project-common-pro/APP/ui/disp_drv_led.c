@@ -49,7 +49,7 @@ extern xd_u8  M62429_ch1_vol;
 extern xd_u8  M62429_ch2_vol;
 #endif
 #endif
-extern _xdata u8 filename_buff[100];
+extern _xdata u8 filename_buff[];
 extern void disp_buf_clear(void);
 
 #ifdef NEW_RTC_SETTING_CTRL
@@ -796,7 +796,7 @@ void Disp_Timer_OFF(void)
 #endif 
 void Disp_Error(void)
 {
-       dispstring("err",0);
+       dispstring(" err",0);
 
 }
 void Disp_CLR(void)
@@ -949,7 +949,7 @@ void parttern_rolling_activator(void)
 			}
 			else{
 				set_spectrum_lock(LOCK);
-			     	//printf("---->parttern_rolling_activator  %d, \r\n",(u16)disp_rolling_mode);
+			     	//printf("---->parttern_rolling_activator  LOCK  \r\n");
 			}
 		}
 		else{
@@ -975,7 +975,14 @@ void parttern_rolling_activator(void)
 #endif
 
 extern u8 select_disp_rolling_mode;
-
+void init_rolling_var()
+{
+	disp_div_timer =0;
+	disp_rolling_bar =0;
+	spilt_timer =10;
+	disp_rolling_mode =1;
+	select_disp_rolling_mode=0;
+}
 void spect_rolling_pattern_disp()
 {
 	disp_div_timer++;
@@ -988,7 +995,7 @@ void spect_rolling_pattern_disp()
 
 	disp_rolling_bar++;
 
-     	//printf("---->spect_rolling_pattern_disp  %d,    %d   \r\n",(u16)disp_rolling_mode,(u16)disp_rolling_bar);
+     	//printf("---->spect_rolling_pattern_disp  %d,    %d   \r\n",(u16)disp_rolling_mode,(u16)select_disp_rolling_mode);
 
 	clear_spect_disp_buf();
 
@@ -1311,12 +1318,26 @@ void spect_pattern_disp_reflesh(u8  spec_fresh)
 		disp_spect_level = get_spect_power();
 		//printf("__----spect_pattern_disp_reflesh  %d, \r\n",(u16)disp_spect_level);
 		spect_pattern_disp();
-
+		init_rolling_var();
 	}
 	else if(spec_fresh ==DISP_SPECT_ROLLING){
 
 		spect_rolling_pattern_disp();
 	}
+}
+void Disp_roll_mode_Num(void)
+{
+
+    disp_buf_clear();
+    ICON_BAR_IND_LED(1);			
+    ICON_MEDIA_IND_LED(1);
+    ICON_5_LED(1);
+    ICON_VOL_IND_LED(1);
+    ICON_FM_IND_LED(1);	
+    //dispNum((u8)((select_disp_rolling_mode/10)%10),1);
+    dispNum(select_disp_rolling_mode%10,1);
+    spect_rolling_pattern_disp();
+
 }
 #endif
 #if defined(USE_SPECTRUM_PARTTERN)

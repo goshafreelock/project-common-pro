@@ -44,7 +44,7 @@ extern xd_u8  PT_Treble_Val;
 extern xd_u8  PT_Balence_Val;
 extern xd_u8  PT_Fade_Val;
 #endif
-extern _xdata u8 filename_buff[100];
+extern _xdata u8 filename_buff[];
 extern void disp_buf_clear(void);
 
 #ifdef NEW_RTC_SETTING_CTRL

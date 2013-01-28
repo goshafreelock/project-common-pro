@@ -6,7 +6,7 @@
 
 #if defined(USE_LCD_DRV_HT1621)
 extern u8 _idata  my_music_vol;  
-extern _xdata u8 filename_buff[100];
+extern _xdata u8 filename_buff[];
 extern FSAPIMSG _pdata fs_msg;
 extern volatile u8 play_mode;
 extern volatile u8 eq_mode;
