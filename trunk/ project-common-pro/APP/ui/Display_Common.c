@@ -936,6 +936,9 @@ void device_online_led_ind(void)
 }
 #endif
 #if defined(SPECTRUM_FUNC_ENABLE)
+
+extern void Disp_roll_mode_Num(void);
+
 xd_u16 spect_buffer[10]={0};
 bool spectrum_lock=0;
 xd_u8 spec_power=0;
@@ -1403,7 +1406,7 @@ void Disp_Con(u8 LCDinterf)
 		Clear_Disp_Buf();
 	}
 
-	printf("-----> return_cnt %x \r\n",(u16)return_cnt);
+	printf("-----> return_cnt %x \r\n",(u16)curr_menu);
 
 	printf("----->Disp ON %x \r\n",(u16)LCDinterf);
 
@@ -1569,6 +1572,11 @@ void Disp_Con(u8 LCDinterf)
         	Disp_Alm_Up();
         	break;
 #endif	 
+#if defined(SPECTRUM_FUNC_ENABLE)
+	case DISP_ROLLING_MODE:
+	 Disp_roll_mode_Num();
+	 	break;
+#endif		
     	default:break;
     }
 

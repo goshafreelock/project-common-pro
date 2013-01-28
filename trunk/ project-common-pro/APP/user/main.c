@@ -442,6 +442,7 @@ void sdmmc_detect(void)
     }
 }
 #endif
+extern bool drv_key_scan_bit;
 /*----------------------------------------------------------------------------*/
 /**@brief 10MSÖÐ¶Ï
    @param
@@ -473,7 +474,9 @@ void timer0isr(void) interrupt 0 using 1
    {
    	isr0_ms_cnt =0;
 #ifdef LED_DRV_USE_SM1628_KEY_FUNC
-	Read_key();
+
+drv_key_scan_bit = 1;
+	//Read_key();
 #endif
 
 	
