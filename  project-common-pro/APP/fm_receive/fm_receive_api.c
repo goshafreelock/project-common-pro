@@ -41,6 +41,11 @@ extern u8 _idata  my_music_vol;
 extern u8 given_device;
 extern u8 play_status;
 
+#ifdef LED_DRV_USE_SM1628_KEY_FUNC
+extern bool drv_key_scan_bit;
+extern void Read_key();
+#endif
+
 #if defined(K619_FXK_619_V001)
 extern bool config_led_by_gpio;
 #endif
@@ -954,6 +959,15 @@ void scan_fre(void)
 	 #else
         	Disp_Con(DISP_FREQ|CLS_BUF_MAGIC_NUM);
 	 #endif
+	 
+#ifdef LED_DRV_USE_SM1628_KEY_FUNC
+	if(drv_key_scan_bit){
+
+		drv_key_scan_bit =0;
+		Read_key();
+
+	}
+#endif
 	 
 	 key=get_msg();
 	 

@@ -1305,6 +1305,8 @@ void spect_pattern_disp()
 
 	update_led_buf();
 }
+extern u8 get_spect_power(void);
+
 void spect_pattern_disp_reflesh(u8  spec_fresh)
 {	
 

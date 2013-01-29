@@ -62,7 +62,7 @@ xd_u16 am_fre_point[MAX_AM_CHANNL] _at_ 0xd80;    //4 AM收音搜索到的台的缓存
 bool radio_mode=1;
 xd_u8 fre_point[MAX_CHANNL]	_at_ 0xd80;    ///< FM收音搜索到的台的缓存
 #else
-xd_u8 fre_point[MAX_CHANNL];    ///< FM收音搜索到的台的缓存
+xd_u8 fre_point[MAX_CHANNL] _at_ 0xd80;    ///< FM收音搜索到的台的缓存
 #endif
 extern _idata u16 dac_cnt;
 extern u8 aux_ch_reg;
@@ -503,6 +503,7 @@ __SCAN_FREQ:
 			break;
 #endif
         case INFO_HALF_SECOND :
+			
 #if ((USE_DEVICE == MEMORY_STYLE)&&(FAT_MEMORY))          
              updata_fat_memory();
 #endif

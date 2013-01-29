@@ -45,7 +45,7 @@ u16 align_m62429_reg_data(u8 vol_db,u8 reg_ch)
 {
 	return ((((3-(vol_db%4))<<7)|((21-(vol_db/4))<<2)|(CHAN_W_SINGLE)|(reg_ch))|0x0600);
 }
-void M62429_config_Data(u8 adj_dir,u8 adj_channel,u16 reg_data)
+void M62429_config_Data(u8 adj_dir,u8 adj_channel)
 {
 	static bool vol_lock=0;
 	u16 reg_temp=0,REG=0;
@@ -150,8 +150,8 @@ void M62429_Init(void)
 	M62429_ch1_vol=CHAN_A_VOL_DEF;
 	M62429_ch2_vol=CHAN_B_VOL_DEF;
 	
-	M62429_config_Data(ADJ_CURR,CHAN_SEL_A,M62429_ch1_vol);
-	M62429_config_Data(ADJ_CURR,CHAN_SEL_B,M62429_ch2_vol);
+	M62429_config_Data(ADJ_CURR,CHAN_SEL_A);
+	M62429_config_Data(ADJ_CURR,CHAN_SEL_B);
 }
 
 #endif

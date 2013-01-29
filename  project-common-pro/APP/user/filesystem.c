@@ -127,6 +127,7 @@ bool get_filename( u8 _xdata *p )
     filename_len = i;
     return flag;
 }
+#if defined(USE_FOLDER_SELECT_FUNC)
 
 /*----------------------------------------------------------------------------*/
 /**@brief   获取下一个文件夹的文件
@@ -161,4 +162,4 @@ u16 get_dir_file(u8 cmd)
 	}
 	return fileNumber;		
 }
-
+#endif

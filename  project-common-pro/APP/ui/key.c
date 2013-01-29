@@ -12,8 +12,8 @@
 #include "clock.h"
 #include "main.h"
 
-extern void P0IE_ctl(u8, u8);
-extern u8 bP0IE;
+//extern void P0IE_ctl(u8, u8);
+//extern u8 bP0IE;
 extern u8 _idata  my_music_vol;
 extern u8 play_status;	
 extern void putbyte(u8);
@@ -148,7 +148,7 @@ u8 signal_volt=0,last_signal_volt=0;
 xd_u8 signal_online_timer=0,signal_ready=0,delta_signal_volt=0;
 
 #ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
-extern bool adc_spectrum_enable;
+//extern bool adc_spectrum_enable;
 extern xd_u16 spect_buffer[10];
 u8 spect_buf_idx=0;
 #endif
@@ -1205,7 +1205,9 @@ void keyInit(void)
 {
     ADCCON = 0xf8;
     adc_clock();
+#ifndef NO_ADKEY_FUNC
     key_value = 0xff;
+#endif
     //P3PU  &= ~(1<<4);
     //P3DIR |= (1<<4);
 #ifdef _MY_IR_KEY_
@@ -1319,8 +1321,10 @@ void adc_scan(void)
     }
     else if (cnt == 2)
     {
-        key_value = ADCDATH;//READ VDDIO
 
+#ifndef NO_ADKEY_FUNC
+        key_value = ADCDATH;//READ VDDIO
+#endif
         P0PU  |= (BIT(2)); 
 	 P0PD  |=(BIT(2));
 	 P0DIR |= (BIT(2));
@@ -1432,9 +1436,7 @@ void adc_scan(void)
     }
     else if (cnt == 2)
     {
-#ifdef NO_ADKEY_FUNC		   
-	key_value= 0xFF;
-#else
+#ifndef NO_ADKEY_FUNC
         key_value = ADCDATH;//READ VDDIO
 #endif        
 #ifdef CUSTOM_DEFINE_ADPORT_FUNC
@@ -1532,8 +1534,9 @@ void adc_scan(void)
 	 
 #ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
 
-	 if(adc_spectrum_enable)       
-	 {
+	// if(adc_spectrum_enable)       
+	if((work_mode==SYS_AUX)||(work_mode==SYS_FMREV))
+	{
 		spect_buffer[spect_buf_idx] = delta_signal_volt;
 		spect_buf_idx++;		
 		if(spect_buf_idx>10)spect_buf_idx=0;
@@ -1666,6 +1669,9 @@ u8 keyDetect(void)
 				||(My_IRTab[key_index].APP_Key ==INFO_POWER)
 #elif defined(SEPARATED_FAST_FORDWORD_KEY)				
 				||(My_IRTab[key_index].APP_Key ==INFO_PLUS)||(My_IRTab[key_index].APP_Key ==INFO_MINUS)
+#elif defined(USE_IR_VOL_TUNE_ONLY)
+				||(My_IRTab[key_index].APP_Key ==INFO_VOL_MINUS)||(My_IRTab[key_index].APP_Key ==INFO_VOL_PLUS)
+
 #endif					
 				)
 				IR_KEY_Detect =1;

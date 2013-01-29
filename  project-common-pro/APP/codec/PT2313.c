@@ -14,7 +14,7 @@
 
 #ifdef SUPPORT_M62429
 #include "m62429.h"
-extern void M62429_config_Data(u8 adj_dir,u8 adj_channel,u16 reg_data);
+extern void M62429_config_Data(u8 adj_dir,u8 adj_channel);
 extern void M62429_Init(void);
 #endif
 //#define  UART_ENABLE_PT2313
@@ -380,10 +380,10 @@ void PT_2313_mic_config(PT_CTRL_CMD PT_CMD)
 
 #ifdef SUPPORT_M62429
 	if(PT_CMD ==PT_UP){		
-		M62429_config_Data(ADJ_UP,CHAN_SEL_B,0xFF);
+		M62429_config_Data(ADJ_UP,CHAN_SEL_B);
 	}
 	else if(PT_CMD ==PT_DW){	
-		M62429_config_Data(ADJ_DOWN,CHAN_SEL_B,0xFF);		
+		M62429_config_Data(ADJ_DOWN,CHAN_SEL_B);		
 	}
 #endif
 }
@@ -391,10 +391,10 @@ void PT_2313_echo_config(PT_CTRL_CMD PT_CMD)
 {
 #ifdef SUPPORT_M62429
 	if(PT_CMD ==PT_UP){		
-		M62429_config_Data(ADJ_UP,CHAN_SEL_A,0xFF);
+		M62429_config_Data(ADJ_UP,CHAN_SEL_A);
 	}
 	else if(PT_CMD ==PT_DW){	
-		M62429_config_Data(ADJ_DOWN,CHAN_SEL_A,0xFF);		
+		M62429_config_Data(ADJ_DOWN,CHAN_SEL_A);		
 	}
 #endif
 }
