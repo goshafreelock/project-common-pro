@@ -108,6 +108,10 @@ extern bool pause_flash_enable;
 extern void disp_buf_figure_buf();
 #endif
 
+#ifdef LED_DRV_MUTE_ON_FLASH_WHOLE_SCREEN
+extern void led_drv_spark_all();
+#endif
+
 #if defined(SYS_DEFAULT_IN_PWR_OFF_FOR_LED_PROTECTION)||defined(SYS_LED_PROTECTION_UNTILL_PWR_ON)
 bool sys_pwr_on_led_protect_bit=0;
 #endif
@@ -939,7 +943,7 @@ void device_online_led_ind(void)
 
 extern void Disp_roll_mode_Num(void);
 
-xd_u16 spect_buffer[10]={0};
+xd_u16 spect_buffer[10] _at_ 0xdd0; 
 bool spectrum_lock=0;
 xd_u8 spec_power=0;
 extern u8 ReadLFSR();
@@ -947,7 +951,7 @@ extern u8 ReadLFSR();
 extern void spectrum_pattern(u16 *spect_buf);
 extern void spect_pattern_disp_reflesh(u8  spec_fresh);
 #ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
-bool adc_spectrum_enable=0;
+//bool adc_spectrum_enable=0;
 #endif
 
 #ifdef PARTTERN_ROLLING_ACTIVATOR_FUNC
@@ -1127,7 +1131,7 @@ void get_spectrum_data(void)
 	if((work_mode==SYS_MP3DECODE_SD)||(work_mode==SYS_MP3DECODE_USB)){
 
 #ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
-		 adc_spectrum_enable=0;    
+		 //adc_spectrum_enable=0;    
 #endif
 
 		freqavg(spect_buffer);
@@ -1137,7 +1141,7 @@ void get_spectrum_data(void)
 
 #ifdef SPERCTRUM_FROM_AUX_ADC_SAMPLE
 
-		 adc_spectrum_enable=1;    
+		 //adc_spectrum_enable=1;    
 
 #else
 		get_random_spect_data();

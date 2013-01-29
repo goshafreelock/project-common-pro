@@ -111,6 +111,11 @@ void gpio_key_scan_one_or_two();
 extern bool gpio_key_scan_bit;
 #endif
 
+#ifdef LED_DRV_USE_SM1628_KEY_FUNC
+extern bool drv_key_scan_bit;
+extern void Read_key();
+#endif
+
 #if defined(DEFAULT_GO_TO_CUSTOM_MODE)
 extern bool custom_first_time_pwr_flag;
 #endif
@@ -1369,8 +1374,10 @@ void audio_effect_hdlr(u8 hdlr_cmd)
 
 }
 #endif		
-bool drv_key_scan_bit=0;
 
+#ifdef LED_DRV_USE_SM1628_KEY_FUNC
+bool drv_key_scan_bit=0;
+#endif
 /*----------------------------------------------------------------------------*/
 /**@brief   几个任务都会用到的消息集中处理的函数
    @param   key： 需要处理的消息
@@ -2120,6 +2127,13 @@ u8 ap_handle_hotkey(u8 key)
 		if(audio_effect_state==CONFIG_LUD){
 			audio_effect_state = CONFIG_INIT;
 		}		
+
+#ifdef USE_IR_VOL_TUNE_ONLY
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			audio_effect_state = CONFIG_VOL;
+		}		
+#endif
 		audio_effect_hdlr(0x01);
 		flush_low_msg();	
 		break;
@@ -2158,6 +2172,12 @@ u8 ap_handle_hotkey(u8 key)
 		if(audio_effect_state==CONFIG_LUD){
 			audio_effect_state = CONFIG_INIT;
 		}
+#ifdef USE_IR_VOL_TUNE_ONLY
+		if(IR_KEY_Detect){
+			IR_KEY_Detect =0;
+			audio_effect_state = CONFIG_VOL;
+		}			
+#endif		
 		audio_effect_hdlr(0x02);
 		flush_low_msg();
 		break;
