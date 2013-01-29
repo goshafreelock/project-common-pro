@@ -598,7 +598,7 @@
 //#define K4010_MY_1258_V001
 //#define K2150_HF_1234_V001
 //#define K4005_AJR_105_V001
-#define K2081_DM_007_V001
+//#define K2081_DM_007_V001
 
 
 
@@ -747,7 +747,7 @@
 //#define K000_JK_BTONLY_V001
 //#define K000_JK_LBR_BT_V001
 //#define K000_JK_ZHCX_V001
-//#define K000_JK_HY_SM001_V001
+#define K000_JK_HY_SM001_V001
 //#define K000_JK_HY_WM2428B_V001
 //#define K1163_DYT_1163_V001
 //#define K0000_XC_X813_V001
