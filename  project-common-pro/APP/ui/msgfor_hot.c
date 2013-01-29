@@ -2613,7 +2613,7 @@ _SYS_GO_IN_POWER_OFF:
 #endif				
 
 #ifdef EQ_LONG_PRESS_FOR_FM_MP3_SEL
-    	case INFO_EQ_DOWN| KEY_LONG:
+    	case INFO_EQ_UP| KEY_LONG:
 
 		if(IR_Type == NO_FM_CHIP)break;
 

@@ -622,9 +622,9 @@ void bat_val_arg(void);
 #define ADKEY_1		INFO_PLAY
 #define ADKEY_2		INFO_PREV_FIL
 #define ADKEY_3		INFO_NEXT_FIL
-#define ADKEY_4		INFO_EQ_DOWN
+#define ADKEY_4		INFO_EQ_UP
 #define ADKEY_5		INFO_STOP
-#define ADKEY_6		INFO_EQ_UP
+#define ADKEY_6		INFO_EQ_DOWN
 #define ADKEY_7		NO_KEY
 #define ADKEY_8		NO_KEY
 #define ADKEY_NOKEY	NO_KEY
