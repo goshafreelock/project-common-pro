@@ -1951,6 +1951,9 @@ void JogDetect(void)
         }
         else
         {
+#ifdef K2081_DM_007_V001
+		if(get_super_mute_lock())return;
+#endif
             keyval_buf = touchkeyval;
             if (touchkeyval == 0x00)
             {

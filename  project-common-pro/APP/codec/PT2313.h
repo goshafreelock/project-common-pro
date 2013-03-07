@@ -125,6 +125,7 @@ typedef enum
 void PT2313_Config(u8 PT_PARA,PT2313_CTRL PT_CMD);
 void PT2313_Init(void);
 void PT2312_reset(void);
+void PT2313_pre_config();
 
 //bool get_pt_2313_londness_flag();
 

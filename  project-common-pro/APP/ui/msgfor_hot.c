@@ -1544,6 +1544,7 @@ u8 ap_handle_hotkey(u8 key)
 
 #if defined(MUTE_ON_FLASH_WHOLE_SCREEN)||defined(MP3_PUASE_FLASH_FIGURE)||defined(PAUSE_FLASH_WHOLE_SCREEN)||defined(LED_DRV_MUTE_ON_FLASH_WHOLE_SCREEN)
     case INFO_RESTORE_SCREEN:
+		
 		Disp_Con(curr_menu);
 	break;
 #endif	
@@ -2131,7 +2132,10 @@ u8 ap_handle_hotkey(u8 key)
 #ifdef USE_IR_VOL_TUNE_ONLY
 		if(IR_KEY_Detect){
 			IR_KEY_Detect =0;
-			audio_effect_state = CONFIG_VOL;
+			if(audio_effect_state ==0){
+
+				audio_effect_state = CONFIG_VOL;
+			}
 		}		
 #endif
 		audio_effect_hdlr(0x01);
@@ -2175,7 +2179,11 @@ u8 ap_handle_hotkey(u8 key)
 #ifdef USE_IR_VOL_TUNE_ONLY
 		if(IR_KEY_Detect){
 			IR_KEY_Detect =0;
-			audio_effect_state = CONFIG_VOL;
+
+			if(audio_effect_state ==0){
+
+				audio_effect_state = CONFIG_VOL;
+			}
 		}			
 #endif		
 		audio_effect_hdlr(0x02);
