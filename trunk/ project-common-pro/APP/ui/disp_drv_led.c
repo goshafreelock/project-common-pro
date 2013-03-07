@@ -569,11 +569,11 @@ void disp_file_time(void)
     u16 sec;
     u16 min;
     u32 file_play_time;
-
+	
 #ifdef LED_DRV_MUTE_ON_FLASH_WHOLE_SCREEN
-	if(get_super_mute_lock()){
-		return;
-	}
+	//if(get_super_mute_lock()){
+		//return;
+	//}
 #endif
 
     file_play_time = get_music_play_time();
@@ -1268,24 +1268,26 @@ void spect_pattern_disp()
 	switch(disp_spect_level)
 	{
 		case 0:
-			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			break;
 		case 1:
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
-			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
 			break;
 		case 2:
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
-			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
 			break;
 		case 3:
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
 			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
-			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
 			break;
 		case 4:
+			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
+			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
+			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
+			ICON_RIGHT_BAR_4(1);ICON_LEFT_BAR_4(1);
+			break;
+		case 5:
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
 			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
@@ -1293,7 +1295,7 @@ void spect_pattern_disp()
 			ICON_RIGHT_BAR_5(1);ICON_LEFT_BAR_5(1);
 			break;	
 
-		case 5:
+		case 6:
 			ICON_RIGHT_BAR_1(1);ICON_LEFT_BAR_1(1);
 			ICON_RIGHT_BAR_2(1);ICON_LEFT_BAR_2(1);
 			ICON_RIGHT_BAR_3(1);ICON_LEFT_BAR_3(1);
@@ -1599,40 +1601,50 @@ void play_status_led_spark_automatic()
 void led_drv_spark_all()
 {
 	static bool led_buf_update = 0,disp_restore=0;
-	static u8 spark_timer=0;
-
-	play_status_led_spark_automatic();
+	static u8 spark_timer=0,half_sec_spark_timer=0;
 
 
 	if(get_super_mute_lock()){
 
 		spark_timer++;
-		if(spark_timer==250){
-			spark_timer=0;			
-			led_buf_update=~led_buf_update;					
-			update_led_buf();	
+		if(spark_timer>=200){
+			spark_timer=0;
+			
+			//half_sec_spark_timer++;
+
+			//if(half_sec_spark_timer>=50){
+
+				half_sec_spark_timer=0;
+				led_buf_update=~led_buf_update;
+				if(led_buf_update){
+
+					disp_buf_clear();
+					ICON_BAR_IND_LED(0);						
+					ICON_MEDIA_IND_LED(0);
+					ICON_5_LED(0);
+					ICON_VOL_IND_LED(0);
+					ICON_FM_IND_LED(0);
+				}
+				else{
+
+#if 0			
+					disp_buf_clear();
+					ICON_BAR_IND_LED(1);			
+					ICON_MEDIA_IND_LED(1);
+					ICON_5_LED(1);
+					ICON_VOL_IND_LED(1);
+					ICON_FM_IND_LED(1);	
+#endif
+		            		put_msg_lifo(INFO_RESTORE_SCREEN);							
+					
+					//dispstring(" ---",0);
+				}					
+				update_led_buf();	
+			//}
 		}
 
 		disp_restore=1;
-		if(led_buf_update){
-
-			disp_buf_clear();
-			ICON_BAR_IND_LED(0);						
-			ICON_MEDIA_IND_LED(0);
-			ICON_5_LED(0);
-			ICON_VOL_IND_LED(0);
-			ICON_FM_IND_LED(0);
-		}
-		else{
-
-			disp_buf_clear();
-			ICON_BAR_IND_LED(1);			
-			ICON_MEDIA_IND_LED(1);
-			ICON_5_LED(1);
-			ICON_VOL_IND_LED(1);
-			ICON_FM_IND_LED(1);			
-			dispstring(" ---",0);
-		}		
+	
 	}
 	else if(led_spark_protect>0){
 		
@@ -1645,6 +1657,8 @@ void led_drv_spark_all()
 	}
 	else{
 		
+
+		play_status_led_spark_automatic();
 
 		ICON_VOL_IND_LED(1);
 		//ICON_FM_IND_LED(1);

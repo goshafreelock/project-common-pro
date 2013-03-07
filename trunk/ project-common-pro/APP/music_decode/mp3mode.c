@@ -614,6 +614,9 @@ void music_play(void)
 		return;
     }
 #endif	
+#ifdef SUPPORT_PT2313
+ 	PT2313_pre_config();
+#endif
     while (1)
     {
         key = get_msg();
@@ -1566,6 +1569,9 @@ void music_play(void)
 #ifdef PREV_KEY_SKIP_SONG_DELAY
 		   prev_skip_timer=1;
 #endif            
+#ifdef K2081_DM_007_V001
+		if(get_super_mute_lock())break;
+#endif
                  disp_file_time();
               //  draw_lcd(0, 1);
             }

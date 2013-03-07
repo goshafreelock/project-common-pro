@@ -31,6 +31,8 @@ xd_u8  PT_Fade_Val=PT_MAX_VOL/2;
 xd_u8  PT_Subw_Val=PT_MAX_VOL/2;
 xd_u8 PT_max_eq=0;
 
+extern xd_u8 audio_effect_state;
+
 _code u8 VOL_Table[36] = {63,63,63,63,63,63,50,44,38,34,30,28,26,24,22,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0};
 _code u8   IMPACT_TABLE[5][3]=
 {
@@ -451,6 +453,8 @@ void PT2312_reset(void)
 	my_music_vol= 25;
 	PT_Subw_Val = 52;
 	PT_Bass_Val = PT_MIN_VOL;
+
+	audio_effect_state =  CONFIG_VOL;
 	
 	PT2313_Config(0xFF,MUTE_ADJ);
 	PT2313_Config(0xFF,TRELBE_ADJ);
@@ -505,6 +509,21 @@ void PT2313_Init(void)
 #ifdef K2081_DM_007_V001
 	PT2312_reset();
 #endif
+	PT2313_Config(0xFF,MUTE_ADJ);
+	PT2313_Config(0xFF,TRELBE_ADJ);
+	PT2313_Config(0xFF,BASS_ADJ);
+	PT2313_Config(0xFF,BAL_ADJ);
+	PT2313_Config(0xFF,EQ_ADJ);
+	
+#ifdef USE_REAR_CHANNEL_FOR_SUBWOOFER
+	PT2313_Config(0xFF,SW_ADJ);
+#endif
+#ifdef SUPPORT_M62429
+	M62429_Init();
+#endif	
+}
+void PT2313_pre_config()
+{
 	PT2313_Config(0xFF,MUTE_ADJ);
 	PT2313_Config(0xFF,TRELBE_ADJ);
 	PT2313_Config(0xFF,BASS_ADJ);

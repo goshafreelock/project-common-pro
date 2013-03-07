@@ -74,7 +74,7 @@ typedef enum
 
 /*延时显示时间*/
 #ifdef K2081_DM_007_V001
-#define RETURN_TIME 10
+#define RETURN_TIME 6
 #else
 #define RETURN_TIME 5
 #endif

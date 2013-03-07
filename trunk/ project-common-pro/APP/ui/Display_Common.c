@@ -958,6 +958,8 @@ extern void spect_pattern_disp_reflesh(u8  spec_fresh);
 void parttern_rolling_activator(void);
 #endif
 
+u8 select_disp_rolling_mode=0;
+
 #ifdef USE_MULTI_SPECTRUM_MODE
 xd_u8 spectrum_mode=0;
 u8 _code spect_mode_tab[5][4]=
@@ -977,11 +979,13 @@ void select_spectrum_mode(void)
 		spectrum_mode=0;
 		
 	}
+	select_disp_rolling_mode = spectrum_mode;
      	//printf("---->select_spectrum_mode  %d, \r\n",(u16)spectrum_mode);
 		
 }
 #endif
-u8 select_disp_rolling_mode=0;
+
+#ifdef PARTTERN_ROLLING_ACTIVATOR_FUNC	
 extern u8 disp_rolling_mode,disp_rolling_bar;
 void select_spectrum_mode(void)
 {
@@ -1001,6 +1005,7 @@ void select_spectrum_mode(void)
 	//}
      	//printf("---->select_disp_rolling_mode  %d, \r\n",(u16)select_disp_rolling_mode);
 }
+#endif
 #if 0
 void clear_spectrum_buf(void)
 {
@@ -1111,18 +1116,20 @@ void get_spectrum_data(void)
 
 	if(spectrum_lock/*||get_super_mute_lock()*/){
 		//clear_spectrum_buf();
-		spect_pattern_disp_reflesh(DISP_SPECT_ROLLING);
+		spect_pattern_disp_reflesh(DISP_STOP_SPECT);
 		return;
 	}
 	else if(get_super_mute_lock()){
 		//clear_spectrum_buf();
 		return;
 	}
+#ifdef PARTTERN_ROLLING_ACTIVATOR_FUNC	
 	else if(select_disp_rolling_mode>0){
 		//clear_spectrum_buf();
 		spect_pattern_disp_reflesh(DISP_SPECT_ROLLING);
 		return;
 	}	
+#endif	
 #ifdef USE_RTC_FUNCTION	
 	if(work_mode>=SYS_RTC){
 		return;
